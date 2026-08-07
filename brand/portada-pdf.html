@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Portada PDF — eleven</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* eleven · portada PDF universal v1.0
+     Para cualquier documento: informes, guías, dosieres, entregas mensuales.
+     USO: edita tipo, título y datos → Ctrl+P → PDF (márgenes "Ninguno", gráficos de fondo). */
+  :root{
+    --primary-400:#8B7BFF;--primary-50:#F1EFFF;--ink:#0B0B12;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif;--f-mono:"JetBrains Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);background:#8A8A9E22}
+  .page{width:210mm;height:297mm;margin:16px auto;padding:22mm;position:relative;display:flex;flex-direction:column;
+    background:var(--ink);color:#fff;box-shadow:0 4px 12px rgba(11,11,18,.15);
+    background-image:radial-gradient(rgba(139,123,255,.13) 1.2px,transparent 1.2px);background-size:24px 24px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  [contenteditable]{outline:none;border-radius:3px}
+  [contenteditable]:hover{background:rgba(139,123,255,.15)}
+  [contenteditable]:focus{background:rgba(139,123,255,.25)}
+
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo svg{height:28px}
+  .logo span{font-family:var(--f-head);font-weight:700;font-size:22px;letter-spacing:-.03em}
+
+  .centro{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .tipo{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary-400);margin-bottom:14px}
+  h1{font-family:var(--f-head);font-size:46pt;line-height:1.04;letter-spacing:-.03em;font-weight:700;max-width:13ch;text-wrap:balance}
+  .sub{font-size:13pt;color:#B0B0C0;margin-top:8mm;max-width:50ch}
+
+  .datos{margin-top:18mm;font-family:var(--f-mono);font-size:10pt;color:#8A8A9E;display:grid;gap:5px}
+  .datos b{color:#fff;font-weight:400}
+
+  .pie{display:flex;justify-content:space-between;align-items:flex-end;font-size:9pt;color:#8A8A9E}
+  .barra{position:absolute;left:0;right:0;bottom:0;height:3mm;background:linear-gradient(90deg,#8B7BFF,#5A43F2);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  .aviso-pantalla{max-width:210mm;margin:16px auto 0;padding:12px 16px;background:#E4E0FF;border-radius:10px;font-size:13px;color:#33268A;font-family:var(--f-body)}
+  @media print{
+    body{background:#fff}
+    .page{margin:0;box-shadow:none}
+    .aviso-pantalla{display:none}
+    [contenteditable]:hover{background:transparent}
+  }
+  @page{size:A4;margin:0}
+</style>
+</head>
+<body>
+
+<div class="aviso-pantalla">✏️ Portada universal para cualquier PDF de eleven (informes, dosieres, entregas). Edita los textos y exporta con Ctrl+P. Únela al resto del documento con cualquier combinador de PDFs.</div>
+
+<div class="page">
+  <div class="logo">
+    <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#fff"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#fff"/></svg>
+    <span>eleven</span>
+  </div>
+
+  <div class="centro">
+    <div class="tipo" contenteditable="true">Informe mensual</div>
+    <h1 contenteditable="true">Resultados de agosto</h1>
+    <p class="sub" contenteditable="true">Qué ha pasado este mes en tu sistema de captación, qué hemos mejorado y qué haremos el mes que viene.</p>
+    <div class="datos">
+      <div>Cliente&nbsp;&nbsp;&nbsp; <b contenteditable="true">Nombre del Negocio</b></div>
+      <div>Periodo&nbsp;&nbsp;&nbsp; <b contenteditable="true">01–31 · 08 · 2026</b></div>
+      <div>Preparado por&nbsp;&nbsp;&nbsp; <b contenteditable="true">eleven</b></div>
+    </div>
+  </div>
+
+  <div class="pie">
+    <span>eleven · Crecimiento por sistema.</span>
+    <span style="font-family:var(--f-mono)" contenteditable="true">DOC-2026-001</span>
+  </div>
+  <div class="barra"></div>
+</div>
+
+</body>
+</html>
+

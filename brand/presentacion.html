@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Presentación — eleven</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* eleven · plantilla de presentación v1.0 · 16:9 (1280×720)
+     USO: edita los textos (clic), duplica o borra diapositivas en el HTML según necesites,
+     y exporta con Ctrl+P → Guardar como PDF (horizontal, márgenes "Ninguno", gráficos de fondo).
+     El PDF resultante se presenta a pantalla completa desde cualquier visor. */
+  :root{
+    --primary-50:#F1EFFF;--primary-200:#CCC5FF;--primary-400:#8B7BFF;--primary-500:#6E5BFF;
+    --primary-600:#5A43F2;--primary-700:#4A35D6;
+    --accent-500:#2EE6A6;--accent-600:#17C98C;
+    --ink:#0B0B12;--bg:#FAFAFC;--surface:#fff;--surface-2:#F4F4F8;--border:#E9E9F0;
+    --text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif;--f-mono:"JetBrains Mono",monospace;
+    --dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='rgba(139,123,255,0.14)'/%3E%3C/svg%3E");
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);background:#8A8A9E22;color:var(--ink);line-height:1.5}
+  [contenteditable]{outline:none;border-radius:4px}
+  [contenteditable]:hover{box-shadow:0 0 0 2px rgba(110,91,255,.35)}
+  [contenteditable]:focus{box-shadow:0 0 0 2px var(--primary-500)}
+
+  .slide{width:1280px;height:720px;margin:20px auto;background:var(--surface);position:relative;overflow:hidden;
+    box-shadow:0 4px 12px rgba(11,11,18,.15);padding:72px 88px;display:flex;flex-direction:column;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .oscura{background:var(--ink);background-image:var(--dots);color:#fff}
+  .num-pie{position:absolute;right:44px;bottom:32px;font-family:var(--f-mono);font-size:14px;color:var(--text-3)}
+  .marca-pie{position:absolute;left:44px;bottom:26px;display:flex;align-items:center;gap:10px}
+  .marca-pie svg{height:20px}
+  .marca-pie span{font-family:var(--f-head);font-weight:700;font-size:16px;letter-spacing:-.02em}
+  .barra{position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,#8B7BFF,#5A43F2)}
+  .overline{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary-600);margin-bottom:14px}
+  .oscura .overline{color:var(--primary-400)}
+  h1{font-family:var(--f-head);font-size:72px;line-height:1.05;letter-spacing:-.03em;font-weight:700}
+  h2{font-family:var(--f-head);font-size:44px;line-height:1.1;letter-spacing:-.02em;font-weight:700;margin-bottom:24px}
+  .lockup{display:flex;align-items:center;gap:14px}
+  .lockup svg{height:34px}
+  .lockup .nombre{font-family:var(--f-head);font-weight:700;font-size:28px;letter-spacing:-.03em}
+
+  ul.check{list-style:none;font-size:22px;display:grid;gap:16px;color:#343442;max-width:60ch}
+  ul.check li{padding-left:38px;position:relative}
+  ul.check li::before{content:"✓";position:absolute;left:0;color:var(--accent-600);font-weight:700}
+  ul.cross{list-style:none;font-size:22px;display:grid;gap:16px;color:#343442;max-width:60ch}
+  ul.cross li{padding-left:38px;position:relative}
+  ul.cross li::before{content:"✕";position:absolute;left:0;color:#EF4444;font-weight:700}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:8px}
+  .card{background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:28px}
+  .card .n{font-family:var(--f-mono);font-size:14px;color:var(--primary-600);background:var(--primary-50);border-radius:99px;padding:4px 12px;display:inline-block;margin-bottom:14px}
+  .card b{display:block;font-family:var(--f-head);font-weight:500;font-size:22px;margin-bottom:6px}
+  .card p{font-size:16px;color:var(--text-2)}
+
+  .metricas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-top:16px}
+  .metrica{border:1px solid var(--border);border-radius:16px;padding:32px;background:var(--surface-2)}
+  .metrica .valor{font-family:var(--f-mono);font-size:64px;line-height:1.05;letter-spacing:-.01em}
+  .metrica .delta{color:var(--accent-600);font-size:19px;font-weight:600;margin-top:8px}
+  .metrica .etiqueta{font-size:16px;color:var(--text-2);margin-top:4px}
+
+  .dosCol{display:grid;grid-template-columns:1fr 1fr;gap:28px;flex:1}
+  .col{border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:14px}
+  .col.antes{background:var(--surface-2);border:1px solid var(--border)}
+  .col.despues{background:var(--primary-50);border:1px solid var(--primary-200)}
+  .col .titulo{font-family:var(--f-head);font-weight:500;font-size:24px}
+  .col ul{list-style:none;display:grid;gap:12px;font-size:18px;color:#343442}
+  .col.antes li{padding-left:30px;position:relative}
+  .col.antes li::before{content:"✕";position:absolute;left:0;color:#EF4444;font-weight:700}
+  .col.despues li{padding-left:30px;position:relative}
+  .col.despues li::before{content:"✓";position:absolute;left:0;color:var(--accent-600);font-weight:700}
+
+  .cita{font-family:var(--f-head);font-size:44px;line-height:1.25;letter-spacing:-.02em;font-weight:500;max-width:24ch;margin:auto 0}
+  .cita .senal{color:var(--accent-500)}
+  .autor{font-size:20px;color:#B0B0C0}
+  .autor b{color:#fff;font-weight:600;display:block;font-size:22px}
+
+  .precioBox{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;flex:1;align-items:center}
+  .precio{font-family:var(--f-mono);font-size:96px;letter-spacing:-.02em;line-height:1}
+  .precio small{font-size:22px;color:var(--text-2);font-family:var(--f-body);display:block;margin-top:10px}
+
+  .cierre{align-items:flex-start;justify-content:center}
+  .cierre .tel{font-family:var(--f-head);font-size:40px;font-weight:700;margin-top:28px}
+  .cierre .mail{font-family:var(--f-mono);font-size:22px;color:#B0B0C0;margin-top:8px}
+
+  .aviso-pantalla{max-width:1280px;margin:16px auto 0;padding:12px 16px;background:#E4E0FF;border-radius:10px;font-size:13px;color:#33268A}
+  @media print{
+    body{background:#fff}
+    .slide{margin:0;box-shadow:none;page-break-after:always}
+    .slide:last-of-type{page-break-after:auto}
+    .aviso-pantalla{display:none}
+    [contenteditable]:hover{box-shadow:none}
+  }
+  @page{size:13.333in 7.5in;margin:0}
+</style>
+</head>
+<body>
+
+<div class="aviso-pantalla">✏️ 8 diapositivas maestras editables (clic en los textos). Duplica/borra las que necesites en el HTML. Exportar: <b>Ctrl+P → PDF</b>, orientación horizontal, márgenes "Ninguno", gráficos de fondo. El PDF se presenta a pantalla completa.</div>
+
+<!-- 1 · PORTADA -->
+<div class="slide oscura">
+  <div class="lockup">
+    <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#fff"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#fff"/></svg>
+    <span class="nombre">eleven</span>
+  </div>
+  <div style="margin:auto 0">
+    <div class="overline" contenteditable="true">Propuesta de crecimiento</div>
+    <h1 contenteditable="true" style="max-width:14ch">Más clientes para tu negocio.</h1>
+    <p style="font-family:var(--f-mono);font-size:18px;color:#8A8A9E;margin-top:28px" contenteditable="true">Nombre del Negocio · 07/08/2026</p>
+  </div>
+  <div style="font-size:15px;color:#8A8A9E">Crecimiento por sistema.</div>
+  <div class="barra"></div>
+</div>
+
+<!-- 2 · SEPARADOR DE SECCIÓN -->
+<div class="slide oscura">
+  <div style="margin:auto 0">
+    <div style="font-family:var(--f-mono);font-size:120px;color:var(--primary-400);line-height:1" contenteditable="true">01</div>
+    <h1 style="font-size:56px;margin-top:20px" contenteditable="true">Dónde estás hoy</h1>
+  </div>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span style="color:#fff">eleven</span></div>
+  <div class="num-pie">02</div>
+</div>
+
+<!-- 3 · CONTENIDO CON BULLETS -->
+<div class="slide">
+  <div class="overline" contenteditable="true">Diagnóstico</div>
+  <h2 contenteditable="true">Qué está frenando tu captación</h2>
+  <ul class="cross" contenteditable="true" style="margin-top:8px">
+    <li>Tu web tarda 6 segundos en cargar: cada segundo te cuesta reservas.</li>
+    <li>No apareces en las búsquedas de tu zona ("dentista en Valencia").</li>
+    <li>Las llamadas fuera de horario se pierden: nadie hace seguimiento.</li>
+    <li>Tu competencia directa ya invierte en visibilidad digital.</li>
+  </ul>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span>eleven</span></div>
+  <div class="num-pie">03</div>
+</div>
+
+<!-- 4 · PROCESO 3 CARDS -->
+<div class="slide">
+  <div class="overline" contenteditable="true">El sistema</div>
+  <h2 contenteditable="true">Cómo lo resolvemos</h2>
+  <div class="cards">
+    <div class="card"><span class="n">01</span><b contenteditable="true">Base que convierte</b><p contenteditable="true">Web rápida y clara, pensada para que quien entra llame o reserve.</p></div>
+    <div class="card"><span class="n">02</span><b contenteditable="true">Visibilidad local</b><p contenteditable="true">Google, mapas y contenido: que te encuentren justo cuando te buscan.</p></div>
+    <div class="card"><span class="n">03</span><b contenteditable="true">IA que no duerme</b><p contenteditable="true">Automatización que responde, cualifica y hace seguimiento por ti.</p></div>
+  </div>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span>eleven</span></div>
+  <div class="num-pie">04</div>
+</div>
+
+<!-- 5 · MÉTRICAS -->
+<div class="slide">
+  <div class="overline" contenteditable="true">Resultados · caso real</div>
+  <h2 contenteditable="true">Qué consigue el sistema</h2>
+  <div class="metricas">
+    <div class="metrica"><div class="valor" contenteditable="true">×2,4</div><div class="delta" contenteditable="true">↑ reservas</div><div class="etiqueta" contenteditable="true">en 3 meses</div></div>
+    <div class="metrica"><div class="valor" contenteditable="true">+41</div><div class="delta" contenteditable="true">↑ llamadas</div><div class="etiqueta" contenteditable="true">cada mes</div></div>
+    <div class="metrica"><div class="valor" contenteditable="true">4,8★</div><div class="delta" contenteditable="true">↑ reseñas</div><div class="etiqueta" contenteditable="true">en Google</div></div>
+  </div>
+  <p style="font-size:15px;color:var(--text-3);margin-top:20px" contenteditable="true">Restaurante en Valencia · datos de marzo–junio 2026</p>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span>eleven</span></div>
+  <div class="num-pie">05</div>
+</div>
+
+<!-- 6 · ANTES / DESPUÉS -->
+<div class="slide">
+  <div class="overline" contenteditable="true">La diferencia</div>
+  <h2 contenteditable="true">Antes y después de eleven</h2>
+  <div class="dosCol">
+    <div class="col antes">
+      <div class="titulo">Hoy</div>
+      <ul contenteditable="true">
+        <li>Web antigua que no aparece en Google</li>
+        <li>El teléfono suena solo por el boca a boca</li>
+        <li>Sin datos: no sabes qué funciona</li>
+      </ul>
+    </div>
+    <div class="col despues">
+      <div class="titulo">Con el sistema</div>
+      <ul contenteditable="true">
+        <li>Web que convierte visitas en llamadas</li>
+        <li>Visibilidad constante en tu zona</li>
+        <li>Informe mensual: qué entra, qué cuesta, qué devuelve</li>
+      </ul>
+    </div>
+  </div>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span>eleven</span></div>
+  <div class="num-pie">06</div>
+</div>
+
+<!-- 7 · INVERSIÓN -->
+<div class="slide">
+  <div class="overline" contenteditable="true">Inversión</div>
+  <h2 contenteditable="true">Cuánto cuesta empezar</h2>
+  <div class="precioBox">
+    <div>
+      <div class="precio" contenteditable="true">490 €<small contenteditable="true">pago único · 50% señal, 50% a la publicación</small></div>
+    </div>
+    <ul class="check" contenteditable="true" style="font-size:19px">
+      <li>Web a medida, publicada y optimizada</li>
+      <li>Hasta 2 rondas de cambios incluidas</li>
+      <li>Hosting y puesta en marcha el primer año</li>
+      <li>Solo pagas si la demo te convence</li>
+    </ul>
+  </div>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span>eleven</span></div>
+  <div class="num-pie">07</div>
+</div>
+
+<!-- 8 · CIERRE / CTA -->
+<div class="slide oscura cierre">
+  <div class="overline" contenteditable="true">Siguiente paso</div>
+  <h1 style="font-size:64px;max-width:16ch" contenteditable="true">¿Empezamos con tu demo gratuita?</h1>
+  <div class="tel" contenteditable="true">+34 610 10 22 79</div>
+  <div class="mail" contenteditable="true">rafa@elevenprime.es · elevenprime.es</div>
+  <div class="marca-pie"><svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg><span style="color:#fff">eleven</span></div>
+  <div class="barra"></div>
+</div>
+
+</body>
+</html>
+

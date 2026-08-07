@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Factura — eleven</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* eleven · plantilla de factura v1.0
+     USO: edita los campos (clic y escribir), Ctrl+P → PDF, márgenes "Ninguno", gráficos de fondo activados.
+     NOTA LEGAL: completa los datos fiscales reales del emisor antes del primer uso. */
+  :root{
+    --primary-500:#6E5BFF;--primary-600:#5A43F2;--primary-700:#4A35D6;--primary-50:#F1EFFF;
+    --ink:#0B0B12;--surface:#fff;--surface-2:#F4F4F8;--border:#E9E9F0;--text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif;--f-mono:"JetBrains Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);font-size:10.5pt;line-height:1.55;color:var(--ink);background:#8A8A9E22}
+  .page{width:210mm;min-height:297mm;margin:16px auto;background:var(--surface);padding:22mm;position:relative;box-shadow:0 4px 12px rgba(11,11,18,.15);display:flex;flex-direction:column}
+  [contenteditable]{outline:none;border-radius:3px}
+  [contenteditable]:hover{background:rgba(110,91,255,.07)}
+  [contenteditable]:focus{background:var(--primary-50)}
+
+  .cabecera{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14mm}
+  .logo{display:flex;align-items:center;gap:9px}
+  .logo svg{height:24px}
+  .logo span{font-family:var(--f-head);font-weight:700;font-size:19px;letter-spacing:-.03em}
+  .doc-tipo{text-align:right}
+  .doc-tipo h1{font-family:var(--f-head);font-size:20pt;letter-spacing:-.02em;font-weight:700}
+  .doc-tipo .num{font-family:var(--f-mono);color:var(--primary-700);font-size:11pt}
+
+  .partes{display:grid;grid-template-columns:1fr 1fr;gap:8mm;margin-bottom:10mm}
+  .parte{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:5mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .parte .lbl{font-size:8.5pt;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:2mm}
+  .parte div{font-size:10pt;color:#343442}
+  .parte b{color:var(--ink)}
+
+  .meta{display:flex;gap:10mm;font-family:var(--f-mono);font-size:9.5pt;color:var(--text-2);margin-bottom:8mm}
+  .meta b{color:var(--ink);font-weight:400}
+
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:8.5pt;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);padding:3mm 0;border-bottom:1px solid var(--border)}
+  th.der,td.der{text-align:right}
+  td{padding:3.5mm 0;border-bottom:1px solid var(--border);vertical-align:top}
+  td small{color:var(--text-2);display:block}
+  .num{font-family:var(--f-mono);white-space:nowrap}
+  .totales{margin-left:auto;width:70mm;margin-top:5mm}
+  .totales td{padding:2.5mm 0;border-bottom:0;color:var(--text-2)}
+  .totales tr.total td{font-family:var(--f-head);font-weight:700;font-size:14pt;color:var(--ink);border-top:1px solid var(--ink);padding-top:4mm}
+  .totales tr.total .num{color:var(--primary-700)}
+
+  .pago{background:var(--primary-50);border:1px solid #CCC5FF;border-radius:12px;padding:5mm;margin-top:10mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pago .lbl{font-size:8.5pt;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-700);margin-bottom:2mm}
+  .pago div{font-size:10pt}
+  .pago .num{font-size:11pt}
+
+  .pie-pagina{margin-top:auto;padding-top:8mm;font-size:8pt;color:var(--text-3);text-align:center;line-height:1.5}
+  .barra{position:absolute;left:0;right:0;bottom:0;height:3mm;background:linear-gradient(90deg,#8B7BFF,#5A43F2);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  .aviso-pantalla{max-width:210mm;margin:16px auto 0;padding:12px 16px;background:#E4E0FF;border-radius:10px;font-size:13px;color:#33268A}
+  @media print{
+    body{background:#fff}
+    .page{margin:0;box-shadow:none}
+    .aviso-pantalla{display:none}
+    [contenteditable]:hover{background:transparent}
+  }
+  @page{size:A4;margin:0}
+</style>
+</head>
+<body>
+
+<div class="aviso-pantalla">✏️ Edita los campos con un clic. Antes del primer uso real: completa los <b>datos fiscales del emisor</b> (NIF, dirección, IBAN). Luego Ctrl+P → PDF con gráficos de fondo.</div>
+
+<div class="page">
+  <div class="cabecera">
+    <div class="logo">
+      <svg viewBox="0 0 76 110"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B7BFF"/><stop offset="1" stop-color="#5A43F2"/></linearGradient></defs><rect x="0" y="34" width="30" height="76" rx="15" fill="url(#g)"/><rect x="46" y="0" width="30" height="110" rx="15" fill="url(#g)"/></svg>
+      <span>eleven</span>
+    </div>
+    <div class="doc-tipo">
+      <h1>Factura</h1>
+      <div class="num" contenteditable="true">F-2026-001</div>
+    </div>
+  </div>
+
+  <div class="partes">
+    <div class="parte">
+      <div class="lbl">Emisor</div>
+      <div contenteditable="true"><b>Nombre fiscal del emisor</b><br>NIF: 00000000X<br>Dirección fiscal completa<br>CP · Ciudad<br>rafa@elevenprime.es</div>
+    </div>
+    <div class="parte">
+      <div class="lbl">Cliente</div>
+      <div contenteditable="true"><b>Nombre fiscal del cliente</b><br>NIF/CIF: 00000000X<br>Dirección fiscal completa<br>CP · Ciudad</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span>Fecha: <b contenteditable="true">07/08/2026</b></span>
+    <span>Vencimiento: <b contenteditable="true">a la recepción</b></span>
+    <span>Referencia: <b contenteditable="true">PROP-2026-001</b></span>
+  </div>
+
+  <table>
+    <tr><th>Concepto</th><th class="der">Cant.</th><th class="der">Precio</th><th class="der">Importe</th></tr>
+    <tr>
+      <td contenteditable="true">Web completa a medida<small>Diseño, textos, optimización Google, publicación y hosting primer año</small></td>
+      <td class="der num" contenteditable="true">1</td>
+      <td class="der num" contenteditable="true">490,00 €</td>
+      <td class="der num" contenteditable="true">490,00 €</td>
+    </tr>
+  </table>
+
+  <table class="totales">
+    <tr><td>Base imponible</td><td class="der num" contenteditable="true">490,00 €</td></tr>
+    <tr><td>IVA (21%)</td><td class="der num" contenteditable="true">102,90 €</td></tr>
+    <tr class="total"><td>Total</td><td class="der num" contenteditable="true">592,90 €</td></tr>
+  </table>
+
+  <div class="pago">
+    <div class="lbl">Forma de pago</div>
+    <div contenteditable="true">Transferencia bancaria al IBAN <span class="num">ES00 0000 0000 0000 0000 0000</span><br>o Bizum al <span class="num">+34 610 10 22 79</span> · Indica la referencia <span class="num">F-2026-001</span></div>
+  </div>
+
+  <div class="pie-pagina" contenteditable="true">
+    eleven · Crecimiento por sistema. · elevenprime.es<br>
+    Factura emitida conforme al RD 1619/2012. Los datos se tratan únicamente para la gestión de esta relación comercial (RGPD).
+  </div>
+  <div class="barra"></div>
+</div>
+
+</body>
+</html>
+

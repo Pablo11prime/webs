@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>eleven — Generador de plantillas social</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  /* eleven · generador social v1.0
+     USO: 1) elige formato  2) haz clic en los textos y edítalos  3) Descargar PNG.
+     Las plantillas se renderizan a tamaño real (1080px) y se exportan tal cual. */
+  :root{
+    --primary-50:#F1EFFF;--primary-200:#CCC5FF;--primary-400:#8B7BFF;--primary-500:#6E5BFF;
+    --primary-600:#5A43F2;--primary-700:#4A35D6;
+    --accent-500:#2EE6A6;--accent-600:#17C98C;
+    --ink:#0B0B12;--bg:#FAFAFC;--surface:#fff;--border:#E9E9F0;--text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif;--f-mono:"JetBrains Mono",monospace;
+    /* tile de puntos "retícula de señal" como data-uri para render fiable en la exportación */
+    --dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='rgba(139,123,255,0.14)'/%3E%3C/svg%3E");
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);background:var(--bg);color:var(--ink);padding:24px}
+  h1{font-family:var(--f-head);font-size:24px;letter-spacing:-.02em;margin-bottom:4px}
+  .sub{color:var(--text-2);font-size:14px;margin-bottom:20px}
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:28px;position:sticky;top:0;background:var(--bg);padding:12px 0;z-index:10;border-bottom:1px solid var(--border)}
+  select,.btn{height:40px;border-radius:10px;border:1px solid var(--border);background:var(--surface);font:inherit;font-size:14px;padding:0 14px;cursor:pointer}
+  .btn-primary{background:var(--primary-500);color:#fff;border:0;font-weight:500;transition:background .2s}
+  .btn-primary:hover{background:var(--primary-600)}
+  .fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:32px;align-items:start}
+  .bloque h2{font-family:var(--f-head);font-size:16px;font-weight:500;margin-bottom:2px}
+  .bloque .uso{font-size:12.5px;color:var(--text-3);margin-bottom:10px}
+  .marco{overflow:hidden;border-radius:12px;border:1px solid var(--border);width:min(378px,100%)}
+  .escala{transform-origin:top left}
+  .bloque .acciones{margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .nota{font-size:12px;color:var(--text-3)}
+  [contenteditable]{outline:none}
+  [contenteditable]:hover{box-shadow:0 0 0 2px rgba(110,91,255,.35)}
+  [contenteditable]:focus{box-shadow:0 0 0 2px var(--primary-500)}
+
+  /* ===== lienzos 1080px reales ===== */
+  .lienzo{width:1080px;height:1080px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+  body[data-formato="vertical"] .lienzo{height:1350px}
+  body[data-formato="story"] .lienzo{height:1920px}
+
+  /* padding: 80px seguridad; story añade zonas seguras 220px arriba/abajo */
+  .lienzo{padding:80px}
+  body[data-formato="story"] .lienzo{padding:220px 80px}
+
+  /* --- T1 · El Dato --- */
+  .t-dato{background:var(--ink);background-image:var(--dots);color:#fff}
+  .t-dato .overline{font-size:26px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary-400)}
+  .t-dato .cifra{font-family:var(--f-mono);font-size:280px;line-height:1;letter-spacing:-.02em;margin:auto 0 24px}
+  .t-dato .linea{font-family:var(--f-head);font-weight:700;font-size:64px;line-height:1.1;letter-spacing:-.02em;max-width:14ch}
+  .t-dato .pie{margin-top:auto;display:flex;align-items:center;gap:20px}
+  .t-dato .pie .usuario{font-size:26px;color:var(--text-3)}
+
+  /* --- T2 · El Consejo --- */
+  .t-consejo{background:var(--bg);align-items:center;justify-content:center}
+  .t-consejo .card{background:var(--surface);border-radius:24px;box-shadow:0 4px 12px rgba(11,11,18,.08);padding:80px;width:100%;display:flex;flex-direction:column;gap:28px}
+  .t-consejo .overline{font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary-600)}
+  .t-consejo .titular{font-family:var(--f-head);font-weight:700;font-size:72px;line-height:1.12;letter-spacing:-.02em;color:var(--ink)}
+  .t-consejo .pie{display:flex;align-items:center;justify-content:space-between;margin-top:24px}
+  .t-consejo .pie .usuario{font-size:24px;color:var(--text-3)}
+  .t-consejo .pagina{font-family:var(--f-mono);font-size:24px;color:var(--text-3)}
+
+  /* --- T3 · El Caso --- */
+  .t-caso{background:var(--ink);color:#fff;padding:0}
+  .t-caso .foto{height:46%;background:linear-gradient(135deg,#33268A,#1E1650);background-size:cover;background-position:center;position:relative}
+  .t-caso .badge{position:absolute;left:80px;bottom:40px;background:#fff;color:var(--ink);border-radius:999px;padding:14px 32px;font-size:24px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .t-caso .cuerpo{flex:1;padding:64px 80px 80px;display:flex;flex-direction:column;background-image:var(--dots)}
+  .t-caso .negocio{font-family:var(--f-head);font-weight:700;font-size:56px;letter-spacing:-.02em;line-height:1.1}
+  .t-caso .sector{font-size:26px;color:var(--text-3);margin-top:8px}
+  .t-caso .metricas{margin-top:auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px}
+  .t-caso .metrica .valor{font-family:var(--f-mono);font-size:76px;line-height:1.05;letter-spacing:-.01em}
+  .t-caso .metrica .delta{color:var(--accent-500);font-size:28px;font-weight:600;margin-top:6px}
+  .t-caso .metrica .etiqueta{font-size:24px;color:var(--text-3);margin-top:6px}
+  body[data-formato="story"] .t-caso .foto{height:38%}
+  .t-caso .pie-marca{display:flex;align-items:center;gap:16px;margin-top:56px}
+
+  /* --- T4 · Portada Reel --- */
+  .t-reel{background:var(--ink);background-image:radial-gradient(circle at 100% 0%,rgba(110,91,255,.55) 0%,rgba(90,67,242,.25) 34%,rgba(11,11,18,0) 68%),var(--dots);color:#fff}
+  .t-reel .simbolo{position:absolute;top:80px;right:80px}
+  body[data-formato="story"] .t-reel .simbolo{top:220px}
+  .t-reel .titular{font-family:var(--f-head);font-weight:700;font-size:88px;line-height:1.06;letter-spacing:-.025em;max-width:11ch;margin-top:auto}
+  .t-reel .sub{font-size:30px;color:#B0B0C0;margin-top:24px}
+  .t-reel .pie{display:flex;align-items:center;gap:16px;margin-top:48px}
+  .t-reel .pie .usuario{font-size:26px;color:var(--text-3)}
+
+  .marca-mini{display:flex;align-items:center;gap:14px}
+  .marca-mini svg{height:48px;width:auto}
+  .marca-mini .nombre{font-family:var(--f-head);font-weight:700;font-size:34px;letter-spacing:-.03em;color:#fff}
+</style>
+</head>
+<body data-formato="cuadrado">
+
+<h1>Generador de plantillas social</h1>
+<p class="sub">Haz clic en cualquier texto para editarlo · elige formato · descarga el PNG a tamaño real. La foto de "El Caso" se sube con su botón.</p>
+
+<div class="toolbar">
+  <label for="formato" style="font-size:14px;font-weight:500">Formato</label>
+  <select id="formato" onchange="cambiarFormato(this.value)">
+    <option value="cuadrado">Feed cuadrado · 1080×1080</option>
+    <option value="vertical">Feed vertical · 1080×1350</option>
+    <option value="story">Story / Reel · 1080×1920</option>
+  </select>
+  <span class="nota">Regla de feed: alterna plantillas claras y oscuras en damero.</span>
+</div>
+
+<div class="fila">
+
+  <div class="bloque">
+    <h2>1 · El Dato</h2>
+    <div class="uso">Resultados y métricas. La promesa hecha imagen — cifra en mono, delta implícito.</div>
+    <div class="marco"><div class="escala">
+      <div class="lienzo t-dato" id="t1">
+        <div class="overline" contenteditable="true">Caso real · Clínica dental</div>
+        <div class="cifra" contenteditable="true">×3</div>
+        <div class="linea" contenteditable="true">reservas en 90 días</div>
+        <div class="pie">
+          <div class="marca-mini">
+            <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg>
+            <span class="nombre">eleven</span>
+          </div>
+          <span class="usuario" contenteditable="true">@eleven.agencia</span>
+        </div>
+      </div>
+    </div></div>
+    <div class="acciones"><button class="btn btn-primary" onclick="descargar('t1','dato')">Descargar PNG</button></div>
+  </div>
+
+  <div class="bloque">
+    <h2>2 · El Consejo</h2>
+    <div class="uso">Micro-lecciones y tips. Construye autoridad (el Sabio). Ideal como carrusel.</div>
+    <div class="marco"><div class="escala">
+      <div class="lienzo t-consejo" id="t2">
+        <div class="card">
+          <div class="overline" contenteditable="true">SEO local · Tip 04</div>
+          <div class="titular" contenteditable="true">Tu ficha de Google vende más que tu web. Cuídala primero.</div>
+          <div class="pie">
+            <span class="usuario" contenteditable="true">@eleven.agencia</span>
+            <span class="pagina" contenteditable="true">01/06</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div class="acciones"><button class="btn btn-primary" onclick="descargar('t2','consejo')">Descargar PNG</button></div>
+  </div>
+
+  <div class="bloque">
+    <h2>3 · El Caso</h2>
+    <div class="uso">Prueba social con foto real del negocio. La única plantilla con fotografía.</div>
+    <div class="marco"><div class="escala">
+      <div class="lienzo t-caso" id="t3">
+        <div class="foto" id="fotoCaso">
+          <span class="badge">Caso de éxito</span>
+        </div>
+        <div class="cuerpo">
+          <div class="negocio" contenteditable="true">Restaurante La Marea</div>
+          <div class="sector" contenteditable="true">Restaurante · Valencia</div>
+          <div class="metricas">
+            <div class="metrica"><div class="valor" contenteditable="true">×2,4</div><div class="delta" contenteditable="true">↑ reservas</div><div class="etiqueta" contenteditable="true">en 3 meses</div></div>
+            <div class="metrica"><div class="valor" contenteditable="true">+41</div><div class="delta" contenteditable="true">↑ llamadas</div><div class="etiqueta" contenteditable="true">cada mes</div></div>
+            <div class="metrica"><div class="valor" contenteditable="true">4,8★</div><div class="delta" contenteditable="true">↑ reseñas</div><div class="etiqueta" contenteditable="true">en Google</div></div>
+          </div>
+          <div class="pie-marca marca-mini">
+            <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg>
+            <span class="nombre">eleven</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div class="acciones">
+      <button class="btn btn-primary" onclick="descargar('t3','caso')">Descargar PNG</button>
+      <label class="btn" style="display:inline-flex;align-items:center">Subir foto<input type="file" accept="image/*" style="display:none" onchange="ponerFoto(event)"></label>
+      <span class="nota">Sin foto usa el fondo violeta oscuro.</span>
+    </div>
+  </div>
+
+  <div class="bloque">
+    <h2>4 · Portada Reel</h2>
+    <div class="uso">Portadas de reels, thumbnails de YouTube y apertura de vídeos.</div>
+    <div class="marco"><div class="escala">
+      <div class="lienzo t-reel" id="t4">
+        <div class="simbolo">
+          <svg viewBox="0 0 76 110" style="height:96px"><rect x="0" y="34" width="30" height="76" rx="15" fill="#fff"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#fff"/></svg>
+        </div>
+        <div class="titular" contenteditable="true">3 errores que espantan clientes de tu web</div>
+        <div class="sub" contenteditable="true">Y cómo arreglarlos esta semana</div>
+        <div class="pie marca-mini">
+          <span class="usuario" contenteditable="true">@eleven.agencia</span>
+        </div>
+      </div>
+    </div></div>
+    <div class="acciones"><button class="btn btn-primary" onclick="descargar('t4','reel')">Descargar PNG</button></div>
+  </div>
+
+</div>
+
+<script>
+  const ALTURAS = { cuadrado: 1080, vertical: 1350, story: 1920 };
+  const ANCHO_PREVIEW = 378; // ancho del marco de previsualización
+
+  function ajustarEscalas() {
+    const h = ALTURAS[document.body.dataset.formato];
+    const factor = ANCHO_PREVIEW / 1080;
+    document.querySelectorAll('.escala').forEach(e => {
+      e.style.transform = `scale(${factor})`;
+      e.style.width = '1080px';
+      e.style.height = h + 'px';
+      e.parentElement.style.height = (h * factor) + 'px';
+    });
+  }
+  function cambiarFormato(v) { document.body.dataset.formato = v; ajustarEscalas(); }
+
+  function ponerFoto(ev) {
+    const f = ev.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = e => document.getElementById('fotoCaso').style.backgroundImage =
+      `linear-gradient(rgba(30,22,80,.35), rgba(11,11,18,.45)), url(${e.target.result})`;
+    r.readAsDataURL(f);
+  }
+
+  async function descargar(id, nombre) {
+    const el = document.getElementById(id);
+    const h = ALTURAS[document.body.dataset.formato];
+    await document.fonts.ready;
+    // en el clon que renderiza html2canvas se anula el scale del preview para capturar a 1080×h reales
+    const canvas = await html2canvas(el, {
+      scale: 1, width: 1080, height: h, backgroundColor: null, useCORS: true,
+      onclone: doc => doc.querySelectorAll('.escala').forEach(e => {
+        e.style.transform = 'none';
+        e.parentElement.style.height = 'auto';
+        e.parentElement.style.overflow = 'visible';
+      })
+    });
+    const a = document.createElement('a');
+    a.download = `eleven_${nombre}_1080x${h}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  }
+
+  document.fonts.ready.then(ajustarEscalas);
+  ajustarEscalas();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Propuesta — eleven</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* eleven · plantilla de propuesta v1.0
+     USO: edita los textos resaltados directamente (son editables), luego Ctrl+P → Guardar como PDF.
+     En el diálogo de impresión: márgenes "Ninguno", "Gráficos de fondo" activado. */
+  :root{
+    --primary-400:#8B7BFF;--primary-500:#6E5BFF;--primary-600:#5A43F2;--primary-700:#4A35D6;--primary-50:#F1EFFF;--primary-200:#CCC5FF;
+    --accent-600:#17C98C;--ink:#0B0B12;--bg:#FAFAFC;--surface:#fff;--surface-2:#F4F4F8;
+    --border:#E9E9F0;--text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif;--f-mono:"JetBrains Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);font-size:11pt;line-height:1.6;color:var(--ink);background:#8A8A9E22}
+  .page{width:210mm;min-height:297mm;margin:16px auto;background:var(--surface);padding:22mm;position:relative;box-shadow:0 4px 12px rgba(11,11,18,.15);display:flex;flex-direction:column}
+  [contenteditable]{outline:none;border-radius:3px}
+  [contenteditable]:hover{background:rgba(110,91,255,.07)}
+  [contenteditable]:focus{background:var(--primary-50)}
+
+  /* Portada */
+  .cover{background:var(--ink);color:#fff;background-image:radial-gradient(rgba(139,123,255,.13) 1.2px,transparent 1.2px);background-size:24px 24px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cover .logo{display:flex;align-items:center;gap:10px}
+  .cover .logo svg{height:28px}
+  .cover .logo span{font-family:var(--f-head);font-weight:700;font-size:22px;letter-spacing:-.03em}
+  .cover .centro{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .cover .tipo{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary-400);margin-bottom:14px}
+  .cover h1{font-family:var(--f-head);font-size:44pt;line-height:1.05;letter-spacing:-.03em;font-weight:700;max-width:12ch}
+  .cover .cliente-box{margin-top:20mm;font-family:var(--f-mono);font-size:10.5pt;color:#B0B0C0;display:grid;gap:6px}
+  .cover .cliente-box b{color:#fff;font-weight:400}
+  .cover .pie{display:flex;justify-content:space-between;align-items:flex-end;font-size:9pt;color:#8A8A9E}
+  .cover .barra{position:absolute;left:0;right:0;bottom:0;height:3mm;background:linear-gradient(90deg,#8B7BFF,#5A43F2);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  /* Interior */
+  .overline{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--primary-600);display:block;margin-bottom:10px}
+  h2{font-family:var(--f-head);font-size:22pt;letter-spacing:-.02em;font-weight:700;margin-bottom:6mm;line-height:1.15}
+  h3{font-family:var(--f-head);font-size:13pt;font-weight:500;margin:8mm 0 3mm}
+  p{color:#343442;max-width:70ch}
+  .lead{font-size:12pt;color:var(--text-2)}
+  .card{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:6mm;margin-top:4mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  ul.check{list-style:none;margin-top:3mm}
+  ul.check li{padding-left:7mm;position:relative;margin-bottom:2.5mm;color:#343442}
+  ul.check li::before{content:"✓";position:absolute;left:0;color:var(--accent-600);font-weight:700}
+  .pasos{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm;margin-top:4mm}
+  .paso{border:1px solid var(--border);border-radius:12px;padding:5mm}
+  .paso .n{font-family:var(--f-mono);font-size:9pt;color:var(--primary-600);background:var(--primary-50);border-radius:99px;padding:1mm 3mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .paso b{display:block;font-family:var(--f-head);font-weight:500;font-size:11.5pt;margin:3mm 0 1mm}
+  .paso small{color:var(--text-2);font-size:9.5pt;line-height:1.5;display:block}
+
+  table.inv{width:100%;border-collapse:collapse;margin-top:4mm}
+  table.inv th{text-align:left;font-size:9pt;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);padding:3mm 0;border-bottom:1px solid var(--border)}
+  table.inv th:last-child,table.inv td:last-child{text-align:right}
+  table.inv td{padding:3.5mm 0;border-bottom:1px solid var(--border);vertical-align:top}
+  table.inv td small{color:var(--text-2);display:block;max-width:60ch}
+  .num{font-family:var(--f-mono);white-space:nowrap}
+  .total-row td{border-bottom:0;font-family:var(--f-head);font-weight:700;font-size:14pt;padding-top:5mm}
+  .total-row .num{font-family:var(--f-mono);color:var(--primary-700)}
+
+  .pie-pagina{margin-top:auto;padding-top:8mm;display:flex;justify-content:space-between;font-size:8.5pt;color:var(--text-3)}
+  .pie-pagina .mono{font-family:var(--f-mono)}
+  .firma{display:grid;grid-template-columns:1fr 1fr;gap:10mm;margin-top:12mm}
+  .firma .caja{border-top:1px solid var(--ink);padding-top:3mm;font-size:9.5pt;color:var(--text-2)}
+
+  .aviso-pantalla{max-width:210mm;margin:16px auto 0;padding:12px 16px;background:#E4E0FF;border-radius:10px;font-size:13px;color:#33268A}
+  @media print{
+    body{background:#fff}
+    .page{margin:0;box-shadow:none;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    .aviso-pantalla{display:none}
+    [contenteditable]:hover{background:transparent}
+  }
+  @page{size:A4;margin:0}
+</style>
+</head>
+<body>
+
+<div class="aviso-pantalla">✏️ Los textos son editables: haz clic y escribe (cliente, fechas, precios…). Después <b>Ctrl+P → Guardar como PDF</b>, márgenes "Ninguno", con gráficos de fondo.</div>
+
+<!-- PÁGINA 1 · PORTADA -->
+<div class="page cover">
+  <div class="logo">
+    <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#fff"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#fff"/></svg>
+    <span>eleven</span>
+  </div>
+  <div class="centro">
+    <div class="tipo">Propuesta de colaboración</div>
+    <h1 contenteditable="true">Tu web, lista para captar clientes.</h1>
+    <div class="cliente-box">
+      <div>Preparada para&nbsp; <b contenteditable="true">Nombre del Negocio</b></div>
+      <div>Atención de&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b contenteditable="true">Nombre del propietario</b></div>
+      <div>Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b contenteditable="true">07 · 08 · 2026</b></div>
+      <div>Validez&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b contenteditable="true">30 días</b></div>
+    </div>
+  </div>
+  <div class="pie">
+    <span>eleven · Crecimiento por sistema.</span>
+    <span class="num" contenteditable="true">PROP-2026-001</span>
+  </div>
+  <div class="barra"></div>
+</div>
+
+<!-- PÁGINA 2 · QUÉ PROPONEMOS -->
+<div class="page">
+  <span class="overline">01 · La propuesta</span>
+  <h2>Qué te proponemos</h2>
+  <p class="lead" contenteditable="true">Ya has visto tu demo funcionando. Esta propuesta recoge exactamente qué incluye la versión final, cuánto cuesta y cómo lo hacemos — sin letra pequeña.</p>
+
+  <h3>Qué incluye tu web</h3>
+  <ul class="check" contenteditable="true">
+    <li>Diseño a medida para tu negocio (la demo que ya conoces, refinada)</li>
+    <li>Perfecta en móvil, donde te buscan tus clientes</li>
+    <li>Optimizada para aparecer en Google (SEO local básico)</li>
+    <li>Textos y estructura orientados a que te llamen o reserven</li>
+    <li>Botones directos de llamada y WhatsApp</li>
+    <li>Hasta 2 rondas de cambios antes de publicar</li>
+    <li>Publicación, hosting y puesta en marcha incluidos el primer año</li>
+  </ul>
+
+  <h3>Cómo trabajamos</h3>
+  <div class="pasos">
+    <div class="paso"><span class="n">01</span><b>Señal (50%)</b><small>Confirmas con el pago de la señal y nos pones tus fotos, datos y cambios.</small></div>
+    <div class="paso"><span class="n">02</span><b>Versión final</b><small>Aplicamos tus cambios y rematamos la web. Te la enseñamos antes de publicar.</small></div>
+    <div class="paso"><span class="n">03</span><b>Publicación</b><small>Con tu OK, la publicamos y pagas el 50% restante. Tu web ya trabaja para ti.</small></div>
+  </div>
+
+  <div class="card">
+    <b style="font-family:var(--f-head);font-weight:500">¿Por qué con nosotros?</b>
+    <p style="margin-top:2mm;font-size:10.5pt">Porque no te pedimos fe: te enseñamos el trabajo terminado antes de cobrar. Así funciona todo lo que hacemos — resultados primero, promesas las justas.</p>
+  </div>
+
+  <div class="pie-pagina"><span>eleven · propuesta comercial</span><span class="mono">02 / 03</span></div>
+</div>
+
+<!-- PÁGINA 3 · INVERSIÓN Y ACEPTACIÓN -->
+<div class="page">
+  <span class="overline">02 · Inversión</span>
+  <h2>Cuánto cuesta</h2>
+
+  <table class="inv">
+    <tr><th>Concepto</th><th>Importe</th></tr>
+    <tr>
+      <td contenteditable="true">Web completa a medida<small>Diseño, textos, optimización Google, publicación y hosting primer año. Pago único.</small></td>
+      <td class="num" contenteditable="true">490,00 €</td>
+    </tr>
+    <tr>
+      <td contenteditable="true">— <small>Añade aquí líneas extra si las hay (reservas online, varios idiomas, tienda…) o borra esta fila.</small></td>
+      <td class="num" contenteditable="true">0,00 €</td>
+    </tr>
+    <tr><td style="color:var(--text-2)">IVA (21%)</td><td class="num" contenteditable="true">102,90 €</td></tr>
+    <tr class="total-row"><td>Total</td><td class="num" contenteditable="true">592,90 €</td></tr>
+  </table>
+
+  <h3>Condiciones</h3>
+  <ul class="check" contenteditable="true">
+    <li>50% de señal para empezar · 50% restante a la publicación con tu OK</li>
+    <li>Pago por transferencia o Bizum</li>
+    <li>Plazo estimado: 7–10 días laborables desde la señal y la entrega de materiales</li>
+    <li>Propuesta válida 30 días desde la fecha de portada</li>
+  </ul>
+
+  <h3>Aceptación</h3>
+  <p style="font-size:10.5pt">Para aceptar, responde al email con "adelante" o firma aquí y devuélvenos este documento.</p>
+  <div class="firma">
+    <div class="caja">Por el cliente<br><span contenteditable="true">Nombre y fecha</span></div>
+    <div class="caja">Por eleven<br><span contenteditable="true">Nombre y fecha</span></div>
+  </div>
+
+  <div class="pie-pagina">
+    <span>eleven · <span contenteditable="true">rafa@elevenprime.es · +34 610 10 22 79</span></span>
+    <span class="mono">03 / 03</span>
+  </div>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eleven — Herramientas de marca</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--primary-50:#F1EFFF;--primary-500:#6E5BFF;--primary-600:#5A43F2;--primary-700:#4A35D6;
+    --ink:#0B0B12;--bg:#FAFAFC;--surface:#fff;--border:#E9E9F0;--text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);background:var(--bg);color:var(--ink);line-height:1.6;padding:48px 24px}
+  .wrap{max-width:720px;margin:0 auto}
+  .marca{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .marca svg{height:24px}
+  .marca span{font-family:var(--f-head);font-weight:700;font-size:20px;letter-spacing:-.03em}
+  h1{font-family:var(--f-head);font-size:32px;letter-spacing:-.02em;margin:24px 0 6px}
+  .sub{color:var(--text-2);margin-bottom:36px}
+  .grupo{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-600);margin:28px 0 10px}
+  a.item{display:flex;justify-content:space-between;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:10px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
+  a.item:hover{border-color:var(--primary-500);transform:translateY(-1px)}
+  a.item b{font-family:var(--f-head);font-weight:500;font-size:16px;display:block}
+  a.item small{color:var(--text-3);font-size:13px}
+  a.item .flecha{color:var(--primary-500);font-size:18px}
+  .nota{margin-top:36px;font-size:13px;color:var(--text-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="marca">
+    <svg viewBox="0 0 76 110"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B7BFF"/><stop offset="1" stop-color="#5A43F2"/></linearGradient></defs><rect x="0" y="34" width="30" height="76" rx="15" fill="url(#g)"/><rect x="46" y="0" width="30" height="110" rx="15" fill="url(#g)"/></svg>
+    <span>eleven</span>
+  </div>
+  <h1>Herramientas de marca</h1>
+  <p class="sub">Uso interno del equipo. Todo genera piezas con la identidad v1.0 — no improvises fuera de estas herramientas.</p>
+
+  <div class="grupo">Gráficos</div>
+  <a class="item" href="generador-social.html"><span><b>Generador social</b><small>4 plantillas · feed, vertical y story · exporta PNG 1080px</small></span><span class="flecha">→</span></a>
+  <a class="item" href="covers.html"><span><b>Covers de perfiles</b><small>LinkedIn personal/empresa, X y YouTube · PNG a tamaño exacto</small></span><span class="flecha">→</span></a>
+
+  <div class="grupo">Documentos</div>
+  <a class="item" href="propuesta.html"><span><b>Propuesta comercial</b><small>3 páginas editables · Ctrl+P → PDF</small></span><span class="flecha">→</span></a>
+  <a class="item" href="factura.html"><span><b>Factura</b><small>A4 · completar datos fiscales antes del primer uso</small></span><span class="flecha">→</span></a>
+  <a class="item" href="portada-pdf.html"><span><b>Portada PDF</b><small>Universal para informes y dosieres</small></span><span class="flecha">→</span></a>
+  <a class="item" href="presentacion.html"><span><b>Presentación</b><small>16:9 · 8 diapositivas maestras · Ctrl+P → PDF horizontal</small></span><span class="flecha">→</span></a>
+
+  <div class="grupo">Referencia</div>
+  <a class="item" href="brand-book.html"><span><b>Brand book</b><small>La identidad completa: logo, color, tipografía, componentes</small></span><span class="flecha">→</span></a>
+  <a class="item" href="/assets/brand/tokens.css"><span><b>tokens.css</b><small>Variables CSS listas para cualquier web nueva</small></span><span class="flecha">→</span></a>
+
+  <p class="nota">Los archivos fuente viven en la carpeta <b>Brand/</b> del equipo. Esta página no se indexa en buscadores.</p>
+</div>
+</body>
+</html>

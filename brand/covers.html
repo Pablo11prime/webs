@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>eleven — Covers de perfiles</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  /* eleven · covers de perfiles v1.0
+     USO: edita los textos (clic) y pulsa Descargar PNG. Cada cover sale a su tamaño exacto de plataforma.
+     Las guías punteadas (zona segura de YouTube) NO salen en la exportación. */
+  :root{
+    --primary-400:#8B7BFF;--primary-500:#6E5BFF;--primary-600:#5A43F2;
+    --ink:#0B0B12;--bg:#FAFAFC;--surface:#fff;--border:#E9E9F0;--text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",sans-serif;--f-body:"Inter",sans-serif;--f-mono:"JetBrains Mono",monospace;
+    --dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='rgba(139,123,255,0.14)'/%3E%3C/svg%3E");
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--f-body);background:var(--bg);color:var(--ink);padding:24px}
+  h1{font-family:var(--f-head);font-size:24px;letter-spacing:-.02em;margin-bottom:4px}
+  .sub{color:var(--text-2);font-size:14px;margin-bottom:28px}
+  .bloque{margin-bottom:40px}
+  .bloque h2{font-family:var(--f-head);font-size:16px;font-weight:500;margin-bottom:2px}
+  .bloque .uso{font-size:12.5px;color:var(--text-3);margin-bottom:10px}
+  .marco{overflow:hidden;border-radius:12px;border:1px solid var(--border);width:min(760px,100%)}
+  .escala{transform-origin:top left}
+  .acciones{margin-top:10px;display:flex;gap:8px;align-items:center}
+  .btn{height:40px;border-radius:10px;border:0;background:var(--primary-500);color:#fff;font:inherit;font-size:14px;font-weight:500;padding:0 16px;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--primary-600)}
+  .nota{font-size:12px;color:var(--text-3)}
+  [contenteditable]{outline:none}
+  [contenteditable]:hover{box-shadow:0 0 0 2px rgba(110,91,255,.35)}
+  [contenteditable]:focus{box-shadow:0 0 0 2px var(--primary-500)}
+
+  /* base de todos los covers */
+  .cover{position:relative;overflow:hidden;background:var(--ink);background-image:radial-gradient(circle at 100% 0%,rgba(110,91,255,.45) 0%,rgba(90,67,242,.18) 30%,rgba(11,11,18,0) 60%),var(--dots);color:#fff;display:flex;flex-direction:column;justify-content:center}
+  .cover .lockup{display:flex;align-items:center}
+  .cover .tagline{color:#B0B0C0}
+  .cover .web{font-family:var(--f-mono);color:var(--text-3);position:absolute}
+
+  /* LinkedIn personal 1584×396 */
+  .c-liper{width:1584px;height:396px;padding:0 96px}
+  .c-liper .lockup{gap:24px}
+  .c-liper svg{height:84px}
+  .c-liper .nombre{font-family:var(--f-head);font-weight:700;font-size:96px;letter-spacing:-.03em}
+  .c-liper .tagline{font-size:34px;margin-top:12px}
+  .c-liper .web{right:96px;bottom:40px;font-size:24px}
+
+  /* LinkedIn empresa 1128×191 */
+  .c-liemp{width:1128px;height:191px;padding:0 64px;flex-direction:row;align-items:center;justify-content:space-between}
+  .c-liemp .lockup{gap:16px}
+  .c-liemp svg{height:56px}
+  .c-liemp .nombre{font-family:var(--f-head);font-weight:700;font-size:60px;letter-spacing:-.03em}
+  .c-liemp .tagline{font-size:26px}
+
+  /* X / Twitter 1500×500 */
+  .c-x{width:1500px;height:500px;padding:0 96px}
+  .c-x .lockup{gap:24px}
+  .c-x svg{height:96px}
+  .c-x .nombre{font-family:var(--f-head);font-weight:700;font-size:110px;letter-spacing:-.03em}
+  .c-x .tagline{font-size:38px;margin-top:14px}
+  .c-x .web{right:96px;bottom:44px;font-size:26px}
+
+  /* YouTube 2560×1440 · zona segura 1546×423 centrada */
+  .c-yt{width:2560px;height:1440px;align-items:center}
+  .c-yt .segura{width:1546px;height:423px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .c-yt .lockup{gap:28px;justify-content:center}
+  .c-yt svg{height:110px}
+  .c-yt .nombre{font-family:var(--f-head);font-weight:700;font-size:128px;letter-spacing:-.03em}
+  .c-yt .tagline{font-size:42px;margin-top:16px}
+  .guia{position:absolute;left:50%;top:50%;width:1546px;height:423px;transform:translate(-50%,-50%);border:3px dashed rgba(46,230,166,.5);border-radius:8px;pointer-events:none}
+  .guia span{position:absolute;top:-40px;left:0;font-size:24px;color:#2EE6A6;font-family:var(--f-mono)}
+</style>
+</head>
+<body>
+
+<h1>Covers de perfiles</h1>
+<p class="sub">Cada cover exporta a su tamaño exacto. Textos editables con un clic. El avatar de todos los perfiles es <b>eleven-icon.svg</b> (en <span style="font-family:var(--f-mono);font-size:12.5px">Brand/Logo/</span>).</p>
+
+<div class="bloque">
+  <h2>LinkedIn personal · 1584×396</h2>
+  <div class="uso">Para los perfiles del equipo. El texto queda a la izquierda porque la foto de perfil tapa la esquina inferior izquierda en móvil lo justo.</div>
+  <div class="marco"><div class="escala">
+    <div class="cover c-liper" id="c1">
+      <div class="lockup">
+        <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg>
+        <span class="nombre">eleven</span>
+      </div>
+      <div class="tagline" contenteditable="true">Crecimiento por sistema. Webs y captación para negocios locales.</div>
+      <span class="web" contenteditable="true">elevenprime.es</span>
+    </div>
+  </div></div>
+  <div class="acciones"><button class="btn" onclick="descargar('c1','linkedin-personal',1584,396)">Descargar PNG</button></div>
+</div>
+
+<div class="bloque">
+  <h2>LinkedIn empresa · 1128×191</h2>
+  <div class="uso">Banner de la página de empresa. Formato muy bajo: solo lockup + tagline corta.</div>
+  <div class="marco"><div class="escala">
+    <div class="cover c-liemp" id="c2">
+      <div class="lockup">
+        <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg>
+        <span class="nombre">eleven</span>
+      </div>
+      <div class="tagline" contenteditable="true">Crecimiento por sistema.</div>
+    </div>
+  </div></div>
+  <div class="acciones"><button class="btn" onclick="descargar('c2','linkedin-empresa',1128,191)">Descargar PNG</button></div>
+</div>
+
+<div class="bloque">
+  <h2>X / Twitter · 1500×500</h2>
+  <div class="uso">Header de perfil. La esquina inferior izquierda la tapa el avatar: contenido centrado-izquierda con margen.</div>
+  <div class="marco"><div class="escala">
+    <div class="cover c-x" id="c3">
+      <div class="lockup">
+        <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg>
+        <span class="nombre">eleven</span>
+      </div>
+      <div class="tagline" contenteditable="true">Más clientes para tu negocio. Por sistema, no por suerte.</div>
+      <span class="web" contenteditable="true">elevenprime.es</span>
+    </div>
+  </div></div>
+  <div class="acciones"><button class="btn" onclick="descargar('c3','x-header',1500,500)">Descargar PNG</button></div>
+</div>
+
+<div class="bloque">
+  <h2>YouTube · 2560×1440</h2>
+  <div class="uso">El recuadro punteado verde es la zona segura (1546×423): lo único visible en todos los dispositivos. La guía NO sale en el PNG.</div>
+  <div class="marco"><div class="escala">
+    <div class="cover c-yt" id="c4">
+      <div class="segura">
+        <div class="lockup">
+          <svg viewBox="0 0 76 110"><rect x="0" y="34" width="30" height="76" rx="15" fill="#8B7BFF"/><rect x="46" y="0" width="30" height="110" rx="15" fill="#6E5BFF"/></svg>
+          <span class="nombre">eleven</span>
+        </div>
+        <div class="tagline" contenteditable="true">Crecimiento por sistema. Casos, consejos y webs que venden.</div>
+      </div>
+      <div class="guia"><span>zona segura TV/móvil — no sale en el PNG</span></div>
+    </div>
+  </div></div>
+  <div class="acciones"><button class="btn" onclick="descargar('c4','youtube',2560,1440)">Descargar PNG</button></div>
+</div>
+
+<script>
+  const ANCHO_PREVIEW = 760;
+  function ajustar() {
+    document.querySelectorAll('.escala').forEach(e => {
+      const c = e.firstElementChild;
+      const w = c.offsetWidth, h = c.offsetHeight;
+      const f = ANCHO_PREVIEW / w;
+      e.style.transform = `scale(${f})`;
+      e.style.width = w + 'px';
+      e.parentElement.style.height = (h * f) + 'px';
+    });
+  }
+  async function descargar(id, nombre, w, h) {
+    const el = document.getElementById(id);
+    await document.fonts.ready;
+    const canvas = await html2canvas(el, {
+      scale: 1, width: w, height: h, backgroundColor: null, useCORS: true,
+      onclone: doc => {
+        doc.querySelectorAll('.escala').forEach(e => { e.style.transform = 'none'; e.parentElement.style.height = 'auto'; e.parentElement.style.overflow = 'visible'; });
+        doc.querySelectorAll('.guia').forEach(g => g.remove());
+      }
+    });
+    const a = document.createElement('a');
+    a.download = `eleven_cover_${nombre}_${w}x${h}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  }
+  document.fonts.ready.then(ajustar);
+  ajustar();
+</script>
+</body>
+</html>
+

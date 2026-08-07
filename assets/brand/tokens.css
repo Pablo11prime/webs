@@ -1,0 +1,124 @@
+/* eleven — Design Tokens v1.0 · Crecimiento por sistema. */
+
+:root {
+  /* Color · primary */
+  --ev-primary-50: #F1EFFF;
+  --ev-primary-100: #E4E0FF;
+  --ev-primary-200: #CCC5FF;
+  --ev-primary-300: #ACA0FF;
+  --ev-primary-400: #8B7BFF;
+  --ev-primary-500: #6E5BFF;
+  --ev-primary-600: #5A43F2;
+  --ev-primary-700: #4A35D6;
+  --ev-primary-800: #3D2CAF;
+  --ev-primary-900: #33268A;
+  --ev-primary-950: #1E1650;
+
+  /* Color · accent "Señal" */
+  --ev-accent-50: #EAFFF6;
+  --ev-accent-100: #CFFCE9;
+  --ev-accent-500: #2EE6A6;
+  --ev-accent-600: #17C98C;
+  --ev-accent-700: #0FA873;
+
+  /* Color · neutrales (matiz 240°) */
+  --ev-neutral-0: #FFFFFF;
+  --ev-neutral-50: #FAFAFC;
+  --ev-neutral-100: #F4F4F8;
+  --ev-neutral-200: #E9E9F0;
+  --ev-neutral-300: #D9D9E3;
+  --ev-neutral-400: #B0B0C0;
+  --ev-neutral-500: #8A8A9E;
+  --ev-neutral-600: #6B6B80;
+  --ev-neutral-700: #4E4E61;
+  --ev-neutral-800: #343442;
+  --ev-neutral-900: #1D1D28;
+  --ev-neutral-950: #12121A;
+  --ev-ink: #0B0B12;
+
+  /* Semánticos */
+  --ev-success: #17C98C;
+  --ev-warning: #F5A524;
+  --ev-error: #EF4444;
+  --ev-info: var(--ev-primary-500);
+
+  /* Roles (modo claro por defecto) */
+  --ev-bg: var(--ev-neutral-50);
+  --ev-surface: var(--ev-neutral-0);
+  --ev-surface-2: var(--ev-neutral-100);
+  --ev-border: var(--ev-neutral-200);
+  --ev-text: var(--ev-ink);
+  --ev-text-secondary: var(--ev-neutral-600);
+
+  /* Degradado de marca (único permitido) */
+  --ev-gradient-brand: linear-gradient(135deg, #8B7BFF 0%, #5A43F2 100%);
+
+  /* Tipografía */
+  --ev-font-heading: "Satoshi", "Inter", -apple-system, "Segoe UI", sans-serif;
+  --ev-font-body: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --ev-font-mono: "JetBrains Mono", "Cascadia Code", monospace;
+
+  /* Espaciado (base 4px) */
+  --ev-space-1: 4px;  --ev-space-2: 8px;   --ev-space-3: 12px;
+  --ev-space-4: 16px; --ev-space-5: 20px;  --ev-space-6: 24px;
+  --ev-space-8: 32px; --ev-space-10: 40px; --ev-space-12: 48px;
+  --ev-space-16: 64px; --ev-space-20: 80px; --ev-space-24: 96px; --ev-space-32: 128px;
+
+  /* Radios */
+  --ev-radius-sm: 6px;
+  --ev-radius-md: 10px;
+  --ev-radius-lg: 16px;
+  --ev-radius-xl: 24px;
+  --ev-radius-full: 999px;
+
+  /* Elevación */
+  --ev-elevation-1: 0 1px 2px rgba(11,11,18,.05), 0 1px 3px rgba(11,11,18,.06);
+  --ev-elevation-2: 0 4px 12px rgba(11,11,18,.08);
+  --ev-elevation-3: 0 12px 32px rgba(11,11,18,.12);
+
+  /* Motion */
+  --ev-duration-fast: 120ms;
+  --ev-duration-base: 200ms;
+  --ev-duration-slow: 300ms;
+  --ev-duration-hero: 600ms;
+  --ev-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ev-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ev-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* Z-index */
+  --ev-z-dropdown: 1000; --ev-z-sticky: 1100; --ev-z-overlay: 1200;
+  --ev-z-modal: 1300; --ev-z-toast: 1400; --ev-z-tooltip: 1500;
+
+  /* Contenedores */
+  --ev-container-text: 720px;
+  --ev-container-content: 1080px;
+  --ev-container-wide: 1280px;
+}
+
+/* Modo oscuro */
+[data-theme="dark"] {
+  --ev-bg: var(--ev-ink);
+  --ev-surface: #14141F;
+  --ev-surface-2: var(--ev-neutral-900);
+  --ev-border: #2A2A3A;
+  --ev-text: var(--ev-neutral-100);
+  --ev-text-secondary: var(--ev-neutral-400);
+  --ev-elevation-1: none;
+  --ev-elevation-2: none;
+  --ev-elevation-3: 0 12px 32px rgba(0,0,0,.5);
+}
+
+/* Base recomendada */
+body {
+  background: var(--ev-bg);
+  color: var(--ev-text);
+  font-family: var(--ev-font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 100ms !important; transition-duration: 100ms !important; }
+}

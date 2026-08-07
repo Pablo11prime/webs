@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 200" role="img" aria-label="eleven">
+  <rect x="32"  y="82" width="30" height="76"  rx="15" fill="#FFFFFF"/>
+  <rect x="77"  y="48" width="30" height="110" rx="15" fill="#FFFFFF"/>
+  <text x="146" y="158" font-family="Satoshi, Inter, -apple-system, 'Segoe UI', sans-serif"
+        font-size="120" font-weight="700" letter-spacing="-3.6" fill="#FFFFFF">eleven</text>
+</svg>

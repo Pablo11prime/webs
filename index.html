@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eleven — Webs para negocios locales. Crecimiento por sistema.</title>
+<meta name="description" content="Creamos la web de tu negocio y te la enseñamos funcionando antes de que pagues nada. Diseño a medida, optimizada para Google y lista en días. Desde 490 €.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary-50:#F1EFFF;--primary-100:#E4E0FF;--primary-200:#CCC5FF;--primary-400:#8B7BFF;
+    --primary-500:#6E5BFF;--primary-600:#5A43F2;--primary-700:#4A35D6;
+    --accent-600:#17C98C;
+    --ink:#0B0B12;--bg:#FAFAFC;--surface:#FFFFFF;--surface-2:#F4F4F8;
+    --border:#E9E9F0;--text-2:#6B6B80;--text-3:#8A8A9E;
+    --f-head:"Satoshi","Inter",-apple-system,"Segoe UI",sans-serif;
+    --f-body:"Inter",-apple-system,"Segoe UI",sans-serif;
+    --f-mono:"JetBrains Mono",monospace;
+    --shadow-1:0 1px 2px rgba(11,11,18,.05),0 1px 3px rgba(11,11,18,.06);
+    --shadow-2:0 4px 12px rgba(11,11,18,.08);
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--f-body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* Navbar */
+  nav{position:sticky;top:0;z-index:1100;background:rgba(250,250,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{height:64px;display:flex;align-items:center;justify-content:space-between}
+  .marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+  .marca svg{height:24px;width:auto}
+  .marca .nombre{font-family:var(--f-head);font-weight:700;font-size:1.25rem;letter-spacing:-.03em}
+  .btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 20px;border-radius:10px;font-family:var(--f-body);font-size:15px;font-weight:500;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:all .2s var(--ease)}
+  .btn-primary{background:var(--primary-500);color:#fff}
+  .btn-primary:hover{background:var(--primary-600);transform:translateY(-1px)}
+  .btn-secondary{background:transparent;border-color:var(--border);color:var(--ink)}
+  .btn-secondary:hover{background:var(--surface-2)}
+  .btn:focus-visible{outline:2px solid var(--primary-500);outline-offset:2px}
+
+  /* Hero */
+  .hero{background:var(--ink);color:#fff;padding:96px 0 88px;position:relative;overflow:hidden;background-image:radial-gradient(rgba(139,123,255,.13) 1.5px,transparent 1.5px);background-size:24px 24px}
+  .hero .bars{display:flex;align-items:flex-end;gap:12px;height:88px;margin-bottom:40px}
+  .hero .bar{width:26px;border-radius:13px;background:linear-gradient(180deg,#8B7BFF,#5A43F2);transform-origin:bottom}
+  .hero .bar1{height:60px;animation:grow .6s var(--ease) both}
+  .hero .bar2{height:88px;animation:grow .6s var(--ease) .1s both}
+  @keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  .overline{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-400);display:block;margin-bottom:16px}
+  .hero h1{font-family:var(--f-head);font-size:clamp(40px,6.5vw,64px);line-height:1.05;letter-spacing:-.03em;font-weight:700;max-width:16ch;text-wrap:balance;margin-bottom:20px}
+  .hero .lead{font-size:19px;color:#B0B0C0;max-width:52ch;margin-bottom:36px}
+  .hero .lead strong{color:#fff;font-weight:600}
+  .hero .acciones{display:flex;gap:12px;flex-wrap:wrap}
+  .hero .btn-secondary{border-color:#343442;color:#fff}
+  .hero .btn-secondary:hover{background:#1D1D28}
+
+  /* Sections */
+  section{padding:96px 0}
+  h2{font-family:var(--f-head);font-size:clamp(30px,4vw,36px);line-height:1.15;letter-spacing:-.02em;font-weight:700;text-wrap:balance;margin-bottom:12px}
+  .section-lead{font-size:18px;color:var(--text-2);max-width:58ch;margin-bottom:48px}
+  .grid{display:grid;gap:24px}
+  .cols-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow-1)}
+  .card h3{font-family:var(--f-head);font-size:22px;font-weight:500;letter-spacing:-.01em;margin-bottom:8px}
+  .card p{font-size:15px;color:var(--text-2)}
+  .paso-num{font-family:var(--f-mono);font-size:13px;color:var(--primary-600);background:var(--primary-50);border-radius:999px;padding:4px 12px;display:inline-block;margin-bottom:16px}
+  .precio{font-family:var(--f-mono);font-size:40px;letter-spacing:-.01em;line-height:1.1}
+  .precio small{font-size:15px;color:var(--text-2);font-family:var(--f-body)}
+  .incluye{list-style:none;margin-top:16px;display:grid;gap:10px}
+  .incluye li{padding-left:26px;position:relative;font-size:15px;color:var(--text-2)}
+  .incluye li::before{content:"✓";position:absolute;left:0;color:var(--accent-600);font-weight:700}
+
+  /* CTA final */
+  .cta{background:var(--ink);color:#fff;border-radius:24px;padding:72px 24px;text-align:center;position:relative;overflow:hidden;background-image:radial-gradient(rgba(139,123,255,.13) 1.5px,transparent 1.5px);background-size:24px 24px}
+  .cta h2{color:#fff;max-width:20ch;margin:0 auto 12px}
+  .cta p{color:#B0B0C0;max-width:48ch;margin:0 auto 32px}
+  .cta .tel{font-family:var(--f-head);font-size:1.4rem;font-weight:700;color:#fff;text-decoration:none;display:block;margin-top:20px}
+
+  footer{background:var(--ink);color:var(--text-3);margin-top:96px;padding:48px 24px;text-align:center;font-size:13px}
+  footer .mark{color:#fff;font-family:var(--f-head);font-weight:700;font-size:16px;margin-bottom:8px}
+  footer a{color:var(--text-3)}
+
+  @media (prefers-reduced-motion: reduce){.hero .bar{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav-inner">
+  <a class="marca" href="/">
+    <svg viewBox="0 0 76 110" role="img" aria-label="símbolo eleven">
+      <defs><linearGradient id="gn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B7BFF"/><stop offset="1" stop-color="#5A43F2"/></linearGradient></defs>
+      <rect x="0" y="34" width="30" height="76" rx="15" fill="url(#gn)"/>
+      <rect x="46" y="0" width="30" height="110" rx="15" fill="url(#gn)"/>
+    </svg>
+    <span class="nombre">eleven</span>
+  </a>
+  <a class="btn btn-primary" href="#contacto">Quiero mi demo</a>
+</div></nav>
+
+<div class="hero"><div class="wrap">
+  <div class="bars"><div class="bar bar1"></div><div class="bar bar2"></div></div>
+  <span class="overline">Webs para negocios locales</span>
+  <h1>Tu web, hecha antes de pagar.</h1>
+  <p class="lead">Creamos la web de tu negocio y te la enseñamos <strong>funcionando</strong>. Si te gusta, es tuya. Si no, no pagas nada. Así de simple.</p>
+  <div class="acciones">
+    <a class="btn btn-primary" href="#contacto">Quiero mi demo gratis</a>
+    <a class="btn btn-secondary" href="#como">Ver cómo funciona</a>
+  </div>
+</div></div>
+
+<section id="como"><div class="wrap">
+  <span class="overline">Cómo funciona</span>
+  <h2>Tres pasos. Cero riesgo.</h2>
+  <p class="section-lead">No te pedimos que te imagines nada: primero ves tu web terminada y luego decides.</p>
+  <div class="grid cols-3">
+    <div class="card">
+      <span class="paso-num">01</span>
+      <h3>Hacemos tu demo</h3>
+      <p>Estudiamos tu negocio y creamos una web completa a tu medida: diseño, textos y estructura pensados para conseguir clientes. Gratis y sin compromiso.</p>
+    </div>
+    <div class="card">
+      <span class="paso-num">02</span>
+      <h3>Tú decides</h3>
+      <p>Te enviamos el enlace y la ves funcionando en tu móvil. ¿Cambios? Los hacemos. ¿No te convence? No pasa nada y no pagas nada.</p>
+    </div>
+    <div class="card">
+      <span class="paso-num">03</span>
+      <h3>La publicamos</h3>
+      <p>Si la quieres, la dejamos lista y publicada en pocos días, optimizada para Google y para móvil. Tu negocio, visible y captando clientes.</p>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <span class="overline">Qué incluye</span>
+  <h2>Una web que trabaja para ti</h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start">
+    <div class="card">
+      <div class="precio">490 €<small> · pago único, sin cuotas ocultas</small></div>
+      <ul class="incluye">
+        <li>Diseño a medida para tu negocio, no una plantilla</li>
+        <li>Perfecta en móvil, donde te buscan tus clientes</li>
+        <li>Optimizada para aparecer en Google</li>
+        <li>Textos y estructura orientados a que te contacten</li>
+        <li>Botones directos de llamada y WhatsApp</li>
+        <li>Cambios incluidos antes de publicar</li>
+      </ul>
+    </div>
+    <div class="card" style="background:var(--primary-50);border-color:var(--primary-200)">
+      <h3>¿Por qué enseñamos la web antes de cobrar?</h3>
+      <p style="color:var(--ink)">Porque a los negocios locales les han vendido mucho humo. Nosotros preferimos que el trabajo hable primero: ves exactamente lo que compras, funcionando, antes de poner un euro. Crecimiento por sistema, no por promesas.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="contacto" style="padding-top:0"><div class="wrap">
+  <div class="cta">
+    <h2>Pide tu demo gratuita</h2>
+    <p>Escríbenos con el nombre de tu negocio y tu ciudad. Te enseñamos tu web funcionando, sin compromiso.</p>
+    <a class="btn btn-primary" href="mailto:rafa@elevenprime.es?subject=Quiero%20mi%20demo%20gratis&body=Nombre%20del%20negocio%3A%0ACiudad%3A%0ATel%C3%A9fono%20(opcional)%3A">Quiero mi demo gratis</a>
+    <a class="tel" href="tel:+34610102279">+34 610 10 22 79</a>
+    <p style="margin:4px 0 0;font-size:13px">También por WhatsApp</p>
+  </div>
+</div></section>
+
+<footer>
+  <div class="mark">eleven</div>
+  <div>Crecimiento por sistema. · <a href="https://elevenprime.es">elevenprime.es</a> · <a href="tel:+34610102279">+34 610 10 22 79</a></div>
+</footer>
+
+</body>
+</html>

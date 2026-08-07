@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 200" role="img" aria-label="eleven">
+  <defs>
+    <linearGradient id="ev-bars" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8B7BFF"/>
+      <stop offset="1" stop-color="#5A43F2"/>
+    </linearGradient>
+  </defs>
+  <!-- Símbolo: la Señal 11 (proporción 11:16) -->
+  <rect x="32"  y="82" width="30" height="76"  rx="15" fill="url(#ev-bars)"/>
+  <rect x="77"  y="48" width="30" height="110" rx="15" fill="url(#ev-bars)"/>
+  <!-- Wordmark -->
+  <text x="146" y="158" font-family="Satoshi, Inter, -apple-system, 'Segoe UI', sans-serif"
+        font-size="120" font-weight="700" letter-spacing="-3.6" fill="#0B0B12">eleven</text>
+</svg>

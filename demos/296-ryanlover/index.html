@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ryanlover — Peluquería y belleza integral en Eixample, Barcelona</title>
+<meta name="description" content="Ryanlover, peluquería unisex en Carrer de Roger de Llúria 94, Barcelona. Corte, color, barbería con toalla caliente y tratamientos capilares, faciales y corporales. Con cita previa: 670 32 66 96.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --negro:#1A1A1A;
+  --crema:#F6F1EA;
+  --oro:#C9A24B;
+  --oro-suave:rgba(201,162,75,.14);
+  --blanco:#FFFFFF;
+  --gris:#5c564e;
+  --sombra:0 18px 45px rgba(26,26,26,.10);
+  --sombra-suave:0 8px 24px rgba(26,26,26,.07);
+  --radio:22px;
+  --curva:cubic-bezier(.22,.61,.2,1);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--crema);
+  color:var(--negro);
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%}
+a{color:inherit}
+
+/* ---------- Barra de progreso de scroll ---------- */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--oro),#e6c97e);
+  z-index:1000;transition:width 120ms linear;
+  box-shadow:0 0 12px rgba(201,162,75,.55);
+}
+
+/* ---------- Marca de agua DEMO ---------- */
+.cinta-demo{
+  position:fixed;top:22px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--negro);color:var(--oro);
+  font-size:11px;font-weight:700;letter-spacing:.35em;
+  padding:7px 56px;text-transform:uppercase;
+  box-shadow:0 4px 14px rgba(0,0,0,.28);
+  pointer-events:none;opacity:.92;
+}
+
+/* ---------- Navegación ---------- */
+nav.navegacion{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;
+  background:rgba(246,241,234,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(26,26,26,.06);
+}
+.logo{
+  font-family:var(--serif);font-size:1.45rem;font-weight:700;
+  letter-spacing:.04em;text-decoration:none;
+}
+.logo em{font-style:normal;color:var(--oro)}
+.nav-tel{
+  text-decoration:none;font-weight:600;font-size:.85rem;
+  background:var(--negro);color:var(--crema);
+  padding:10px 18px;border-radius:999px;
+  transition:transform 250ms var(--curva),background 250ms var(--curva),box-shadow 250ms var(--curva);
+  box-shadow:var(--sombra-suave);white-space:nowrap;
+}
+.nav-tel:hover{transform:translateY(-2px) scale(1.03);background:var(--oro);color:var(--negro)}
+
+/* ---------- Hero ---------- */
+header.hero{
+  position:relative;min-height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:120px 24px 90px;
+  background:
+    radial-gradient(60% 46% at 50% 0%,rgba(201,162,75,.22),transparent 70%),
+    radial-gradient(45% 38% at 88% 82%,rgba(201,162,75,.14),transparent 70%),
+    linear-gradient(170deg,#111 0%,var(--negro) 46%,#242018 100%);
+  color:var(--crema);overflow:hidden;
+}
+.hero-fondo{
+  position:absolute;inset:-12%;pointer-events:none;
+  will-change:transform;
+  background-image:
+    repeating-linear-gradient(115deg,transparent 0 84px,rgba(201,162,75,.055) 84px 85px),
+    radial-gradient(2px 2px at 18% 30%,rgba(201,162,75,.5),transparent 60%),
+    radial-gradient(2px 2px at 76% 22%,rgba(201,162,75,.4),transparent 60%),
+    radial-gradient(1.6px 1.6px at 64% 68%,rgba(246,241,234,.35),transparent 60%),
+    radial-gradient(1.6px 1.6px at 32% 78%,rgba(201,162,75,.35),transparent 60%);
+}
+.hero-anillo{
+  position:absolute;left:50%;top:50%;pointer-events:none;
+  width:min(78vw,560px);height:min(78vw,560px);
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(201,162,75,.28);border-radius:50%;
+}
+.hero-anillo::after{
+  content:"";position:absolute;inset:26px;
+  border:1px dashed rgba(201,162,75,.18);border-radius:50%;
+}
+.hero-contenido{position:relative;z-index:2;max-width:680px}
+.hero-etiqueta{
+  display:inline-block;font-size:.74rem;font-weight:600;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--oro);
+  border:1px solid rgba(201,162,75,.45);border-radius:999px;
+  padding:9px 20px 8px;margin-bottom:26px;
+  background:rgba(201,162,75,.08);
+}
+h1.hero-titulo{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(3rem,11vw,5.4rem);
+  line-height:1.04;letter-spacing:.01em;margin-bottom:20px;
+}
+h1 .palabra{display:inline-block}
+.hero-eslogan{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.25rem,4.6vw,1.7rem);
+  color:#e9dfd0;max-width:34ch;margin:0 auto 14px;line-height:1.45;
+}
+.hero-eslogan .oro{color:var(--oro);font-style:normal}
+.hero-sub{
+  font-size:.95rem;color:rgba(246,241,234,.72);
+  letter-spacing:.06em;margin-bottom:38px;
+}
+.hero-botones{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.boton{
+  display:inline-flex;align-items:center;gap:10px;
+  text-decoration:none;font-weight:700;font-size:1rem;
+  padding:16px 30px;border-radius:999px;
+  transition:transform 280ms var(--curva),box-shadow 280ms var(--curva),background 280ms var(--curva),color 280ms var(--curva);
+}
+.boton-oro{
+  background:linear-gradient(120deg,var(--oro),#dcb968);color:var(--negro);
+  box-shadow:0 14px 34px rgba(201,162,75,.38);
+}
+.boton-oro:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 20px 44px rgba(201,162,75,.5)}
+.boton-borde{
+  border:1.5px solid rgba(246,241,234,.55);color:var(--crema);
+  background:rgba(246,241,234,.05);
+}
+.boton-borde:hover{transform:translateY(-3px) scale(1.04);background:var(--crema);color:var(--negro)}
+.hero-flecha{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
+  color:rgba(246,241,234,.55);font-size:1.3rem;z-index:2;
+  animation:flota 2.4s ease-in-out infinite;
+}
+@keyframes flota{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(9px)}}
+
+/* ---------- Secciones base ---------- */
+main{display:block}
+section{padding:88px 24px}
+.envoltorio{max-width:1060px;margin:0 auto}
+.sobre-etiqueta{
+  display:block;font-size:.72rem;font-weight:700;
+  letter-spacing:.4em;text-transform:uppercase;color:var(--oro);
+  margin-bottom:14px;
+}
+h2.titulo-seccion{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(2.1rem,7vw,3.2rem);
+  line-height:1.12;margin-bottom:22px;
+}
+.filete{
+  width:64px;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,var(--oro),transparent);
+  margin:0 0 30px;
+}
+
+/* ---------- Sobre nosotros ---------- */
+#sobre{background:var(--blanco)}
+.sobre-rejilla{display:grid;gap:44px;align-items:center}
+.sobre-texto p{font-size:1.08rem;color:var(--gris);margin-bottom:18px;max-width:56ch}
+.sobre-texto p strong{color:var(--negro)}
+.sobre-cifras{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+}
+.cifra{
+  background:var(--crema);border:1px solid rgba(201,162,75,.25);
+  border-radius:var(--radio);padding:28px 20px;text-align:center;
+  box-shadow:var(--sombra-suave);
+  transition:transform 300ms var(--curva),box-shadow 300ms var(--curva);
+}
+.cifra:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--sombra)}
+.cifra-numero{
+  font-family:var(--serif);font-size:2.6rem;font-weight:700;
+  color:var(--negro);line-height:1;
+}
+.cifra-numero .oro{color:var(--oro)}
+.cifra-texto{font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);margin-top:8px}
+.retrato{
+  position:relative;border-radius:var(--radio);overflow:hidden;
+  min-height:320px;display:flex;align-items:flex-end;
+  background:
+    radial-gradient(70% 55% at 30% 20%,rgba(201,162,75,.35),transparent 65%),
+    linear-gradient(160deg,#26221b,var(--negro) 70%);
+  box-shadow:var(--sombra);color:var(--crema);
+}
+.retrato::before{
+  content:"R";position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-56%);
+  font-family:var(--serif);font-weight:600;font-size:13rem;
+  color:rgba(201,162,75,.16);line-height:1;
+}
+.retrato-pie{position:relative;padding:26px;z-index:1}
+.retrato-pie strong{font-family:var(--serif);font-size:1.5rem;font-weight:600;display:block}
+.retrato-pie span{font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+
+/* ---------- Servicios ---------- */
+#servicios{
+  background:
+    radial-gradient(50% 30% at 85% 8%,var(--oro-suave),transparent 70%),
+    var(--crema);
+}
+.tarjetas{display:grid;gap:20px;grid-template-columns:1fr}
+.tarjeta{
+  background:var(--blanco);border-radius:var(--radio);
+  padding:34px 28px;box-shadow:var(--sombra-suave);
+  border:1px solid rgba(26,26,26,.05);
+  transition:transform 320ms var(--curva),box-shadow 320ms var(--curva),border-color 320ms var(--curva);
+}
+.tarjeta:hover{transform:translateY(-7px) scale(1.025);box-shadow:var(--sombra);border-color:rgba(201,162,75,.45)}
+.tarjeta-icono{
+  width:56px;height:56px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--oro-suave),rgba(201,162,75,.28));
+  margin-bottom:20px;color:var(--oro);
+}
+.tarjeta h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;margin-bottom:10px}
+.tarjeta p{color:var(--gris);font-size:.98rem}
+
+/* ---------- Reseñas ---------- */
+#resenas{background:var(--negro);color:var(--crema)}
+#resenas .titulo-seccion{color:var(--crema)}
+.nota-google{
+  display:inline-flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:rgba(246,241,234,.06);border:1px solid rgba(201,162,75,.35);
+  border-radius:999px;padding:12px 26px;margin-bottom:44px;
+}
+.nota-numero{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--oro)}
+.estrellas{color:var(--oro);letter-spacing:3px;font-size:1.05rem}
+.nota-detalle{font-size:.85rem;color:rgba(246,241,234,.75)}
+.resenas-rejilla{display:grid;gap:20px;grid-template-columns:1fr}
+.resena{
+  background:rgba(246,241,234,.05);
+  border:1px solid rgba(246,241,234,.1);
+  border-radius:var(--radio);padding:30px 26px;
+  transition:transform 300ms var(--curva),border-color 300ms var(--curva),background 300ms var(--curva);
+}
+.resena:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(201,162,75,.5);background:rgba(201,162,75,.08)}
+.resena .estrellas{display:block;margin-bottom:14px}
+.resena p{font-family:var(--serif);font-style:italic;font-size:1.18rem;line-height:1.55;color:#efe7da}
+.resena footer{margin-top:16px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,241,234,.55)}
+
+/* ---------- Contacto ---------- */
+#contacto{background:var(--blanco)}
+.contacto-rejilla{display:grid;gap:28px;grid-template-columns:1fr}
+.ficha-contacto{
+  background:var(--crema);border-radius:var(--radio);
+  padding:34px 28px;box-shadow:var(--sombra-suave);
+  border:1px solid rgba(201,162,75,.2);
+  transition:transform 300ms var(--curva),box-shadow 300ms var(--curva);
+}
+.ficha-contacto:hover{transform:translateY(-5px) scale(1.015);box-shadow:var(--sombra)}
+.ficha-contacto h3{
+  font-size:.78rem;font-weight:700;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--oro);margin-bottom:12px;
+}
+.ficha-contacto p{font-size:1.06rem;color:var(--negro);margin-bottom:6px}
+.ficha-contacto small{color:var(--gris);font-size:.9rem}
+.ficha-contacto a{color:var(--negro);font-weight:600;text-decoration:none;border-bottom:2px solid var(--oro);transition:color 250ms var(--curva)}
+.ficha-contacto a:hover{color:var(--oro)}
+.contacto-cta{
+  margin-top:40px;text-align:center;
+  background:linear-gradient(140deg,var(--negro),#2a2318);
+  border-radius:calc(var(--radio) + 6px);
+  padding:52px 28px;color:var(--crema);
+  box-shadow:var(--sombra);position:relative;overflow:hidden;
+}
+.contacto-cta::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(55% 70% at 50% 0%,rgba(201,162,75,.25),transparent 70%);
+}
+.contacto-cta h3{font-family:var(--serif);font-weight:600;font-size:clamp(1.7rem,6vw,2.4rem);margin-bottom:12px;position:relative}
+.contacto-cta p{color:rgba(246,241,234,.78);margin-bottom:28px;position:relative}
+.contacto-cta .boton{position:relative}
+
+/* ---------- Footer ---------- */
+footer.pie{
+  background:var(--negro);color:rgba(246,241,234,.7);
+  text-align:center;padding:44px 24px;
+  border-top:1px solid rgba(201,162,75,.25);
+}
+.pie-logo{font-family:var(--serif);font-size:1.4rem;color:var(--crema);font-weight:600;margin-bottom:8px}
+.pie-logo em{font-style:normal;color:var(--oro)}
+.pie p{font-size:.9rem;margin-bottom:6px}
+.pie a{color:var(--oro);text-decoration:none;font-weight:600}
+.pie a:hover{text-decoration:underline}
+.pie-demo{
+  margin-top:18px;padding-top:18px;
+  border-top:1px solid rgba(246,241,234,.1);
+  font-size:.85rem;color:rgba(246,241,234,.55);
+}
+
+/* ---------- Animaciones de entrada ---------- */
+.revelar{
+  opacity:0;transform:translateY(34px);
+  transition:opacity 500ms var(--curva),transform 500ms var(--curva);
+  transition-delay:var(--retardo,0ms);
+}
+.revelar.visible{opacity:1;transform:none}
+h1 .palabra{
+  opacity:0;transform:translateY(26px) rotate(2deg);
+  transition:opacity 480ms var(--curva),transform 480ms var(--curva);
+}
+h1.animada .palabra{opacity:1;transform:none}
+
+/* ---------- Escritorio ---------- */
+@media (min-width:760px){
+  section{padding:110px 32px}
+  .sobre-rejilla{grid-template-columns:1.1fr .9fr}
+  .tarjetas{grid-template-columns:repeat(2,1fr)}
+  .resenas-rejilla{grid-template-columns:repeat(3,1fr)}
+  .contacto-rejilla{grid-template-columns:repeat(3,1fr)}
+}
+@media (min-width:1020px){
+  .tarjetas{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ---------- Movimiento reducido ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+  .revelar,h1 .palabra{opacity:1 !important;transform:none !important}
+  .hero-fondo{transform:none !important}
+}
+</style>
+<noscript>
+<style>
+/* Garantía de visibilidad sin JavaScript: TODO visible siempre */
+.revelar,h1 .palabra,.cifra-numero,[data-contador]{opacity:1 !important;transform:none !important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso" aria-hidden="true"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav class="navegacion" aria-label="Principal">
+  <a class="logo" href="#inicio">Ryan<em>lover</em></a>
+  <a class="nav-tel" href="tel:+34670326696">670 32 66 96</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="parallax" aria-hidden="true"></div>
+  <div class="hero-anillo" aria-hidden="true"></div>
+  <div class="hero-contenido">
+    <span class="hero-etiqueta revelar">Eixample · Barcelona</span>
+    <h1 class="hero-titulo" id="titulo-hero">Ryanlover</h1>
+    <p class="hero-eslogan revelar" style="--retardo:250ms">Belleza y estética de manera integral: <span class="oro">el arte del color</span>, del corte y del cuidado, en manos de Ryan.</p>
+    <p class="hero-sub revelar" style="--retardo:400ms">Peluquería unisex · Barbería · Tratamientos capilares, faciales y corporales</p>
+    <div class="hero-botones revelar" style="--retardo:550ms">
+      <a class="boton boton-oro" href="tel:+34670326696">Pedir cita</a>
+      <a class="boton boton-borde" href="tel:+34670326696">Llamar: 670 32 66 96</a>
+    </div>
+  </div>
+  <div class="hero-flecha" aria-hidden="true">↓</div>
+</header>
+
+<main>
+
+<section id="sobre" aria-labelledby="titulo-sobre">
+  <div class="envoltorio">
+    <div class="sobre-rejilla">
+      <div class="sobre-texto">
+        <span class="sobre-etiqueta revelar">Sobre nosotros</span>
+        <h2 class="titulo-seccion revelar" id="titulo-sobre" style="--retardo:100ms">El salón donde te sientes como en casa</h2>
+        <div class="filete revelar" style="--retardo:150ms"></div>
+        <p class="revelar" style="--retardo:200ms">El alma de Ryanlover es <strong>Ryan</strong>, un peluquero amable y comprometido que, según cuentan sus clientas y clientes, es generoso con su tiempo y su atención hasta el último detalle.</p>
+        <p class="revelar" style="--retardo:300ms">Su especialidad son las <strong>transformaciones de color complejas</strong>, trabajadas con una paciencia enorme: ha conseguido mechas que en otros salones daban por imposibles.</p>
+        <p class="revelar" style="--retardo:400ms">Y todo con un trato cercano que hace que cada visita se sienta <strong>como estar en casa</strong>.</p>
+      </div>
+      <div>
+        <div class="retrato revelar" style="--retardo:200ms">
+          <div class="retrato-pie">
+            <span>Peluquero &amp; propietario</span>
+            <strong>Ryan</strong>
+          </div>
+        </div>
+        <div style="height:18px"></div>
+        <div class="sobre-cifras">
+          <div class="cifra revelar" style="--retardo:300ms">
+            <div class="cifra-numero"><span data-contador="4.9" data-decimal="1">0,0</span><span class="oro">★</span></div>
+            <div class="cifra-texto">Nota en Google</div>
+          </div>
+          <div class="cifra revelar" style="--retardo:400ms">
+            <div class="cifra-numero"><span data-contador="365">0</span></div>
+            <div class="cifra-texto">Reseñas reales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" aria-labelledby="titulo-servicios">
+  <div class="envoltorio">
+    <span class="sobre-etiqueta revelar">Servicios</span>
+    <h2 class="titulo-seccion revelar" id="titulo-servicios" style="--retardo:100ms">Belleza integral, de la raíz a la piel</h2>
+    <div class="filete revelar" style="--retardo:150ms"></div>
+    <div class="tarjetas">
+      <article class="tarjeta revelar" style="--retardo:100ms">
+        <div class="tarjeta-icono" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="6" cy="17" r="3"/><circle cx="14" cy="17" r="3"/><path d="M8.2 14.8 19 4M8 4l5.4 5.4"/></svg>
+        </div>
+        <h3>Corte</h3>
+        <p>Cortes a medida para mujer y hombre, pensados para tu estilo y la caída natural de tu cabello.</p>
+      </article>
+      <article class="tarjeta revelar" style="--retardo:200ms">
+        <div class="tarjeta-icono" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 7.2 6 11a6 6 0 0 1-12 0c0-3.8 3-7 6-11z"/></svg>
+        </div>
+        <h3>Color y transformaciones</h3>
+        <p>El arte del color: mechas, balayage y cambios complejos trabajados con paciencia, incluso los que otros dieron por imposibles.</p>
+      </article>
+      <article class="tarjeta revelar" style="--retardo:300ms">
+        <div class="tarjeta-icono" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4 8.5 15.5M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M20 4c-2 0-5 1-7 3"/></svg>
+        </div>
+        <h3>Barbería</h3>
+        <p>Ritual clásico de barbería con afeitado de toalla caliente, arreglo de barba y acabado impecable.</p>
+      </article>
+      <article class="tarjeta revelar" style="--retardo:400ms">
+        <div class="tarjeta-icono" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 6c2 1.5 8 1.5 10 0M6 11c2.5 2 9.5 2 12 0M7 16c2 1.5 8 1.5 10 0"/></svg>
+        </div>
+        <h3>Tratamientos capilares</h3>
+        <p>Cuidados profundos para hidratar, reparar y devolver fuerza y brillo a tu cabello.</p>
+      </article>
+      <article class="tarjeta revelar" style="--retardo:500ms">
+        <div class="tarjeta-icono" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 10h.01M15 10h.01M9 15c1.5 1.2 4.5 1.2 6 0"/></svg>
+        </div>
+        <h3>Tratamientos faciales</h3>
+        <p>Estética facial para limpiar, equilibrar y realzar la luz natural de tu piel.</p>
+      </article>
+      <article class="tarjeta revelar" style="--retardo:600ms">
+        <div class="tarjeta-icono" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3c0 1.5-1 2.5-1 4h-4c0-1.5-1-2.5-1-4a3 3 0 0 1 3-3zM8 13h8l1 8H7l1-8z"/></svg>
+        </div>
+        <h3>Tratamientos corporales</h3>
+        <p>Bienestar de cuerpo entero para completar tu puesta a punto de manera integral.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="resenas" aria-labelledby="titulo-resenas">
+  <div class="envoltorio">
+    <span class="sobre-etiqueta revelar">Reseñas</span>
+    <h2 class="titulo-seccion revelar" id="titulo-resenas" style="--retardo:100ms">Lo que dicen quienes ya han pasado por sus manos</h2>
+    <div class="nota-google revelar" style="--retardo:200ms">
+      <span class="nota-numero"><span data-contador="4.9" data-decimal="1">0,0</span></span>
+      <span class="estrellas" aria-label="4,9 de 5 estrellas">★★★★★</span>
+      <span class="nota-detalle"><strong data-contador="365">0</strong> reseñas en Google</span>
+    </div>
+    <div class="resenas-rejilla">
+      <article class="resena revelar" style="--retardo:150ms">
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <p>Ryan es amabilísimo y se nota lo comprometido que está: te dedica todo el tiempo y la atención que haga falta, sin prisas.</p>
+        <footer>Reseña de Google · parafraseada</footer>
+      </article>
+      <article class="resena revelar" style="--retardo:300ms">
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <p>Me hizo una transformación de color muy complicada con una paciencia enorme. Consiguió unas mechas que en otros salones me dijeron que eran imposibles.</p>
+        <footer>Reseña de Google · parafraseada</footer>
+      </article>
+      <article class="resena revelar" style="--retardo:450ms">
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <p>El trato es tan cercano que te hace sentir como en casa. Salgo siempre encantada con el resultado.</p>
+        <footer>Reseña de Google · parafraseada</footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" aria-labelledby="titulo-contacto">
+  <div class="envoltorio">
+    <span class="sobre-etiqueta revelar">Contacto</span>
+    <h2 class="titulo-seccion revelar" id="titulo-contacto" style="--retardo:100ms">Te esperamos en el Eixample</h2>
+    <div class="filete revelar" style="--retardo:150ms"></div>
+    <div class="contacto-rejilla">
+      <div class="ficha-contacto revelar" style="--retardo:100ms">
+        <h3>Dirección</h3>
+        <p>Carrer de Roger de Llúria, 94</p>
+        <p>Eixample, 08009 Barcelona</p>
+        <small><a href="https://www.google.com/maps/place/?q=place_id:ChIJc93K3aCjpBIRaudNpJqUcMU" target="_blank" rel="noopener">Ver en Google Maps</a></small>
+      </div>
+      <div class="ficha-contacto revelar" style="--retardo:250ms">
+        <h3>Cita previa</h3>
+        <p>Atendemos con cita previa</p>
+        <small><a href="tel:+34670326696">670 32 66 96</a></small>
+      </div>
+      <div class="ficha-contacto revelar" style="--retardo:400ms">
+        <h3>Síguenos</h3>
+        <p><a href="https://www.instagram.com/ryanlover_bcn/" target="_blank" rel="noopener">Instagram · @ryanlover_bcn</a></p>
+        <p><a href="https://www.facebook.com/ryanloveresp/" target="_blank" rel="noopener">Facebook · ryanloveresp</a></p>
+      </div>
+    </div>
+    <div class="contacto-cta revelar" style="--retardo:200ms">
+      <h3>¿Un cambio de look, un color imposible o un ritual de barbería?</h3>
+      <p>Llama y reserva tu momento con Ryan. Con cita previa.</p>
+      <a class="boton boton-oro" href="tel:+34670326696">Pedir cita · 670 32 66 96</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="pie-logo">Ryan<em>lover</em></div>
+  <p>Carrer de Roger de Llúria, 94 · Eixample, 08009 Barcelona · <a href="tel:+34670326696">670 32 66 96</a></p>
+  <p><a href="https://www.instagram.com/ryanlover_bcn/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/ryanloveresp/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.google.com/maps/place/?q=place_id:ChIJc93K3aCjpBIRaudNpJqUcMU" target="_blank" rel="noopener">Google Maps</a></p>
+  <div class="pie-demo">DEMO creada por <strong>Eleven AI</strong> — esta web puede ser tuya.</div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Título del hero palabra a palabra ---------- */
+  var titulo = document.getElementById('titulo-hero');
+  if (titulo) {
+    var palabras = titulo.textContent.trim().split(/\s+/);
+    titulo.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      s.style.transitionDelay = (i * 140) + 'ms';
+      titulo.appendChild(s);
+      if (i < palabras.length - 1) titulo.appendChild(document.createTextNode(' '));
+    });
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ titulo.classList.add('animada'); });
+    });
+  }
+
+  /* ---------- Contadores animados (4,9 y 365) ---------- */
+  function animarContador(el){
+    if (el.dataset.hecho) return;
+    el.dataset.hecho = '1';
+    var objetivo = parseFloat(el.getAttribute('data-contador'));
+    var decimales = parseInt(el.getAttribute('data-decimal') || '0', 10);
+    if (reducido) { el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    var duracion = 1400, inicio = null;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var avance = Math.min((t - inicio) / duracion, 1);
+      var suavizado = 1 - Math.pow(1 - avance, 3);
+      el.textContent = (objetivo * suavizado).toFixed(decimales).replace('.', ',');
+      if (avance < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  /* ---------- Entradas escalonadas con IntersectionObserver ---------- */
+  var revelables = document.querySelectorAll('.revelar');
+  if ('IntersectionObserver' in window && !reducido) {
+    var observador = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('[data-contador]').forEach(animarContador);
+          observador.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revelables.forEach(function(el){ observador.observe(el); });
+  } else {
+    revelables.forEach(function(el){ el.classList.add('visible'); });
+    document.querySelectorAll('[data-contador]').forEach(animarContador);
+  }
+
+  /* ---------- Barra de progreso de scroll + parallax suave del hero ---------- */
+  var barra = document.getElementById('barra-progreso');
+  var fondo = document.getElementById('parallax');
+  var pendiente = false;
+  function alDesplazar(){
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || document.documentElement.scrollTop;
+      var alto = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra && alto > 0) barra.style.width = (y / alto * 100) + '%';
+      if (fondo && !reducido && y < window.innerHeight * 1.2) {
+        fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      }
+      pendiente = false;
+    });
+  }
+  window.addEventListener('scroll', alDesplazar, { passive: true });
+  alDesplazar();
+
+  /* ---------- Script de RESCATE anti-página-vacía ----------
+     Garantía de visibilidad: si a los 1,2 s algún elemento sigue
+     invisible (opacity 0), se fuerza visible. Evita demos en blanco
+     en visores de email y navegadores sin IntersectionObserver. */
+  function rescate(){
+    document.querySelectorAll('.revelar, .palabra').forEach(function(el){
+      var op = window.getComputedStyle(el).opacity;
+      if (parseFloat(op) < 1) {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    if (titulo) titulo.classList.add('animada');
+    document.querySelectorAll('[data-contador]').forEach(function(el){
+      if (!el.dataset.hecho) animarContador(el);
+    });
+  }
+  setTimeout(rescate, 1200);
+})();
+</script>
+
+</body>
+</html>

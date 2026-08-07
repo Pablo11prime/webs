@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Salon — Coloristas expertos en Barcelona | Rubios y balayage</title>
+<meta name="description" content="Time Salon, peluquería unisex en el Eixample de Barcelona. Coloristas expertos en rubios y balayage de acabado natural. Cita previa: 930 38 02 57.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1E1A17;
+  --cream:#F4EDE3;
+  --gold:#C89B5F;
+  --gold-soft:rgba(200,155,95,.14);
+  --white:#FFFDF9;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:22px;
+  --shadow:0 18px 40px -18px rgba(30,26,23,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--white);
+  font-size:18px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:var(--white)}
+
+/* ====== Barra de progreso de scroll ====== */
+#progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--gold),#E4C08A);
+  z-index:1000;transition:width .15s linear;
+}
+
+/* ====== Marca de agua DEMO ====== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--ink);color:var(--cream);
+  font-size:11px;letter-spacing:.35em;font-weight:600;
+  padding:7px 54px;pointer-events:none;
+  box-shadow:0 6px 16px rgba(30,26,23,.25);
+  text-transform:uppercase;
+}
+
+/* ====== Animaciones de entrada ====== */
+.anim{opacity:0;transform:translateY(28px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.anim.visible{opacity:1;transform:none}
+.anim.d1{transition-delay:.08s}
+.anim.d2{transition-delay:.16s}
+.anim.d3{transition-delay:.24s}
+.anim.d4{transition-delay:.32s}
+.anim.d5{transition-delay:.40s}
+.palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.hero-listo .palabra{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .anim,.palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  #hero-fondo,#hero-halo{transform:none !important}
+  *{animation:none !important}
+}
+
+/* ====== Header ====== */
+header{
+  position:absolute;top:0;left:0;right:0;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:26px clamp(20px,5vw,56px);
+}
+.logo{
+  font-family:var(--serif);font-weight:500;font-size:24px;
+  color:var(--cream);letter-spacing:.02em;text-decoration:none;
+}
+.logo em{font-style:italic;color:var(--gold)}
+nav{display:flex;gap:26px}
+nav a{
+  color:rgba(244,237,227,.85);text-decoration:none;font-size:15px;
+  letter-spacing:.06em;transition:color .25s var(--ease);
+}
+nav a:hover{color:var(--gold)}
+@media (max-width:640px){nav{display:none}}
+
+/* ====== Hero ====== */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--ink);color:var(--cream);
+  overflow:hidden;text-align:center;
+  padding:120px 22px 90px;
+}
+#hero-fondo{
+  position:absolute;inset:-12%;z-index:0;will-change:transform;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 118%,rgba(200,155,95,.34),transparent 62%),
+    radial-gradient(ellipse 45% 38% at 82% 12%,rgba(200,155,95,.14),transparent 65%),
+    radial-gradient(ellipse 40% 34% at 12% 26%,rgba(244,237,227,.06),transparent 60%),
+    var(--ink);
+}
+#hero-fondo::after{
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(115deg,transparent 0 34px,rgba(244,237,227,.028) 34px 35px);
+}
+#hero-halo{
+  position:absolute;z-index:0;left:50%;top:50%;width:min(78vw,560px);height:min(78vw,560px);
+  transform:translate(-50%,-50%);border-radius:50%;
+  border:1px solid rgba(200,155,95,.32);will-change:transform;
+}
+#hero-halo::before{
+  content:"";position:absolute;inset:26px;border-radius:50%;
+  border:1px dashed rgba(200,155,95,.20);
+}
+.hero-int{position:relative;z-index:2;max-width:820px}
+.sobretitulo{
+  font-size:13px;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;margin-bottom:26px;
+}
+.hero h1{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(46px,10vw,96px);line-height:1.04;
+  letter-spacing:-.01em;margin-bottom:26px;
+}
+.hero h1 .cursiva{font-style:italic;color:var(--gold);font-weight:400}
+.hero p.eslogan{
+  max-width:520px;margin:0 auto 40px;font-weight:300;
+  font-size:clamp(17px,2.4vw,21px);color:rgba(244,237,227,.82);
+}
+.botones{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:17px 34px;border-radius:999px;text-decoration:none;
+  font-weight:500;font-size:17px;letter-spacing:.02em;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
+}
+.btn-oro{background:var(--gold);color:var(--ink);box-shadow:0 14px 30px -12px rgba(200,155,95,.55)}
+.btn-oro:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 20px 40px -12px rgba(200,155,95,.65)}
+.btn-linea{border:1px solid rgba(244,237,227,.4);color:var(--cream)}
+.btn-linea:hover{transform:translateY(-3px) scale(1.03);background:rgba(244,237,227,.08);border-color:var(--gold)}
+.hero-meta{
+  margin-top:52px;display:flex;gap:34px;justify-content:center;flex-wrap:wrap;
+  color:rgba(244,237,227,.7);font-size:15px;letter-spacing:.04em;
+}
+.hero-meta strong{color:var(--gold);font-weight:600}
+
+/* ====== Secciones genéricas ====== */
+section{padding:clamp(76px,11vw,130px) clamp(20px,6vw,64px)}
+.contenedor{max-width:1080px;margin:0 auto}
+.etiqueta{
+  font-size:12px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:16px;
+}
+h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(32px,5.5vw,52px);line-height:1.12;
+  letter-spacing:-.01em;margin-bottom:22px;
+}
+h2 em{font-style:italic;color:var(--gold)}
+
+/* ====== Sobre nosotros ====== */
+.sobre{background:var(--cream)}
+.sobre-grid{display:grid;gap:44px;grid-template-columns:1fr;align-items:center}
+@media (min-width:820px){.sobre-grid{grid-template-columns:1.1fr .9fr}}
+.sobre p{max-width:52ch;font-size:19px;font-weight:300;color:rgba(30,26,23,.85);margin-bottom:16px}
+.sobre p strong{font-weight:600}
+.panel-cifras{
+  background:var(--ink);color:var(--cream);border-radius:var(--radius);
+  padding:44px 36px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:1fr 1fr;gap:30px;text-align:center;
+}
+.cifra{font-family:var(--serif);font-size:clamp(40px,7vw,58px);color:var(--gold);line-height:1}
+.cifra-txt{font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin-top:10px;color:rgba(244,237,227,.75)}
+.panel-cifras .nota{grid-column:1/-1;font-size:14px;color:rgba(244,237,227,.6);letter-spacing:.03em}
+.panel-cifras .nota a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,155,95,.4)}
+
+/* ====== Servicios ====== */
+.servicios{background:var(--white)}
+.rejilla-serv{display:grid;gap:22px;grid-template-columns:1fr;margin-top:48px}
+@media (min-width:640px){.rejilla-serv{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:980px){.rejilla-serv{grid-template-columns:repeat(3,1fr)}}
+.tarjeta{
+  background:var(--cream);border-radius:var(--radius);
+  padding:36px 30px;position:relative;overflow:hidden;
+  border:1px solid rgba(30,26,23,.06);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+}
+.tarjeta:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow)}
+.tarjeta::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--gold),transparent 80%);
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease);
+}
+.tarjeta:hover::before{transform:scaleX(1)}
+.icono{
+  width:56px;height:56px;border-radius:16px;background:var(--gold-soft);
+  display:flex;align-items:center;justify-content:center;margin-bottom:22px;
+  color:var(--gold);
+}
+.tarjeta h3{font-family:var(--serif);font-weight:500;font-size:23px;margin-bottom:10px}
+.tarjeta p{font-size:16px;font-weight:300;color:rgba(30,26,23,.75)}
+
+/* ====== Reseñas ====== */
+.resenas{background:var(--ink);color:var(--cream)}
+.resenas .etiqueta{color:var(--gold)}
+.cabecera-resenas{display:flex;flex-wrap:wrap;gap:26px;align-items:end;justify-content:space-between;margin-bottom:46px}
+.sello{
+  display:inline-flex;align-items:baseline;gap:12px;
+  background:rgba(244,237,227,.06);border:1px solid rgba(200,155,95,.35);
+  border-radius:999px;padding:14px 26px;
+}
+.sello .nota-num{font-family:var(--serif);font-size:32px;color:var(--gold);line-height:1}
+.sello span{font-size:14px;color:rgba(244,237,227,.75);letter-spacing:.04em}
+.estrellas{color:var(--gold);letter-spacing:3px;font-size:17px}
+.rejilla-res{display:grid;gap:22px;grid-template-columns:1fr}
+@media (min-width:820px){.rejilla-res{grid-template-columns:repeat(3,1fr)}}
+.resena{
+  background:rgba(244,237,227,.05);border:1px solid rgba(244,237,227,.10);
+  border-radius:var(--radius);padding:34px 28px;
+  transition:transform .35s var(--ease),border-color .35s var(--ease);
+}
+.resena:hover{transform:translateY(-5px) scale(1.02);border-color:rgba(200,155,95,.5)}
+.resena p{font-size:17px;font-weight:300;color:rgba(244,237,227,.88);margin:16px 0 20px;font-style:italic;font-family:var(--serif)}
+.resena .autor{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+
+/* ====== Contacto ====== */
+.contacto{background:var(--cream)}
+.contacto-grid{display:grid;gap:26px;grid-template-columns:1fr;margin-top:44px}
+@media (min-width:820px){.contacto-grid{grid-template-columns:1fr 1fr}}
+.bloque-contacto{
+  background:var(--white);border-radius:var(--radius);padding:38px 32px;
+  box-shadow:var(--shadow);border:1px solid rgba(30,26,23,.05);
+}
+.bloque-contacto h3{
+  font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+}
+.bloque-contacto h3 .punto{width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block}
+.bloque-contacto p,.bloque-contacto li{font-size:17px;font-weight:300;color:rgba(30,26,23,.8)}
+.bloque-contacto ul{list-style:none}
+.bloque-contacto li{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px dashed rgba(30,26,23,.12)}
+.bloque-contacto li:last-child{border-bottom:none}
+.bloque-contacto li span:last-child{font-weight:500}
+.cerrado{color:rgba(30,26,23,.45)}
+.enlaces-contacto{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.enlace-tel{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  color:var(--ink);font-weight:500;font-size:19px;
+  transition:color .25s var(--ease),transform .25s var(--ease);
+}
+.enlace-tel:hover{color:var(--gold);transform:translateX(4px)}
+.enlace-mapa{
+  display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+  color:var(--gold);text-decoration:none;font-weight:500;font-size:16px;
+  border-bottom:1px solid rgba(200,155,95,.4);padding-bottom:2px;
+  transition:opacity .25s var(--ease);
+}
+.enlace-mapa:hover{opacity:.75}
+.cta-final{
+  grid-column:1/-1;background:var(--ink);color:var(--cream);
+  border-radius:var(--radius);padding:46px 34px;text-align:center;box-shadow:var(--shadow);
+}
+.cta-final h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,4vw,34px);margin-bottom:12px}
+.cta-final h3 em{font-style:italic;color:var(--gold)}
+.cta-final p{color:rgba(244,237,227,.75);font-weight:300;margin-bottom:26px}
+
+/* ====== Footer ====== */
+footer{
+  background:var(--ink);color:rgba(244,237,227,.7);
+  padding:44px clamp(20px,6vw,64px);text-align:center;
+  border-top:1px solid rgba(244,237,227,.08);font-size:15px;
+}
+footer .marca-agencia{color:var(--cream)}
+footer .marca-agencia strong{color:var(--gold);font-weight:600}
+footer .redes{margin-top:14px}
+footer a{color:var(--gold);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:20px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(244,237,227,.45);
+}
+</style>
+<noscript>
+<style>
+/* Garantía de visibilidad sin JavaScript: TODO visible siempre */
+.anim,.palabra{opacity:1 !important;transform:none !important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"></div>
+<div class="cinta-demo" aria-hidden="true">Demo</div>
+
+<header>
+  <a class="logo" href="#inicio">Time <em>Salon</em></a>
+  <nav aria-label="Navegación principal">
+    <a href="#sobre">Salón</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#resenas">Reseñas</a>
+    <a href="#contacto">Cita previa</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="inicio" aria-label="Presentación">
+  <div id="hero-fondo" aria-hidden="true"></div>
+  <div id="hero-halo" aria-hidden="true"></div>
+  <div class="hero-int">
+    <p class="sobretitulo anim">Coloristas expertos · Eixample, Barcelona</p>
+    <h1 id="titulo-hero">El arte del color, <span class="cursiva">en su punto natural</span></h1>
+    <p class="eslogan anim d2">Especialistas en rubios y balayage de acabado natural. Peluquería unisex donde el color se trabaja como se merece: con tiempo, técnica y buen gusto.</p>
+    <div class="botones anim d3">
+      <a class="btn btn-oro" href="tel:+34930380257">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita
+      </a>
+      <a class="btn btn-linea" href="tel:+34930380257">930 38 02 57</a>
+    </div>
+    <div class="hero-meta anim d4">
+      <span><strong>5,0★</strong> en Google</span>
+      <span><strong>370</strong> reseñas</span>
+      <span><strong>11K</strong> en Instagram</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SOBRE NOSOTROS ====== -->
+<section class="sobre" id="sobre" aria-label="Sobre nosotros">
+  <div class="contenedor sobre-grid">
+    <div>
+      <p class="etiqueta anim">El salón</p>
+      <h2 class="anim d1">Un equipo con energía, <em>un color con firma</em></h2>
+      <p class="anim d2">En Time Salon el color es una especialidad, no un servicio más. Sus clientes destacan el <strong>trabajo brillante con el color</strong> y a <strong>Federico</strong>, su dueño, como un peluquero fantástico.</p>
+      <p class="anim d3">Un salón bonito y cuidado en pleno Eixample, con un equipo de ambiente vibrante y enérgico, y unos precios que las reseñas describen como muy buenos para la calidad que entregan.</p>
+    </div>
+    <div class="panel-cifras anim d2">
+      <div>
+        <div class="cifra"><span class="contador" data-fin="5" data-decimal="1">0,0</span>★</div>
+        <div class="cifra-txt">Nota en Google</div>
+      </div>
+      <div>
+        <div class="cifra"><span class="contador" data-fin="370">0</span></div>
+        <div class="cifra-txt">Reseñas reales</div>
+      </div>
+      <p class="nota">Valoración pública en <a href="https://www.google.com/maps/place/?q=place_id:ChIJ08P7uJmjpBIR-xLYJdS-RmE" target="_blank" rel="noopener">Google Maps</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SERVICIOS ====== -->
+<section class="servicios" id="servicios" aria-label="Servicios">
+  <div class="contenedor">
+    <p class="etiqueta anim">Servicios</p>
+    <h2 class="anim d1">Del rubio perfecto <em>al corte de tendencia</em></h2>
+    <div class="rejilla-serv">
+      <article class="tarjeta anim d1">
+        <div class="icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3c3 4 6 7.2 6 10.5A6 6 0 0 1 6 13.5C6 10.2 9 7 12 3z"/></svg></div>
+        <h3>Rubios expertos</h3>
+        <p>La casa es territorio de coloristas: rubios luminosos trabajados con técnica para un resultado sano y elegante.</p>
+      </article>
+      <article class="tarjeta anim d2">
+        <div class="icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 20c4-2 5-8 8-12M8 20c4-2 6-6 9-9M13 20c3-1 5-3 7-6"/></svg></div>
+        <h3>Balayage natural</h3>
+        <p>Degradados de acabado natural, pintados a mano, que crecen bonitos y no marcan raíz.</p>
+      </article>
+      <article class="tarjeta anim d3">
+        <div class="icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3v18M12 3v18M18 3v18" opacity=".9"/></svg></div>
+        <h3>Mechas</h3>
+        <p>Mechas trabajadas mechón a mechón para dar luz, contraste y movimiento al cabello.</p>
+      </article>
+      <article class="tarjeta anim d1">
+        <div class="icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.5 15.5M8.5 8.5 20 20"/></svg></div>
+        <h3>Cortes de tendencia</h3>
+        <p>Corte de mujer y de hombre al día de lo que se lleva, adaptado a tu estilo y a tu rutina.</p>
+      </article>
+      <article class="tarjeta anim d2">
+        <div class="icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 12c2-4 4-6 8-6s6 2 8 6c-2 4-4 6-8 6s-6-2-8-6z"/><path d="M9 12a3 3 0 0 0 6 0"/></svg></div>
+        <h3>Permanentes</h3>
+        <p>Ondas y rizos con cuerpo y caída natural, pensados para durar sin castigar la fibra.</p>
+      </article>
+      <article class="tarjeta anim d3">
+        <div class="icono" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></div>
+        <h3>Alisados</h3>
+        <p>Melenas lisas, pulidas y con brillo espejo, con tratamientos de alisado a medida.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== RESEÑAS ====== -->
+<section class="resenas" id="resenas" aria-label="Reseñas de clientes">
+  <div class="contenedor">
+    <div class="cabecera-resenas">
+      <div>
+        <p class="etiqueta anim">Reseñas</p>
+        <h2 class="anim d1">Lo que se dice <em>de Time Salon</em></h2>
+      </div>
+      <div class="sello anim d2">
+        <span class="nota-num">5,0</span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <span>· 370 reseñas en Google</span>
+      </div>
+    </div>
+    <div class="rejilla-res">
+      <article class="resena anim d1">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <p>Un salón bonito y muy limpio, y sobre todo un trabajo brillante con el color. El resultado supera lo que esperaba.</p>
+        <div class="autor">Reseña de Google</div>
+      </article>
+      <article class="resena anim d2">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <p>Federico, el dueño, es un peluquero fantástico. El ambiente del equipo es vibrante y enérgico: da gusto volver.</p>
+        <div class="autor">Reseña de Google</div>
+      </article>
+      <article class="resena anim d3">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <p>Para la calidad que ofrecen, los precios son muy buenos. Salgo siempre encantada con mi color.</p>
+        <div class="autor">Reseña de Google</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTACTO ====== -->
+<section class="contacto" id="contacto" aria-label="Contacto y cita previa">
+  <div class="contenedor">
+    <p class="etiqueta anim">Cita previa</p>
+    <h2 class="anim d1">Te esperamos <em>en el Eixample</em></h2>
+    <div class="contacto-grid">
+      <div class="bloque-contacto anim d1">
+        <h3><span class="punto"></span>Dónde estamos</h3>
+        <p>Carrer de Roger de Flor, 216<br>Eixample, 08013 Barcelona</p>
+        <a class="enlace-mapa" href="https://www.google.com/maps/place/?q=place_id:ChIJ08P7uJmjpBIR-xLYJdS-RmE" target="_blank" rel="noopener">
+          Ver en Google Maps
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+        <div class="enlaces-contacto">
+          <a class="enlace-tel" href="tel:+34930380257">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            930 38 02 57
+          </a>
+          <a class="enlace-tel" href="tel:+34658993699">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
+            658 99 36 99
+          </a>
+        </div>
+      </div>
+      <div class="bloque-contacto anim d2">
+        <h3><span class="punto"></span>Horario</h3>
+        <ul>
+          <li><span>Lunes</span><span>10:00 – 19:00</span></li>
+          <li><span>Martes</span><span>10:00 – 19:00</span></li>
+          <li><span>Miércoles</span><span>10:00 – 19:00</span></li>
+          <li><span>Jueves</span><span>10:00 – 19:00</span></li>
+          <li><span>Viernes</span><span>10:00 – 19:00</span></li>
+          <li class="cerrado"><span>Sábado</span><span>Cerrado</span></li>
+          <li class="cerrado"><span>Domingo</span><span>Cerrado</span></li>
+        </ul>
+      </div>
+      <div class="cta-final anim d3">
+        <h3>Tu color, <em>en manos de coloristas</em></h3>
+        <p>Atendemos con cita previa. Llámanos y busca tu hueco esta misma semana.</p>
+        <div class="botones">
+          <a class="btn btn-oro" href="tel:+34930380257">Pedir cita · 930 38 02 57</a>
+          <a class="btn btn-linea" href="https://instagram.com/timesalonbarcelona" target="_blank" rel="noopener">Instagram · @timesalonbarcelona</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca-agencia">Demo creada por <strong>Eleven AI</strong> — esta web puede ser tuya.</p>
+  <p class="redes">Time Salon · Carrer de Roger de Flor, 216, 08013 Barcelona · <a href="https://instagram.com/timesalonbarcelona" target="_blank" rel="noopener">@timesalonbarcelona</a></p>
+  <p class="aviso-demo">Página de demostración — no es la web oficial del negocio</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Hero palabra a palabra ---- */
+  var titulo = document.getElementById('titulo-hero');
+  if (titulo && !reduceMotion) {
+    var nodos = Array.prototype.slice.call(titulo.childNodes);
+    titulo.textContent = '';
+    var retardo = 0;
+    nodos.forEach(function(n){
+      var esCursiva = n.nodeType === 1 && n.classList && n.classList.contains('cursiva');
+      var texto = n.textContent;
+      texto.split(/\s+/).forEach(function(pal){
+        if (!pal) return;
+        var s = document.createElement('span');
+        s.className = 'palabra' + (esCursiva ? ' cursiva' : '');
+        s.textContent = pal;
+        s.style.transitionDelay = retardo + 'ms';
+        titulo.appendChild(s);
+        titulo.appendChild(document.createTextNode(' '));
+        retardo += 90;
+      });
+    });
+    setTimeout(function(){ titulo.classList.add('hero-listo'); document.body.classList.add('hero-listo'); }, 120);
+  }
+
+  /* ---- Entradas escalonadas con IntersectionObserver ---- */
+  var animados = document.querySelectorAll('.anim');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    animados.forEach(function(el){ io.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ---- Contadores animados (5,0 y 370) ---- */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin'));
+    var decimales = parseInt(el.getAttribute('data-decimal') || '0', 10);
+    var dur = 1400, inicio = null;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var p = Math.min((t - inicio) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      var val = (fin * suave).toFixed(decimales).replace('.', ',');
+      el.textContent = val;
+      if (p < 1) requestAnimationFrame(paso);
+      else el.textContent = fin.toFixed(decimales).replace('.', ',');
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ ioC.observe(el); });
+  } else {
+    contadores.forEach(function(el){
+      var fin = parseFloat(el.getAttribute('data-fin'));
+      var dec = parseInt(el.getAttribute('data-decimal') || '0', 10);
+      el.textContent = fin.toFixed(dec).replace('.', ',');
+    });
+  }
+
+  /* ---- Barra de progreso de scroll + parallax suave del hero ---- */
+  var barra = document.getElementById('progreso');
+  var fondo = document.getElementById('hero-fondo');
+  var halo = document.getElementById('hero-halo');
+  var pendiente = false;
+  function alScroll(){
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra && total > 0) barra.style.width = (Math.min(y / total, 1) * 100) + '%';
+      if (!reduceMotion && y < window.innerHeight * 1.2) {
+        if (fondo) fondo.style.transform = 'translateY(' + (y * 0.22) + 'px)';
+        if (halo) halo.style.transform = 'translate(-50%,' + (-50 + y * 0.035) + '%) rotate(' + (y * 0.03) + 'deg)';
+      }
+      pendiente = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ---- Script de RESCATE anti-página-vacía ----
+     Si a los ~1,2 s cualquier elemento sigue invisible (opacity 0),
+     se fuerza su visibilidad. Garantiza que la demo NUNCA se vea en blanco
+     en visores de email o navegadores sin IntersectionObserver. */
+  function rescateVisibilidad(){
+    var todos = document.querySelectorAll('.anim, .palabra, .contador');
+    todos.forEach(function(el){
+      var op = window.getComputedStyle(el).opacity;
+      if (parseFloat(op) < 1) {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+      if (el.classList.contains('contador') && (el.textContent === '0' || el.textContent === '0,0')) {
+        var fin = parseFloat(el.getAttribute('data-fin'));
+        var dec = parseInt(el.getAttribute('data-decimal') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+    if (titulo) titulo.classList.add('hero-listo');
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+</body>
+</html>

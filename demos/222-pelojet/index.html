@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pelojet Taller d'Imatge — Peluquería orgánica en Ruzafa, València</title>
+<meta name="description" content="Pelojet Taller d'Imatge: peluquería unisex con productos orgánicos en el corazón de Ruzafa (València). Coloración orgánica, balayage, cortes y depilación. 4,9★ en Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B2B2B;
+  --cream:#F5F0E8;
+  --sage:#7A9E7E;
+  --sage-soft:#E6EEE7;
+  --sage-deep:#5E8062;
+  --white:#FFFFFF;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:22px;
+  --shadow:0 10px 30px rgba(43,43,43,.08);
+  --shadow-lift:0 18px 44px rgba(43,43,43,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  line-height:1.65;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;letter-spacing:-.01em}
+a{color:inherit}
+img{max-width:100%}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--sage),var(--sage-deep));
+  z-index:1000;transition:width 120ms linear;border-radius:0 4px 4px 0;
+}
+
+/* ===== Marca de agua DEMO ===== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--ink);color:var(--cream);
+  font-size:.72rem;font-weight:600;letter-spacing:.35em;
+  padding:.42em 3.4em;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  pointer-events:none;opacity:.9;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  background:rgba(245,240,232,.86);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(43,43,43,.07);
+}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;text-decoration:none}
+.logo em{font-style:normal;color:var(--sage-deep)}
+.nav-cta{
+  text-decoration:none;font-weight:600;font-size:.9rem;
+  background:var(--ink);color:var(--cream);
+  padding:.55em 1.2em;border-radius:999px;
+  transition:transform 250ms var(--ease),background 250ms var(--ease);
+}
+.nav-cta:hover{transform:scale(1.05);background:var(--sage-deep)}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:4.5rem 1.4rem 5rem;text-align:center;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(122,158,126,.22), transparent 60%),
+    radial-gradient(40rem 26rem at -10% 110%, rgba(122,158,126,.18), transparent 55%),
+    var(--cream);
+}
+.hoja{position:absolute;pointer-events:none;opacity:.55;will-change:transform}
+.hoja svg{display:block}
+.hero-int{position:relative;max-width:640px;margin:0 auto}
+.chip{
+  display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sage-deep);background:var(--sage-soft);
+  border:1px solid rgba(122,158,126,.35);
+  padding:.45em 1.1em;border-radius:999px;margin-bottom:1.2rem;
+}
+.hero h1{font-size:clamp(2.5rem,9vw,4.2rem);font-weight:700}
+.hero h1 .sub{display:block;font-size:clamp(1rem,3.4vw,1.35rem);font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--sage-deep);margin-top:.5rem}
+.eslogan{
+  font-size:clamp(1.05rem,4vw,1.3rem);color:#4c4c4c;
+  max-width:34ch;margin:1.3rem auto 0;
+}
+.eslogan .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
+.eslogan .palabra.visible{opacity:1;transform:none}
+.hero-datos{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.4rem;font-size:.88rem;color:#555}
+.hero-datos span{background:var(--white);border:1px solid rgba(43,43,43,.08);border-radius:999px;padding:.35em 1em;box-shadow:var(--shadow)}
+.botones{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.btn{
+  text-decoration:none;font-weight:600;font-size:1.02rem;
+  padding:.95em 1.9em;border-radius:999px;
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease),background 280ms var(--ease);
+}
+.btn-primario{background:var(--ink);color:var(--cream);box-shadow:var(--shadow-lift)}
+.btn-primario:hover{transform:translateY(-3px) scale(1.03);background:#1c1c1c}
+.btn-verde{background:var(--sage);color:var(--white);box-shadow:0 12px 30px rgba(122,158,126,.4)}
+.btn-verde:hover{transform:translateY(-3px) scale(1.03);background:var(--sage-deep)}
+.nota-hero{margin-top:1.1rem;font-size:.85rem;color:#777}
+
+/* ===== Contadores ===== */
+.franja-contador{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  padding:0 1.4rem;margin-top:-2.4rem;position:relative;z-index:5;
+}
+.tarjeta-num{
+  background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-lift);
+  padding:1.1rem 1.6rem;text-align:center;min-width:130px;
+  border:1px solid rgba(122,158,126,.18);
+}
+.tarjeta-num .num{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:700;color:var(--sage-deep)}
+.tarjeta-num .desc{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#777}
+
+/* ===== Secciones ===== */
+section{padding:4.2rem 1.4rem}
+.contenedor{max-width:960px;margin:0 auto}
+.etiqueta{font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:.6rem}
+h2{font-size:clamp(1.8rem,6vw,2.6rem);margin-bottom:1rem}
+
+/* Animación de entrada escalonada */
+.anima{opacity:0;transform:translateY(28px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.anima.visible{opacity:1;transform:none}
+
+/* ===== Sobre nosotros ===== */
+.sobre{background:var(--white)}
+.sobre-grid{display:grid;gap:2rem;align-items:center}
+.sobre p{color:#4c4c4c;margin-bottom:1rem;font-size:1.05rem}
+.equipo{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.2rem}
+.persona{
+  display:flex;align-items:center;gap:.6rem;
+  background:var(--cream);border-radius:999px;padding:.4em 1.1em .4em .4em;
+  border:1px solid rgba(43,43,43,.06);font-weight:600;font-size:.92rem;
+  transition:transform 250ms var(--ease);
+}
+.persona:hover{transform:scale(1.05)}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;color:var(--white);
+  font-family:'Fraunces',serif;font-weight:700;font-size:1rem;
+  background:linear-gradient(135deg,var(--sage),var(--sage-deep));
+}
+.detalles{display:grid;gap:.7rem;margin-top:1.6rem}
+.detalle{
+  display:flex;align-items:flex-start;gap:.7rem;font-size:.98rem;color:#444;
+  background:var(--cream);border-radius:16px;padding:.8rem 1rem;
+}
+.detalle .ico{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--sage-soft);display:grid;place-items:center;color:var(--sage-deep)}
+
+/* ===== Servicios ===== */
+.servicios{background:
+  radial-gradient(50rem 24rem at 110% 0%, rgba(122,158,126,.14), transparent 60%),
+  var(--cream)}
+.rejilla-serv{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2rem}
+.tarjeta-serv{
+  background:var(--white);border-radius:var(--radius);padding:1.6rem 1.5rem;
+  box-shadow:var(--shadow);border:1px solid rgba(122,158,126,.14);
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  position:relative;overflow:hidden;
+}
+.tarjeta-serv::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:5px;
+  background:linear-gradient(180deg,var(--sage),var(--sage-deep));
+  border-radius:5px 0 0 5px;
+}
+.tarjeta-serv:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow-lift)}
+.tarjeta-serv h3{font-size:1.25rem;margin-bottom:.35rem}
+.tarjeta-serv p{color:#666;font-size:.94rem}
+.precio{
+  display:inline-block;margin-top:.9rem;
+  font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:var(--sage-deep);
+  background:var(--sage-soft);border-radius:12px;padding:.15em .7em;
+}
+.nota-serv{margin-top:1.4rem;font-size:.88rem;color:#777;text-align:center}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--ink);color:var(--cream)}
+.resenas .etiqueta{color:var(--sage)}
+.puntuacion{
+  display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem;
+}
+.puntuacion .grande{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:700;color:var(--white)}
+.estrellas{color:#E8C468;font-size:1.3rem;letter-spacing:.12em}
+.puntuacion .detalle-punt{color:#bdb6aa;font-size:.95rem}
+.rejilla-res{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.tarjeta-res{
+  background:rgba(245,240,232,.06);border:1px solid rgba(245,240,232,.12);
+  border-radius:var(--radius);padding:1.5rem;
+  transition:transform 300ms var(--ease),background 300ms var(--ease);
+}
+.tarjeta-res:hover{transform:translateY(-5px) scale(1.02);background:rgba(245,240,232,.1)}
+.tarjeta-res .estrellas{font-size:1rem;margin-bottom:.6rem}
+.tarjeta-res p{color:#e7e1d6;font-size:.98rem}
+.tarjeta-res .autor{margin-top:.9rem;font-size:.82rem;color:#a49c8e;letter-spacing:.06em;text-transform:uppercase}
+
+/* ===== Contacto ===== */
+.contacto{background:var(--white)}
+.rejilla-cont{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.8rem}
+.tarjeta-cont{
+  background:var(--cream);border-radius:var(--radius);padding:1.4rem 1.4rem;
+  border:1px solid rgba(43,43,43,.06);
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease);
+}
+.tarjeta-cont:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tarjeta-cont h3{font-size:1.05rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.tarjeta-cont h3 .ico{width:30px;height:30px;border-radius:10px;background:var(--sage-soft);display:grid;place-items:center;color:var(--sage-deep);flex:0 0 auto}
+.tarjeta-cont p, .tarjeta-cont li{color:#555;font-size:.96rem}
+.tarjeta-cont ul{list-style:none}
+.tarjeta-cont li{display:flex;justify-content:space-between;gap:1rem;padding:.25rem 0;border-bottom:1px dashed rgba(43,43,43,.1)}
+.tarjeta-cont li:last-child{border-bottom:none}
+.tarjeta-cont li .cerrado{color:#b06a5a;font-weight:600}
+.tarjeta-cont a{color:var(--sage-deep);font-weight:600;text-decoration:none}
+.tarjeta-cont a:hover{text-decoration:underline}
+.cta-final{
+  margin-top:2.4rem;text-align:center;
+  background:linear-gradient(135deg,var(--sage-soft),#fff);
+  border:1px solid rgba(122,158,126,.3);
+  border-radius:var(--radius);padding:2.2rem 1.5rem;
+}
+.cta-final h3{font-size:1.5rem;margin-bottom:.5rem}
+.cta-final p{color:#555;margin-bottom:1.3rem}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--ink);color:#bdb6aa;text-align:center;
+  padding:2.6rem 1.4rem;font-size:.9rem;
+}
+footer .marca{font-family:'Fraunces',serif;color:var(--cream);font-size:1.15rem;margin-bottom:.4rem}
+footer a{color:var(--sage);text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(245,240,232,.12);
+  font-size:.85rem;
+}
+
+/* ===== Escritorio ===== */
+@media(min-width:720px){
+  .rejilla-serv{grid-template-columns:repeat(2,1fr)}
+  .rejilla-res{grid-template-columns:repeat(3,1fr)}
+  .rejilla-cont{grid-template-columns:repeat(2,1fr)}
+  .sobre-grid{grid-template-columns:1.2fr 1fr}
+  section{padding:5.5rem 2rem}
+}
+@media(min-width:1000px){
+  .rejilla-serv{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== Reduced motion: sin animaciones ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .anima,.eslogan .palabra{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.anima,.eslogan .palabra,.hoja,[data-contador]{opacity:1!important;transform:none!important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio">Pelo<em>jet</em></a>
+  <a class="nav-cta" href="tel:+34610457102">Llamar</a>
+</nav>
+
+<header id="inicio">
+<section class="hero" aria-label="Presentación">
+  <div class="hoja" style="top:12%;left:6%" data-parallax="0.25">
+    <svg width="54" height="54" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C7 7 4 12 6 18c6 2 11-1 16-6-3-1-7-1-10 2 2-4 5-8 0-12z" fill="#7A9E7E" opacity=".5"/></svg>
+  </div>
+  <div class="hoja" style="top:20%;right:8%" data-parallax="0.45">
+    <svg width="72" height="72" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22C17 17 20 12 18 6 12 4 7 7 2 12c3 1 7 1 10-2-2 4-5 8 0 12z" fill="#7A9E7E" opacity=".4"/></svg>
+  </div>
+  <div class="hoja" style="bottom:14%;left:12%" data-parallax="0.6">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#7A9E7E" stroke-width="1.5" opacity=".45"/><circle cx="12" cy="12" r="5" fill="#7A9E7E" opacity=".3"/></svg>
+  </div>
+  <div class="hero-int">
+    <span class="chip anima">Peluquería orgánica · Ruzafa, València</span>
+    <h1 class="anima">Pelojet
+      <span class="sub">Taller d'Imatge</span>
+    </h1>
+    <p class="eslogan" id="eslogan">Color y corte con productos orgánicos, en el corazón de Ruzafa.</p>
+    <div class="hero-datos anima">
+      <span>★ 4,9 en Google</span>
+      <span>★ 5,0 en Booksy</span>
+      <span>Unisex</span>
+      <span>We speak English</span>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-primario" href="tel:+34610457102">📞 610 45 71 02</a>
+      <a class="btn btn-verde" href="tel:+34610457102">Pedir cita</a>
+    </div>
+    <p class="nota-hero anima">Jornada continua de 10:00 a 19:00 · Carrer de Dénia, 59</p>
+  </div>
+</section>
+</header>
+
+<main>
+
+<div class="franja-contador">
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4.9" data-decimales="1">0,0</span>★</div>
+    <div class="desc">Nota en Google</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="347">0</span></div>
+    <div class="desc">Reseñas</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="5.0" data-decimales="1">0,0</span>★</div>
+    <div class="desc">En Booksy</div>
+  </div>
+</div>
+
+<section class="sobre" aria-label="Sobre nosotros">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div>
+        <p class="etiqueta anima">Sobre nosotros</p>
+        <h2 class="anima">Un taller de imagen que se siente como en casa</h2>
+        <p class="anima">Al frente está Eloy —al que sus clientes describen como un auténtico artista de las tijeras—, junto a Andrea y Elena. Aquí cada visita empieza con un asesoramiento personalizado y, si te apetece, un café o una cerveza — invita la casa.</p>
+        <p class="anima">Trabajamos con productos orgánicos de calidad a precios justos, en un local limpio y acogedor con decoración cuidada, terraza y buena música. Trato cercano y familiar, en el barrio de Ruzafa.</p>
+        <div class="equipo anima">
+          <span class="persona"><span class="avatar">E</span>Eloy</span>
+          <span class="persona"><span class="avatar">A</span>Andrea</span>
+          <span class="persona"><span class="avatar">E</span>Elena</span>
+        </div>
+      </div>
+      <div class="detalles">
+        <div class="detalle anima"><span class="ico">🌿</span>Productos orgánicos de calidad</div>
+        <div class="detalle anima"><span class="ico">☕</span>Café y cerveza de cortesía</div>
+        <div class="detalle anima"><span class="ico">🪴</span>Decoración cuidada con terraza</div>
+        <div class="detalle anima"><span class="ico">🇬🇧</span>We speak English</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" aria-label="Servicios">
+  <div class="contenedor">
+    <p class="etiqueta anima">Servicios</p>
+    <h2 class="anima">Cuidamos tu pelo, con lo mejor de lo orgánico</h2>
+    <div class="rejilla-serv">
+      <article class="tarjeta-serv anima">
+        <h3>Coloración orgánica</h3>
+        <p>Color pleno con productos orgánicos que respetan tu cabello.</p>
+        <span class="precio">32 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Mechas balayage</h3>
+        <p>Luz y dimensión con un degradado natural hecho a mano.</p>
+        <span class="precio">70 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Alisados</h3>
+        <p>Melena lisa y manejable, adaptado a tu tipo de cabello.</p>
+        <span class="precio">80–100 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Botox capilar</h3>
+        <p>Tratamiento de hidratación profunda para recuperar brillo y cuerpo.</p>
+        <span class="precio">40 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Corte de chico</h3>
+        <p>Corte a medida con asesoramiento personalizado.</p>
+        <span class="precio">desde 12,75 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Depilación</h3>
+        <p>También cuidamos tu piel: servicio de depilación en el mismo salón.</p>
+        <span class="precio">Consultar</span>
+      </article>
+    </div>
+    <p class="nota-serv anima">Peluquería unisex · Llámanos y te asesoramos sin compromiso: <a href="tel:+34610457102" style="color:var(--sage-deep);font-weight:600">610 45 71 02</a></p>
+  </div>
+</section>
+
+<section class="resenas" aria-label="Reseñas">
+  <div class="contenedor">
+    <p class="etiqueta anima">Lo que dicen nuestros clientes</p>
+    <h2 class="anima">4,9 estrellas no salen de la nada</h2>
+    <div class="puntuacion anima">
+      <span class="grande">4,9</span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <span class="detalle-punt">347 reseñas en Google · 5,0★ en Booksy</span>
+    </div>
+    <div class="rejilla-res">
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>«Siempre encantada con el servicio. Los conozco desde años y todo lo que pido el resultado es verdaderamente muy bueno.»</p>
+        <p class="autor">Carina · reseña en Booksy</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>«Fui a esta peluquería de barrio y la verdad es que salí encantada. El trato es súper cercano, te hacen sentir como en casa.»</p>
+        <p class="autor">Sarah · reseña en Booksy</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>«Trato excelente, precios económicos, buena música, y lo mejor, cerveza GRATIS.»</p>
+        <p class="autor">Moisés Santana · reseña en Google</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" aria-label="Contacto">
+  <div class="contenedor">
+    <p class="etiqueta anima">Contacto</p>
+    <h2 class="anima">Ven a vernos a Ruzafa</h2>
+    <div class="rejilla-cont">
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📍</span>Dónde estamos</h3>
+        <p>Carrer de Dénia, 59<br>L'Eixample (Ruzafa)<br>46004 València</p>
+        <p style="margin-top:.7rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=Pelojet+Taller+d%27Imatge+Carrer+de+D%C3%A9nia+59+46004+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">🕙</span>Horario — jornada continua</h3>
+        <ul>
+          <li><span>Martes a sábado</span><span>10:00 – 19:00</span></li>
+          <li><span>Domingo</span><span class="cerrado">Cerrado</span></li>
+          <li><span>Lunes</span><span class="cerrado">Cerrado</span></li>
+        </ul>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📞</span>Teléfono</h3>
+        <p>Llámanos para pedir tu cita:</p>
+        <p style="margin-top:.4rem;font-size:1.25rem"><a href="tel:+34610457102">610 45 71 02</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">💬</span>Redes sociales</h3>
+        <p><a href="https://www.instagram.com/pelojet/" target="_blank" rel="noopener">Instagram · @pelojet</a></p>
+        <p style="margin-top:.4rem"><a href="https://www.facebook.com/pelojet/" target="_blank" rel="noopener">Facebook · Pelojet</a></p>
+      </div>
+    </div>
+    <div class="cta-final anima">
+      <h3>¿Te cortas… o lo dejas para mañana?</h3>
+      <p>Jornada continua de 10:00 a 19:00 — sin cerrar a mediodía.</p>
+      <a class="btn btn-verde" href="tel:+34610457102">Pedir cita ahora</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca">Pelojet · Taller d'Imatge</p>
+  <p>Carrer de Dénia, 59 — Ruzafa, València · <a href="tel:+34610457102">610 45 71 02</a></p>
+  <p class="aviso-demo">Demo creada por <strong style="color:var(--cream)">Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Eslogan palabra a palabra ===== */
+  var eslogan = document.getElementById('eslogan');
+  if (eslogan && !reduceMotion) {
+    var palabras = eslogan.textContent.trim().split(/\s+/);
+    eslogan.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      eslogan.appendChild(s);
+      eslogan.appendChild(document.createTextNode(' '));
+      setTimeout(function(){ s.classList.add('visible'); }, 350 + i * 90);
+    });
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anima'));
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var retrasos = new WeakMap();
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = Array.prototype.slice.call(e.target.parentNode.querySelectorAll(':scope > .anima'));
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = (Math.max(idx,0) * 90) + 'ms';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    animados.forEach(function(el){ obs.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (347 reseñas · 4,9) ===== */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function fmt(v){ return v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion) { el.textContent = fmt(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easing cúbico */
+      el.textContent = fmt(fin * suave);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fmt(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = Array.prototype.slice.call(document.querySelectorAll('[data-contador]'));
+  if ('IntersectionObserver' in window) {
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); obsNum.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ obsNum.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave del hero ===== */
+  var barra = document.getElementById('barra-progreso');
+  var hojas = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion) {
+        hojas.forEach(function(h){
+          var f = parseFloat(h.getAttribute('data-parallax')) || 0.3;
+          h.style.transform = 'translateY(' + (y * f * -0.4) + 'px) rotate(' + (y * f * 0.03) + 'deg)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía =====
+     Lección del 03/08/2026: algunos visores de email/navegadores no disparan
+     IntersectionObserver y la página quedaba en blanco. A los 1,2 s, este
+     rescate fuerza visible todo lo que siga oculto, pase lo que pase. */
+  function rescateVisibilidad(){
+    document.querySelectorAll('.anima, .eslogan .palabra').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (parseFloat(el.textContent.replace(',', '.')) === 0) {
+        var fin = parseFloat(el.getAttribute('data-contador'));
+        var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+
+</body>
+</html>

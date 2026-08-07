@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peluquería Toñi — Señora y caballero en el Barri Gòtic, Barcelona</title>
+<meta name="description" content="Peluquería Toñi, peluquería de barrio de toda la vida en Ciutat Vella, Barcelona. Corte de señora, caballero e infantil, color y tratamientos capilares. 5,0★ en Google con 144 reseñas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --vino:#6B2F2F;
+    --vino-oscuro:#552323;
+    --crema:#F7F2EA;
+    --oro:#B08950;
+    --oro-claro:#C9A46E;
+    --tinta:#3A2626;
+    --blanco:#FFFDF9;
+    --sombra-suave:0 10px 30px rgba(107,47,47,.10);
+    --sombra-alta:0 18px 45px rgba(107,47,47,.16);
+    --curva:cubic-bezier(.22,.61,.36,1);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Jost',system-ui,sans-serif;
+    background:var(--crema);
+    color:var(--tinta);
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;color:var(--vino);line-height:1.15;}
+  a{color:var(--vino);}
+  img{max-width:100%;}
+
+  /* ====== Barra de progreso de scroll ====== */
+  #barra-progreso{
+    position:fixed;top:0;left:0;height:4px;width:0%;
+    background:linear-gradient(90deg,var(--oro),var(--vino));
+    z-index:1000;transition:width 120ms linear;
+  }
+
+  /* ====== Marca de agua DEMO ====== */
+  .cinta-demo{
+    position:fixed;top:18px;right:-46px;z-index:999;
+    transform:rotate(45deg);
+    background:var(--vino);color:var(--crema);
+    font-size:12px;font-weight:600;letter-spacing:.35em;
+    padding:6px 54px;box-shadow:0 4px 14px rgba(0,0,0,.22);
+    pointer-events:none;opacity:.92;
+  }
+
+  /* ====== Cabecera ====== */
+  header{
+    position:sticky;top:0;z-index:900;
+    background:rgba(247,242,234,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(176,137,80,.25);
+  }
+  .barra-nav{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:14px 20px;
+  }
+  .logo{
+    font-family:'Fraunces',Georgia,serif;font-weight:700;
+    font-size:1.25rem;color:var(--vino);text-decoration:none;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo svg{flex:none;}
+  .nav-tel{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--vino);color:var(--crema);
+    text-decoration:none;font-weight:600;font-size:.95rem;
+    padding:10px 18px;border-radius:999px;
+    box-shadow:var(--sombra-suave);
+    transition:transform 250ms var(--curva),box-shadow 250ms var(--curva),background 250ms var(--curva);
+  }
+  .nav-tel:hover{transform:translateY(-2px) scale(1.03);box-shadow:var(--sombra-alta);background:var(--vino-oscuro);}
+
+  /* ====== Hero ====== */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:72px 20px 88px;text-align:center;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% -10%,rgba(176,137,80,.20),transparent 60%),
+      radial-gradient(ellipse 60% 50% at 110% 110%,rgba(107,47,47,.10),transparent 65%),
+      var(--crema);
+  }
+  .hero-deco{
+    position:absolute;inset:0;pointer-events:none;
+    will-change:transform;
+  }
+  .hero-deco svg{position:absolute;opacity:.5;}
+  .deco-1{top:8%;left:-30px;transform:rotate(-18deg);}
+  .deco-2{bottom:10%;right:-24px;transform:rotate(14deg);}
+  .hero-int{position:relative;max-width:760px;margin:0 auto;}
+  .sello{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blanco);border:1px solid rgba(176,137,80,.4);
+    color:var(--vino);font-size:.9rem;font-weight:600;
+    padding:8px 18px;border-radius:999px;margin-bottom:26px;
+    box-shadow:var(--sombra-suave);
+  }
+  .sello .estrellas-mini{color:var(--oro);letter-spacing:2px;}
+  .hero h1{
+    font-size:clamp(2.5rem,8vw,4.2rem);
+    font-weight:700;margin-bottom:18px;
+  }
+  .hero h1 .palabra{display:inline-block;}
+  .hero .eslogan{
+    font-size:clamp(1.15rem,4vw,1.5rem);
+    color:var(--tinta);max-width:34ch;margin:0 auto 14px;
+    font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+  }
+  .hero .sub{
+    color:#6d5545;max-width:46ch;margin:0 auto 36px;font-size:1.02rem;
+  }
+  .botones-hero{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    text-decoration:none;font-weight:600;font-size:1.05rem;
+    padding:16px 30px;border-radius:999px;
+    transition:transform 300ms var(--curva),box-shadow 300ms var(--curva),background 300ms var(--curva),color 300ms var(--curva);
+  }
+  .btn-primario{background:var(--vino);color:var(--crema);box-shadow:var(--sombra-alta);}
+  .btn-primario:hover{transform:translateY(-3px) scale(1.03);background:var(--vino-oscuro);}
+  .btn-secundario{background:var(--blanco);color:var(--vino);border:1.5px solid var(--oro);box-shadow:var(--sombra-suave);}
+  .btn-secundario:hover{transform:translateY(-3px) scale(1.03);background:var(--oro);color:var(--blanco);border-color:var(--oro);}
+  .filo{
+    height:56px;margin-top:60px;position:relative;
+  }
+  .filo svg{position:absolute;left:0;bottom:-30px;width:100%;height:56px;display:block;}
+
+  /* ====== Secciones genéricas ====== */
+  section{padding:76px 20px;}
+  .int{max-width:1080px;margin:0 auto;}
+  .etiqueta{
+    display:inline-block;color:var(--oro);font-weight:600;
+    letter-spacing:.28em;text-transform:uppercase;font-size:.8rem;
+    margin-bottom:12px;
+  }
+  .titulo-seccion{font-size:clamp(1.8rem,5.5vw,2.6rem);margin-bottom:18px;}
+  .separador{
+    width:64px;height:3px;border-radius:3px;margin:0 0 28px;
+    background:linear-gradient(90deg,var(--oro),transparent);
+  }
+  .centrado{text-align:center;}
+  .centrado .separador{margin-left:auto;margin-right:auto;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+
+  /* ====== Sobre ====== */
+  .sobre{background:var(--blanco);}
+  .sobre-grid{display:grid;gap:36px;align-items:center;}
+  .sobre p{margin-bottom:16px;max-width:60ch;}
+  .sobre p strong{color:var(--vino);}
+  .adorno-sobre{
+    display:flex;justify-content:center;
+  }
+  .medallon{
+    width:min(280px,70vw);aspect-ratio:1;border-radius:50%;
+    background:
+      radial-gradient(circle at 32% 28%,rgba(255,255,255,.55),transparent 55%),
+      conic-gradient(from 210deg,var(--vino),#8a4444 40%,var(--vino) 75%,var(--vino-oscuro));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--sombra-alta);
+    border:6px solid var(--crema);outline:1.5px solid rgba(176,137,80,.5);
+  }
+  .medallon-int{
+    text-align:center;color:var(--crema);font-family:'Fraunces',Georgia,serif;
+  }
+  .medallon-int .grande{font-size:2.6rem;font-weight:700;line-height:1;display:block;}
+  .medallon-int .peq{font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;font-family:'Jost',sans-serif;}
+  @media(min-width:820px){
+    .sobre-grid{grid-template-columns:1.2fr .8fr;}
+  }
+
+  /* ====== Servicios ====== */
+  .servicios{background:var(--crema);}
+  .malla-servicios{
+    display:grid;gap:22px;margin-top:16px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  }
+  .tarjeta{
+    background:var(--blanco);border-radius:22px;padding:32px 26px;
+    box-shadow:var(--sombra-suave);
+    border:1px solid rgba(176,137,80,.18);
+    transition:transform 300ms var(--curva),box-shadow 300ms var(--curva),border-color 300ms var(--curva);
+  }
+  .tarjeta:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--sombra-alta);border-color:rgba(176,137,80,.55);}
+  .icono{
+    width:58px;height:58px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,rgba(176,137,80,.18),rgba(107,47,47,.10));
+    margin-bottom:18px;color:var(--vino);
+  }
+  .tarjeta h3{font-size:1.28rem;margin-bottom:10px;}
+  .tarjeta p{font-size:.98rem;color:#5e4a3d;}
+
+  /* ====== Reseñas ====== */
+  .resenas{
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 0%,rgba(176,137,80,.16),transparent 60%),
+      var(--vino);
+    color:var(--crema);
+  }
+  .resenas .titulo-seccion,.resenas h3{color:var(--crema);}
+  .resenas .etiqueta{color:var(--oro-claro);}
+  .contadores{
+    display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin:34px 0 44px;
+  }
+  .contador{
+    background:rgba(247,242,234,.08);
+    border:1px solid rgba(201,164,110,.4);
+    border-radius:20px;padding:26px 40px;min-width:170px;text-align:center;
+    backdrop-filter:blur(4px);
+  }
+  .contador .cifra{
+    font-family:'Fraunces',Georgia,serif;font-weight:700;
+    font-size:2.9rem;color:var(--oro-claro);display:block;line-height:1.1;
+  }
+  .contador .texto{font-size:.88rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85;}
+  .malla-resenas{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .resena{
+    background:rgba(247,242,234,.97);color:var(--tinta);
+    border-radius:20px;padding:28px 26px;position:relative;
+    box-shadow:0 14px 34px rgba(0,0,0,.22);
+    transition:transform 300ms var(--curva),box-shadow 300ms var(--curva);
+  }
+  .resena:hover{transform:translateY(-5px) scale(1.02);}
+  .resena .estrellas{color:var(--oro);font-size:1.1rem;letter-spacing:3px;margin-bottom:12px;}
+  .resena p{font-size:.98rem;font-style:italic;margin-bottom:14px;}
+  .resena .fuente{font-size:.82rem;font-weight:600;color:var(--vino);letter-spacing:.06em;text-transform:uppercase;}
+  .resena::before{
+    content:"\201C";position:absolute;top:6px;right:20px;
+    font-family:'Fraunces',Georgia,serif;font-size:4rem;color:rgba(176,137,80,.35);line-height:1;
+  }
+
+  /* ====== Contacto ====== */
+  .contacto{background:var(--blanco);}
+  .malla-contacto{display:grid;gap:22px;margin-top:10px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+  .ficha{
+    background:var(--crema);border-radius:20px;padding:28px 24px;
+    border:1px solid rgba(176,137,80,.22);box-shadow:var(--sombra-suave);
+    transition:transform 300ms var(--curva),box-shadow 300ms var(--curva);
+  }
+  .ficha:hover{transform:translateY(-4px);box-shadow:var(--sombra-alta);}
+  .ficha h3{font-size:1.15rem;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+  .ficha p,.ficha li{font-size:.98rem;color:#5e4a3d;}
+  .ficha ul{list-style:none;}
+  .ficha li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed rgba(176,137,80,.35);}
+  .ficha li:last-child{border-bottom:none;}
+  .ficha li span:last-child{font-weight:600;color:var(--vino);white-space:nowrap;}
+  .ficha a{font-weight:600;}
+  .cierre-cta{
+    margin-top:48px;text-align:center;
+    background:linear-gradient(135deg,var(--vino),var(--vino-oscuro));
+    border-radius:26px;padding:52px 24px;color:var(--crema);
+    box-shadow:var(--sombra-alta);position:relative;overflow:hidden;
+  }
+  .cierre-cta::after{
+    content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;
+    border-radius:50%;background:radial-gradient(circle,rgba(201,164,110,.35),transparent 70%);
+  }
+  .cierre-cta h3{color:var(--crema);font-size:clamp(1.4rem,4.5vw,2rem);margin-bottom:10px;}
+  .cierre-cta p{opacity:.85;margin-bottom:26px;}
+  .cierre-cta .btn-secundario{border-color:var(--oro-claro);}
+
+  /* ====== Footer ====== */
+  footer{
+    background:var(--vino-oscuro);color:rgba(247,242,234,.85);
+    text-align:center;padding:40px 20px;font-size:.92rem;
+  }
+  footer .marca-agencia{
+    display:inline-block;margin-top:10px;color:var(--oro-claro);
+    font-weight:600;letter-spacing:.04em;
+  }
+  footer a{color:var(--oro-claro);}
+
+  /* ====== Animaciones de entrada ====== */
+  .anim{
+    opacity:0;transform:translateY(28px);
+    transition:opacity 500ms var(--curva),transform 500ms var(--curva);
+    transition-delay:var(--retardo,0ms);
+  }
+  .anim.visible{opacity:1;transform:none;}
+  .hero h1 .palabra{
+    opacity:0;transform:translateY(.6em) rotate(2deg);
+    transition:opacity 450ms var(--curva),transform 450ms var(--curva);
+  }
+  .hero h1.lista .palabra{opacity:1;transform:none;}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    .anim,.hero h1 .palabra{opacity:1!important;transform:none!important;}
+    .hero-deco{transform:none!important;}
+  }
+</style>
+<noscript>
+<style>
+  /* Garantía de visibilidad: sin JavaScript, TODO se ve. */
+  .anim,.hero h1 .palabra,.tarjeta,.resena,.ficha,.contador{
+    opacity:1!important;transform:none!important;
+  }
+  #barra-progreso{display:none;}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<header>
+  <nav class="barra-nav">
+    <a class="logo" href="#inicio" aria-label="Peluquería Toñi — inicio">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B08950" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle>
+        <path d="M8.5 8.5 20 20M8.5 15.5 20 4"></path>
+      </svg>
+      Peluquería Toñi
+    </a>
+    <a class="nav-tel" href="tel:+34933171746">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+      933 17 17 46
+    </a>
+  </nav>
+</header>
+
+<main id="inicio">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-deco" id="parallax" aria-hidden="true">
+      <svg class="deco-1" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#B08950" stroke-width="0.7" stroke-linecap="round">
+        <circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle>
+        <path d="M8.5 8.5 20 20M8.5 15.5 20 4"></path>
+      </svg>
+      <svg class="deco-2" width="130" height="130" viewBox="0 0 24 24" fill="none" stroke="#6B2F2F" stroke-width="0.7" stroke-linecap="round">
+        <path d="M4 3v18M8 3v18M12 3v10M16 3v10M20 3v10M4 3h16"></path>
+      </svg>
+    </div>
+    <div class="hero-int">
+      <p class="sello anim"><span class="estrellas-mini" aria-hidden="true">★★★★★</span> 5,0 en Google · 144 reseñas</p>
+      <h1 id="titulo-hero">El corte exacto que pides, de toda la vida en el Gòtic</h1>
+      <p class="eslogan anim" style="--retardo:250ms">Peluquería de señora y caballero en el corazón de Ciutat Vella, con Toñi al frente.</p>
+      <p class="sub anim" style="--retardo:350ms">Corte, color y tratamientos capilares, también para los más pequeños. En una calle peatonal del Barri Gòtic, a pocos pasos del Palau de la Música.</p>
+      <div class="botones-hero anim" style="--retardo:450ms">
+        <a class="btn btn-primario" href="tel:+34933171746">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          Llamar ahora
+        </a>
+        <a class="btn btn-secundario" href="tel:+34933171746">Pedir cita</a>
+      </div>
+    </div>
+    <div class="filo" aria-hidden="true">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0 56h1440V20C1200 46 960 56 720 40 480 24 240 14 0 30z" fill="#FFFDF9"></path></svg>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE NOSOTROS ============ -->
+  <section class="sobre" id="sobre">
+    <div class="int sobre-grid">
+      <div>
+        <span class="etiqueta anim">Sobre nosotros</span>
+        <h2 class="titulo-seccion anim" style="--retardo:100ms">Una peluquería de barrio, de las de verdad</h2>
+        <div class="separador anim" style="--retardo:150ms"></div>
+        <p class="anim" style="--retardo:200ms">Quien se sienta en el sillón de <strong>Toñi</strong> lo repite: hace <strong>exactamente el corte que le pides</strong>, sin sorpresas y sin cortar nunca de más.</p>
+        <p class="anim" style="--retardo:300ms">El trato es <strong>amable, atento y personalizado</strong>, como en las peluquerías de toda la vida, y los <strong>precios son muy razonables</strong>.</p>
+        <p class="anim" style="--retardo:400ms">Señora, caballero y también los más pequeños de la casa: todos salen con su corte, su color o su tratamiento hecho a su medida.</p>
+      </div>
+      <div class="adorno-sobre anim" style="--retardo:250ms">
+        <div class="medallon">
+          <div class="medallon-int">
+            <span class="grande">5,0<span aria-hidden="true">★</span></span>
+            <span class="peq">144 reseñas<br>en Google</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="servicios" id="servicios">
+    <div class="int centrado">
+      <span class="etiqueta anim">Servicios</span>
+      <h2 class="titulo-seccion anim" style="--retardo:100ms">Lo que hacemos, bien hecho</h2>
+      <div class="separador anim" style="--retardo:150ms"></div>
+      <div class="malla-servicios">
+        <article class="tarjeta anim" style="--retardo:150ms">
+          <div class="icono" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M8.5 8.5 20 20M8.5 15.5 20 4"></path></svg>
+          </div>
+          <h3>Corte de señora</h3>
+          <p>El corte que pides, tal cual lo pides. Toñi escucha primero y corta después, sin llevarse nunca un centímetro de más.</p>
+        </article>
+        <article class="tarjeta anim" style="--retardo:250ms">
+          <div class="icono" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 3v18M8 3v18M12 3v12M16 3v12M20 3v12M4 3h16"></path></svg>
+          </div>
+          <h3>Corte de caballero</h3>
+          <p>Cortes clásicos y actuales para caballero, con el acabado cuidado de una peluquería de barrio con oficio.</p>
+        </article>
+        <article class="tarjeta anim" style="--retardo:350ms">
+          <div class="icono" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M5 21c1-4 3.5-6 7-6s6 2 7 6"></path></svg>
+          </div>
+          <h3>Corte infantil</h3>
+          <p>También cortamos a los más pequeños, con paciencia y trato cercano para que salgan contentos del sillón.</p>
+        </article>
+        <article class="tarjeta anim" style="--retardo:450ms">
+          <div class="icono" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3c3 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-6.5 6-11z"></path></svg>
+          </div>
+          <h3>Color</h3>
+          <p>Tintes y color aplicados con mimo, pensados para cada persona y para el resultado que quiere ver en el espejo.</p>
+        </article>
+        <article class="tarjeta anim" style="--retardo:550ms">
+          <div class="icono" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21c-4 0-7-2.5-7-6.5C5 10 8 6 12 3c4 3 7 7 7 11.5 0 4-3 6.5-7 6.5z"></path><path d="M9 14c0 2 1.3 3.2 3 3.2"></path></svg>
+          </div>
+          <h3>Tratamientos capilares</h3>
+          <p>Cuidados para el cabello que completan el corte y el color, con la atención personalizada de siempre.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEÑAS ============ -->
+  <section class="resenas" id="resenas">
+    <div class="int centrado">
+      <span class="etiqueta anim">Opiniones</span>
+      <h2 class="titulo-seccion anim" style="--retardo:100ms">Lo que dicen nuestros clientes</h2>
+      <div class="contadores">
+        <div class="contador anim" style="--retardo:150ms">
+          <span class="cifra" id="cifra-nota" data-final="5,0">0,0</span>
+          <span class="texto">Nota en Google</span>
+        </div>
+        <div class="contador anim" style="--retardo:250ms">
+          <span class="cifra" id="cifra-resenas" data-final="144">0</span>
+          <span class="texto">Reseñas</span>
+        </div>
+      </div>
+      <div class="malla-resenas">
+        <article class="resena anim" style="--retardo:200ms">
+          <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+          <p>Pides un corte y Toñi te hace ese corte, exactamente el que querías. Jamás se lleva de más.</p>
+          <div class="fuente">Reseña de Google · 5,0</div>
+        </article>
+        <article class="resena anim" style="--retardo:320ms">
+          <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+          <p>El trato es amabilísimo, muy atento y totalmente personalizado. Te sientes como en casa.</p>
+          <div class="fuente">Reseña de Google · 5,0</div>
+        </article>
+        <article class="resena anim" style="--retardo:440ms">
+          <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+          <p>Precios muy razonables para un trabajo tan bien hecho. Difícil encontrar algo así en el centro.</p>
+          <div class="fuente">Reseña de Google · 5,0</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="contacto" id="contacto">
+    <div class="int">
+      <div class="centrado">
+        <span class="etiqueta anim">Contacto</span>
+        <h2 class="titulo-seccion anim" style="--retardo:100ms">Ven a vernos al Barri Gòtic</h2>
+        <div class="separador anim" style="--retardo:150ms"></div>
+      </div>
+      <div class="malla-contacto">
+        <div class="ficha anim" style="--retardo:150ms">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B08950" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg> Dónde estamos</h3>
+          <p>Carrer de n'Amargós, 2<br>Ciutat Vella, 08002 Barcelona</p>
+          <p style="margin-top:8px;font-size:.9rem;">Calle peatonal del Barri Gòtic, a pocos pasos del Palau de la Música.</p>
+          <p style="margin-top:12px;"><a href="https://www.google.com/maps/place/?q=place_id:ChIJoQJLofCipBIRWPd_mbRXwEo" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+        </div>
+        <div class="ficha anim" style="--retardo:280ms">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B08950" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"></path></svg> Teléfono</h3>
+          <p>Llámanos y reserva tu hora:</p>
+          <p style="margin-top:10px;font-size:1.3rem;"><a href="tel:+34933171746">933 17 17 46</a></p>
+        </div>
+        <div class="ficha anim" style="--retardo:410ms">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B08950" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg> Horario</h3>
+          <ul>
+            <li><span>Martes – Viernes</span><span>9:00 – 20:00</span></li>
+            <li><span>Sábado</span><span>9:00 – 13:00</span></li>
+            <li><span>Lunes y domingo</span><span>Cerrado</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="cierre-cta anim" style="--retardo:200ms">
+        <h3>¿Te cortamos como tú quieres?</h3>
+        <p>Reserva tu cita por teléfono: martes a viernes de 9:00 a 20:00, sábados de 9:00 a 13:00.</p>
+        <a class="btn btn-secundario" href="tel:+34933171746">Pedir cita · 933 17 17 46</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Peluquería Toñi · Carrer de n'Amargós, 2, Ciutat Vella, 08002 Barcelona · <a href="tel:+34933171746">933 17 17 46</a></p>
+  <p class="marca-agencia">Demo creada por Eleven AI — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Título del hero: palabra a palabra ---- */
+  var titulo = document.getElementById('titulo-hero');
+  if (titulo) {
+    var palabras = titulo.textContent.trim().split(/\s+/);
+    titulo.textContent = '';
+    palabras.forEach(function (p, i) {
+      var span = document.createElement('span');
+      span.className = 'palabra';
+      span.textContent = p;
+      span.style.transitionDelay = (80 * i) + 'ms';
+      titulo.appendChild(span);
+      if (i < palabras.length - 1) titulo.appendChild(document.createTextNode(' '));
+    });
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ titulo.classList.add('lista'); });
+    });
+  }
+
+  /* ---- Entradas escalonadas con IntersectionObserver ---- */
+  var animados = document.querySelectorAll('.anim');
+  if (reducido || !('IntersectionObserver' in window)) {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  } else {
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observador.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    animados.forEach(function(el){ observador.observe(el); });
+  }
+
+  /* ---- Contadores animados (144 reseñas, nota 5,0) ---- */
+  function animarCifra(el) {
+    var final = el.getAttribute('data-final');
+    var decimal = final.indexOf(',') !== -1;
+    var objetivo = parseFloat(final.replace(',', '.'));
+    if (reducido) { el.textContent = final; return; }
+    var duracion = 1400, inicio = null;
+    function paso(t) {
+      if (!inicio) inicio = t;
+      var avance = Math.min((t - inicio) / duracion, 1);
+      var suavizado = 1 - Math.pow(1 - avance, 3);
+      var valor = objetivo * suavizado;
+      el.textContent = decimal
+        ? valor.toFixed(1).replace('.', ',')
+        : String(Math.round(valor));
+      if (avance < 1) requestAnimationFrame(paso);
+      else el.textContent = final;
+    }
+    requestAnimationFrame(paso);
+  }
+  var cifras = document.querySelectorAll('.cifra[data-final]');
+  if ('IntersectionObserver' in window && !reducido) {
+    var obsCifras = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (e.isIntersecting) { animarCifra(e.target); obsCifras.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    cifras.forEach(function(el){ obsCifras.observe(el); });
+  } else {
+    cifras.forEach(function(el){ el.textContent = el.getAttribute('data-final'); });
+  }
+
+  /* ---- Barra de progreso de scroll + parallax suave del hero ---- */
+  var barra = document.getElementById('barra-progreso');
+  var deco = document.getElementById('parallax');
+  var pendiente = false;
+  function alDesplazar() {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function () {
+      var y = window.scrollY || document.documentElement.scrollTop;
+      var alto = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra && alto > 0) barra.style.width = (y / alto * 100) + '%';
+      if (deco && !reducido) deco.style.transform = 'translateY(' + (y * 0.25) + 'px)';
+      pendiente = false;
+    });
+  }
+  window.addEventListener('scroll', alDesplazar, { passive: true });
+  alDesplazar();
+
+  /* ---- Script de RESCATE anti-página-vacía ----
+     Si a los 1,2 s algún elemento sigue invisible (opacity 0),
+     se fuerza su visibilidad. Lección aprendida el 03/08/2026:
+     algunos visores de email no ejecutan IntersectionObserver. ---- */
+  function rescateVisibilidad() {
+    document.querySelectorAll('.anim, .palabra').forEach(function (el) {
+      var estilo = window.getComputedStyle(el);
+      if (parseFloat(estilo.opacity) < 1) {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    if (titulo) titulo.classList.add('lista');
+    cifras.forEach(function (el) {
+      if (el.textContent === '0' || el.textContent === '0,0') {
+        el.textContent = el.getAttribute('data-final');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+})();
+</script>
+
+</body>
+</html>

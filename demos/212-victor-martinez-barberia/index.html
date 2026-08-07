@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Víctor Martínez · Barbería &amp; Peluquería — Ciutat Vella, València</title>
+<meta name="description" content="Víctor Martínez, barbería y peluquería masculina en Ciutat Vella (Calle Periodista Azzati 11, València). 4,9★ con 618 reseñas en Google. Demo.">
+<!-- DEMO no contractual creada por Eleven AI con datos públicos verificados.
+     Nota del builder: negocio sin teléfono público verificado, por eso no hay botón tel:+34000000000;
+     el contacto principal es "Cómo llegar" (Google Maps). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#1A1A1A;
+    --negro-2:#232323;
+    --negro-3:#101010;
+    --crema:#F5F0E8;
+    --crema-2:#EAE2D3;
+    --oro:#C9A227;
+    --oro-claro:#E3C766;
+    --linea:rgba(201,162,39,.28);
+    --sombra:0 18px 50px rgba(0,0,0,.35);
+    --curva:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Jost',system-ui,sans-serif;
+    background:var(--negro);
+    color:var(--crema);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand{font-family:'Cinzel',serif;letter-spacing:.04em}
+  img{max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--oro);color:var(--negro)}
+
+  /* ===== Barra de progreso de scroll ===== */
+  #progreso{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+    background:linear-gradient(90deg,var(--oro),var(--oro-claro));
+    box-shadow:0 0 12px rgba(201,162,39,.6)}
+
+  /* ===== Marca de agua DEMO ===== */
+  .demo-badge{
+    position:fixed;bottom:16px;left:16px;z-index:999;
+    background:rgba(26,26,26,.82);border:1px solid var(--oro);color:var(--oro);
+    font-family:'Jost',sans-serif;font-weight:600;letter-spacing:.28em;font-size:.7rem;
+    padding:.45em 1.1em .45em 1.35em;border-radius:999px;backdrop-filter:blur(6px);
+    pointer-events:none;text-transform:uppercase}
+  .marca-fondo{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    pointer-events:none;z-index:998;overflow:hidden}
+  .marca-fondo span{
+    font-family:'Cinzel',serif;font-size:clamp(6rem,22vw,16rem);font-weight:700;
+    color:rgba(245,240,232,.028);transform:rotate(-24deg);letter-spacing:.2em;user-select:none}
+
+  /* ===== Navegación ===== */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.9rem clamp(1rem,4vw,3rem);
+    background:linear-gradient(180deg,rgba(16,16,16,.92),rgba(16,16,16,.75));
+    backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,162,39,.15);
+    transition:padding .3s var(--curva)}
+  .brand{display:flex;align-items:center;gap:.65rem;font-size:1rem;color:var(--crema)}
+  .brand .mono{
+    width:38px;height:38px;border:1.5px solid var(--oro);border-radius:50%;
+    display:grid;place-items:center;font-size:.78rem;color:var(--oro);font-weight:700;
+    background:radial-gradient(circle at 30% 25%,rgba(201,162,39,.18),transparent 65%)}
+  .brand small{display:block;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.34em;
+    color:var(--oro);text-transform:uppercase;font-weight:500}
+  nav.menu{display:flex;gap:clamp(.9rem,2.5vw,2rem);align-items:center;font-size:.86rem;
+    letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+  nav.menu a{opacity:.85;transition:opacity .25s,color .25s;position:relative;padding:.2em 0}
+  nav.menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;
+    background:var(--oro);transition:width .3s var(--curva)}
+  nav.menu a:hover{opacity:1;color:var(--oro-claro)}
+  nav.menu a:hover::after{width:100%}
+  nav.menu a.solo-md{display:none}
+  @media(min-width:760px){nav.menu a.solo-md{display:inline}}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55em;justify-content:center;
+    padding:.85em 1.7em;border-radius:999px;font-weight:600;letter-spacing:.1em;
+    text-transform:uppercase;font-size:.82rem;border:1.5px solid var(--oro);
+    transition:transform .25s var(--curva),box-shadow .25s var(--curva),background .25s,color .25s;
+    will-change:transform}
+  .btn-oro{background:linear-gradient(120deg,var(--oro),var(--oro-claro));color:var(--negro-3)}
+  .btn-oro:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 30px rgba(201,162,39,.35)}
+  .btn-linea{color:var(--crema);background:transparent}
+  .btn-linea:hover{background:rgba(201,162,39,.12);transform:translateY(-3px)}
+  .btn-nav{padding:.55em 1.2em;font-size:.72rem}
+
+  /* ===== Hero ===== */
+  .hero{
+    min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    position:relative;padding:7.5rem clamp(1.2rem,6vw,4rem) 4.5rem;
+    background:
+      radial-gradient(1100px 600px at 85% -10%,rgba(201,162,39,.14),transparent 60%),
+      radial-gradient(800px 500px at -10% 110%,rgba(201,162,39,.08),transparent 60%),
+      var(--negro-3);
+    overflow:hidden}
+  .hero::before{ /* rayas diagonales sutiles tipo poste de barbero */
+    content:"";position:absolute;inset:-40% -10%;
+    background:repeating-linear-gradient(135deg,rgba(245,240,232,.022) 0 2px,transparent 2px 26px);
+    animation:derivaFondo 26s linear infinite;pointer-events:none}
+  @keyframes derivaFondo{to{transform:translateX(52px)}}
+  .hero-ornamento{position:absolute;right:clamp(-6rem,-2vw,2rem);top:14%;opacity:.16;
+    width:min(46vw,430px);pointer-events:none;will-change:transform}
+  .hero-inner{position:relative;max-width:1100px;margin:0 auto;width:100%}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:.7em;color:var(--oro);
+    letter-spacing:.32em;text-transform:uppercase;font-size:.72rem;font-weight:600;margin-bottom:1.4rem}
+  .hero-eyebrow::before,.hero-eyebrow::after{content:"";height:1px;width:34px;background:var(--linea)}
+  h1{
+    font-size:clamp(2.35rem,8.2vw,5.4rem);line-height:1.06;font-weight:700;
+    color:var(--crema);text-wrap:balance;margin-bottom:1.4rem}
+  h1 .w{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);
+    animation:palabra .9s var(--curva) forwards}
+  h1 .oro{color:transparent;background:linear-gradient(115deg,var(--oro) 20%,var(--oro-claro) 55%,var(--oro) 85%);
+    background-size:200% 100%;-webkit-background-clip:text;background-clip:text;
+    animation:palabra .9s var(--curva) forwards,brilloOro 6s ease-in-out 1.4s infinite}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  @keyframes brilloOro{0%,100%{background-position:0 0}50%{background-position:100% 0}}
+  .hero-sub{max-width:56ch;font-size:clamp(1.02rem,2.4vw,1.25rem);font-weight:300;
+    color:var(--crema-2);opacity:0;animation:palabra .9s var(--curva) 1s forwards}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.3rem;
+    opacity:0;animation:palabra .9s var(--curva) 1.25s forwards}
+  .hero-nota{margin-top:2.6rem;display:inline-flex;align-items:center;gap:.9em;
+    background:rgba(245,240,232,.05);border:1px solid var(--linea);border-radius:16px;
+    padding:.8em 1.3em;font-size:.92rem;opacity:0;animation:palabra .9s var(--curva) 1.5s forwards}
+  .estrellas{color:var(--oro);letter-spacing:.12em;font-size:1rem;white-space:nowrap}
+  .flecha-scroll{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);
+    color:var(--oro);opacity:.7;font-size:1.4rem;animation:flota 2.4s ease-in-out infinite}
+  @keyframes flota{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+
+  /* ===== Secciones genéricas ===== */
+  section{padding:clamp(4rem,9vw,7rem) clamp(1.2rem,6vw,4rem);position:relative}
+  .contenedor{max-width:1100px;margin:0 auto}
+  .encabezado{margin-bottom:clamp(2.2rem,5vw,3.6rem);max-width:640px}
+  .encabezado .kicker{color:var(--oro);letter-spacing:.3em;text-transform:uppercase;
+    font-size:.72rem;font-weight:600;display:flex;align-items:center;gap:.8em;margin-bottom:.9rem}
+  .encabezado .kicker::before{content:"";width:30px;height:1px;background:var(--oro)}
+  h2{font-size:clamp(1.7rem,4.6vw,2.7rem);line-height:1.15;color:var(--crema);text-wrap:balance}
+  .encabezado p{margin-top:1rem;color:var(--crema-2);font-weight:300;font-size:1.05rem}
+
+  /* Revelado en cascada */
+  .rev{opacity:0;transform:translateY(34px);
+    transition:opacity .8s var(--curva),transform .8s var(--curva)}
+  .rev.in{opacity:1;transform:none}
+  .rev.d1{transition-delay:.12s}.rev.d2{transition-delay:.24s}
+  .rev.d3{transition-delay:.36s}.rev.d4{transition-delay:.48s}
+
+  /* ===== Sobre nosotros ===== */
+  .sobre{background:linear-gradient(180deg,var(--negro-3),var(--negro))}
+  .sobre-grid{display:grid;gap:2.5rem}
+  @media(min-width:860px){.sobre-grid{grid-template-columns:1.15fr .85fr;align-items:center}}
+  .sobre-texto p{color:var(--crema-2);font-weight:300;font-size:1.08rem;margin-bottom:1.1rem}
+  .sobre-texto strong{color:var(--crema);font-weight:500}
+  .cifras{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+  .cifra{
+    background:linear-gradient(160deg,var(--negro-2),#1d1b16);
+    border:1px solid var(--linea);border-radius:20px;padding:1.6rem 1.2rem;text-align:center;
+    box-shadow:var(--sombra);transition:transform .35s var(--curva),border-color .35s}
+  .cifra:hover{transform:translateY(-6px);border-color:var(--oro)}
+  .cifra .num{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,2.8rem);font-weight:700;color:var(--oro);line-height:1.1}
+  .cifra .num sup{font-size:.45em;color:var(--oro-claro)}
+  .cifra .tag{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--crema-2);margin-top:.5rem;display:block}
+  .cifra.ancha{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:1.2rem;text-align:left}
+  .cifra.ancha .tag{margin-top:.2rem}
+
+  /* ===== Carta / Servicios ===== */
+  .carta{background:var(--crema);color:var(--negro)}
+  .carta h2,.carta .brand{color:var(--negro)}
+  .carta .encabezado p{color:#4d463a}
+  .carta .encabezado .kicker{color:#8a6d12}
+  .carta .encabezado .kicker::before{background:#8a6d12}
+  .tarjetas{display:grid;gap:1.3rem}
+  @media(min-width:760px){.tarjetas{grid-template-columns:repeat(3,1fr)}}
+  .tarjeta{
+    background:#fff;border:1px solid #e5dcc8;border-radius:22px;padding:2rem 1.7rem;
+    box-shadow:0 10px 30px rgba(26,26,26,.07);position:relative;overflow:hidden;
+    transition:transform .4s var(--curva),box-shadow .4s var(--curva)}
+  .tarjeta::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--oro),var(--oro-claro));transform:scaleX(0);
+    transform-origin:left;transition:transform .45s var(--curva)}
+  .tarjeta:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:0 22px 45px rgba(26,26,26,.14)}
+  .tarjeta:hover::before{transform:scaleX(1)}
+  .tarjeta .icono{
+    width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:1.35rem;
+    background:radial-gradient(circle at 30% 25%,#f6ecd2,#efe3c4);border:1px solid #e0d3ae;margin-bottom:1.1rem}
+  .tarjeta h3{font-size:1.15rem;color:var(--negro);margin-bottom:.45rem}
+  .tarjeta p{font-size:.95rem;color:#5a5245;font-weight:300}
+  .precio-linea{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+    border-top:1px dashed #d8cbab;margin-top:1.2rem;padding-top:1rem}
+  .precio-linea .p{font-family:'Cinzel',serif;font-weight:700;font-size:1.5rem;color:#8a6d12}
+  .precio-linea .t{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#7a7160}
+  .carta-nota{margin-top:1.6rem;font-size:.85rem;color:#6a6152;font-style:italic;max-width:62ch}
+
+  /* ===== Reseñas ===== */
+  .resenas{background:
+    radial-gradient(900px 480px at 110% 0,rgba(201,162,39,.12),transparent 60%),var(--negro-3)}
+  .panel-resenas{
+    border:1px solid var(--linea);border-radius:26px;overflow:hidden;box-shadow:var(--sombra);
+    background:linear-gradient(160deg,var(--negro-2),#191713);display:grid}
+  @media(min-width:860px){.panel-resenas{grid-template-columns:.9fr 1.1fr}}
+  .panel-nota{
+    padding:clamp(2rem,5vw,3.2rem);display:flex;flex-direction:column;justify-content:center;
+    align-items:flex-start;gap:.6rem;background:rgba(201,162,39,.07);border-bottom:1px solid var(--linea)}
+  @media(min-width:860px){.panel-nota{border-bottom:0;border-right:1px solid var(--linea)}}
+  .nota-gigante{font-family:'Cinzel',serif;font-size:clamp(3.6rem,10vw,5.6rem);font-weight:700;
+    color:var(--oro);line-height:1}
+  .panel-nota .estrellas{font-size:1.3rem}
+  .panel-nota .de{color:var(--crema-2);font-size:.95rem;font-weight:300}
+  .panel-temas{padding:clamp(2rem,5vw,3.2rem);display:flex;flex-direction:column;gap:1.1rem;justify-content:center}
+  .tema{display:flex;gap:.9rem;align-items:flex-start}
+  .tema .punto{color:var(--oro);font-size:1.1rem;line-height:1.5;flex:none}
+  .tema p{color:var(--crema-2);font-weight:300}
+  .tema p strong{color:var(--crema);font-weight:500}
+  .panel-temas .fuente{font-size:.8rem;color:rgba(245,240,232,.55);font-style:italic}
+  .panel-temas .btn{align-self:flex-start;margin-top:.4rem}
+
+  /* ===== Contacto ===== */
+  .contacto .bloque{
+    display:grid;gap:1.3rem;border:1px solid var(--linea);border-radius:26px;
+    background:linear-gradient(160deg,var(--negro-2),#1b1914);box-shadow:var(--sombra);
+    padding:clamp(1.8rem,5vw,3rem)}
+  @media(min-width:860px){.contacto .bloque{grid-template-columns:1.1fr .9fr;align-items:center}}
+  .dato{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.2rem}
+  .dato .ic{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--oro);
+    display:grid;place-items:center;color:var(--oro);font-size:1.1rem;
+    background:radial-gradient(circle at 30% 25%,rgba(201,162,39,.16),transparent 70%)}
+  .dato h3{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--oro);margin-bottom:.25rem}
+  .dato p{color:var(--crema-2);font-weight:300}
+  .mapa-cta{
+    border:1px dashed var(--linea);border-radius:20px;padding:2rem 1.6rem;text-align:center;
+    display:flex;flex-direction:column;gap:1.1rem;align-items:center;
+    background:repeating-linear-gradient(45deg,rgba(201,162,39,.04) 0 10px,transparent 10px 20px)}
+  .mapa-cta p{color:var(--crema-2);font-weight:300;font-size:.95rem;max-width:34ch}
+
+  /* ===== Footer ===== */
+  footer{
+    background:var(--negro-3);border-top:1px solid rgba(201,162,39,.18);
+    padding:2.6rem clamp(1.2rem,6vw,4rem);text-align:center}
+  footer .brand{justify-content:center;margin-bottom:.9rem;display:flex}
+  footer .dir{color:rgba(245,240,232,.65);font-size:.9rem;font-weight:300}
+  footer .aviso{
+    margin-top:1.5rem;padding-top:1.3rem;border-top:1px solid rgba(245,240,232,.08);
+    color:rgba(245,240,232,.55);font-size:.85rem;font-weight:300}
+  footer .aviso strong{color:var(--oro);font-weight:600}
+
+  /* ===== Accesibilidad / movimiento reducido ===== */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .rev,h1 .w,h1 .oro,.hero-sub,.hero-cta,.hero-nota{opacity:1!important;transform:none!important}
+    html{scroll-behavior:auto}
+  }
+  @media(max-width:759px){
+    nav.menu{gap:.9rem}
+    .cifras{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+    .rev,h1 .w,h1 .oro,.hero-sub,.hero-cta,.hero-nota{opacity:1!important;transform:none!important;animation:none!important}
+    #progreso{display:none}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"></div>
+<div class="marca-fondo" aria-hidden="true"><span>DEMO</span></div>
+<div class="demo-badge" aria-hidden="true">Demo</div>
+
+<header class="nav">
+  <a class="brand" href="#inicio" aria-label="Víctor Martínez, inicio">
+    <span class="mono">VM</span>
+    <span>Víctor Martínez<small>Barbería · Peluquería</small></span>
+  </a>
+  <nav class="menu" aria-label="Secciones">
+    <a href="#sobre" class="solo-md">La casa</a>
+    <a href="#carta" class="solo-md">Carta</a>
+    <a href="#resenas" class="solo-md">Reseñas</a>
+    <a class="btn btn-oro btn-nav" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%ADctor%20Mart%C3%ADnez%20barber%C3%ADa%20peluquer%C3%ADa%2C%20Calle%20Periodista%20Azzati%2011%2C%2046002%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+  </nav>
+</header>
+
+<main id="inicio">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Presentación">
+    <svg class="hero-ornamento" id="ornamento" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+      <circle cx="100" cy="100" r="96" stroke="#C9A227" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="72" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 7"/>
+      <path d="M70 138 L130 62 M78 62 L122 138" stroke="#C9A227" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="83" cy="132" r="9" stroke="#C9A227" stroke-width="2"/>
+      <circle cx="117" cy="132" r="9" stroke="#C9A227" stroke-width="2"/>
+    </svg>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Ciutat Vella · València</p>
+      <h1>
+        <span class="w" style="animation-delay:.10s">El</span>
+        <span class="w" style="animation-delay:.22s">oficio</span>
+        <span class="w" style="animation-delay:.34s">de</span>
+        <span class="w" style="animation-delay:.46s">siempre,</span><br>
+        <span class="w oro" style="animation-delay:.66s">a</span>
+        <span class="w oro" style="animation-delay:.78s">un</span>
+        <span class="w oro" style="animation-delay:.90s">paso</span>
+        <span class="w" style="animation-delay:1.02s">del</span>
+        <span class="w" style="animation-delay:1.14s">Ayuntamiento</span>
+      </h1>
+      <p class="hero-sub">Barbería y peluquería masculina en la calle Periodista Azzati 11, junto a la Plaza del Ayuntamiento de València. Una de las barberías mejor valoradas del centro.</p>
+      <div class="hero-cta">
+        <a class="btn btn-oro" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%ADctor%20Mart%C3%ADnez%20barber%C3%ADa%20peluquer%C3%ADa%2C%20Calle%20Periodista%20Azzati%2011%2C%2046002%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar ↗</a>
+        <a class="btn btn-linea" href="#carta">Ver la carta</a>
+      </div>
+      <p class="hero-nota"><span class="estrellas" aria-hidden="true">★★★★★</span> <span><strong>4,9</strong> · 618 reseñas en Google</span></p>
+    </div>
+    <span class="flecha-scroll" aria-hidden="true">↓</span>
+  </section>
+
+  <!-- ============ SOBRE NOSOTROS ============ -->
+  <section class="sobre" id="sobre" aria-label="Sobre la barbería">
+    <div class="contenedor">
+      <div class="encabezado rev">
+        <p class="kicker">La casa</p>
+        <h2>Barbería de barrio en pleno corazón de València</h2>
+      </div>
+      <div class="sobre-grid">
+        <div class="sobre-texto">
+          <p class="rev d1">En plena <strong>Ciutat Vella</strong>, a un paso de la Plaza del Ayuntamiento, Víctor Martínez es una <strong>barbería y peluquería masculina</strong> que se ha ganado su sitio a base de tijera, navaja y trato cercano.</p>
+          <p class="rev d2">Sus clientes la sitúan entre las <strong>barberías mejor valoradas del centro de València</strong>: un 4,9 sobre 5 con más de seiscientas reseñas en Google lo dicen todo.</p>
+          <p class="rev d3">Sin artificios: el oficio clásico de barbería, hecho bien, en el centro de la ciudad.</p>
+        </div>
+        <div class="cifras">
+          <div class="cifra rev d2">
+            <span class="num"><span class="contador" data-fin="4.9" data-dec="1">0,0</span></span>
+            <span class="tag">Valoración en Google</span>
+          </div>
+          <div class="cifra rev d3">
+            <span class="num"><span class="contador" data-fin="618" data-dec="0">0</span></span>
+            <span class="tag">Reseñas de clientes</span>
+          </div>
+          <div class="cifra ancha rev d4">
+            <span class="estrellas" aria-hidden="true">★★★★★</span>
+            <span class="tag">De las mejor valoradas de Ciutat Vella</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CARTA / SERVICIOS ============ -->
+  <section class="carta" id="carta" aria-label="Carta de servicios">
+    <div class="contenedor">
+      <div class="encabezado rev">
+        <p class="kicker">La carta</p>
+        <h2>Corte clásico, resultado impecable</h2>
+        <p>Barbería y peluquería masculina. La referencia de precio procede de su antigua carta de reservas online.</p>
+      </div>
+      <div class="tarjetas">
+        <article class="tarjeta rev d1">
+          <span class="icono" aria-hidden="true">✂</span>
+          <h3>Corte de pelo</h3>
+          <p>El servicio de la casa: corte masculino a tijera y máquina, con acabado cuidado al detalle.</p>
+          <div class="precio-linea"><span class="p">20&nbsp;€</span><span class="t">30 min</span></div>
+        </article>
+        <article class="tarjeta rev d2">
+          <span class="icono" aria-hidden="true">🪒</span>
+          <h3>Barbería</h3>
+          <p>El cuidado clásico de barbería, con la atención de un salón que vive del trabajo bien hecho.</p>
+          <div class="precio-linea"><span class="p" style="font-size:1rem;font-family:'Jost',sans-serif;font-weight:500">Consultar en el local</span><span class="t"></span></div>
+        </article>
+        <article class="tarjeta rev d3">
+          <span class="icono" aria-hidden="true">💈</span>
+          <h3>Peluquería masculina</h3>
+          <p>Peluquería para hombre en el centro de València, con el trato cercano de toda la vida.</p>
+          <div class="precio-linea"><span class="p" style="font-size:1rem;font-family:'Jost',sans-serif;font-weight:500">Consultar en el local</span><span class="t"></span></div>
+        </article>
+      </div>
+      <p class="carta-nota rev d3">Precio del corte según la antigua carta de reservas del salón (corte de pelo, 30 minutos). Para el resto de servicios y disponibilidad, lo mejor es pasarse por el local.</p>
+    </div>
+  </section>
+
+  <!-- ============ RESEÑAS ============ -->
+  <section class="resenas" id="resenas" aria-label="Reseñas de clientes">
+    <div class="contenedor">
+      <div class="encabezado rev">
+        <p class="kicker">Lo que dicen</p>
+        <h2>618 clientes no pueden equivocarse</h2>
+      </div>
+      <div class="panel-resenas rev d1">
+        <div class="panel-nota">
+          <span class="nota-gigante"><span class="contador" data-fin="4.9" data-dec="1">0,0</span></span>
+          <span class="estrellas" aria-hidden="true">★★★★★</span>
+          <span class="de">sobre 5 · 618 reseñas en Google</span>
+        </div>
+        <div class="panel-temas">
+          <div class="tema"><span class="punto" aria-hidden="true">◆</span><p>Sus clientes la señalan como <strong>una de las barberías mejor valoradas del centro de València</strong>.</p></div>
+          <div class="tema"><span class="punto" aria-hidden="true">◆</span><p>Un <strong>4,9 sobre 5</strong> mantenido a lo largo de cientos de valoraciones: constancia y oficio.</p></div>
+          <div class="tema"><span class="punto" aria-hidden="true">◆</span><p>En pleno <strong>corazón de Ciutat Vella</strong>, junto a la Plaza del Ayuntamiento.</p></div>
+          <p class="fuente">Valoración pública real de su ficha de Google.</p>
+          <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%ADctor%20Mart%C3%ADnez%20barber%C3%ADa%20peluquer%C3%ADa%2C%20Calle%20Periodista%20Azzati%2011%2C%2046002%20Val%C3%A8ncia" target="_blank" rel="noopener">Leer reseñas en Google ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="contacto" id="contacto" aria-label="Dónde estamos">
+    <div class="contenedor">
+      <div class="encabezado rev">
+        <p class="kicker">Visítanos</p>
+        <h2>En el centro, donde siempre</h2>
+      </div>
+      <div class="bloque rev d1">
+        <div>
+          <div class="dato">
+            <span class="ic" aria-hidden="true">⌖</span>
+            <div>
+              <h3>Dirección</h3>
+              <p>Calle Periodista Azzati, 11<br>Ciutat Vella · 46002 València</p>
+            </div>
+          </div>
+          <div class="dato">
+            <span class="ic" aria-hidden="true">✦</span>
+            <div>
+              <h3>Referencia</h3>
+              <p>Junto a la Plaza del Ayuntamiento de València</p>
+            </div>
+          </div>
+          <div class="dato" style="margin-bottom:0">
+            <span class="ic" aria-hidden="true">✂</span>
+            <div>
+              <h3>Citas</h3>
+              <p>Atención en el propio salón. Esta web podría incluir reservas online con confirmación al momento.</p>
+            </div>
+          </div>
+        </div>
+        <div class="mapa-cta">
+          <span class="estrellas" aria-hidden="true">★★★★★</span>
+          <p>Estamos a un minuto a pie de la Plaza del Ayuntamiento. Abre el mapa y ven a vernos.</p>
+          <a class="btn btn-oro" href="https://www.google.com/maps/search/?api=1&amp;query=V%C3%ADctor%20Mart%C3%ADnez%20barber%C3%ADa%20peluquer%C3%ADa%2C%20Calle%20Periodista%20Azzati%2011%2C%2046002%20Val%C3%A8ncia" target="_blank" rel="noopener">Abrir en Google Maps ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a class="brand" href="#inicio" aria-label="Víctor Martínez, volver arriba">
+    <span class="mono">VM</span>
+    <span>Víctor Martínez<small>Barbería · Peluquería</small></span>
+  </a>
+  <p class="dir">Calle Periodista Azzati, 11 · Ciutat Vella · 46002 València</p>
+  <p class="aviso"><strong>DEMO</strong> creada por <strong>Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra no contractual, elaborado con datos públicos del negocio.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reducido = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Revelado en cascada con IntersectionObserver ---------- */
+  var revelables = [].slice.call(document.querySelectorAll(".rev"));
+  function mostrarTodo(){ revelables.forEach(function(el){ el.classList.add("in"); }); }
+  if (reducido || !("IntersectionObserver" in window)) {
+    mostrarTodo();
+  } else {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    revelables.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ----------
+     Si a los 1,2 s algún elemento sigue oculto (IO no disparado, WebView raro,
+     visor de email...), se fuerza visible. La página NUNCA puede quedar en blanco. */
+  setTimeout(function(){
+    revelables.forEach(function(el){
+      var visible = false;
+      try { visible = parseFloat(getComputedStyle(el).opacity) > 0.05; } catch(err) { visible = false; }
+      if (!visible || !el.classList.contains("in")) {
+        el.style.transition = "opacity .6s ease";
+        el.classList.add("in");
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      }
+    });
+    [].slice.call(document.querySelectorAll("h1 .w, .hero-sub, .hero-cta, .hero-nota")).forEach(function(el){
+      var visible = false;
+      try { visible = parseFloat(getComputedStyle(el).opacity) > 0.05; } catch(err) { visible = false; }
+      if (!visible) { el.style.animation = "none"; el.style.opacity = "1"; el.style.transform = "none"; }
+    });
+  }, 1200);
+
+  /* ---------- Contadores animados (4,9 y 618) ---------- */
+  function animaContador(el){
+    var fin = parseFloat(el.getAttribute("data-fin"));
+    var dec = parseInt(el.getAttribute("data-dec"), 10) || 0;
+    if (reducido) { el.textContent = fin.toFixed(dec).replace(".", ","); return; }
+    var dur = 1500, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easeOutCubic */
+      el.textContent = (fin * suave).toFixed(dec).replace(".", ",");
+      if (p < 1) requestAnimationFrame(paso);
+      else el.textContent = fin.toFixed(dec).replace(".", ",");
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = [].slice.call(document.querySelectorAll(".contador"));
+  if ("IntersectionObserver" in window && !reducido) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animaContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ ioC.observe(el); });
+    /* rescate de contadores: pase lo que pase, a los 4 s muestran su valor final */
+    setTimeout(function(){
+      contadores.forEach(function(el){
+        var fin = parseFloat(el.getAttribute("data-fin"));
+        var dec = parseInt(el.getAttribute("data-dec"), 10) || 0;
+        if (parseFloat(el.textContent.replace(",", ".")) < fin) el.textContent = fin.toFixed(dec).replace(".", ",");
+      });
+    }, 4000);
+  } else {
+    contadores.forEach(function(el){
+      var fin = parseFloat(el.getAttribute("data-fin"));
+      var dec = parseInt(el.getAttribute("data-dec"), 10) || 0;
+      el.textContent = fin.toFixed(dec).replace(".", ",");
+    });
+  }
+
+  /* ---------- Barra de progreso de scroll + parallax del ornamento ---------- */
+  var barra = document.getElementById("progreso");
+  var ornamento = document.getElementById("ornamento");
+  var pendiente = false;
+  function alScroll(){
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function(){
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+      if (barra) barra.style.width = Math.min(y / max * 100, 100) + "%";
+      if (ornamento && !reducido) ornamento.style.transform = "translateY(" + (y * 0.18) + "px) rotate(" + (y * 0.02) + "deg)";
+      pendiente = false;
+    });
+  }
+  window.addEventListener("scroll", alScroll, { passive: true });
+  alScroll();
+})();
+</script>
+</body>
+</html>

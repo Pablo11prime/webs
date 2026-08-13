@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PinPon Lili — Moda femenina bohemio-chic en el centro de Valencia</title>
+<meta name="description" content="PinPon Lili: marca propia de moda femenina en Ciutat Vella, Valencia. Vestidos, conjuntos coordinados y blusas con estética original. 4,7★ en Google y más de 400.000 seguidores en Instagram. Envíos a toda Europa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terracota:#B0674F;
+  --terracota-oscuro:#8F4F3B;
+  --crema:#F6EFE7;
+  --dorado:#C99A5B;
+  --dorado-suave:#F0E2CC;
+  --tinta:#3B2A24;
+  --blanco:#FFFDFA;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:24px;
+  --shadow:0 10px 30px rgba(59,42,36,.08);
+  --shadow-lift:0 20px 48px rgba(59,42,36,.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Jost',system-ui,sans-serif;
+  color:var(--tinta);
+  background:var(--crema);
+  line-height:1.7;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.12;letter-spacing:.005em;font-weight:600}
+a{color:inherit}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--terracota),var(--dorado));
+  z-index:1000;transition:width 120ms linear;border-radius:0 4px 4px 0;
+}
+
+/* ===== Marca de agua DEMO ===== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--tinta);color:var(--crema);
+  font-size:.72rem;font-weight:500;letter-spacing:.35em;
+  padding:.42em 3.4em;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  pointer-events:none;opacity:.9;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  background:rgba(246,239,231,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(176,103,79,.14);
+}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.4rem;text-decoration:none;letter-spacing:.02em}
+.logo em{font-style:italic;color:var(--terracota)}
+.nav-cta{
+  text-decoration:none;font-weight:500;font-size:.9rem;letter-spacing:.04em;
+  background:var(--terracota);color:var(--blanco);
+  padding:.55em 1.3em;border-radius:999px;
+  transition:transform 250ms var(--ease),background 250ms var(--ease);
+}
+.nav-cta:hover{transform:scale(1.05);background:var(--terracota-oscuro)}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:4.8rem 1.4rem 5.4rem;text-align:center;
+  background:
+    radial-gradient(58rem 30rem at 88% -12%, rgba(201,154,91,.24), transparent 60%),
+    radial-gradient(42rem 26rem at -12% 112%, rgba(176,103,79,.16), transparent 55%),
+    var(--crema);
+}
+.adorno{position:absolute;pointer-events:none;opacity:.6;will-change:transform}
+.adorno svg{display:block}
+.hero-int{position:relative;max-width:680px;margin:0 auto}
+.chip{
+  display:inline-block;font-size:.76rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--terracota-oscuro);background:var(--dorado-suave);
+  border:1px solid rgba(201,154,91,.45);
+  padding:.5em 1.2em;border-radius:999px;margin-bottom:1.3rem;
+}
+.hero h1{font-size:clamp(3rem,11vw,5rem);font-weight:600}
+.hero h1 .sub{
+  display:block;font-family:'Jost',sans-serif;font-weight:400;
+  font-size:clamp(.85rem,3vw,1.05rem);letter-spacing:.34em;text-transform:uppercase;
+  color:var(--terracota);margin-top:.7rem;
+}
+.eslogan{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.2rem,4.6vw,1.55rem);color:#6b5248;
+  max-width:36ch;margin:1.4rem auto 0;
+}
+.eslogan .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
+.eslogan .palabra.visible{opacity:1;transform:none}
+.hero-datos{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;font-size:.88rem;color:#6b5248}
+.hero-datos span{background:var(--blanco);border:1px solid rgba(176,103,79,.14);border-radius:999px;padding:.35em 1em;box-shadow:var(--shadow)}
+.botones{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2.1rem}
+.btn{
+  text-decoration:none;font-weight:500;font-size:1rem;letter-spacing:.03em;
+  padding:.95em 1.9em;border-radius:999px;
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease),background 280ms var(--ease);
+}
+.btn-terracota{background:var(--terracota);color:var(--blanco);box-shadow:0 14px 32px rgba(176,103,79,.38)}
+.btn-terracota:hover{transform:translateY(-3px) scale(1.03);background:var(--terracota-oscuro)}
+.btn-tinta{background:var(--tinta);color:var(--crema);box-shadow:var(--shadow-lift)}
+.btn-tinta:hover{transform:translateY(-3px) scale(1.03);background:#2a1d18}
+.btn-borde{border:1.5px solid var(--terracota);color:var(--terracota-oscuro);background:transparent}
+.btn-borde:hover{transform:translateY(-3px) scale(1.03);background:var(--dorado-suave)}
+.nota-hero{margin-top:1.2rem;font-size:.85rem;color:#8a7568;letter-spacing:.04em}
+
+/* ===== Contadores ===== */
+.franja-contador{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  padding:0 1.4rem;margin-top:-2.5rem;position:relative;z-index:5;
+}
+.tarjeta-num{
+  background:var(--blanco);border-radius:var(--radius);box-shadow:var(--shadow-lift);
+  padding:1.1rem 1.7rem;text-align:center;min-width:140px;
+  border:1px solid rgba(201,154,91,.28);
+}
+.tarjeta-num .num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--terracota)}
+.tarjeta-num .desc{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:#8a7568}
+
+/* ===== Secciones ===== */
+section{padding:4.4rem 1.4rem}
+.contenedor{max-width:980px;margin:0 auto}
+.etiqueta{font-size:.76rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--terracota);margin-bottom:.7rem}
+h2{font-size:clamp(2rem,7vw,3rem);margin-bottom:1rem}
+
+/* Animación de entrada escalonada */
+.anima{opacity:0;transform:translateY(28px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.anima.visible{opacity:1;transform:none}
+
+/* ===== La marca ===== */
+.marca-sec{background:var(--blanco)}
+.marca-grid{display:grid;gap:2.2rem;align-items:center}
+.marca-sec p.texto{color:#5f4c42;margin-bottom:1rem;font-size:1.06rem}
+.detalles{display:grid;gap:.75rem;margin-top:.4rem}
+.detalle{
+  display:flex;align-items:flex-start;gap:.75rem;font-size:.98rem;color:#5f4c42;
+  background:var(--crema);border-radius:18px;padding:.85rem 1.05rem;
+  border:1px solid rgba(201,154,91,.18);
+  transition:transform 260ms var(--ease);
+}
+.detalle:hover{transform:translateX(4px)}
+.detalle .ico{flex:0 0 auto;width:28px;height:28px;border-radius:9px;background:var(--dorado-suave);display:grid;place-items:center;color:var(--terracota-oscuro)}
+.cita-editorial{
+  margin-top:1.6rem;padding-left:1.2rem;border-left:3px solid var(--dorado);
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;color:var(--terracota-oscuro);
+}
+
+/* ===== Colecciones ===== */
+.colecciones{background:
+  radial-gradient(50rem 24rem at 112% 0%, rgba(201,154,91,.16), transparent 60%),
+  var(--crema)}
+.rejilla-col{display:grid;grid-template-columns:1fr;gap:1.15rem;margin-top:2.1rem}
+.tarjeta-col{
+  background:var(--blanco);border-radius:var(--radius);padding:2rem 1.6rem 1.7rem;
+  box-shadow:var(--shadow);border:1px solid rgba(201,154,91,.2);
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  position:relative;overflow:hidden;text-align:center;
+}
+.tarjeta-col::after{
+  content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  width:64%;height:4px;border-radius:4px 4px 0 0;
+  background:linear-gradient(90deg,var(--terracota),var(--dorado));
+  opacity:.85;
+}
+.tarjeta-col:hover{transform:translateY(-7px) rotate(-.4deg) scale(1.02);box-shadow:var(--shadow-lift)}
+.tarjeta-col .simbolo{
+  width:58px;height:58px;margin:0 auto 1rem;border-radius:50%;
+  background:var(--dorado-suave);display:grid;place-items:center;
+  border:1px solid rgba(201,154,91,.4);
+}
+.tarjeta-col h3{font-size:1.55rem;margin-bottom:.4rem}
+.tarjeta-col p{color:#7a6459;font-size:.95rem;max-width:30ch;margin:0 auto}
+.nota-col{margin-top:1.6rem;font-size:.9rem;color:#8a7568;text-align:center;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.1rem}
+
+/* ===== Cómo comprar ===== */
+.comprar{background:var(--tinta);color:var(--crema)}
+.comprar .etiqueta{color:var(--dorado)}
+.comprar .intro{color:#d9cabe;max-width:56ch}
+.rejilla-comprar{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2.1rem}
+.paso{
+  background:rgba(246,239,231,.06);border:1px solid rgba(246,239,231,.14);
+  border-radius:var(--radius);padding:1.7rem 1.5rem;
+  transition:transform 300ms var(--ease),background 300ms var(--ease);
+}
+.paso:hover{transform:translateY(-5px) scale(1.02);background:rgba(246,239,231,.11)}
+.paso .numero{
+  font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--dorado);
+  line-height:1;margin-bottom:.5rem;
+}
+.paso h3{font-size:1.35rem;margin-bottom:.4rem;color:var(--blanco)}
+.paso p{color:#d9cabe;font-size:.95rem}
+.paso a.enlace{color:var(--dorado);font-weight:500;text-decoration:none}
+.paso a.enlace:hover{text-decoration:underline}
+.comprar .botones{margin-top:2.2rem}
+.envios{
+  margin-top:1.6rem;text-align:center;font-size:.9rem;color:#c4b3a5;letter-spacing:.06em;
+}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--blanco)}
+.puntuacion{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.puntuacion .grande{font-family:'Cormorant Garamond',serif;font-size:3.6rem;font-weight:700;color:var(--terracota)}
+.estrellas{color:var(--dorado);font-size:1.3rem;letter-spacing:.12em}
+.puntuacion .detalle-punt{color:#8a7568;font-size:.95rem}
+.rejilla-res{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.tarjeta-res{
+  background:var(--crema);border:1px solid rgba(201,154,91,.22);
+  border-radius:var(--radius);padding:1.6rem;
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+}
+.tarjeta-res:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow)}
+.tarjeta-res .estrellas{font-size:1rem;margin-bottom:.6rem}
+.tarjeta-res h3{font-size:1.3rem;margin-bottom:.3rem}
+.tarjeta-res p{color:#6b5248;font-size:.96rem}
+.nota-res{margin-top:1.4rem;font-size:.85rem;color:#8a7568;text-align:center}
+
+/* ===== Contacto ===== */
+.contacto{background:
+  radial-gradient(46rem 24rem at -10% 10%, rgba(176,103,79,.1), transparent 55%),
+  var(--crema)}
+.rejilla-cont{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.9rem}
+.tarjeta-cont{
+  background:var(--blanco);border-radius:var(--radius);padding:1.5rem 1.4rem;
+  border:1px solid rgba(201,154,91,.2);
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease);
+}
+.tarjeta-cont:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tarjeta-cont h3{font-size:1.15rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.55rem}
+.tarjeta-cont h3 .ico{width:32px;height:32px;border-radius:10px;background:var(--dorado-suave);display:grid;place-items:center;color:var(--terracota-oscuro);flex:0 0 auto;font-family:'Jost',sans-serif;font-size:1rem}
+.tarjeta-cont p{color:#6b5248;font-size:.96rem}
+.tarjeta-cont a{color:var(--terracota-oscuro);font-weight:500;text-decoration:none}
+.tarjeta-cont a:hover{text-decoration:underline}
+.cta-final{
+  margin-top:2.5rem;text-align:center;
+  background:linear-gradient(135deg,var(--dorado-suave),var(--blanco));
+  border:1px solid rgba(201,154,91,.4);
+  border-radius:var(--radius);padding:2.4rem 1.5rem;
+}
+.cta-final h3{font-size:1.8rem;margin-bottom:.5rem}
+.cta-final p{color:#6b5248;margin-bottom:1.4rem;max-width:48ch;margin-left:auto;margin-right:auto}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--tinta);color:#c4b3a5;text-align:center;
+  padding:2.8rem 1.4rem;font-size:.9rem;
+}
+footer .marca{font-family:'Cormorant Garamond',serif;color:var(--crema);font-size:1.35rem;margin-bottom:.4rem}
+footer a{color:var(--dorado);text-decoration:none;font-weight:500}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:1.3rem;padding-top:1.3rem;border-top:1px solid rgba(246,239,231,.12);
+  font-size:.85rem;
+}
+
+/* ===== Escritorio ===== */
+@media(min-width:720px){
+  .rejilla-col{grid-template-columns:repeat(3,1fr)}
+  .rejilla-res{grid-template-columns:repeat(3,1fr)}
+  .rejilla-cont{grid-template-columns:repeat(2,1fr)}
+  .rejilla-comprar{grid-template-columns:repeat(3,1fr)}
+  .marca-grid{grid-template-columns:1.2fr 1fr}
+  section{padding:5.8rem 2rem}
+}
+
+/* ===== Reduced motion: sin animaciones ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .anima,.eslogan .palabra{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.anima,.eslogan .palabra,.adorno,[data-contador]{opacity:1!important;transform:none!important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio">PinPon <em>Lili</em></a>
+  <a class="nav-cta" href="tel:+34665100473">Llamar</a>
+</nav>
+
+<header id="inicio">
+<section class="hero" aria-label="Presentación">
+  <div class="adorno" style="top:10%;left:5%" data-parallax="0.25">
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3a9 9 0 0 1 0 18V3z" fill="#C99A5B" opacity=".45"/><path d="M12 3a9 9 0 0 0 0 18V3z" stroke="#B0674F" stroke-width="1.2" opacity=".5"/></svg>
+  </div>
+  <div class="adorno" style="top:18%;right:7%" data-parallax="0.45">
+    <svg width="76" height="76" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20c0-8 4-14 8-16 4 2 8 8 8 16H4z" stroke="#B0674F" stroke-width="1.2" opacity=".45"/><path d="M12 4v16" stroke="#C99A5B" stroke-width="1" opacity=".5"/></svg>
+  </div>
+  <div class="adorno" style="bottom:12%;left:11%" data-parallax="0.6">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#C99A5B" stroke-width="1.3" opacity=".5"/><circle cx="12" cy="12" r="4.5" fill="#B0674F" opacity=".3"/></svg>
+  </div>
+  <div class="adorno" style="bottom:20%;right:13%" data-parallax="0.35">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12c6-7 12-7 18 0-6 7-12 7-18 0z" stroke="#B0674F" stroke-width="1.1" opacity=".4"/></svg>
+  </div>
+  <div class="hero-int">
+    <span class="chip anima">Moda femenina · Ciutat Vella, Valencia</span>
+    <h1 class="anima">PinPon Lili
+      <span class="sub">Bohemio · Chic · Con alma</span>
+    </h1>
+    <p class="eslogan" id="eslogan">Prendas con estética propia, lejos de la producción en masa.</p>
+    <div class="hero-datos anima">
+      <span>★ 4,7 en Google · 423 reseñas</span>
+      <span>+400.000 en Instagram</span>
+      <span>Envíos a toda Europa</span>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-terracota" href="tel:+34665100473">📞 665 10 04 73</a>
+      <a class="btn btn-tinta" href="https://www.instagram.com/pinponlili/" target="_blank" rel="noopener">Escríbenos por Instagram</a>
+    </div>
+    <p class="nota-hero anima">C. del Hospital, 12 · pleno centro de Valencia</p>
+  </div>
+</section>
+</header>
+
+<main>
+
+<div class="franja-contador">
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4.7" data-decimales="1">0,0</span>★</div>
+    <div class="desc">Nota en Google</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="423">0</span></div>
+    <div class="desc">Reseñas</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num">+<span data-contador="400">0</span> mil</div>
+    <div class="desc">Seguidores en Instagram</div>
+  </div>
+</div>
+
+<section class="marca-sec" aria-label="La marca">
+  <div class="contenedor">
+    <div class="marca-grid">
+      <div>
+        <p class="etiqueta anima">La marca</p>
+        <h2 class="anima">Moda con carácter, hecha para ti</h2>
+        <p class="texto anima">PinPon Lili es una marca propia de moda femenina con estética bohemio-chic: vestidos, conjuntos coordinados y blusas pensados para quien busca un estilo original, lejos de la producción masiva.</p>
+        <p class="texto anima">Nuestra tienda está en la calle del Hospital, en Ciutat Vella, en pleno centro de Valencia. Y si no puedes venir, te lo enviamos: mandamos pedidos a toda Europa.</p>
+        <p class="cita-editorial anima">«Vestir diferente no es una moda: es una forma de ser.»</p>
+      </div>
+      <div class="detalles">
+        <div class="detalle anima"><span class="ico">✦</span>Marca propia de moda femenina, prendas nuevas</div>
+        <div class="detalle anima"><span class="ico">✦</span>Estética bohemio-chic con identidad propia</div>
+        <div class="detalle anima"><span class="ico">✦</span>Tienda física en el centro de Valencia</div>
+        <div class="detalle anima"><span class="ico">✦</span>Envíos a toda Europa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="colecciones" aria-label="Nuestras prendas">
+  <div class="contenedor">
+    <p class="etiqueta anima">Nuestras prendas</p>
+    <h2 class="anima">Lo que encontrarás en PinPon Lili</h2>
+    <div class="rejilla-col">
+      <article class="tarjeta-col anima">
+        <div class="simbolo" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M9 3l3 3 3-3 2 4-2 2v12H8V9L6 7l3-4z" stroke="#B0674F" stroke-width="1.4" fill="#F0E2CC"/></svg>
+        </div>
+        <h3>Vestidos</h3>
+        <p>Piezas con caída, aire bohemio y detalles que no verás en todas partes.</p>
+      </article>
+      <article class="tarjeta-col anima">
+        <div class="simbolo" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="8" rx="2" stroke="#B0674F" stroke-width="1.4" fill="#F0E2CC"/><rect x="5" y="13" width="14" height="8" rx="2" stroke="#C99A5B" stroke-width="1.4" fill="#FFFDFA"/></svg>
+        </div>
+        <h3>Conjuntos coordinados</h3>
+        <p>Dos piezas que combinan solas: el look completo, sin pensarlo.</p>
+      </article>
+      <article class="tarjeta-col anima">
+        <div class="simbolo" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M8 4h8l3 4-3 2v10H8V10L5 8l3-4z" stroke="#B0674F" stroke-width="1.4" fill="#F0E2CC"/><path d="M12 4v6" stroke="#C99A5B" stroke-width="1.2"/></svg>
+        </div>
+        <h3>Blusas</h3>
+        <p>Básicos que no lo son: blusas con estética original para el día a día.</p>
+      </article>
+    </div>
+    <p class="nota-col anima">Novedades constantes en nuestro Instagram <a href="https://www.instagram.com/pinponlili/" target="_blank" rel="noopener" style="color:var(--terracota-oscuro);font-weight:500">@pinponlili</a></p>
+  </div>
+</section>
+
+<section class="comprar" aria-label="Cómo comprar">
+  <div class="contenedor">
+    <p class="etiqueta anima">Compra fácil</p>
+    <h2 class="anima" style="color:var(--blanco)">¿Te ha enamorado algo? Pídelo</h2>
+    <p class="intro anima">Puedes venir a la tienda o pedir tus prendas a distancia: enviamos a toda Europa. Así de sencillo:</p>
+    <div class="rejilla-comprar">
+      <article class="paso anima">
+        <div class="numero">01</div>
+        <h3>Por Instagram</h3>
+        <p>Mándanos un mensaje directo a <a class="enlace" href="https://www.instagram.com/pinponlili/" target="_blank" rel="noopener">@pinponlili</a> con la prenda que te gusta.</p>
+      </article>
+      <article class="paso anima">
+        <div class="numero">02</div>
+        <h3>Por WhatsApp o teléfono</h3>
+        <p>Escríbenos o llámanos al <a class="enlace" href="tel:+34665100473">665 10 04 73</a> y te atendemos al momento.</p>
+      </article>
+      <article class="paso anima">
+        <div class="numero">03</div>
+        <h3>En la tienda</h3>
+        <p>Ven a vernos a C. del Hospital, 12, en pleno centro de Valencia, y pruébatelo todo.</p>
+      </article>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-terracota" href="https://wa.me/34665100473" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+      <a class="btn btn-borde" style="color:var(--dorado);border-color:var(--dorado)" href="https://www.instagram.com/pinponlili/" target="_blank" rel="noopener">Pedir por Instagram</a>
+    </div>
+    <p class="envios anima">📦 Enviamos a toda Europa · Atención cercana y envíos rápidos</p>
+  </div>
+</section>
+
+<section class="resenas" aria-label="Opiniones de clientas">
+  <div class="contenedor">
+    <p class="etiqueta anima">Lo que dicen las clientas</p>
+    <h2 class="anima">4,7 estrellas y más de 400 opiniones</h2>
+    <div class="puntuacion anima">
+      <span class="grande">4,7</span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <span class="detalle-punt">423 reseñas en Google</span>
+    </div>
+    <div class="rejilla-res">
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Trato cercano</h3>
+        <p>Las clientas destacan una atención impecable y un trato cercano, tanto en tienda como por mensaje.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Envíos rápidos</h3>
+        <p>Los pedidos a distancia llegan rápido y bien cuidados, también fuera de España.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Calidad real</h3>
+        <p>Prendas de calidad, tal y como se describen: lo que ves es lo que recibes.</p>
+      </article>
+    </div>
+    <p class="nota-res anima">Resumen de las opiniones publicadas en la ficha de Google de PinPon Lili.</p>
+  </div>
+</section>
+
+<section class="contacto" aria-label="Contacto">
+  <div class="contenedor">
+    <p class="etiqueta anima">Contacto</p>
+    <h2 class="anima">Visítanos en el centro de Valencia</h2>
+    <div class="rejilla-cont">
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📍</span>Dónde estamos</h3>
+        <p>C. del Hospital, 12<br>Ciutat Vella<br>46001 Valencia</p>
+        <p style="margin-top:.7rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=PinPon+Lili+C.+del+Hospital+12+46001+Valencia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📞</span>Teléfono y WhatsApp</h3>
+        <p>Llámanos o escríbenos para pedidos y consultas:</p>
+        <p style="margin-top:.4rem;font-size:1.25rem"><a href="tel:+34665100473">665 10 04 73</a></p>
+        <p style="margin-top:.4rem"><a href="https://wa.me/34665100473" target="_blank" rel="noopener">Abrir WhatsApp →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">✉️</span>Email</h3>
+        <p>Para cualquier consulta:</p>
+        <p style="margin-top:.4rem"><a href="mailto:tiendaspinponlili@gmail.com">tiendaspinponlili@gmail.com</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">♥</span>Redes sociales</h3>
+        <p><a href="https://www.instagram.com/pinponlili/" target="_blank" rel="noopener">Instagram · @pinponlili</a></p>
+        <p style="margin-top:.4rem"><a href="https://www.tiktok.com/@pinponlilitiktok" target="_blank" rel="noopener">TikTok · @pinponlilitiktok</a></p>
+        <p style="margin-top:.4rem">También en Facebook</p>
+      </div>
+    </div>
+    <div class="cta-final anima">
+      <h3>Tu próximo look te está esperando</h3>
+      <p>Pásate por la tienda o pídelo desde casa: enviamos a toda Europa.</p>
+      <div class="botones" style="margin-top:0">
+        <a class="btn btn-terracota" href="tel:+34665100473">Llamar ahora</a>
+        <a class="btn btn-borde" href="https://www.instagram.com/pinponlili/" target="_blank" rel="noopener">Ver Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca">PinPon Lili</p>
+  <p>C. del Hospital, 12 — Ciutat Vella, Valencia · <a href="tel:+34665100473">665 10 04 73</a></p>
+  <p class="aviso-demo">Demo creada por <strong style="color:var(--crema)">Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Eslogan palabra a palabra ===== */
+  var eslogan = document.getElementById('eslogan');
+  if (eslogan && !reduceMotion) {
+    var palabras = eslogan.textContent.trim().split(/\s+/);
+    eslogan.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      eslogan.appendChild(s);
+      eslogan.appendChild(document.createTextNode(' '));
+      setTimeout(function(){ s.classList.add('visible'); }, 350 + i * 90);
+    });
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anima'));
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = Array.prototype.slice.call(e.target.parentNode.querySelectorAll(':scope > .anima'));
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = (Math.max(idx,0) * 90) + 'ms';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    animados.forEach(function(el){ obs.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (4,7 · 423 · 400) ===== */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function fmt(v){ return v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion) { el.textContent = fmt(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easing cúbico */
+      el.textContent = fmt(fin * suave);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fmt(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = Array.prototype.slice.call(document.querySelectorAll('[data-contador]'));
+  if ('IntersectionObserver' in window) {
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); obsNum.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ obsNum.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave del hero ===== */
+  var barra = document.getElementById('barra-progreso');
+  var adornos = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion) {
+        adornos.forEach(function(a){
+          var f = parseFloat(a.getAttribute('data-parallax')) || 0.3;
+          a.style.transform = 'translateY(' + (y * f * -0.4) + 'px) rotate(' + (y * f * 0.03) + 'deg)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía =====
+     Lección del 03/08/2026: algunos visores de email/navegadores no disparan
+     IntersectionObserver y la página quedaba en blanco. A los 1,2 s, este
+     rescate fuerza visible todo lo que siga oculto, pase lo que pase. */
+  function rescateVisibilidad(){
+    document.querySelectorAll('.anima, .eslogan .palabra').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (parseFloat(el.textContent.replace(',', '.')) === 0) {
+        var fin = parseFloat(el.getAttribute('data-contador'));
+        var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+
+</body>
+</html>

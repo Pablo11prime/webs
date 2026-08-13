@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bajomisombrero — Peluquería premium en Barcelona · Premio Kérastase Mejor Peluquería Nacional</title>
+<meta name="description" content="Bajomisombrero: templo capilar de 200 m² en Barcelona. Premio de Excelencia Kérastase a la Mejor Peluquería Nacional. Coloración, balayage, spa capilar y rituales Kérastase. 4,7★ con 636 reseñas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fucsia:#E30470;
+  --fucsia-suave:#FDEBF3;
+  --fucsia-hondo:#B00357;
+  --gris:#6B616B;
+  --azul:#69B0BF;
+  --azul-suave:#EAF4F6;
+  --tinta:#2A242A;
+  --marfil:#FAF7F5;
+  --blanco:#FFFFFF;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:24px;
+  --sombra:0 12px 32px rgba(42,36,42,.08);
+  --sombra-alta:0 22px 50px rgba(42,36,42,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Jost',system-ui,sans-serif;
+  color:var(--tinta);
+  background:var(--marfil);
+  line-height:1.65;
+  font-size:17px;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.12;letter-spacing:.005em;font-weight:600}
+a{color:inherit}
+strong{font-weight:500}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--fucsia),var(--azul));
+  z-index:1000;transition:width 120ms linear;border-radius:0 4px 4px 0;
+}
+
+/* ===== Marca de agua DEMO ===== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--tinta);color:var(--marfil);
+  font-size:.72rem;font-weight:500;letter-spacing:.35em;
+  padding:.42em 3.4em;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  pointer-events:none;opacity:.9;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  background:rgba(250,247,245,.86);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(42,36,42,.07);
+}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.35rem;text-decoration:none;letter-spacing:.02em}
+.logo em{font-style:normal;color:var(--fucsia)}
+.nav-cta{
+  text-decoration:none;font-weight:500;font-size:.9rem;
+  background:var(--tinta);color:var(--marfil);
+  padding:.55em 1.25em;border-radius:999px;
+  transition:transform 250ms var(--ease),background 250ms var(--ease);
+}
+.nav-cta:hover{transform:scale(1.05);background:var(--fucsia)}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:4.6rem 1.4rem 5.4rem;text-align:center;
+  background:
+    radial-gradient(56rem 30rem at 88% -12%, rgba(227,4,112,.10), transparent 60%),
+    radial-gradient(44rem 26rem at -12% 110%, rgba(105,176,191,.16), transparent 55%),
+    var(--marfil);
+}
+.flotante{position:absolute;pointer-events:none;opacity:.6;will-change:transform}
+.flotante svg{display:block}
+.hero-int{position:relative;max-width:680px;margin:0 auto}
+.chip{
+  display:inline-flex;align-items:center;gap:.5em;
+  font-size:.76rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fucsia-hondo);background:var(--fucsia-suave);
+  border:1px solid rgba(227,4,112,.28);
+  padding:.5em 1.2em;border-radius:999px;margin-bottom:1.3rem;
+}
+.hero h1{font-size:clamp(2.7rem,10vw,4.6rem);font-weight:700}
+.hero h1 .sub{
+  display:block;font-family:'Jost',sans-serif;
+  font-size:clamp(.85rem,3vw,1.05rem);font-weight:400;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gris);margin-top:.7rem;
+}
+.eslogan{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.25rem,4.6vw,1.6rem);color:#544c54;
+  max-width:36ch;margin:1.3rem auto 0;
+}
+.eslogan .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
+.eslogan .palabra.visible{opacity:1;transform:none}
+.hero-datos{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;font-size:.88rem;color:#5b535b}
+.hero-datos span{background:var(--blanco);border:1px solid rgba(42,36,42,.08);border-radius:999px;padding:.35em 1em;box-shadow:var(--sombra)}
+.botones{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2.1rem}
+.btn{
+  text-decoration:none;font-weight:500;font-size:1.02rem;
+  padding:.95em 1.9em;border-radius:999px;
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease),background 280ms var(--ease);
+}
+.btn-primario{background:var(--tinta);color:var(--marfil);box-shadow:var(--sombra-alta)}
+.btn-primario:hover{transform:translateY(-3px) scale(1.03);background:#191519}
+.btn-fucsia{background:var(--fucsia);color:var(--blanco);box-shadow:0 14px 32px rgba(227,4,112,.32)}
+.btn-fucsia:hover{transform:translateY(-3px) scale(1.03);background:var(--fucsia-hondo)}
+.nota-hero{margin-top:1.15rem;font-size:.85rem;color:#837a83}
+
+/* ===== Cinta deslizante de servicios ===== */
+.marquesina{
+  overflow:hidden;background:var(--tinta);color:var(--marfil);
+  padding:.7rem 0;white-space:nowrap;position:relative;
+}
+.marquesina .pista{display:inline-block;animation:desliza 30s linear infinite}
+.marquesina span{
+  display:inline-block;margin:0 1.6rem;
+  font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;font-weight:400;
+}
+.marquesina .punto{color:var(--fucsia);margin:0}
+@keyframes desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== Contadores ===== */
+.franja-contador{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  padding:0 1.4rem;margin-top:2.6rem;position:relative;z-index:5;
+}
+.tarjeta-num{
+  background:var(--blanco);border-radius:var(--radius);box-shadow:var(--sombra-alta);
+  padding:1.1rem 1.7rem;text-align:center;min-width:136px;
+  border:1px solid rgba(227,4,112,.12);
+}
+.tarjeta-num .num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--fucsia-hondo)}
+.tarjeta-num .desc{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:#847b84}
+
+/* ===== Secciones ===== */
+section{padding:4.4rem 1.4rem}
+.contenedor{max-width:980px;margin:0 auto}
+.etiqueta{font-size:.76rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--fucsia-hondo);margin-bottom:.6rem}
+h2{font-size:clamp(1.9rem,6.4vw,2.8rem);margin-bottom:1rem}
+
+/* Animación de entrada escalonada */
+.anima{opacity:0;transform:translateY(28px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.anima.visible{opacity:1;transform:none}
+
+/* ===== Sobre nosotros ===== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:2.2rem;align-items:center}
+.sobre p{color:#544c54;margin-bottom:1rem;font-size:1.05rem}
+.detalles{display:grid;gap:.7rem}
+.detalle{
+  display:flex;align-items:flex-start;gap:.75rem;font-size:.97rem;color:#4b444b;
+  background:var(--marfil);border-radius:16px;padding:.85rem 1rem;
+  border:1px solid rgba(42,36,42,.05);
+  transition:transform 250ms var(--ease);
+}
+.detalle:hover{transform:translateX(4px)}
+.detalle .ico{flex:0 0 auto;width:28px;height:28px;border-radius:9px;background:var(--fucsia-suave);display:grid;place-items:center;color:var(--fucsia-hondo);font-size:.9rem}
+.detalle:nth-child(even) .ico{background:var(--azul-suave);color:#3f7e8d}
+
+/* ===== Franja del premio ===== */
+.premio{
+  background:
+    radial-gradient(48rem 26rem at 110% 0%, rgba(227,4,112,.16), transparent 55%),
+    radial-gradient(40rem 22rem at -10% 100%, rgba(105,176,191,.14), transparent 55%),
+    var(--tinta);
+  color:var(--marfil);text-align:center;
+}
+.premio .laurel{font-size:2.2rem;display:block;margin-bottom:.6rem}
+.premio h2{color:var(--blanco);font-size:clamp(1.7rem,6vw,2.5rem)}
+.premio h2 em{font-style:italic;color:#F49CC6}
+.premio p{color:#cfc7cd;max-width:52ch;margin:1rem auto 0;font-size:1rem}
+.sello{
+  display:inline-block;margin-bottom:1.1rem;
+  font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:#F49CC6;
+  border:1px solid rgba(244,156,198,.4);border-radius:999px;padding:.5em 1.4em;
+}
+
+/* ===== Servicios ===== */
+.servicios{background:
+  radial-gradient(50rem 24rem at 110% 0%, rgba(105,176,191,.12), transparent 60%),
+  var(--marfil)}
+.rejilla-serv{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2rem}
+.tarjeta-serv{
+  background:var(--blanco);border-radius:var(--radius);padding:1.7rem 1.5rem 1.6rem;
+  box-shadow:var(--sombra);border:1px solid rgba(227,4,112,.10);
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  position:relative;overflow:hidden;
+}
+.tarjeta-serv::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:5px;
+  background:linear-gradient(180deg,var(--fucsia),var(--azul));
+  border-radius:5px 0 0 5px;
+}
+.tarjeta-serv:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--sombra-alta)}
+.tarjeta-serv .ico-serv{
+  width:46px;height:46px;border-radius:14px;margin-bottom:.9rem;
+  background:var(--fucsia-suave);display:grid;place-items:center;font-size:1.3rem;
+}
+.tarjeta-serv:nth-child(even) .ico-serv{background:var(--azul-suave)}
+.tarjeta-serv h3{font-size:1.35rem;margin-bottom:.35rem}
+.tarjeta-serv p{color:#6d646d;font-size:.94rem}
+.tarjeta-ancha{
+  grid-column:1 / -1;text-align:center;
+  background:linear-gradient(135deg,var(--fucsia-suave),var(--azul-suave));
+  border:1px solid rgba(227,4,112,.15);
+}
+.tarjeta-ancha::before{display:none}
+.tarjeta-ancha .ico-serv{margin:0 auto .9rem}
+.nota-serv{margin-top:1.4rem;font-size:.88rem;color:#847b84;text-align:center}
+.nota-serv a{color:var(--fucsia-hondo);font-weight:500}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--tinta);color:var(--marfil)}
+.resenas .etiqueta{color:#F49CC6}
+.resenas h2{color:var(--blanco)}
+.puntuacion{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.puntuacion .grande{font-family:'Cormorant Garamond',serif;font-size:3.6rem;font-weight:700;color:var(--blanco)}
+.estrellas{color:#E8C468;font-size:1.3rem;letter-spacing:.12em}
+.puntuacion .detalle-punt{color:#b3aab1;font-size:.95rem}
+.rejilla-res{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.tarjeta-res{
+  background:rgba(250,247,245,.06);border:1px solid rgba(250,247,245,.12);
+  border-radius:var(--radius);padding:1.6rem 1.5rem;
+  transition:transform 300ms var(--ease),background 300ms var(--ease);
+}
+.tarjeta-res:hover{transform:translateY(-5px) scale(1.02);background:rgba(250,247,245,.1)}
+.tarjeta-res .estrellas{font-size:1rem;margin-bottom:.6rem}
+.tarjeta-res h3{color:var(--blanco);font-size:1.25rem;margin-bottom:.45rem}
+.tarjeta-res p{color:#ded6dc;font-size:.96rem}
+.nota-res{margin-top:1.6rem;font-size:.82rem;color:#9a9098;text-align:center}
+
+/* ===== Contacto ===== */
+.contacto{background:var(--blanco)}
+.rejilla-cont{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.8rem}
+.tarjeta-cont{
+  background:var(--marfil);border-radius:var(--radius);padding:1.5rem 1.4rem;
+  border:1px solid rgba(42,36,42,.06);
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease);
+}
+.tarjeta-cont:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.tarjeta-cont h3{font-family:'Jost',sans-serif;font-weight:500;font-size:1.02rem;margin-bottom:.55rem;display:flex;align-items:center;gap:.55rem}
+.tarjeta-cont h3 .ico{width:32px;height:32px;border-radius:10px;background:var(--fucsia-suave);display:grid;place-items:center;color:var(--fucsia-hondo);flex:0 0 auto}
+.tarjeta-cont p, .tarjeta-cont li{color:#5b535b;font-size:.96rem}
+.tarjeta-cont ul{list-style:none}
+.tarjeta-cont li{display:flex;justify-content:space-between;gap:1rem;padding:.28rem 0;border-bottom:1px dashed rgba(42,36,42,.1)}
+.tarjeta-cont li:last-child{border-bottom:none}
+.tarjeta-cont li .suave{color:#847b84}
+.tarjeta-cont a{color:var(--fucsia-hondo);font-weight:500;text-decoration:none}
+.tarjeta-cont a:hover{text-decoration:underline}
+.cta-final{
+  margin-top:2.4rem;text-align:center;
+  background:linear-gradient(135deg,var(--fucsia-suave),var(--azul-suave));
+  border:1px solid rgba(227,4,112,.2);
+  border-radius:var(--radius);padding:2.4rem 1.5rem;
+}
+.cta-final h3{font-size:1.6rem;margin-bottom:.5rem}
+.cta-final p{color:#5b535b;margin-bottom:1.3rem}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--tinta);color:#b3aab1;text-align:center;
+  padding:2.6rem 1.4rem;font-size:.9rem;
+}
+footer .marca{font-family:'Cormorant Garamond',serif;color:var(--marfil);font-size:1.25rem;margin-bottom:.4rem}
+footer a{color:#F49CC6;text-decoration:none;font-weight:500}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(250,247,245,.12);
+  font-size:.85rem;
+}
+
+/* ===== Escritorio ===== */
+@media(min-width:720px){
+  .rejilla-serv{grid-template-columns:repeat(2,1fr)}
+  .rejilla-res{grid-template-columns:repeat(3,1fr)}
+  .rejilla-cont{grid-template-columns:repeat(2,1fr)}
+  .sobre-grid{grid-template-columns:1.2fr 1fr}
+  section{padding:5.5rem 2rem}
+}
+@media(min-width:1000px){
+  .rejilla-serv{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== Reduced motion: sin animaciones ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .anima,.eslogan .palabra{opacity:1!important;transform:none!important}
+  .marquesina .pista{animation:none!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.anima,.eslogan .palabra,.flotante,[data-contador]{opacity:1!important;transform:none!important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio">Bajomi<em>sombrero</em></a>
+  <a class="nav-cta" href="tel:+34680284856">Llamar</a>
+</nav>
+
+<header id="inicio">
+<section class="hero" aria-label="Presentación">
+  <div class="flotante" style="top:10%;left:5%" data-parallax="0.25">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <ellipse cx="12" cy="16" rx="9" ry="2.6" stroke="#E30470" stroke-width="1.3" opacity=".5"/>
+      <path d="M7.5 15.5c0-4 .8-8.5 4.5-8.5s4.5 4.5 4.5 8.5" stroke="#E30470" stroke-width="1.3" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="flotante" style="top:22%;right:7%" data-parallax="0.45">
+    <svg width="58" height="58" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="7.5" cy="17" r="2.6" stroke="#69B0BF" stroke-width="1.3" opacity=".55"/>
+      <circle cx="16.5" cy="17" r="2.6" stroke="#69B0BF" stroke-width="1.3" opacity=".55"/>
+      <path d="M9.4 15.2 18 4M14.6 15.2 6 4" stroke="#69B0BF" stroke-width="1.3" opacity=".55"/>
+    </svg>
+  </div>
+  <div class="flotante" style="bottom:12%;left:11%" data-parallax="0.6">
+    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" stroke="#E30470" stroke-width="1.4" opacity=".35"/>
+      <circle cx="12" cy="12" r="5" fill="#69B0BF" opacity=".28"/>
+    </svg>
+  </div>
+  <div class="flotante" style="bottom:20%;right:13%" data-parallax="0.35">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3c2 3 6 4 6 9a6 6 0 0 1-12 0c0-5 4-6 6-9z" stroke="#69B0BF" stroke-width="1.3" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="hero-int">
+    <span class="chip anima">🏆 Premio de Excelencia Kérastase · Mejor Peluquería Nacional</span>
+    <h1 class="anima">Bajomisombrero
+      <span class="sub">Templo capilar · Barcelona</span>
+    </h1>
+    <p class="eslogan" id="eslogan">Un oasis de 200 m² donde tu cabello se trata con calma, ciencia y arte.</p>
+    <div class="hero-datos anima">
+      <span>★ 4,7 en Google</span>
+      <span>636 reseñas</span>
+      <span>Diagnóstico capilar gratuito</span>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-primario" href="tel:+34680284856">📞 680 28 48 56</a>
+      <a class="btn btn-fucsia" href="tel:+34680284856">Reservar cita</a>
+    </div>
+    <p class="nota-hero anima">Mar–Vie de 10:00 a 20:00 · Carrer de Guitard, 25 — Barcelona</p>
+  </div>
+</section>
+</header>
+
+<div class="marquesina" aria-hidden="true">
+  <div class="pista">
+    <span>Rituales Kérastase</span><span class="punto">✦</span>
+    <span>Coloración Matrix</span><span class="punto">✦</span>
+    <span>Mechas balayage</span><span class="punto">✦</span>
+    <span>Spa capilar</span><span class="punto">✦</span>
+    <span>Keratina y alisados</span><span class="punto">✦</span>
+    <span>Diagnóstico gratuito</span><span class="punto">✦</span>
+    <span>Rituales Kérastase</span><span class="punto">✦</span>
+    <span>Coloración Matrix</span><span class="punto">✦</span>
+    <span>Mechas balayage</span><span class="punto">✦</span>
+    <span>Spa capilar</span><span class="punto">✦</span>
+    <span>Keratina y alisados</span><span class="punto">✦</span>
+    <span>Diagnóstico gratuito</span><span class="punto">✦</span>
+  </div>
+</div>
+
+<main>
+
+<div class="franja-contador">
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4.7" data-decimales="1">0,0</span>★</div>
+    <div class="desc">Nota en Google</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="636">0</span></div>
+    <div class="desc">Reseñas</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="200">0</span> m²</div>
+    <div class="desc">De templo capilar</div>
+  </div>
+</div>
+
+<section class="sobre" aria-label="Sobre nosotros">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div>
+        <p class="etiqueta anima">El salón</p>
+        <h2 class="anima">Más que una peluquería: un templo capilar</h2>
+        <p class="anima">Bajomisombrero es un espacio de <strong>200 m²</strong> concebido como un templo capilar multisensorial, con interiorismo firmado por <strong>Anne-Cécile Espinach</strong>. Sus clientes lo describen como un <em>«oasis capilar»</em> en pleno Barcelona.</p>
+        <p class="anima">Cada visita empieza con un <strong>diagnóstico capilar gratuito con cámara de aumento</strong>: primero entendemos tu cabello, después lo trabajamos. Atención personalizada, sin prisas y con total transparencia en los precios.</p>
+      </div>
+      <div class="detalles">
+        <div class="detalle anima"><span class="ico">🔬</span>Diagnóstico capilar gratuito con cámara de aumento</div>
+        <div class="detalle anima"><span class="ico">🏆</span>Premio de Excelencia Kérastase — Mejor Peluquería Nacional</div>
+        <div class="detalle anima"><span class="ico">🕯️</span>Espacio multisensorial de 200 m² diseñado para relajarte</div>
+        <div class="detalle anima"><span class="ico">🛍️</span>Boutique de productos profesionales en el propio salón</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="premio" aria-label="Premio Kérastase">
+  <div class="contenedor">
+    <span class="laurel anima" aria-hidden="true">🏆</span>
+    <span class="sello anima">Premio de Excelencia Kérastase</span>
+    <h2 class="anima">Reconocida como <em>Mejor Peluquería Nacional</em></h2>
+    <p class="anima">Kérastase, la firma de alta peluquería de referencia mundial, otorgó a Bajomisombrero su Premio de Excelencia a la Mejor Peluquería Nacional. Ese nivel de exigencia es el que encontrarás en cada visita.</p>
+  </div>
+</section>
+
+<section class="servicios" aria-label="Servicios">
+  <div class="contenedor">
+    <p class="etiqueta anima">Servicios</p>
+    <h2 class="anima">Alta peluquería, de la raíz a las puntas</h2>
+    <div class="rejilla-serv">
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">✂️</div>
+        <h3>Corte y coloración</h3>
+        <p>Corte a medida y color profesional con productos Matrix, adaptados a tu diagnóstico.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">🎨</div>
+        <h3>Mechas balayage</h3>
+        <p>Luz y dimensión con un degradado natural, trabajado a mano mecha a mecha.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">💧</div>
+        <h3>Keratina y alisados</h3>
+        <p>Melena lisa, disciplinada y con brillo, respetando la salud de tu cabello.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">🌸</div>
+        <h3>Spa capilar</h3>
+        <p>Tratamientos de bienestar para el cuero cabelludo en un entorno pensado para desconectar.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">✨</div>
+        <h3>Rituales Kérastase</h3>
+        <p>La experiencia de la alta peluquería: rituales personalizados con Kérastase.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">🔬</div>
+        <h3>Diagnóstico gratuito</h3>
+        <p>Análisis de tu cabello y cuero cabelludo con cámara de aumento, sin coste y sin compromiso.</p>
+      </article>
+      <article class="tarjeta-serv tarjeta-ancha anima">
+        <div class="ico-serv" aria-hidden="true">🛍️</div>
+        <h3>Boutique de productos</h3>
+        <p>Llévate a casa el cuidado profesional: selección de productos recomendados según tu diagnóstico.</p>
+      </article>
+    </div>
+    <p class="nota-serv anima">¿Dudas con tu cabello? Llámanos y te asesoramos: <a href="tel:+34680284856">680 28 48 56</a></p>
+  </div>
+</section>
+
+<section class="resenas" aria-label="Reseñas">
+  <div class="contenedor">
+    <p class="etiqueta anima">Lo que dicen los clientes</p>
+    <h2 class="anima">4,7 estrellas y 636 reseñas hablan por nosotros</h2>
+    <div class="puntuacion anima">
+      <span class="grande">4,7</span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <span class="detalle-punt">636 reseñas en Google</span>
+    </div>
+    <div class="rejilla-res">
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Sin prisas, con diagnóstico</h3>
+        <p>Las reseñas repiten lo mismo: atención personalizada y sin prisas, siempre con un diagnóstico previo antes de tocar una tijera.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Equipo profesional y claro</h3>
+        <p>Un equipo que explica lo que hace y es transparente con los precios: sabes qué te haces y cuánto cuesta antes de empezar.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>«Un oasis capilar»</h3>
+        <p>Así describen el ambiente: un espacio relajante en el que la visita a la peluquería se convierte en un momento para ti.</p>
+      </article>
+    </div>
+    <p class="nota-res anima">Resumen de opiniones publicadas por clientes en Google.</p>
+  </div>
+</section>
+
+<section class="contacto" aria-label="Contacto">
+  <div class="contenedor">
+    <p class="etiqueta anima">Contacto</p>
+    <h2 class="anima">Ven a conocer tu templo capilar</h2>
+    <div class="rejilla-cont">
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📍</span>Dónde estamos</h3>
+        <p>Carrer de Guitard, 25<br>08014 Barcelona</p>
+        <p style="margin-top:.7rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=Peluquer%C3%ADa+Bajomisombrero+Carrer+de+Guitard+25+Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">🕙</span>Horario</h3>
+        <ul>
+          <li><span>Martes a viernes</span><span>10:00 – 20:00</span></li>
+          <li><span>Resto de días</span><span class="suave">Consúltanos</span></li>
+        </ul>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📞</span>Teléfono</h3>
+        <p>Reserva tu cita:</p>
+        <p style="margin-top:.4rem;font-size:1.25rem"><a href="tel:+34680284856">680 28 48 56</a></p>
+        <p style="margin-top:.4rem"><a href="tel:+34934901866">934 90 18 66</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">💬</span>Redes y email</h3>
+        <p><a href="https://www.instagram.com/bajomisombrero/" target="_blank" rel="noopener">Instagram · @bajomisombrero</a></p>
+        <p style="margin-top:.4rem"><a href="https://www.facebook.com/peluqueriabajomisombrero" target="_blank" rel="noopener">Facebook · Bajomisombrero</a></p>
+        <p style="margin-top:.4rem"><a href="mailto:info@bajomisombrero.com">info@bajomisombrero.com</a></p>
+      </div>
+    </div>
+    <div class="cta-final anima">
+      <h3>Tu cabello merece un premio nacional</h3>
+      <p>Empieza con un diagnóstico capilar gratuito con cámara de aumento.</p>
+      <a class="btn btn-fucsia" href="tel:+34680284856">Reservar cita ahora</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca">Bajomisombrero · Templo capilar</p>
+  <p>Carrer de Guitard, 25 — Barcelona · <a href="tel:+34680284856">680 28 48 56</a></p>
+  <p class="aviso-demo">Demo creada por <strong style="color:var(--marfil)">Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Eslogan palabra a palabra ===== */
+  var eslogan = document.getElementById('eslogan');
+  if (eslogan && !reduceMotion) {
+    var palabras = eslogan.textContent.trim().split(/\s+/);
+    eslogan.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      eslogan.appendChild(s);
+      eslogan.appendChild(document.createTextNode(' '));
+      setTimeout(function(){ s.classList.add('visible'); }, 350 + i * 85);
+    });
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anima'));
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = Array.prototype.slice.call(e.target.parentNode.querySelectorAll(':scope > .anima'));
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = (Math.max(idx,0) * 90) + 'ms';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    animados.forEach(function(el){ obs.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (4,7★ · 636 reseñas · 200 m²) ===== */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function fmt(v){ return v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion) { el.textContent = fmt(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easing cúbico */
+      el.textContent = fmt(fin * suave);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fmt(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = Array.prototype.slice.call(document.querySelectorAll('[data-contador]'));
+  if ('IntersectionObserver' in window) {
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); obsNum.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ obsNum.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave del hero ===== */
+  var barra = document.getElementById('barra-progreso');
+  var flotantes = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion) {
+        flotantes.forEach(function(f){
+          var k = parseFloat(f.getAttribute('data-parallax')) || 0.3;
+          f.style.transform = 'translateY(' + (y * k * -0.4) + 'px) rotate(' + (y * k * 0.03) + 'deg)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía =====
+     Lección del 03/08/2026: algunos visores de email/navegadores no disparan
+     IntersectionObserver y la página quedaba en blanco. A los 1,2 s, este
+     rescate fuerza visible todo lo que siga oculto, pase lo que pase. */
+  function rescateVisibilidad(){
+    document.querySelectorAll('.anima, .eslogan .palabra').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (parseFloat(el.textContent.replace(',', '.')) === 0) {
+        var fin = parseFloat(el.getAttribute('data-contador'));
+        var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+
+</body>
+</html>

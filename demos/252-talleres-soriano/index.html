@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Soriano — Taller mecánico familiar en La Saïdia, València | 4,9★ en Google</title>
+<meta name="description" content="Talleres Soriano, taller de automóviles multimarca en La Saïdia, València. Mecánica general, motores, frenos, aceite y electricidad. 4,9 estrellas con 220 reseñas. Llama al 963 49 43 18.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#1C2E4A;
+    --azul-osc:#132138;
+    --azul-prof:#0C1626;
+    --pizarra:#5A6673;
+    --pizarra-suave:#8A94A0;
+    --naranja:#D97925;
+    --naranja-osc:#B8611A;
+    --naranja-claro:#F0A45E;
+    --crema:#F7F5F0;
+    --blanco:#FFFFFF;
+    --linea:#E4E0D8;
+    --texto:#22303F;
+    --radio:20px;
+    --sombra:0 12px 32px rgba(28,46,74,.10);
+    --sombra-alta:0 22px 55px rgba(28,46,74,.20);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--texto);
+    background:var(--crema);
+    line-height:1.65;
+    font-size:16.5px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.12;font-weight:600;color:var(--azul)}
+  img{max-width:100%}
+  ::selection{background:var(--naranja);color:#fff}
+
+  /* ====== Barra de progreso de scroll ====== */
+  #progreso{
+    position:fixed;top:0;left:0;height:4px;width:0%;z-index:1300;
+    background:linear-gradient(90deg,var(--naranja),var(--naranja-claro));
+    transition:width 100ms linear;
+  }
+
+  /* ====== Marca de agua DEMO (discreta, fija) ====== */
+  .marca-demo{
+    position:fixed;bottom:18px;left:18px;z-index:1200;
+    background:rgba(12,22,38,.82);color:#fff;
+    font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    padding:7px 14px;border-radius:999px;
+    border:1px solid rgba(240,164,94,.55);
+    backdrop-filter:blur(6px);
+    pointer-events:none;user-select:none;
+  }
+  .marca-demo span{color:var(--naranja-claro)}
+
+  /* ====== Utilidades de animación (con red de seguridad) ====== */
+  .anim{opacity:0;transform:translateY(26px);transition:opacity 520ms var(--ease),transform 520ms var(--ease)}
+  .anim.visible{opacity:1;transform:none}
+  .anim-izq{opacity:0;transform:translateX(-32px);transition:opacity 560ms var(--ease),transform 560ms var(--ease)}
+  .anim-izq.visible{opacity:1;transform:none}
+  .anim-der{opacity:0;transform:translateX(32px);transition:opacity 560ms var(--ease),transform 560ms var(--ease)}
+  .anim-der.visible{opacity:1;transform:none}
+  .palabra{display:inline-block;opacity:0;transform:translateY(.5em);transition:opacity 460ms var(--ease),transform 460ms var(--ease)}
+  .palabra.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+    html{scroll-behavior:auto}
+  }
+
+  /* ====== Cabecera ====== */
+  .cabecera{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(247,245,240,.9);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--linea);
+  }
+  .cabecera nav{
+    max-width:1120px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:14px 22px;
+  }
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--azul)}
+  .logo-sello{
+    width:44px;height:44px;border-radius:12px;flex:0 0 auto;
+    background:linear-gradient(150deg,var(--azul) 0%,var(--azul-prof) 100%);
+    display:grid;place-items:center;
+    font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--naranja-claro);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 5px 12px rgba(28,46,74,.28);
+  }
+  .logo-texto{font-family:'Fraunces',serif;font-weight:700;font-size:19px;letter-spacing:.2px}
+  .logo-texto small{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:10px;letter-spacing:2.6px;color:var(--pizarra);text-transform:uppercase}
+  .nav-enlaces{display:flex;align-items:center;gap:8px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    text-decoration:none;font-weight:600;font-size:15.5px;
+    padding:13px 22px;border-radius:999px;white-space:nowrap;
+    transition:transform 260ms var(--ease),box-shadow 260ms var(--ease),background 260ms var(--ease),color 260ms var(--ease);
+  }
+  .btn-naranja{background:var(--naranja);color:#fff;box-shadow:0 6px 16px rgba(217,121,37,.38)}
+  .btn-naranja:hover{background:var(--naranja-osc);transform:translateY(-2px) scale(1.02);box-shadow:0 12px 24px rgba(217,121,37,.45)}
+  .btn-borde{border:1.5px solid rgba(255,255,255,.45);color:#fff}
+  .btn-borde:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px)}
+  .btn-azul{background:var(--azul);color:#fff;box-shadow:0 6px 16px rgba(28,46,74,.3)}
+  .btn-azul:hover{background:var(--azul-osc);transform:translateY(-2px) scale(1.02)}
+  .btn-nav{padding:10px 18px;font-size:14.5px}
+
+  /* ====== Hero ====== */
+  .hero{
+    position:relative;overflow:hidden;color:#fff;
+    background:
+      radial-gradient(1100px 560px at 88% -12%,rgba(217,121,37,.28),transparent 62%),
+      radial-gradient(800px 480px at -8% 108%,rgba(90,102,115,.35),transparent 58%),
+      linear-gradient(158deg,var(--azul) 0%,var(--azul-osc) 52%,var(--azul-prof) 100%);
+    padding:88px 22px 120px;
+  }
+  .hero-trama{
+    position:absolute;inset:-8% 0;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(115deg,transparent 0 30px,rgba(255,255,255,.03) 30px 60px);
+    will-change:transform;
+  }
+  .hero-halo{
+    position:absolute;right:-14%;top:-22%;width:62%;height:85%;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(240,164,94,.16),transparent 70%);
+    will-change:transform;
+  }
+  .hero-int{
+    position:relative;max-width:1120px;margin:0 auto;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;
+  }
+  .hero-etiqueta{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12.5px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;
+    color:var(--naranja-claro);
+    border:1px solid rgba(240,164,94,.4);border-radius:999px;
+    padding:8px 16px;margin-bottom:26px;
+  }
+  .hero-etiqueta i{width:7px;height:7px;border-radius:50%;background:var(--naranja);display:inline-block;animation:latido 2.2s ease-in-out infinite}
+  @keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.55);opacity:.55}}
+  .hero h1{
+    color:#fff;font-size:clamp(40px,6.2vw,68px);font-weight:600;letter-spacing:-.5px;margin-bottom:22px;
+  }
+  .hero h1 em{font-style:italic;color:var(--naranja-claro)}
+  .hero-sub{
+    font-size:clamp(17px,2vw,19.5px);color:rgba(255,255,255,.82);
+    max-width:52ch;margin-bottom:36px;font-weight:400;
+  }
+  .hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
+  .hero-datos{display:flex;flex-wrap:wrap;gap:34px}
+  .dato h3{color:#fff;font-size:34px;font-weight:600;display:flex;align-items:baseline;gap:4px}
+  .dato h3 .estrella-mini{color:var(--naranja-claro);font-size:22px}
+  .dato p{font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:600}
+
+  /* Tarjeta de reputación del hero */
+  .tarjeta-rep{
+    position:relative;background:var(--blanco);color:var(--texto);
+    border-radius:26px;padding:34px 32px;box-shadow:var(--sombra-alta);
+    transform:rotate(1.6deg);
+    transition:transform 450ms var(--ease),box-shadow 450ms var(--ease);
+  }
+  .tarjeta-rep:hover{transform:rotate(0deg) translateY(-6px);box-shadow:0 30px 70px rgba(12,22,38,.35)}
+  .tarjeta-rep::before{
+    content:"";position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);
+    width:120px;height:28px;border-radius:6px;
+    background:rgba(217,121,37,.28);
+    border:1px dashed rgba(217,121,37,.5);
+  }
+  .rep-cab{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .rep-nota{
+    font-family:'Fraunces',serif;font-weight:700;font-size:46px;color:var(--azul);line-height:1;
+  }
+  .rep-estrellas{color:var(--naranja);font-size:20px;letter-spacing:3px}
+  .rep-cab p{font-size:13.5px;color:var(--pizarra);font-weight:500}
+  .rep-cita{
+    font-family:'Fraunces',serif;font-style:italic;font-size:20px;line-height:1.45;color:var(--azul);
+    border-left:3px solid var(--naranja);padding-left:16px;margin-bottom:16px;
+  }
+  .rep-fuente{font-size:13px;color:var(--pizarra);font-weight:500}
+  .rep-fuente strong{color:var(--naranja-osc)}
+
+  /* Onda separadora */
+  .onda{display:block;width:100%;height:70px;margin-top:-1px}
+
+  /* ====== Secciones genéricas ====== */
+  section{padding:92px 22px}
+  .int{max-width:1120px;margin:0 auto}
+  .sec-etiqueta{
+    display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;
+    color:var(--naranja-osc);margin-bottom:14px;
+  }
+  .sec-titulo{font-size:clamp(30px,4.4vw,46px);letter-spacing:-.4px;margin-bottom:18px;max-width:24ch}
+  .sec-texto{color:var(--pizarra);max-width:62ch;font-size:17.5px}
+
+  /* ====== Sobre nosotros / valores ====== */
+  .valores{background:var(--blanco)}
+  .valores-rejilla{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .sello-familiar{
+    position:relative;border-radius:26px;overflow:hidden;
+    background:linear-gradient(160deg,var(--azul),var(--azul-prof));
+    color:#fff;padding:46px 40px;box-shadow:var(--sombra-alta);
+  }
+  .sello-familiar::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(600px 300px at 90% 0%,rgba(217,121,37,.25),transparent 60%);
+  }
+  .sello-familiar h3{color:#fff;font-size:27px;margin-bottom:14px;position:relative;z-index:1}
+  .sello-familiar p{color:rgba(255,255,255,.8);font-size:16px;position:relative;z-index:1;margin-bottom:22px}
+  .sello-lista{list-style:none;position:relative;z-index:1;display:grid;gap:12px}
+  .sello-lista li{display:flex;align-items:center;gap:12px;font-size:15.5px;font-weight:500}
+  .sello-lista li b{
+    width:26px;height:26px;border-radius:50%;flex:0 0 auto;
+    background:rgba(217,121,37,.22);color:var(--naranja-claro);
+    display:grid;place-items:center;font-size:13px;
+  }
+  .pilares{display:grid;gap:18px}
+  .pilar{
+    display:flex;gap:18px;align-items:flex-start;
+    background:var(--crema);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:22px 24px;
+    transition:transform 320ms var(--ease),box-shadow 320ms var(--ease),border-color 320ms var(--ease);
+  }
+  .pilar:hover{transform:translateX(8px);box-shadow:var(--sombra);border-color:var(--naranja-claro)}
+  .pilar-num{
+    font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:var(--naranja);
+    background:#fff;border:1px solid var(--linea);border-radius:12px;
+    width:46px;height:46px;display:grid;place-items:center;flex:0 0 auto;
+  }
+  .pilar h3{font-size:19px;margin-bottom:5px}
+  .pilar p{font-size:15px;color:var(--pizarra)}
+
+  /* ====== Servicios ====== */
+  .servicios{
+    background:
+      radial-gradient(900px 400px at 100% 0%,rgba(217,121,37,.06),transparent 60%),
+      var(--crema);
+  }
+  .serv-rejilla{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+  .serv-tarjeta{
+    position:relative;overflow:hidden;
+    background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:30px 26px;
+    transition:transform 380ms var(--ease),box-shadow 380ms var(--ease),border-color 380ms var(--ease);
+  }
+  .serv-tarjeta::before{
+    content:"";position:absolute;left:0;top:0;height:100%;width:4px;
+    background:linear-gradient(180deg,var(--naranja),var(--naranja-claro));
+    transform:scaleY(0);transform-origin:top;transition:transform 380ms var(--ease);
+  }
+  .serv-tarjeta:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:var(--sombra-alta);border-color:transparent}
+  .serv-tarjeta:hover::before{transform:scaleY(1)}
+  .serv-icono{
+    width:54px;height:54px;border-radius:16px;margin-bottom:20px;
+    background:linear-gradient(150deg,var(--azul),var(--azul-prof));
+    display:grid;place-items:center;
+    transition:transform 380ms var(--ease);
+  }
+  .serv-tarjeta:hover .serv-icono{transform:scale(1.1) rotate(-6deg)}
+  .serv-icono svg{width:26px;height:26px;stroke:var(--naranja-claro);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .serv-tarjeta h3{font-size:20px;margin-bottom:9px}
+  .serv-tarjeta p{font-size:15px;color:var(--pizarra)}
+  .serv-nota{
+    margin-top:34px;display:inline-flex;align-items:center;gap:10px;
+    background:var(--blanco);border:1px dashed var(--naranja);border-radius:999px;
+    padding:12px 22px;font-size:15px;font-weight:600;color:var(--azul);
+  }
+
+  /* ====== Reseñas ====== */
+  .resenas{background:linear-gradient(160deg,var(--azul) 0%,var(--azul-prof) 100%);color:#fff;position:relative;overflow:hidden}
+  .resenas::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(800px 400px at 15% 100%,rgba(217,121,37,.16),transparent 60%);
+  }
+  .resenas .int{position:relative}
+  .resenas .sec-etiqueta{color:var(--naranja-claro)}
+  .resenas .sec-titulo{color:#fff}
+  .resenas .sec-texto{color:rgba(255,255,255,.75)}
+  .res-rejilla{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:50px}
+  .res-tarjeta{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    border-radius:var(--radio);padding:32px 30px;backdrop-filter:blur(4px);
+    transition:transform 380ms var(--ease),background 380ms var(--ease),border-color 380ms var(--ease);
+  }
+  .res-tarjeta:hover{transform:translateY(-6px);background:rgba(255,255,255,.1);border-color:rgba(240,164,94,.5)}
+  .res-estrellas{color:var(--naranja-claro);font-size:17px;letter-spacing:3px;margin-bottom:16px}
+  .res-tarjeta blockquote{
+    font-family:'Fraunces',serif;font-style:italic;font-size:22px;line-height:1.4;color:#fff;margin-bottom:18px;
+  }
+  .res-tarjeta figcaption{font-size:13.5px;color:rgba(255,255,255,.62);font-weight:500}
+  .res-contadores{
+    margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+    border-top:1px solid rgba(255,255,255,.14);padding-top:46px;text-align:center;
+  }
+  .res-contadores h3{color:#fff;font-size:44px;font-weight:600}
+  .res-contadores h3 span{color:var(--naranja-claro)}
+  .res-contadores p{font-size:13px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:600;margin-top:4px}
+
+  /* ====== Contacto ====== */
+  .contacto{background:var(--blanco)}
+  .cont-rejilla{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:16px}
+  .cont-lista{display:grid;gap:14px;margin-top:36px}
+  .cont-fila{
+    display:flex;gap:16px;align-items:flex-start;
+    background:var(--crema);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:20px 22px;
+    transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  }
+  .cont-fila:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+  .cont-icono{
+    width:44px;height:44px;border-radius:13px;flex:0 0 auto;
+    background:linear-gradient(150deg,var(--naranja),var(--naranja-osc));
+    display:grid;place-items:center;
+  }
+  .cont-icono svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .cont-fila h3{font-size:16.5px;margin-bottom:3px}
+  .cont-fila p{font-size:15px;color:var(--pizarra)}
+  .cont-fila a{color:var(--naranja-osc);font-weight:600;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 200ms}
+  .cont-fila a:hover{border-color:var(--naranja-osc)}
+  .horario{
+    background:linear-gradient(160deg,var(--azul),var(--azul-prof));color:#fff;
+    border-radius:26px;padding:38px 36px;box-shadow:var(--sombra-alta);position:relative;overflow:hidden;
+  }
+  .horario::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(500px 260px at 100% 0%,rgba(217,121,37,.22),transparent 60%);
+  }
+  .horario h3{color:#fff;font-size:24px;margin-bottom:22px;position:relative;z-index:1}
+  .horario table{width:100%;border-collapse:collapse;position:relative;z-index:1}
+  .horario td{padding:13px 4px;border-bottom:1px solid rgba(255,255,255,.12);font-size:15.5px}
+  .horario td:last-child{text-align:right;font-weight:600}
+  .horario tr:last-child td{border-bottom:none}
+  .horario .cerrado{color:var(--pizarra-suave)}
+  .horario .abierto{color:var(--naranja-claro)}
+  .horario-nota{position:relative;z-index:1;margin-top:20px;font-size:13.5px;color:rgba(255,255,255,.65)}
+  .cont-botones{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+
+  /* ====== CTA final (demo → formulario) ====== */
+  .cta-final{
+    background:
+      radial-gradient(700px 340px at 50% -30%,rgba(240,164,94,.35),transparent 65%),
+      linear-gradient(150deg,var(--naranja) 0%,var(--naranja-osc) 100%);
+    text-align:center;color:#fff;
+  }
+  .cta-final h2{color:#fff;font-size:clamp(30px,4.6vw,48px);letter-spacing:-.4px;margin:0 auto 18px;max-width:22ch}
+  .cta-final p{color:rgba(255,255,255,.9);max-width:56ch;margin:0 auto 34px;font-size:17.5px}
+  .btn-blanco{background:#fff;color:var(--naranja-osc);box-shadow:0 10px 26px rgba(12,22,38,.22);font-size:17px;padding:16px 32px}
+  .btn-blanco:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 16px 36px rgba(12,22,38,.3)}
+
+  /* ====== Pie ====== */
+  footer{background:var(--azul-prof);color:rgba(255,255,255,.72);padding:52px 22px 40px}
+  .pie-int{max-width:1120px;margin:0 auto;text-align:center}
+  .pie-logo{font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:#fff;margin-bottom:8px}
+  .pie-dir{font-size:14.5px;margin-bottom:26px}
+  .pie-aviso{
+    display:inline-block;background:rgba(217,121,37,.14);border:1px solid rgba(217,121,37,.45);
+    border-radius:14px;padding:16px 26px;font-size:14.5px;color:#fff;line-height:1.6;
+  }
+  .pie-aviso strong{color:var(--naranja-claro)}
+  .pie-aviso a{color:var(--naranja-claro);font-weight:700;text-decoration:underline}
+  .pie-legal{margin-top:24px;font-size:12.5px;color:rgba(255,255,255,.42)}
+
+  /* ====== Responsive ====== */
+  @media (max-width:900px){
+    .hero-int,.valores-rejilla,.cont-rejilla{grid-template-columns:1fr;gap:44px}
+    .serv-rejilla{grid-template-columns:1fr 1fr}
+    .res-rejilla{grid-template-columns:1fr}
+    .tarjeta-rep{transform:rotate(0)}
+    section{padding:72px 20px}
+    .hero{padding:64px 20px 96px}
+  }
+  @media (max-width:600px){
+    .serv-rejilla{grid-template-columns:1fr}
+    .res-contadores{grid-template-columns:1fr;gap:30px}
+    .hero-datos{gap:24px}
+    .btn-nav span{display:none}
+    .btn-nav{padding:10px 14px}
+  }
+</style>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true"><span>●</span>&nbsp;DEMO — Eleven AI</div>
+
+<!-- GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible -->
+<noscript>
+  <style>
+    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+    #progreso,.marca-demo{display:block}
+  </style>
+</noscript>
+
+<header class="cabecera">
+  <nav aria-label="Principal">
+    <a class="logo" href="#inicio">
+      <span class="logo-sello">TS</span>
+      <span class="logo-texto">Talleres Soriano<small>Taller familiar · València</small></span>
+    </a>
+    <div class="nav-enlaces">
+      <a class="btn btn-naranja btn-nav" href="tel:+34963494318">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>963 49 43 18</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main id="inicio">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Presentación">
+    <div class="hero-trama" id="parallax-trama" aria-hidden="true"></div>
+    <div class="hero-halo" id="parallax-halo" aria-hidden="true"></div>
+    <div class="hero-int">
+      <div>
+        <p class="hero-etiqueta anim"><i></i> Taller multimarca · La Saïdia, València</p>
+        <h1 id="titulo-hero">El taller de <em>confianza</em> de tu barrio</h1>
+        <p class="hero-sub anim" style="transition-delay:120ms">Taller familiar en La Saïdia. Mecánica general multimarca con un trato claro y cercano: nuestros clientes nos llaman <strong>"uno de los talleres más honestos de Valencia"</strong>.</p>
+        <div class="hero-botones anim" style="transition-delay:220ms">
+          <a class="btn btn-naranja" href="tel:+34963494318">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Llamar ahora
+          </a>
+          <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres%20Soriano%20C%2F%20del%20Pare%20Dami%C3%A0%206%2046009%20Val%C3%A8ncia" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Cómo llegar
+          </a>
+        </div>
+        <div class="hero-datos anim" style="transition-delay:320ms">
+          <div class="dato">
+            <h3><span data-contador="4.9" data-decimales="1">0,0</span><span class="estrella-mini">★</span></h3>
+            <p>Nota en Google</p>
+          </div>
+          <div class="dato">
+            <h3><span data-contador="220">0</span></h3>
+            <p>Reseñas reales</p>
+          </div>
+          <div class="dato">
+            <h3>L–V</h3>
+            <p>8:30–13:30 · 15:30–19:00</p>
+          </div>
+        </div>
+      </div>
+      <div class="tarjeta-rep anim-der" style="transition-delay:260ms">
+        <div class="rep-cab">
+          <span class="rep-nota">4,9</span>
+          <div>
+            <div class="rep-estrellas" aria-label="4,9 de 5 estrellas">★★★★★</div>
+            <p>220 reseñas en Google</p>
+          </div>
+        </div>
+        <p class="rep-cita">"No especulan ni con la avería ni con el precio."</p>
+        <p class="rep-fuente">Reseña real de un cliente en <strong>Google</strong></p>
+      </div>
+    </div>
+  </section>
+  <svg class="onda" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" style="background:var(--azul-prof)"><path d="M0,70 L0,30 C240,70 480,0 720,20 C960,40 1200,10 1440,40 L1440,70 Z" fill="#FFFFFF"></path></svg>
+
+  <!-- ============ SOBRE NOSOTROS ============ -->
+  <section class="valores" id="nosotros" aria-label="Sobre nosotros">
+    <div class="int valores-rejilla">
+      <div class="anim-izq">
+        <p class="sec-etiqueta">Sobre nosotros</p>
+        <h2 class="sec-titulo">Un taller familiar donde te hablan claro</h2>
+        <p class="sec-texto" style="margin-bottom:34px">En Talleres Soriano trabajamos como siempre se ha hecho en los talleres de barrio: diciéndote qué tiene tu coche, qué hace falta y qué no. Por eso nuestros clientes repiten año tras año y nos han llevado a un 4,9 sobre 5 en Google.</p>
+        <div class="pilares">
+          <div class="pilar anim" style="transition-delay:80ms">
+            <span class="pilar-num">01</span>
+            <div>
+              <h3>Honestidad ante todo</h3>
+              <p>Nuestras reseñas lo repiten: sin especular con la avería ni con el precio.</p>
+            </div>
+          </div>
+          <div class="pilar anim" style="transition-delay:180ms">
+            <span class="pilar-num">02</span>
+            <div>
+              <h3>Precios justos</h3>
+              <p>Pagas lo que tu coche necesita. Trato amable y de confianza, de tú a tú.</p>
+            </div>
+          </div>
+          <div class="pilar anim" style="transition-delay:280ms">
+            <span class="pilar-num">03</span>
+            <div>
+              <h3>Rapidez y clientes fieles</h3>
+              <p>Trabajo bien hecho y a tiempo: la mejor prueba son los clientes que vuelven.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sello-familiar anim-der" style="transition-delay:160ms">
+        <h3>Taller multimarca en La Saïdia</h3>
+        <p>Reparamos vehículos de cualquier marca, con las comodidades de hoy y el trato de siempre.</p>
+        <ul class="sello-lista">
+          <li><b>✓</b> Multimarca: todas las marcas y modelos</li>
+          <li><b>✓</b> Pago con tarjeta y pago móvil NFC</li>
+          <li><b>✓</b> Local accesible</li>
+          <li><b>✓</b> En C/ del Pare Damià, 6 — barrio de La Saïdia</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="servicios" id="servicios" aria-label="Servicios">
+    <div class="int">
+      <p class="sec-etiqueta anim">Servicios</p>
+      <h2 class="sec-titulo anim" style="transition-delay:80ms">Todo lo que tu coche necesita, en un mismo taller</h2>
+      <p class="sec-texto anim" style="transition-delay:160ms">Mecánica general multimarca: del mantenimiento rutinario a la reparación de motores.</p>
+      <div class="serv-rejilla">
+        <div class="serv-tarjeta anim" style="transition-delay:60ms">
+          <div class="serv-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <h3>Mecánica general</h3>
+          <p>Diagnóstico y reparación multimarca, con explicación clara de cada intervención.</p>
+        </div>
+        <div class="serv-tarjeta anim" style="transition-delay:140ms">
+          <div class="serv-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <h3>Reparación de motores</h3>
+          <p>Reparamos el corazón de tu coche para devolverle su rendimiento.</p>
+        </div>
+        <div class="serv-tarjeta anim" style="transition-delay:220ms">
+          <div class="serv-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21"/></svg></div>
+          <h3>Frenos</h3>
+          <p>Revisión y sustitución de frenos para que pares siempre cuando toca.</p>
+        </div>
+        <div class="serv-tarjeta anim" style="transition-delay:100ms">
+          <div class="serv-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7c3.3 4.2 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.7-6.8 6-11z"/><path d="M9.5 14a2.5 2.5 0 0 0 2.5 2.5"/></svg></div>
+          <h3>Cambio de aceite y filtros</h3>
+          <p>El mantenimiento esencial, hecho a tiempo y con materiales adecuados a tu vehículo.</p>
+        </div>
+        <div class="serv-tarjeta anim" style="transition-delay:180ms">
+          <div class="serv-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+          <h3>Electricidad del automóvil</h3>
+          <p>Batería, luces y sistema eléctrico: localizamos la avería y la resolvemos.</p>
+        </div>
+        <div class="serv-tarjeta anim" style="transition-delay:260ms">
+          <div class="serv-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.5 11 13.5 15.5 9"/><path d="M12 2 4 5.5v5.6c0 4.9 3.4 9.5 8 10.9 4.6-1.4 8-6 8-10.9V5.5L12 2z"/></svg></div>
+          <h3>Revisiones periódicas</h3>
+          <p>Revisamos tu coche a fondo para evitar sustos y alargar su vida útil.</p>
+        </div>
+      </div>
+      <p class="serv-nota anim" style="transition-delay:200ms">✓ Taller multimarca · Pago con tarjeta y móvil (NFC) · Local accesible</p>
+    </div>
+  </section>
+
+  <!-- ============ RESEÑAS ============ -->
+  <section class="resenas" id="resenas" aria-label="Opiniones de clientes">
+    <div class="int">
+      <p class="sec-etiqueta anim">Lo que dicen nuestros clientes</p>
+      <h2 class="sec-titulo anim" style="transition-delay:80ms">La honestidad, por escrito</h2>
+      <p class="sec-texto anim" style="transition-delay:160ms">No lo decimos nosotros: lo dicen 220 reseñas reales en Google, con un 4,9 sobre 5.</p>
+      <div class="res-rejilla">
+        <figure class="res-tarjeta anim-izq" style="transition-delay:100ms">
+          <div class="res-estrellas" aria-label="5 estrellas">★★★★★</div>
+          <blockquote>"Uno de los talleres más honestos de Valencia."</blockquote>
+          <figcaption>Reseña real en Google</figcaption>
+        </figure>
+        <figure class="res-tarjeta anim-der" style="transition-delay:200ms">
+          <div class="res-estrellas" aria-label="5 estrellas">★★★★★</div>
+          <blockquote>"No especulan ni con la avería ni con el precio."</blockquote>
+          <figcaption>Reseña real en Google</figcaption>
+        </figure>
+      </div>
+      <div class="res-contadores">
+        <div class="anim" style="transition-delay:80ms">
+          <h3><span data-contador="4.9" data-decimales="1">0,0</span><span>★</span></h3>
+          <p>Valoración media</p>
+        </div>
+        <div class="anim" style="transition-delay:180ms">
+          <h3><span data-contador="220">0</span></h3>
+          <p>Reseñas en Google</p>
+        </div>
+        <div class="anim" style="transition-delay:280ms">
+          <h3><span>100%</span></h3>
+          <p>Trato cercano y familiar</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="contacto" id="contacto" aria-label="Contacto y horario">
+    <div class="int">
+      <p class="sec-etiqueta anim">Contacto</p>
+      <h2 class="sec-titulo anim" style="transition-delay:80ms">Estamos en La Saïdia, muy cerca de ti</h2>
+      <div class="cont-rejilla">
+        <div class="anim-izq" style="transition-delay:120ms">
+          <div class="cont-lista">
+            <div class="cont-fila">
+              <span class="cont-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <div>
+                <h3>Dirección</h3>
+                <p>C/ del Pare Damià, 6 · La Saïdia · 46009 València<br>
+                <a href="https://www.google.com/maps/search/?api=1&amp;query=Talleres%20Soriano%20C%2F%20del%20Pare%20Dami%C3%A0%206%2046009%20Val%C3%A8ncia" target="_blank" rel="noopener">Ver en Google Maps →</a></p>
+              </div>
+            </div>
+            <div class="cont-fila">
+              <span class="cont-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+              <div>
+                <h3>Teléfono</h3>
+                <p><a href="tel:+34963494318">963 49 43 18</a> — llámanos en horario de taller</p>
+              </div>
+            </div>
+            <div class="cont-fila">
+              <span class="cont-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+              <div>
+                <h3>Pago fácil</h3>
+                <p>Aceptamos tarjeta y pago por móvil (NFC). Local accesible.</p>
+              </div>
+            </div>
+          </div>
+          <div class="cont-botones">
+            <a class="btn btn-naranja" href="tel:+34963494318">Llamar al taller</a>
+            <a class="btn btn-azul" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres%20Soriano%20C%2F%20del%20Pare%20Dami%C3%A0%206%2046009%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
+        </div>
+        <div class="horario anim-der" style="transition-delay:200ms">
+          <h3>Horario del taller</h3>
+          <table>
+            <tr><td>Lunes a viernes (mañanas)</td><td class="abierto">8:30 – 13:30</td></tr>
+            <tr><td>Lunes a viernes (tardes)</td><td class="abierto">15:30 – 19:00</td></tr>
+            <tr><td>Sábado</td><td class="cerrado">Cerrado</td></tr>
+            <tr><td>Domingo</td><td class="cerrado">Cerrado</td></tr>
+          </table>
+          <p class="horario-nota">Te recomendamos llamar antes de venir para que podamos atenderte sin esperas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL (formulario de decisión) ============ -->
+  <section class="cta-final" aria-label="Consigue esta web">
+    <div class="int">
+      <h2 class="anim">¿Te gusta cómo quedaría la web de tu taller?</h2>
+      <p class="anim" style="transition-delay:120ms">Esta página es una demostración creada para Talleres Soriano con sus datos públicos reales. Si quieres que sea tuya (o cambiar algo), dínoslo en un minuto.</p>
+      <a class="btn btn-blanco anim" style="transition-delay:220ms" href="https://elevenai-webs.netlify.app/formulario/?id=252&amp;sede=pablo" target="_blank" rel="noopener">Quiero esta web para mi taller →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="pie-int">
+    <p class="pie-logo">Talleres Soriano</p>
+    <p class="pie-dir">C/ del Pare Damià, 6 · La Saïdia · 46009 València · <a href="tel:+34963494318" style="color:inherit">963 49 43 18</a></p>
+    <p class="pie-aviso"><strong>DEMO</strong> creada por <strong>Eleven AI</strong> — esta web puede ser tuya.<br>
+    <a href="https://elevenai-webs.netlify.app/formulario/?id=252&amp;sede=pablo" target="_blank" rel="noopener">Dinos qué te parece aquí</a>.</p>
+    <p class="pie-legal">Página de demostración no oficial elaborada con información pública (Google). No representa al negocio hasta su contratación.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Titular del hero palabra a palabra ---- */
+  var h1 = document.getElementById('titulo-hero');
+  if (h1 && !reduceMotion) {
+    var nodos = Array.prototype.slice.call(h1.childNodes);
+    h1.textContent = '';
+    var retardo = 0;
+    nodos.forEach(function(n){
+      var em = n.nodeType === 1 && n.tagName === 'EM';
+      var trozos = (n.textContent || '').split(/\s+/).filter(Boolean);
+      trozos.forEach(function(t){
+        var s = document.createElement('span');
+        s.className = 'palabra';
+        s.style.transitionDelay = retardo + 'ms';
+        if (em) { var e = document.createElement('em'); e.textContent = t; s.appendChild(e); }
+        else { s.textContent = t; }
+        h1.appendChild(s);
+        h1.appendChild(document.createTextNode(' '));
+        retardo += 90;
+      });
+    });
+    setTimeout(function(){
+      Array.prototype.forEach.call(h1.querySelectorAll('.palabra'), function(p){ p.classList.add('visible'); });
+    }, 150);
+  }
+
+  /* ---- Entradas escalonadas con IntersectionObserver ---- */
+  var animados = document.querySelectorAll('.anim,.anim-izq,.anim-der');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    Array.prototype.forEach.call(animados, function(el){ el.classList.add('visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    Array.prototype.forEach.call(animados, function(el){ io.observe(el); });
+  }
+
+  /* ---- Contadores animados (4,9 y 220) ---- */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function pinta(v){ el.textContent = v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion || !window.requestAnimationFrame) { pinta(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      pinta(fin * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll('[data-contador]');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(en){
+        if (en.isIntersecting) { animarContador(en.target); ioC.unobserve(en.target); }
+      });
+    }, {threshold:.5});
+    Array.prototype.forEach.call(contadores, function(el){ ioC.observe(el); });
+  } else {
+    Array.prototype.forEach.call(contadores, animarContador);
+  }
+
+  /* ---- Barra de progreso de scroll + parallax suave del hero ---- */
+  var barra = document.getElementById('progreso');
+  var trama = document.getElementById('parallax-trama');
+  var halo = document.getElementById('parallax-halo');
+  var pendiente = false;
+  function alScroll(){
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function(){
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra && total > 0) barra.style.width = (y / total * 100) + '%';
+      if (!reduceMotion) {
+        if (trama) trama.style.transform = 'translateY(' + (y * .12) + 'px)';
+        if (halo) halo.style.transform = 'translate(' + (y * -.05) + 'px,' + (y * .18) + 'px)';
+      }
+      pendiente = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, {passive:true});
+  alScroll();
+
+  /* ---- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ----
+     Si a los 1,2 s algo sigue oculto (visor de email, WebView raro, JS a medias),
+     lo forzamos visible. Ninguna parte del contenido puede depender del JS. */
+  setTimeout(function rescate(){
+    var ocultos = document.querySelectorAll('.anim,.anim-izq,.anim-der,.palabra');
+    Array.prototype.forEach.call(ocultos, function(el){
+      var st = window.getComputedStyle ? getComputedStyle(el) : null;
+      if (!el.classList.contains('visible') || (st && parseFloat(st.opacity) < 1)) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

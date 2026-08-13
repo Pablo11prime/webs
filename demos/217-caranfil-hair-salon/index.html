@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARANFIL HAIR SALON — Corte y color de autor en Russafa, València</title>
+<meta name="description" content="CARANFIL HAIR SALON: salón de autor en Russafa (València). Balayage, babylights, color y tratamientos de brillo por Cristian Caranfil, +12 años de experiencia. 4,9★ en Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --negro:#1e1b18;
+  --negro-suave:#2a2621;
+  --marfil:#f5efe6;
+  --marfil-osc:#ece4d6;
+  --oro:#c9a24b;
+  --oro-claro:#e0c37d;
+  --oro-suave:rgba(201,162,75,.12);
+  --blanco:#fffdf9;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:20px;
+  --shadow:0 10px 30px rgba(30,27,24,.10);
+  --shadow-lift:0 20px 48px rgba(30,27,24,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',system-ui,sans-serif;
+  color:var(--negro);
+  background:var(--marfil);
+  line-height:1.65;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.12;letter-spacing:.005em;font-weight:600}
+a{color:inherit}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--oro),var(--oro-claro));
+  z-index:1000;transition:width 120ms linear;border-radius:0 4px 4px 0;
+}
+
+/* ===== Marca de agua DEMO ===== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--oro);color:var(--negro);
+  font-size:.72rem;font-weight:600;letter-spacing:.35em;
+  padding:.42em 3.4em;box-shadow:0 4px 14px rgba(0,0,0,.3);
+  pointer-events:none;opacity:.92;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  background:rgba(30,27,24,.9);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(201,162,75,.25);
+  color:var(--marfil);
+}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.2rem;letter-spacing:.14em;text-decoration:none;text-transform:uppercase}
+.logo em{font-style:normal;color:var(--oro)}
+.nav-cta{
+  text-decoration:none;font-weight:500;font-size:.9rem;
+  background:var(--oro);color:var(--negro);
+  padding:.55em 1.3em;border-radius:999px;
+  transition:transform 250ms var(--ease),background 250ms var(--ease);
+}
+.nav-cta:hover{transform:scale(1.05);background:var(--oro-claro)}
+
+/* ===== Hero (oscuro, salón de autor) ===== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:5rem 1.4rem 5.6rem;text-align:center;
+  background:
+    radial-gradient(58rem 30rem at 88% -12%, rgba(201,162,75,.20), transparent 60%),
+    radial-gradient(42rem 26rem at -12% 112%, rgba(201,162,75,.14), transparent 55%),
+    linear-gradient(180deg,var(--negro),var(--negro-suave));
+  color:var(--marfil);
+}
+.destello{position:absolute;pointer-events:none;opacity:.6;will-change:transform}
+.destello svg{display:block}
+.hero-int{position:relative;max-width:680px;margin:0 auto}
+.chip{
+  display:inline-block;font-size:.76rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--oro-claro);background:rgba(201,162,75,.10);
+  border:1px solid rgba(201,162,75,.4);
+  padding:.5em 1.2em;border-radius:999px;margin-bottom:1.3rem;
+}
+.hero h1{font-size:clamp(2.6rem,9.5vw,4.6rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blanco)}
+.hero h1 .sub{
+  display:block;font-family:'Outfit',sans-serif;font-size:clamp(.8rem,2.8vw,1rem);font-weight:400;
+  letter-spacing:.5em;text-transform:uppercase;color:var(--oro);margin-top:.65rem;
+}
+.linea-oro{width:70px;height:2px;margin:1.5rem auto 0;background:linear-gradient(90deg,transparent,var(--oro),transparent)}
+.eslogan{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.2rem,4.6vw,1.55rem);color:#d9d0c2;
+  max-width:36ch;margin:1.2rem auto 0;
+}
+.eslogan .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
+.eslogan .palabra.visible{opacity:1;transform:none}
+.hero-datos{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;font-size:.86rem;color:#cfc6b6}
+.hero-datos span{background:rgba(245,239,230,.07);border:1px solid rgba(245,239,230,.14);border-radius:999px;padding:.35em 1em}
+.botones{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2.1rem}
+.btn{
+  text-decoration:none;font-weight:500;font-size:1.02rem;
+  padding:.95em 1.9em;border-radius:999px;
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease),background 280ms var(--ease);
+}
+.btn-oro{background:var(--oro);color:var(--negro);box-shadow:0 14px 34px rgba(201,162,75,.35)}
+.btn-oro:hover{transform:translateY(-3px) scale(1.03);background:var(--oro-claro)}
+.btn-borde{border:1px solid rgba(245,239,230,.45);color:var(--marfil)}
+.btn-borde:hover{transform:translateY(-3px) scale(1.03);background:rgba(245,239,230,.1)}
+.nota-hero{margin-top:1.15rem;font-size:.85rem;color:#a99f8e}
+
+/* ===== Contadores ===== */
+.franja-contador{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  padding:0 1.4rem;margin-top:-2.5rem;position:relative;z-index:5;
+}
+.tarjeta-num{
+  background:var(--blanco);border-radius:var(--radius);box-shadow:var(--shadow-lift);
+  padding:1.1rem 1.5rem;text-align:center;min-width:126px;
+  border:1px solid rgba(201,162,75,.28);
+}
+.tarjeta-num .num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--negro)}
+.tarjeta-num .num .oro{color:var(--oro)}
+.tarjeta-num .desc{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:#8a8172}
+
+/* ===== Secciones ===== */
+section{padding:4.2rem 1.4rem}
+.contenedor{max-width:980px;margin:0 auto}
+.etiqueta{font-size:.76rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--oro);margin-bottom:.6rem}
+h2{font-size:clamp(1.9rem,6.4vw,2.8rem);margin-bottom:1rem}
+
+/* Animación de entrada escalonada */
+.anima{opacity:0;transform:translateY(28px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.anima.visible{opacity:1;transform:none}
+
+/* ===== Sobre nosotros ===== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:2rem;align-items:center}
+.sobre p{color:#544c42;margin-bottom:1rem;font-size:1.04rem}
+.equipo{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.3rem}
+.persona{
+  display:flex;align-items:center;gap:.6rem;
+  background:var(--marfil);border-radius:999px;padding:.4em 1.1em .4em .4em;
+  border:1px solid rgba(30,27,24,.08);font-weight:500;font-size:.92rem;
+  transition:transform 250ms var(--ease);
+}
+.persona:hover{transform:scale(1.05)}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;color:var(--negro);
+  font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.05rem;
+  background:linear-gradient(135deg,var(--oro-claro),var(--oro));
+}
+.detalles{display:grid;gap:.7rem;margin-top:.4rem}
+.detalle{
+  display:flex;align-items:flex-start;gap:.7rem;font-size:.97rem;color:#4a4339;
+  background:var(--marfil);border-radius:16px;padding:.85rem 1rem;
+  border:1px solid rgba(201,162,75,.16);
+}
+.detalle .ico{flex:0 0 auto;width:28px;height:28px;border-radius:9px;background:var(--oro-suave);display:grid;place-items:center;color:var(--oro)}
+
+/* ===== Servicios ===== */
+.servicios{background:
+  radial-gradient(52rem 24rem at 112% 0%, rgba(201,162,75,.12), transparent 60%),
+  var(--marfil)}
+.rejilla-serv{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2rem}
+.tarjeta-serv{
+  background:var(--blanco);border-radius:var(--radius);padding:1.6rem 1.5rem;
+  box-shadow:var(--shadow);border:1px solid rgba(201,162,75,.18);
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  position:relative;overflow:hidden;
+}
+.tarjeta-serv::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:5px;
+  background:linear-gradient(180deg,var(--oro-claro),var(--oro));
+  border-radius:5px 0 0 5px;
+}
+.tarjeta-serv:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow-lift)}
+.tarjeta-serv h3{font-size:1.45rem;margin-bottom:.3rem}
+.tarjeta-serv .dur{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#a3987f;margin-bottom:.45rem}
+.tarjeta-serv p{color:#665d50;font-size:.94rem}
+.precio{
+  display:inline-block;margin-top:.9rem;
+  font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.4rem;color:var(--negro);
+  background:var(--oro-suave);border:1px solid rgba(201,162,75,.3);border-radius:12px;padding:.12em .7em;
+}
+.nota-serv{margin-top:1.4rem;font-size:.88rem;color:#8a8172;text-align:center}
+.nota-serv a{color:var(--oro);font-weight:500}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--negro);color:var(--marfil)}
+.resenas .etiqueta{color:var(--oro)}
+.puntuacion{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.puntuacion .grande{font-family:'Cormorant Garamond',serif;font-size:3.6rem;font-weight:700;color:var(--blanco)}
+.estrellas{color:var(--oro-claro);font-size:1.3rem;letter-spacing:.12em}
+.puntuacion .detalle-punt{color:#b3a993;font-size:.95rem}
+.rejilla-res{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.tarjeta-res{
+  background:rgba(245,239,230,.05);border:1px solid rgba(201,162,75,.22);
+  border-radius:var(--radius);padding:1.6rem;
+  transition:transform 300ms var(--ease),background 300ms var(--ease);
+}
+.tarjeta-res:hover{transform:translateY(-5px) scale(1.02);background:rgba(245,239,230,.09)}
+.tarjeta-res .estrellas{font-size:1rem;margin-bottom:.6rem}
+.tarjeta-res p{color:#e9e2d4;font-size:1.02rem;font-family:'Cormorant Garamond',serif;font-style:italic}
+.tarjeta-res .autor{margin-top:.9rem;font-family:'Outfit',sans-serif;font-style:normal;font-size:.8rem;color:#a3987f;letter-spacing:.08em;text-transform:uppercase}
+
+/* ===== Contacto ===== */
+.contacto{background:var(--blanco)}
+.rejilla-cont{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.8rem}
+.tarjeta-cont{
+  background:var(--marfil);border-radius:var(--radius);padding:1.4rem;
+  border:1px solid rgba(201,162,75,.18);
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease);
+}
+.tarjeta-cont:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tarjeta-cont h3{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.02rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.tarjeta-cont h3 .ico{width:30px;height:30px;border-radius:10px;background:var(--oro-suave);display:grid;place-items:center;color:var(--oro);flex:0 0 auto}
+.tarjeta-cont p, .tarjeta-cont li{color:#544c42;font-size:.96rem}
+.tarjeta-cont ul{list-style:none}
+.tarjeta-cont li{display:flex;justify-content:space-between;gap:1rem;padding:.25rem 0;border-bottom:1px dashed rgba(30,27,24,.12)}
+.tarjeta-cont li:last-child{border-bottom:none}
+.tarjeta-cont li .cerrado{color:#a4614d;font-weight:600}
+.tarjeta-cont a{color:#9b7a2e;font-weight:600;text-decoration:none}
+.tarjeta-cont a:hover{text-decoration:underline}
+.cta-final{
+  margin-top:2.4rem;text-align:center;
+  background:linear-gradient(135deg,var(--negro),var(--negro-suave));
+  border:1px solid rgba(201,162,75,.35);
+  border-radius:var(--radius);padding:2.4rem 1.5rem;color:var(--marfil);
+}
+.cta-final h3{font-size:1.8rem;margin-bottom:.5rem;color:var(--blanco)}
+.cta-final p{color:#c9c0b0;margin-bottom:1.3rem}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--negro);color:#b3a993;text-align:center;
+  padding:2.6rem 1.4rem;font-size:.9rem;border-top:1px solid rgba(201,162,75,.2);
+}
+footer .marca{font-family:'Cormorant Garamond',serif;color:var(--marfil);font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+footer a{color:var(--oro);text-decoration:none;font-weight:500}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(245,239,230,.12);
+  font-size:.85rem;
+}
+
+/* ===== Escritorio ===== */
+@media(min-width:720px){
+  .rejilla-serv{grid-template-columns:repeat(2,1fr)}
+  .rejilla-res{grid-template-columns:repeat(2,1fr)}
+  .rejilla-cont{grid-template-columns:repeat(2,1fr)}
+  .sobre-grid{grid-template-columns:1.2fr 1fr}
+  section{padding:5.5rem 2rem}
+}
+@media(min-width:1000px){
+  .rejilla-serv{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== Reduced motion: sin animaciones ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .anima,.eslogan .palabra{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.anima,.eslogan .palabra,.destello,[data-contador]{opacity:1!important;transform:none!important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio">Caranfil <em>Hair Salon</em></a>
+  <a class="nav-cta" href="tel:+34633233540">Llamar</a>
+</nav>
+
+<header id="inicio">
+<section class="hero" aria-label="Presentación">
+  <div class="destello" style="top:14%;left:7%" data-parallax="0.25">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z" fill="#c9a24b" opacity=".5"/></svg>
+  </div>
+  <div class="destello" style="top:24%;right:9%" data-parallax="0.45">
+    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#c9a24b" stroke-width="1.2" opacity=".4"/><circle cx="12" cy="12" r="4.5" stroke="#c9a24b" stroke-width="1" opacity=".35"/></svg>
+  </div>
+  <div class="destello" style="bottom:12%;left:14%" data-parallax="0.6">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4l1.2 4.1L17.3 9l-4.1 1.2L12 14.3l-1.2-4.1L6.7 9l4.1-.9L12 4z" fill="#e0c37d" opacity=".5"/></svg>
+  </div>
+  <div class="hero-int">
+    <span class="chip anima">Salón de autor · Russafa, València</span>
+    <h1 class="anima">Caranfil
+      <span class="sub">Hair Salon</span>
+    </h1>
+    <div class="linea-oro anima" aria-hidden="true"></div>
+    <p class="eslogan" id="eslogan">Corte y color de autor: balayage, babylights y brillo hechos a tu medida.</p>
+    <div class="hero-datos anima">
+      <span>★ 4,9 en Google</span>
+      <span>313 reseñas</span>
+      <span>+12 años de experiencia</span>
+      <span>ES · IT · EN · RO</span>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-oro" href="tel:+34633233540">📞 633 23 35 40</a>
+      <a class="btn btn-borde" href="#reservar">Reservar online</a>
+    </div>
+    <p class="nota-hero anima">Carrer de Sueca, 26 · Mar–Vie 10:00–19:30 · Sáb 10:00–14:00</p>
+  </div>
+</section>
+</header>
+
+<main>
+
+<div class="franja-contador">
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4.9" data-decimales="1">0,0</span><span class="oro">★</span></div>
+    <div class="desc">Nota en Google</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="313">0</span></div>
+    <div class="desc">Reseñas</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num">+<span data-contador="12">0</span></div>
+    <div class="desc">Años de oficio</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4">0</span></div>
+    <div class="desc">Idiomas</div>
+  </div>
+</div>
+
+<section class="sobre" aria-label="Sobre nosotros">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div>
+        <p class="etiqueta anima">El salón</p>
+        <h2 class="anima">La firma de Cristian Caranfil</h2>
+        <p class="anima">Al frente del salón está <strong>Cristian Caranfil</strong>, estilista con más de 12 años de oficio y formación internacional en Roma y Londres. Sus clientas lo resumen así: un auténtico profesional del color y las tijeras.</p>
+        <p class="anima">Junto a <strong>Giada</strong>, te atiende en pleno barrio de Russafa con cita personalizada, en español, italiano, inglés o rumano. Cada trabajo es único: aquí no hay cortes en serie.</p>
+        <div class="equipo anima">
+          <span class="persona"><span class="avatar">C</span>Cristian</span>
+          <span class="persona"><span class="avatar">G</span>Giada</span>
+        </div>
+      </div>
+      <div class="detalles">
+        <div class="detalle anima"><span class="ico">✂</span>Corte y color de autor, hecho a medida</div>
+        <div class="detalle anima"><span class="ico">✦</span>Formación internacional: Roma y Londres</div>
+        <div class="detalle anima"><span class="ico">🗣</span>Español · Italiano · English · Română</div>
+        <div class="detalle anima"><span class="ico">📅</span>Reserva online en Booksy y Fresha</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" aria-label="Servicios">
+  <div class="contenedor">
+    <p class="etiqueta anima">Servicios</p>
+    <h2 class="anima">Color, luz y brillo de autor</h2>
+    <div class="rejilla-serv">
+      <article class="tarjeta-serv anima">
+        <h3>Balayage</h3>
+        <p class="dur">≈ 3 horas</p>
+        <p>Degradado de luz pintado a mano, natural y sin raíz marcada.</p>
+        <span class="precio">120–150 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Babylights</h3>
+        <p class="dur">≈ 4 horas</p>
+        <p>Mechas finísimas para un rubio luminoso, efecto sol.</p>
+        <span class="precio">160–200 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Tratamiento Brillo Diamante</h3>
+        <p>Brillo espejo y sellado del color para una melena con luz propia.</p>
+        <span class="precio">44–64 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Corte</h3>
+        <p class="dur">40 minutos</p>
+        <p>Corte estándar con estudio previo de rostro y estilo.</p>
+        <span class="precio">25 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Color de raíz</h3>
+        <p>Retoque de raíz con color a juego, uniforme y cuidado.</p>
+        <span class="precio">26,40 €</span>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Extensiones</h3>
+        <p>Largo y densidad extra con acabado natural. Pide tu valoración.</p>
+        <span class="precio">Consultar</span>
+      </article>
+    </div>
+    <p class="nota-serv anima">Precios publicados en Booksy · Pide tu cita: <a href="tel:+34633233540">633 23 35 40</a></p>
+  </div>
+</section>
+
+<section class="resenas" aria-label="Reseñas">
+  <div class="contenedor">
+    <p class="etiqueta anima">Lo que dicen sus clientas</p>
+    <h2 class="anima">4,9 estrellas con 313 reseñas</h2>
+    <div class="puntuacion anima">
+      <span class="grande">4,9</span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <span class="detalle-punt">313 reseñas en Google</span>
+    </div>
+    <div class="rejilla-res">
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>«Christian is fantastic and a true professional.»</p>
+        <p class="autor">Angie · reseña en Google</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>«Siempre es una gran experiencia.»</p>
+        <p class="autor">Álvaro · reseña en Google</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="reservar" aria-label="Contacto y reservas">
+  <div class="contenedor">
+    <p class="etiqueta anima">Contacto y reservas</p>
+    <h2 class="anima">Te esperamos en Russafa</h2>
+    <div class="rejilla-cont">
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📍</span>Dónde estamos</h3>
+        <p>Carrer de Sueca, 26<br>L'Eixample (Russafa)<br>46006 València</p>
+        <p style="margin-top:.7rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=CARANFIL+HAIR+SALON+Carrer+de+Sueca+26+46006+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">🕙</span>Horario</h3>
+        <ul>
+          <li><span>Martes a viernes</span><span>10:00 – 19:30</span></li>
+          <li><span>Sábado</span><span>10:00 – 14:00</span></li>
+          <li><span>Domingo</span><span class="cerrado">Cerrado</span></li>
+          <li><span>Lunes</span><span class="cerrado">Cerrado</span></li>
+        </ul>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📞</span>Cita previa</h3>
+        <p>Llámanos y reserva tu hueco:</p>
+        <p style="margin-top:.4rem;font-size:1.25rem"><a href="tel:+34633233540">633 23 35 40</a></p>
+        <p style="margin-top:.7rem">También puedes reservar online: búscanos como <strong>CARANFIL HAIR SALON</strong> en <strong>Booksy</strong> o <strong>Fresha</strong>.</p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">💬</span>Instagram</h3>
+        <p>Los trabajos de Cristian, en su perfil:</p>
+        <p style="margin-top:.4rem"><a href="https://www.instagram.com/criis_hairart/" target="_blank" rel="noopener">@criis_hairart</a></p>
+      </div>
+    </div>
+    <div class="cta-final anima">
+      <h3>Tu color de autor te está esperando</h3>
+      <p>Mar–Vie 10:00–19:30 · Sáb 10:00–14:00 · Carrer de Sueca, 26</p>
+      <a class="btn btn-oro" href="tel:+34633233540">Pedir cita ahora</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca">Caranfil Hair Salon</p>
+  <p>Carrer de Sueca, 26 — Russafa, València · <a href="tel:+34633233540">633 23 35 40</a> · <a href="https://www.instagram.com/criis_hairart/" target="_blank" rel="noopener">@criis_hairart</a></p>
+  <p class="aviso-demo">Demo creada por <strong style="color:var(--marfil)">Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Eslogan palabra a palabra ===== */
+  var eslogan = document.getElementById('eslogan');
+  if (eslogan && !reduceMotion) {
+    var palabras = eslogan.textContent.trim().split(/\s+/);
+    eslogan.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      eslogan.appendChild(s);
+      eslogan.appendChild(document.createTextNode(' '));
+      setTimeout(function(){ s.classList.add('visible'); }, 350 + i * 90);
+    });
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anima'));
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = Array.prototype.slice.call(e.target.parentNode.querySelectorAll(':scope > .anima'));
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = (Math.max(idx,0) * 90) + 'ms';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    animados.forEach(function(el){ obs.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (4,9 · 313 · 12 · 4) ===== */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function fmt(v){ return v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion) { el.textContent = fmt(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easing cúbico */
+      el.textContent = fmt(fin * suave);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fmt(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = Array.prototype.slice.call(document.querySelectorAll('[data-contador]'));
+  if ('IntersectionObserver' in window) {
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); obsNum.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ obsNum.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave del hero ===== */
+  var barra = document.getElementById('barra-progreso');
+  var destellos = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion) {
+        destellos.forEach(function(d){
+          var f = parseFloat(d.getAttribute('data-parallax')) || 0.3;
+          d.style.transform = 'translateY(' + (y * f * -0.4) + 'px) rotate(' + (y * f * 0.05) + 'deg)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía =====
+     Lección del 03/08/2026: algunos visores de email/navegadores no disparan
+     IntersectionObserver y la página quedaba en blanco. A los 1,2 s, este
+     rescate fuerza visible todo lo que siga oculto, pase lo que pase. */
+  function rescateVisibilidad(){
+    document.querySelectorAll('.anima, .eslogan .palabra').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (parseFloat(el.textContent.replace(',', '.')) === 0) {
+        var fin = parseFloat(el.getAttribute('data-contador'));
+        var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+
+</body>
+</html>

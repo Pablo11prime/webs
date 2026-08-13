@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMBER Peluquería — Peluquería unisex en Patraix, València</title>
+<meta name="description" content="AMBER Peluquería: salón unisex en Patraix (València). Mechas, técnica Air Touch, coloración detallista, extensiones de microceratina, peinados y tratamientos capilares. 5,0★ en Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --oro:#8C6A3F;
+  --oro-oscuro:#6E5230;
+  --crema:#F7F3EC;
+  --ambar:#D4A24C;
+  --ambar-suave:#F3E6CE;
+  --tinta:#2E2620;
+  --blanco:#FFFFFF;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:22px;
+  --shadow:0 10px 30px rgba(46,38,32,.08);
+  --shadow-lift:0 18px 44px rgba(46,38,32,.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Jost',system-ui,sans-serif;
+  color:var(--tinta);
+  background:var(--crema);
+  line-height:1.65;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.12;letter-spacing:-.005em}
+a{color:inherit}
+img{max-width:100%}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--ambar),var(--oro));
+  z-index:1000;transition:width 120ms linear;border-radius:0 4px 4px 0;
+}
+
+/* ===== Marca de agua DEMO ===== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--tinta);color:var(--crema);
+  font-size:.72rem;font-weight:600;letter-spacing:.35em;
+  padding:.42em 3.4em;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  pointer-events:none;opacity:.9;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  background:rgba(247,243,236,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(140,106,63,.14);
+}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.35rem;letter-spacing:.16em;text-decoration:none}
+.logo em{font-style:normal;color:var(--oro)}
+.nav-cta{
+  text-decoration:none;font-weight:600;font-size:.9rem;
+  background:var(--oro);color:var(--crema);
+  padding:.55em 1.2em;border-radius:999px;
+  transition:transform 250ms var(--ease),background 250ms var(--ease);
+}
+.nav-cta:hover{transform:scale(1.05);background:var(--oro-oscuro)}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:4.5rem 1.4rem 5.2rem;text-align:center;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(212,162,76,.26), transparent 60%),
+    radial-gradient(42rem 26rem at -10% 110%, rgba(140,106,63,.18), transparent 55%),
+    var(--crema);
+}
+.destello{position:absolute;pointer-events:none;opacity:.6;will-change:transform}
+.destello svg{display:block}
+.hero-int{position:relative;max-width:660px;margin:0 auto}
+.chip{
+  display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--oro-oscuro);background:var(--ambar-suave);
+  border:1px solid rgba(212,162,76,.45);
+  padding:.45em 1.15em;border-radius:999px;margin-bottom:1.2rem;
+}
+.hero h1{font-size:clamp(3rem,11vw,5rem);font-weight:700;letter-spacing:.14em}
+.hero h1 .sub{display:block;font-family:'Jost',sans-serif;font-size:clamp(.9rem,3vw,1.15rem);font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:var(--oro);margin-top:.55rem}
+.eslogan{
+  font-size:clamp(1.05rem,4vw,1.32rem);color:#57493a;
+  max-width:36ch;margin:1.4rem auto 0;
+}
+.eslogan .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
+.eslogan .palabra.visible{opacity:1;transform:none}
+.hero-datos{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;font-size:.88rem;color:#5c4f40}
+.hero-datos span{background:var(--blanco);border:1px solid rgba(140,106,63,.14);border-radius:999px;padding:.35em 1em;box-shadow:var(--shadow)}
+.botones{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2.1rem}
+.btn{
+  text-decoration:none;font-weight:600;font-size:1.02rem;
+  padding:.95em 1.9em;border-radius:999px;display:inline-block;
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease),background 280ms var(--ease);
+}
+.btn-primario{background:var(--tinta);color:var(--crema);box-shadow:var(--shadow-lift)}
+.btn-primario:hover{transform:translateY(-3px) scale(1.03);background:#1e1813}
+.btn-oro{background:var(--oro);color:var(--blanco);box-shadow:0 12px 30px rgba(140,106,63,.4)}
+.btn-oro:hover{transform:translateY(-3px) scale(1.03);background:var(--oro-oscuro)}
+.nota-hero{margin-top:1.1rem;font-size:.85rem;color:#8a7a64}
+
+/* ===== Contadores ===== */
+.franja-contador{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  padding:0 1.4rem;margin-top:-2.4rem;position:relative;z-index:5;
+}
+.tarjeta-num{
+  background:var(--blanco);border-radius:var(--radius);box-shadow:var(--shadow-lift);
+  padding:1.1rem 1.6rem;text-align:center;min-width:130px;
+  border:1px solid rgba(212,162,76,.28);
+}
+.tarjeta-num .num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--oro)}
+.tarjeta-num .desc{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7a64}
+
+/* ===== Secciones ===== */
+section{padding:4.2rem 1.4rem}
+.contenedor{max-width:960px;margin:0 auto}
+.etiqueta{font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--oro);margin-bottom:.6rem}
+h2{font-size:clamp(2rem,6.5vw,2.9rem);margin-bottom:1rem}
+
+/* Animación de entrada escalonada */
+.anima{opacity:0;transform:translateY(28px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.anima.visible{opacity:1;transform:none}
+
+/* ===== Sobre nosotros ===== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:2rem;align-items:center}
+.sobre p{color:#57493a;margin-bottom:1rem;font-size:1.05rem}
+.cita-negocio{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--oro-oscuro);
+  border-left:4px solid var(--ambar);padding:.4rem 0 .4rem 1.1rem;margin:1.2rem 0;
+}
+.equipo{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.2rem}
+.persona{
+  display:flex;align-items:center;gap:.6rem;
+  background:var(--crema);border-radius:999px;padding:.4em 1.1em .4em .4em;
+  border:1px solid rgba(140,106,63,.1);font-weight:600;font-size:.92rem;
+  transition:transform 250ms var(--ease);
+}
+.persona:hover{transform:scale(1.05)}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;color:var(--blanco);
+  font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.05rem;
+  background:linear-gradient(135deg,var(--ambar),var(--oro));
+}
+.detalles{display:grid;gap:.7rem;margin-top:1.6rem}
+.detalle{
+  display:flex;align-items:flex-start;gap:.7rem;font-size:.98rem;color:#4c4133;
+  background:var(--crema);border-radius:16px;padding:.8rem 1rem;
+}
+.detalle .ico{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ambar-suave);display:grid;place-items:center;color:var(--oro-oscuro)}
+
+/* ===== Servicios ===== */
+.servicios{background:
+  radial-gradient(50rem 24rem at 110% 0%, rgba(212,162,76,.16), transparent 60%),
+  var(--crema)}
+.rejilla-serv{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2rem}
+.tarjeta-serv{
+  background:var(--blanco);border-radius:var(--radius);padding:1.6rem 1.5rem;
+  box-shadow:var(--shadow);border:1px solid rgba(212,162,76,.2);
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  position:relative;overflow:hidden;
+}
+.tarjeta-serv::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:5px;
+  background:linear-gradient(180deg,var(--ambar),var(--oro));
+  border-radius:5px 0 0 5px;
+}
+.tarjeta-serv:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow-lift)}
+.tarjeta-serv h3{font-size:1.4rem;margin-bottom:.35rem}
+.tarjeta-serv p{color:#6c5d4a;font-size:.94rem}
+.nota-serv{margin-top:1.4rem;font-size:.9rem;color:#8a7a64;text-align:center}
+.nota-serv a{color:var(--oro-oscuro);font-weight:600}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--tinta);color:var(--crema)}
+.resenas .etiqueta{color:var(--ambar)}
+.puntuacion{
+  display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem;
+}
+.puntuacion .grande{font-family:'Cormorant Garamond',serif;font-size:3.6rem;font-weight:700;color:var(--blanco)}
+.estrellas{color:var(--ambar);font-size:1.3rem;letter-spacing:.12em}
+.puntuacion .detalle-punt{color:#c4b8a5;font-size:.95rem}
+.rejilla-res{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.tarjeta-res{
+  background:rgba(247,243,236,.06);border:1px solid rgba(247,243,236,.12);
+  border-radius:var(--radius);padding:1.5rem;
+  transition:transform 300ms var(--ease),background 300ms var(--ease);
+}
+.tarjeta-res:hover{transform:translateY(-5px) scale(1.02);background:rgba(247,243,236,.1)}
+.tarjeta-res .estrellas{font-size:1rem;margin-bottom:.6rem}
+.tarjeta-res h3{font-size:1.25rem;color:var(--crema);margin-bottom:.4rem}
+.tarjeta-res p{color:#e9e1d3;font-size:.96rem}
+.nota-res{margin-top:1.6rem;font-size:.85rem;color:#a2937c;text-align:center}
+
+/* ===== Contacto ===== */
+.contacto{background:var(--blanco)}
+.rejilla-cont{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.8rem}
+.tarjeta-cont{
+  background:var(--crema);border-radius:var(--radius);padding:1.4rem 1.4rem;
+  border:1px solid rgba(140,106,63,.1);
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease);
+}
+.tarjeta-cont:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tarjeta-cont h3{font-size:1.2rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.tarjeta-cont h3 .ico{width:30px;height:30px;border-radius:10px;background:var(--ambar-suave);display:grid;place-items:center;color:var(--oro-oscuro);flex:0 0 auto;font-size:.95rem}
+.tarjeta-cont p, .tarjeta-cont li{color:#5c4f40;font-size:.96rem}
+.tarjeta-cont ul{list-style:none}
+.tarjeta-cont li{display:flex;justify-content:space-between;gap:1rem;padding:.25rem 0;border-bottom:1px dashed rgba(140,106,63,.18)}
+.tarjeta-cont li:last-child{border-bottom:none}
+.tarjeta-cont li .cerrado{color:#a8674f;font-weight:600}
+.tarjeta-cont a{color:var(--oro-oscuro);font-weight:600;text-decoration:none}
+.tarjeta-cont a:hover{text-decoration:underline}
+.cta-final{
+  margin-top:2.4rem;text-align:center;
+  background:linear-gradient(135deg,var(--ambar-suave),#fff);
+  border:1px solid rgba(212,162,76,.4);
+  border-radius:var(--radius);padding:2.2rem 1.5rem;
+}
+.cta-final h3{font-size:1.7rem;margin-bottom:.5rem}
+.cta-final p{color:#5c4f40;margin-bottom:1.3rem}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--tinta);color:#c4b8a5;text-align:center;
+  padding:2.6rem 1.4rem;font-size:.9rem;
+}
+footer .marca{font-family:'Cormorant Garamond',serif;color:var(--crema);font-size:1.25rem;letter-spacing:.14em;margin-bottom:.4rem}
+footer a{color:var(--ambar);text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(247,243,236,.12);
+  font-size:.85rem;
+}
+
+/* ===== Escritorio ===== */
+@media(min-width:720px){
+  .rejilla-serv{grid-template-columns:repeat(2,1fr)}
+  .rejilla-res{grid-template-columns:repeat(2,1fr)}
+  .rejilla-cont{grid-template-columns:repeat(2,1fr)}
+  .sobre-grid{grid-template-columns:1.2fr 1fr}
+  section{padding:5.5rem 2rem}
+}
+@media(min-width:1000px){
+  .rejilla-serv{grid-template-columns:repeat(3,1fr)}
+  .rejilla-res{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ===== Reduced motion: sin animaciones ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .anima,.eslogan .palabra{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.anima,.eslogan .palabra,.destello,[data-contador]{opacity:1!important;transform:none!important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio">AMBER<em>·</em></a>
+  <a class="nav-cta" href="tel:+34962053821">Llamar</a>
+</nav>
+
+<header id="inicio">
+<section class="hero" aria-label="Presentación">
+  <div class="destello" style="top:12%;left:6%" data-parallax="0.25">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" fill="#D4A24C" opacity=".45"/></svg>
+  </div>
+  <div class="destello" style="top:22%;right:8%" data-parallax="0.45">
+    <svg width="74" height="74" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#8C6A3F" stroke-width="1.4" opacity=".4"/><circle cx="12" cy="12" r="4.5" fill="#D4A24C" opacity=".35"/></svg>
+  </div>
+  <div class="destello" style="bottom:14%;left:12%" data-parallax="0.6">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l1.6 5.1L19 9.7l-5.4 1.6L12 16.4l-1.6-5.1L5 9.7l5.4-1.6z" fill="#8C6A3F" opacity=".4"/></svg>
+  </div>
+  <div class="hero-int">
+    <span class="chip anima">Peluquería unisex · Patraix, València</span>
+    <h1 class="anima">AMBER
+      <span class="sub">Peluquería</span>
+    </h1>
+    <p class="eslogan" id="eslogan">Color, mechas y cortes pensados para realzar tu belleza única.</p>
+    <div class="hero-datos anima">
+      <span>★ 5,0 en Google</span>
+      <span>106 reseñas</span>
+      <span>Unisex</span>
+      <span>Técnica Air Touch</span>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-primario" href="tel:+34962053821">📞 962 05 38 21</a>
+      <a class="btn btn-oro" href="https://www.instagram.com/amber_peluqueriavalencia/" target="_blank" rel="noopener">Pedir cita por Instagram</a>
+    </div>
+    <p class="nota-hero anima">C/ de l'Arxiduc Carles, 17 · Patraix, València</p>
+  </div>
+</section>
+</header>
+
+<main>
+
+<div class="franja-contador">
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="5.0" data-decimales="1">0,0</span>★</div>
+    <div class="desc">Nota en Google</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="106">0</span></div>
+    <div class="desc">Reseñas</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4">0</span></div>
+    <div class="desc">Años en Patraix</div>
+  </div>
+</div>
+
+<section class="sobre" aria-label="Sobre nosotros">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div>
+        <p class="etiqueta anima">Sobre nosotras</p>
+        <h2 class="anima">El brillo del ámbar, en cada melena</h2>
+        <blockquote class="cita-negocio anima">«En AMBER nos enorgullece ofrecer los mejores servicios de peluquería unisex, diseñados para realzar tu belleza única.»</blockquote>
+        <p class="anima">Llevamos unos 4 años en el barrio de Patraix cuidando el pelo de nuestras clientas y clientes con una atención súper personalizada: cada color se estudia, cada corte se piensa. Por algo las 106 reseñas de Google nos dan un 5,0 perfecto.</p>
+        <div class="equipo anima">
+          <span class="persona"><span class="avatar">R</span>Roksana</span>
+          <span class="persona"><span class="avatar">E</span>Esther</span>
+          <span class="persona"><span class="avatar">J</span>Jenny</span>
+        </div>
+      </div>
+      <div class="detalles">
+        <div class="detalle anima"><span class="ico">✨</span>Especialistas en rubios dorados y coloración detallista</div>
+        <div class="detalle anima"><span class="ico">💇</span>Salón unisex: mujer y hombre</div>
+        <div class="detalle anima"><span class="ico">🏅</span>5,0★ en Google con 106 reseñas</div>
+        <div class="detalle anima"><span class="ico">📍</span>En pleno barrio de Patraix, València</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" aria-label="Servicios">
+  <div class="contenedor">
+    <p class="etiqueta anima">Servicios</p>
+    <h2 class="anima">Lo que hacemos (y nos encanta hacer)</h2>
+    <div class="rejilla-serv">
+      <article class="tarjeta-serv anima">
+        <h3>Mechas</h3>
+        <p>Luz y profundidad a medida, con resultados naturales que crecen bonitos.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Técnica Air Touch</h3>
+        <p>El degradado más suave y sofisticado del momento, hecho mechón a mechón.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Coloración detallista</h3>
+        <p>Color trabajado al detalle, con especial mimo en los rubios dorados.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Extensiones de microceratina</h3>
+        <p>Largo y densidad con un acabado discreto y cómodo de llevar.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Peinados</h3>
+        <p>Para el día a día o para ese evento en el que quieres brillar.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <h3>Tratamientos capilares</h3>
+        <p>Cuidamos la salud de tu pelo para que el color luzca aún más.</p>
+      </article>
+    </div>
+    <p class="nota-serv anima">¿Dudas con tu color o tu corte? Te asesoramos sin compromiso: <a href="tel:+34962053821">962 05 38 21</a> o por <a href="https://www.instagram.com/amber_peluqueriavalencia/" target="_blank" rel="noopener">Instagram</a>.</p>
+  </div>
+</section>
+
+<section class="resenas" aria-label="Opiniones">
+  <div class="contenedor">
+    <p class="etiqueta anima">Opiniones</p>
+    <h2 class="anima">Un 5,0 perfecto en Google</h2>
+    <div class="puntuacion anima">
+      <span class="grande">5,0</span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <span class="detalle-punt">106 reseñas en Google</span>
+    </div>
+    <div class="rejilla-res">
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Atención súper personalizada</h3>
+        <p>Cada visita empieza escuchando qué quieres y cómo es tu pelo.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Ambiente acogedor</h3>
+        <p>Un salón donde apetece quedarse: cercano, cuidado y de barrio.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Color impecable</h3>
+        <p>Mechas y coloraciones que salen exactamente como se prometen.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Cortes que sientan genial</h3>
+        <p>Adaptados a cada cara y a cada estilo, para mujer y hombre.</p>
+      </article>
+    </div>
+    <p class="nota-res anima">Esto es lo que más destacan las clientas en sus reseñas de Google.</p>
+  </div>
+</section>
+
+<section class="contacto" aria-label="Contacto">
+  <div class="contenedor">
+    <p class="etiqueta anima">Contacto</p>
+    <h2 class="anima">Ven a vernos a Patraix</h2>
+    <div class="rejilla-cont">
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📍</span>Dónde estamos</h3>
+        <p>C/ de l'Arxiduc Carles, 17<br>Patraix<br>46018 València</p>
+        <p style="margin-top:.7rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=AMBER+Peluquer%C3%ADa+C%2F+de+l%27Arxiduc+Carles+17+46018+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">🕘</span>Horario</h3>
+        <ul>
+          <li><span>Martes a viernes</span><span>9:30 – 19:00</span></li>
+          <li><span>Sábado</span><span>9:00 – 14:00</span></li>
+          <li><span>Domingo</span><span class="cerrado">Cerrado</span></li>
+          <li><span>Lunes</span><span class="cerrado">Cerrado</span></li>
+        </ul>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📞</span>Teléfono</h3>
+        <p>Llámanos para pedir tu cita:</p>
+        <p style="margin-top:.4rem;font-size:1.25rem"><a href="tel:+34962053821">962 05 38 21</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">💬</span>Redes sociales</h3>
+        <p><a href="https://www.instagram.com/amber_peluqueriavalencia/" target="_blank" rel="noopener">Instagram · @amber_peluqueriavalencia</a></p>
+        <p style="margin-top:.4rem"><a href="https://www.facebook.com/amber.arvalencia" target="_blank" rel="noopener">Facebook · AMBER Peluquería</a></p>
+      </div>
+    </div>
+    <div class="cta-final anima">
+      <h3>Tu pelo merece un momento AMBER</h3>
+      <p>Llámanos o escríbenos por Instagram y buscamos tu hueco.</p>
+      <a class="btn btn-oro" href="tel:+34962053821">Llamar ahora</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca">AMBER · Peluquería</p>
+  <p>C/ de l'Arxiduc Carles, 17 — Patraix, València · <a href="tel:+34962053821">962 05 38 21</a></p>
+  <p class="aviso-demo">Demo creada por <strong style="color:var(--crema)">Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Eslogan palabra a palabra ===== */
+  var eslogan = document.getElementById('eslogan');
+  if (eslogan && !reduceMotion) {
+    var palabras = eslogan.textContent.trim().split(/\s+/);
+    eslogan.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      eslogan.appendChild(s);
+      eslogan.appendChild(document.createTextNode(' '));
+      setTimeout(function(){ s.classList.add('visible'); }, 350 + i * 90);
+    });
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anima'));
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = Array.prototype.slice.call(e.target.parentNode.querySelectorAll(':scope > .anima'));
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = (Math.max(idx,0) * 90) + 'ms';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    animados.forEach(function(el){ obs.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (5,0 · 106 reseñas · 4 años) ===== */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function fmt(v){ return v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion) { el.textContent = fmt(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easing cúbico */
+      el.textContent = fmt(fin * suave);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fmt(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = Array.prototype.slice.call(document.querySelectorAll('[data-contador]'));
+  if ('IntersectionObserver' in window) {
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); obsNum.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ obsNum.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave del hero ===== */
+  var barra = document.getElementById('barra-progreso');
+  var destellos = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion) {
+        destellos.forEach(function(d){
+          var f = parseFloat(d.getAttribute('data-parallax')) || 0.3;
+          d.style.transform = 'translateY(' + (y * f * -0.4) + 'px) rotate(' + (y * f * 0.03) + 'deg)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía =====
+     Lección del 03/08/2026: algunos visores de email/navegadores no disparan
+     IntersectionObserver y la página quedaba en blanco. A los 1,2 s, este
+     rescate fuerza visible todo lo que siga oculto, pase lo que pase. */
+  function rescateVisibilidad(){
+    document.querySelectorAll('.anima, .eslogan .palabra').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (parseFloat(el.textContent.replace(',', '.')) === 0) {
+        var fin = parseFloat(el.getAttribute('data-contador'));
+        var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+
+</body>
+</html>

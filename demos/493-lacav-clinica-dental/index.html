@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LACAV Clínica Dental — Estética dental en Ciutat Vella, València</title>
+<meta name="description" content="LACAV Clínica Dental Valencia: estética dental, blanqueamiento, cirugía oral, odontopediatría, sedación y urgencias junto al Mercat Central. 5,0★ en Google. Atención en español, francés, inglés e italiano.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0E7C86;
+  --teal-oscuro:#0A5A62;
+  --teal-tinta:#083D43;
+  --aqua:#F4FAFB;
+  --acento:#F2A65A;
+  --acento-suave:#FCEBD8;
+  --blanco:#FFFFFF;
+  --gris-texto:#3C5257;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:22px;
+  --shadow:0 10px 30px rgba(8,61,67,.08);
+  --shadow-lift:0 20px 48px rgba(8,61,67,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--teal-tinta);
+  background:var(--aqua);
+  line-height:1.65;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Sora',system-ui,sans-serif;line-height:1.15;letter-spacing:-.02em}
+a{color:inherit}
+img{max-width:100%}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--acento),var(--teal));
+  z-index:1000;transition:width 120ms linear;border-radius:0 4px 4px 0;
+}
+
+/* ===== Marca de agua DEMO ===== */
+.cinta-demo{
+  position:fixed;top:18px;right:-46px;z-index:999;
+  transform:rotate(45deg);
+  background:var(--teal-tinta);color:var(--aqua);
+  font-size:.72rem;font-weight:600;letter-spacing:.35em;
+  padding:.42em 3.4em;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  pointer-events:none;opacity:.9;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.25rem;
+  background:rgba(244,250,251,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(14,124,134,.14);
+}
+.logo{font-family:'Sora',sans-serif;font-weight:700;font-size:1.3rem;letter-spacing:.1em;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.logo .simbolo{
+  width:34px;height:34px;border-radius:11px;flex:0 0 auto;
+  background:linear-gradient(135deg,var(--teal),var(--teal-oscuro));
+  display:grid;place-items:center;
+}
+.logo em{font-style:normal;color:var(--teal)}
+.nav-cta{
+  text-decoration:none;font-weight:600;font-size:.9rem;
+  background:var(--teal);color:var(--blanco);
+  padding:.55em 1.2em;border-radius:999px;
+  transition:transform 250ms var(--ease),background 250ms var(--ease);
+}
+.nav-cta:hover{transform:scale(1.05);background:var(--teal-oscuro)}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:4.5rem 1.4rem 5.4rem;text-align:center;
+  background:
+    radial-gradient(58rem 30rem at 88% -12%, rgba(14,124,134,.14), transparent 60%),
+    radial-gradient(44rem 26rem at -12% 112%, rgba(242,166,90,.18), transparent 55%),
+    var(--aqua);
+}
+.flotante{position:absolute;pointer-events:none;opacity:.65;will-change:transform}
+.flotante svg{display:block}
+.hero-int{position:relative;max-width:700px;margin:0 auto}
+.chip{
+  display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal-oscuro);background:rgba(14,124,134,.09);
+  border:1px solid rgba(14,124,134,.3);
+  padding:.45em 1.15em;border-radius:999px;margin-bottom:1.2rem;
+}
+.hero h1{font-size:clamp(2.6rem,10vw,4.4rem);font-weight:700}
+.hero h1 .sub{display:block;font-family:'Inter',sans-serif;font-size:clamp(.85rem,3vw,1.05rem);font-weight:600;letter-spacing:.4em;text-transform:uppercase;color:var(--teal);margin-top:.6rem}
+.eslogan{
+  font-size:clamp(1.05rem,4vw,1.32rem);color:var(--gris-texto);
+  max-width:42ch;margin:1.4rem auto 0;
+}
+.eslogan .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
+.eslogan .palabra.visible{opacity:1;transform:none}
+.hero-datos{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;font-size:.88rem;color:var(--gris-texto)}
+.hero-datos span{background:var(--blanco);border:1px solid rgba(14,124,134,.14);border-radius:999px;padding:.35em 1em;box-shadow:var(--shadow)}
+.botones{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2.1rem}
+.btn{
+  text-decoration:none;font-weight:600;font-size:1.02rem;
+  padding:.95em 1.9em;border-radius:999px;display:inline-block;
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease),background 280ms var(--ease);
+}
+.btn-primario{background:var(--teal);color:var(--blanco);box-shadow:0 14px 34px rgba(14,124,134,.38)}
+.btn-primario:hover{transform:translateY(-3px) scale(1.03);background:var(--teal-oscuro)}
+.btn-acento{background:var(--acento);color:var(--teal-tinta);box-shadow:0 12px 30px rgba(242,166,90,.42)}
+.btn-acento:hover{transform:translateY(-3px) scale(1.03);background:#E8974A}
+.nota-hero{margin-top:1.1rem;font-size:.85rem;color:#5F777C}
+
+/* ===== Contadores ===== */
+.franja-contador{
+  display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+  padding:0 1.4rem;margin-top:-2.6rem;position:relative;z-index:5;
+}
+.tarjeta-num{
+  background:var(--blanco);border-radius:var(--radius);box-shadow:var(--shadow-lift);
+  padding:1.1rem 1.6rem;text-align:center;min-width:132px;
+  border:1px solid rgba(14,124,134,.16);
+}
+.tarjeta-num .num{font-family:'Sora',sans-serif;font-size:1.9rem;font-weight:700;color:var(--teal)}
+.tarjeta-num .desc{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:#5F777C}
+
+/* ===== Secciones ===== */
+section{padding:4.2rem 1.4rem}
+.contenedor{max-width:980px;margin:0 auto}
+.etiqueta{font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+h2{font-size:clamp(1.9rem,6.5vw,2.7rem);margin-bottom:1rem}
+
+/* Animación de entrada escalonada */
+.anima{opacity:0;transform:translateY(28px);transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+.anima.visible{opacity:1;transform:none}
+
+/* ===== Sobre nosotros ===== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:2rem;align-items:center}
+.sobre p{color:var(--gris-texto);margin-bottom:1rem;font-size:1.03rem}
+.cita-clinica{
+  font-family:'Sora',sans-serif;font-size:1.18rem;font-weight:600;color:var(--teal-oscuro);
+  border-left:4px solid var(--acento);padding:.4rem 0 .4rem 1.1rem;margin:1.2rem 0;
+}
+.equipo{display:grid;gap:.8rem;margin-top:1.4rem}
+.doctor{
+  display:flex;align-items:center;gap:.85rem;
+  background:var(--aqua);border-radius:18px;padding:.85rem 1.1rem;
+  border:1px solid rgba(14,124,134,.12);
+  transition:transform 250ms var(--ease),box-shadow 250ms var(--ease);
+}
+.doctor:hover{transform:translateY(-3px) scale(1.01);box-shadow:var(--shadow)}
+.avatar{
+  width:46px;height:46px;border-radius:50%;flex:0 0 auto;
+  display:grid;place-items:center;color:var(--blanco);
+  font-family:'Sora',sans-serif;font-weight:700;font-size:1.05rem;
+  background:linear-gradient(135deg,var(--teal),var(--teal-oscuro));
+}
+.doctor .nombre{font-weight:600;font-size:.98rem}
+.doctor .rol{font-size:.85rem;color:#5F777C}
+.detalles{display:grid;gap:.7rem;margin-top:1.6rem}
+.detalle{
+  display:flex;align-items:flex-start;gap:.7rem;font-size:.96rem;color:var(--gris-texto);
+  background:var(--aqua);border-radius:16px;padding:.8rem 1rem;
+}
+.detalle .ico{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--acento-suave);display:grid;place-items:center;color:var(--teal-oscuro)}
+
+/* ===== Idiomas ===== */
+.idiomas{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:1.1rem}
+.idioma{
+  background:var(--blanco);border:1px solid rgba(14,124,134,.2);border-radius:999px;
+  padding:.32em .95em;font-size:.86rem;font-weight:600;color:var(--teal-oscuro);
+}
+
+/* ===== Servicios ===== */
+.servicios{background:
+  radial-gradient(50rem 24rem at 110% 0%, rgba(242,166,90,.12), transparent 60%),
+  var(--aqua)}
+.rejilla-serv{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2rem}
+.tarjeta-serv{
+  background:var(--blanco);border-radius:var(--radius);padding:1.6rem 1.5rem;
+  box-shadow:var(--shadow);border:1px solid rgba(14,124,134,.14);
+  transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  position:relative;overflow:hidden;
+}
+.tarjeta-serv::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:5px;
+  background:linear-gradient(180deg,var(--acento),var(--teal));
+  border-radius:5px 0 0 5px;
+}
+.tarjeta-serv:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow-lift)}
+.tarjeta-serv .ico-serv{
+  width:46px;height:46px;border-radius:14px;margin-bottom:.85rem;
+  background:rgba(14,124,134,.08);display:grid;place-items:center;font-size:1.35rem;
+}
+.tarjeta-serv h3{font-size:1.22rem;margin-bottom:.35rem}
+.tarjeta-serv p{color:#4C666B;font-size:.94rem}
+.nota-serv{margin-top:1.4rem;font-size:.9rem;color:#5F777C;text-align:center}
+.nota-serv a{color:var(--teal-oscuro);font-weight:600}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--teal-tinta);color:var(--aqua)}
+.resenas .etiqueta{color:var(--acento)}
+.puntuacion{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.puntuacion .grande{font-family:'Sora',sans-serif;font-size:3.4rem;font-weight:700;color:var(--blanco)}
+.estrellas{color:var(--acento);font-size:1.3rem;letter-spacing:.12em}
+.puntuacion .detalle-punt{color:#9FC3C8;font-size:.95rem}
+.rejilla-res{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.tarjeta-res{
+  background:rgba(244,250,251,.06);border:1px solid rgba(244,250,251,.14);
+  border-radius:var(--radius);padding:1.5rem;
+  transition:transform 300ms var(--ease),background 300ms var(--ease);
+}
+.tarjeta-res:hover{transform:translateY(-5px) scale(1.02);background:rgba(244,250,251,.1)}
+.tarjeta-res .estrellas{font-size:1rem;margin-bottom:.6rem}
+.tarjeta-res h3{font-size:1.18rem;color:var(--aqua);margin-bottom:.4rem}
+.tarjeta-res p{color:#D8E9EB;font-size:.96rem}
+.nota-res{margin-top:1.6rem;font-size:.85rem;color:#8FB6BB;text-align:center}
+
+/* ===== Contacto ===== */
+.contacto{background:var(--blanco)}
+.rejilla-cont{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.8rem}
+.tarjeta-cont{
+  background:var(--aqua);border-radius:var(--radius);padding:1.4rem 1.4rem;
+  border:1px solid rgba(14,124,134,.12);
+  transition:transform 280ms var(--ease),box-shadow 280ms var(--ease);
+}
+.tarjeta-cont:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tarjeta-cont h3{font-size:1.15rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.tarjeta-cont h3 .ico{width:30px;height:30px;border-radius:10px;background:var(--acento-suave);display:grid;place-items:center;color:var(--teal-oscuro);flex:0 0 auto;font-size:.95rem}
+.tarjeta-cont p, .tarjeta-cont li{color:var(--gris-texto);font-size:.96rem}
+.tarjeta-cont ul{list-style:none}
+.tarjeta-cont li{display:flex;justify-content:space-between;gap:1rem;padding:.25rem 0;border-bottom:1px dashed rgba(14,124,134,.2)}
+.tarjeta-cont li:last-child{border-bottom:none}
+.tarjeta-cont li .cerrado{color:#B0653B;font-weight:600}
+.tarjeta-cont a{color:var(--teal-oscuro);font-weight:600;text-decoration:none}
+.tarjeta-cont a:hover{text-decoration:underline}
+.aviso-horario{margin-top:.7rem;font-size:.84rem;color:#5F777C}
+.cta-final{
+  margin-top:2.4rem;text-align:center;
+  background:linear-gradient(135deg,rgba(14,124,134,.08),var(--acento-suave));
+  border:1px solid rgba(242,166,90,.45);
+  border-radius:var(--radius);padding:2.2rem 1.5rem;
+}
+.cta-final h3{font-size:1.6rem;margin-bottom:.5rem}
+.cta-final p{color:var(--gris-texto);margin-bottom:1.3rem}
+
+/* ===== Footer ===== */
+footer{
+  background:var(--teal-tinta);color:#9FC3C8;text-align:center;
+  padding:2.6rem 1.4rem;font-size:.9rem;
+}
+footer .marca{font-family:'Sora',sans-serif;color:var(--aqua);font-size:1.2rem;letter-spacing:.1em;margin-bottom:.4rem}
+footer a{color:var(--acento);text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+footer .aviso-demo{
+  margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(244,250,251,.12);
+  font-size:.85rem;
+}
+
+/* ===== Escritorio ===== */
+@media(min-width:720px){
+  .rejilla-serv{grid-template-columns:repeat(2,1fr)}
+  .rejilla-res{grid-template-columns:repeat(3,1fr)}
+  .rejilla-cont{grid-template-columns:repeat(2,1fr)}
+  .sobre-grid{grid-template-columns:1.2fr 1fr}
+  .equipo{grid-template-columns:1fr}
+  section{padding:5.5rem 2rem}
+}
+@media(min-width:1000px){
+  .rejilla-serv{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== Reduced motion: sin animaciones ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .anima,.eslogan .palabra{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.anima,.eslogan .palabra,.flotante,[data-contador]{opacity:1!important;transform:none!important}
+#barra-progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso"></div>
+<div class="cinta-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio"><span class="simbolo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3c-2.1 0-2.9 1.2-4.6 1.2C5.2 4.2 4 5.9 4 8.2c0 3.6 1.6 8.3 3 11 .5 1 1.9.9 2.2-.2.4-1.6.8-3.9 1.4-3.9h2.8c.6 0 1 2.3 1.4 3.9.3 1.1 1.7 1.2 2.2.2 1.4-2.7 3-7.4 3-11 0-2.3-1.2-4-3.4-4C14.9 4.2 14.1 3 12 3z" fill="#F4FAFB"/></svg></span>LACAV<em>·</em></a>
+  <a class="nav-cta" href="https://wa.me/34621294037" target="_blank" rel="noopener">Pedir cita</a>
+</nav>
+
+<header id="inicio">
+<section class="hero" aria-label="Presentación">
+  <div class="flotante" style="top:12%;left:5%" data-parallax="0.25">
+    <svg width="58" height="58" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3c-2.1 0-2.9 1.2-4.6 1.2C5.2 4.2 4 5.9 4 8.2c0 3.6 1.6 8.3 3 11 .5 1 1.9.9 2.2-.2.4-1.6.8-3.9 1.4-3.9h2.8c.6 0 1 2.3 1.4 3.9.3 1.1 1.7 1.2 2.2.2 1.4-2.7 3-7.4 3-11 0-2.3-1.2-4-3.4-4C14.9 4.2 14.1 3 12 3z" fill="#0E7C86" opacity=".2"/></svg>
+  </div>
+  <div class="flotante" style="top:20%;right:7%" data-parallax="0.45">
+    <svg width="72" height="72" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#0E7C86" stroke-width="1.4" opacity=".3"/><circle cx="12" cy="12" r="4.5" fill="#F2A65A" opacity=".35"/></svg>
+  </div>
+  <div class="flotante" style="bottom:13%;left:11%" data-parallax="0.6">
+    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" fill="#F2A65A" opacity=".45"/></svg>
+  </div>
+  <div class="hero-int">
+    <span class="chip anima">Clínica dental · Ciutat Vella, València</span>
+    <h1 class="anima">LACAV
+      <span class="sub">Clínica Dental</span>
+    </h1>
+    <p class="eslogan" id="eslogan">Estética dental y sonrisas sin dolor, en el corazón de València.</p>
+    <div class="hero-datos anima">
+      <span>★ 5,0 en Google</span>
+      <span>95 reseñas</span>
+      <span>Junto al Mercat Central</span>
+      <span>Clínica moderna y digital</span>
+    </div>
+    <div class="botones anima">
+      <a class="btn btn-primario" href="https://wa.me/34621294037" target="_blank" rel="noopener">💬 Cita por WhatsApp</a>
+      <a class="btn btn-acento" href="tel:+34621294037">📞 621 29 40 37</a>
+    </div>
+    <p class="nota-hero anima">Carrer de Guillem Sorolla, 25 · 46001 València</p>
+  </div>
+</section>
+</header>
+
+<main>
+
+<div class="franja-contador">
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="5.0" data-decimales="1">0,0</span>★</div>
+    <div class="desc">Nota en Google</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="95">0</span></div>
+    <div class="desc">Reseñas</div>
+  </div>
+  <div class="tarjeta-num anima">
+    <div class="num"><span data-contador="4">0</span></div>
+    <div class="desc">Idiomas de atención</div>
+  </div>
+</div>
+
+<section class="sobre" aria-label="Sobre la clínica">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div>
+        <p class="etiqueta anima">La clínica</p>
+        <h2 class="anima">Odontología moderna a dos pasos del Mercat Central</h2>
+        <blockquote class="cita-clinica anima">Una clínica moderna y digital donde cada sonrisa se trata con calma, precisión y cero dolor.</blockquote>
+        <p class="anima">LACAV es una clínica dental de Ciutat Vella dirigida por la Dra. Ludovica Alberta Crudele, especializada en estética dental, estética perioral y blanqueamiento. Sus pacientes la puntúan con un 5,0 perfecto en Google.</p>
+        <p class="anima">En sus reseñas se repite una idea: aquí se viene sin miedo. El trato cercano y los tratamientos sin dolor —con el Dr. Nino Bongiorno entre los más mencionados— convierten la visita al dentista en algo fácil.</p>
+        <div class="equipo anima">
+          <div class="doctor">
+            <span class="avatar">LC</span>
+            <span><span class="nombre">Dra. Ludovica Alberta Crudele</span><br><span class="rol">Directora · Estética dental, estética perioral y blanqueamiento</span></span>
+          </div>
+          <div class="doctor">
+            <span class="avatar">NB</span>
+            <span><span class="nombre">Dr. Nino Bongiorno</span><br><span class="rol">Destacado en reseñas por su trato sin dolor</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="detalles">
+        <div class="detalle anima"><span class="ico">🌍</span><span>Atención en 4 idiomas<span class="idiomas"><span class="idioma">Español</span><span class="idioma">Français</span><span class="idioma">English</span><span class="idioma">Italiano</span></span></span></div>
+        <div class="detalle anima"><span class="ico">♿</span>Accesible en silla de ruedas</div>
+        <div class="detalle anima"><span class="ico">🤱</span>Sala de lactancia</div>
+        <div class="detalle anima"><span class="ico">💜</span>Clínica de propiedad femenina</div>
+        <div class="detalle anima"><span class="ico">🚨</span>Atendemos urgencias dentales</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" aria-label="Tratamientos">
+  <div class="contenedor">
+    <p class="etiqueta anima">Tratamientos</p>
+    <h2 class="anima">Todo lo que tu sonrisa necesita</h2>
+    <div class="rejilla-serv">
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">✨</div>
+        <h3>Estética dental</h3>
+        <p>La especialidad de la casa: sonrisas armónicas diseñadas con criterio estético y medios digitales.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">😁</div>
+        <h3>Blanqueamiento dental</h3>
+        <p>Recupera el blanco natural de tus dientes con un tratamiento seguro y supervisado por la Dra. Crudele.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">🦷</div>
+        <h3>Cirugía oral</h3>
+        <p>Intervenciones con planificación digital y un postoperatorio cuidado al detalle.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">🧒</div>
+        <h3>Odontopediatría</h3>
+        <p>Los más pequeños, en buenas manos: primeras visitas tranquilas y sin miedo al dentista.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">😴</div>
+        <h3>Tratamientos con sedación</h3>
+        <p>Si el dentista te impone, la sedación te permite tratarte relajado y sin ansiedad.</p>
+      </article>
+      <article class="tarjeta-serv anima">
+        <div class="ico-serv" aria-hidden="true">🚨</div>
+        <h3>Urgencias dentales</h3>
+        <p>¿Dolor repentino? Escríbenos y buscamos hueco para atenderte cuanto antes.</p>
+      </article>
+    </div>
+    <p class="nota-serv anima">¿No sabes qué necesitas? Cuéntanoslo por <a href="https://wa.me/34621294037" target="_blank" rel="noopener">WhatsApp</a> y te orientamos sin compromiso.</p>
+  </div>
+</section>
+
+<section class="resenas" aria-label="Opiniones de pacientes">
+  <div class="contenedor">
+    <p class="etiqueta anima">Lo que dicen los pacientes</p>
+    <h2 class="anima">Un 5,0 perfecto en Google</h2>
+    <div class="puntuacion anima">
+      <span class="grande">5,0</span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <span class="detalle-punt">95 reseñas en Google</span>
+    </div>
+    <div class="rejilla-res">
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Sin dolor, de verdad</h3>
+        <p>Lo más repetido en las reseñas: tratamientos cómodos y un trato que quita el miedo al dentista.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Moderna y digital</h3>
+        <p>Instalaciones actuales y tecnología digital que se notan desde la primera visita.</p>
+      </article>
+      <article class="tarjeta-res anima">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <h3>Trato cercano, en tu idioma</h3>
+        <p>Atención personalizada en español, francés, inglés e italiano, en pleno centro de València.</p>
+      </article>
+    </div>
+    <p class="nota-res anima">Resumen de lo que más destacan los pacientes en sus reseñas de Google.</p>
+  </div>
+</section>
+
+<section class="contacto" aria-label="Contacto">
+  <div class="contenedor">
+    <p class="etiqueta anima">Contacto</p>
+    <h2 class="anima">Ven a vernos a Ciutat Vella</h2>
+    <div class="rejilla-cont">
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📍</span>Dónde estamos</h3>
+        <p>Carrer de Guillem Sorolla, 25<br>Ciutat Vella · 46001 València<br>Junto al Mercat Central</p>
+        <p style="margin-top:.7rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=LACAV%20Cl%C3%ADnica%20Dental%20Valencia%20Guillem%20Sorolla%2025" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">🕘</span>Horario</h3>
+        <ul>
+          <li><span>Lunes a viernes</span><span>9:00 – 14:00</span></li>
+          <li><span></span><span>16:00 – 20:00</span></li>
+          <li><span>Sábado y domingo</span><span class="cerrado">Cerrado</span></li>
+        </ul>
+        <p class="aviso-horario">Confirma tu cita por WhatsApp antes de venir.</p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">💬</span>WhatsApp y teléfono</h3>
+        <p>Pide cita o resuelve dudas por WhatsApp:</p>
+        <p style="margin-top:.4rem;font-size:1.2rem"><a href="https://wa.me/34621294037" target="_blank" rel="noopener">+34 621 29 40 37</a></p>
+        <p style="margin-top:.4rem">También por llamada: <a href="tel:+34621294037">621 29 40 37</a></p>
+      </div>
+      <div class="tarjeta-cont anima">
+        <h3><span class="ico">📱</span>Redes sociales</h3>
+        <p><a href="https://www.instagram.com/clinicalacav/" target="_blank" rel="noopener">Instagram · @clinicalacav</a></p>
+        <p style="margin-top:.4rem">TikTok · @lacavclinicadentalvlc</p>
+      </div>
+    </div>
+    <div class="cta-final anima">
+      <h3>Tu sonrisa, en manos expertas</h3>
+      <p>Escríbenos por WhatsApp y encontramos el hueco perfecto para tu primera visita.</p>
+      <a class="btn btn-primario" href="https://wa.me/34621294037" target="_blank" rel="noopener">💬 Pedir cita por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="marca">LACAV · Clínica Dental</p>
+  <p>Carrer de Guillem Sorolla, 25 — Ciutat Vella, València · <a href="tel:+34621294037">621 29 40 37</a></p>
+  <p class="aviso-demo">Demo creada por <strong style="color:var(--aqua)">Eleven AI</strong> — esta web puede ser tuya.<br>
+  <a href="https://elevenai-webs.netlify.app/formulario/?id=493&amp;sede=pablo" target="_blank" rel="noopener">Dinos qué te parece en 1 minuto →</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Eslogan palabra a palabra ===== */
+  var eslogan = document.getElementById('eslogan');
+  if (eslogan && !reduceMotion) {
+    var palabras = eslogan.textContent.trim().split(/\s+/);
+    eslogan.textContent = '';
+    palabras.forEach(function(p, i){
+      var s = document.createElement('span');
+      s.className = 'palabra';
+      s.textContent = p;
+      eslogan.appendChild(s);
+      eslogan.appendChild(document.createTextNode(' '));
+      setTimeout(function(){ s.classList.add('visible'); }, 350 + i * 90);
+    });
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anima'));
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = Array.prototype.slice.call(e.target.parentNode.querySelectorAll(':scope > .anima'));
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = (Math.max(idx,0) * 90) + 'ms';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    animados.forEach(function(el){ obs.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (5,0 · 95 reseñas · 4 idiomas) ===== */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    var dur = 1400, t0 = null;
+    function fmt(v){ return v.toFixed(dec).replace('.', ','); }
+    if (reduceMotion) { el.textContent = fmt(fin); return; }
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3); /* easing cúbico */
+      el.textContent = fmt(fin * suave);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fmt(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = Array.prototype.slice.call(document.querySelectorAll('[data-contador]'));
+  if ('IntersectionObserver' in window) {
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); obsNum.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ obsNum.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave del hero ===== */
+  var barra = document.getElementById('barra-progreso');
+  var flotantes = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || window.pageYOffset;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion) {
+        flotantes.forEach(function(d){
+          var f = parseFloat(d.getAttribute('data-parallax')) || 0.3;
+          d.style.transform = 'translateY(' + (y * f * -0.4) + 'px) rotate(' + (y * f * 0.03) + 'deg)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía =====
+     Lección del 03/08/2026: algunos visores de email/navegadores no disparan
+     IntersectionObserver y la página quedaba en blanco. A los 1,2 s, este
+     rescate fuerza visible todo lo que siga oculto, pase lo que pase. */
+  function rescateVisibilidad(){
+    document.querySelectorAll('.anima, .eslogan .palabra').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (parseFloat(el.textContent.replace(',', '.')) === 0) {
+        var fin = parseFloat(el.getAttribute('data-contador'));
+        var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+  window.addEventListener('load', function(){ setTimeout(rescateVisibilidad, 1200); });
+})();
+</script>
+
+</body>
+</html>

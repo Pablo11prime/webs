@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROMA MOTOR — Taller mecánico y electromecánico en València | Especialistas en híbridos y eléctricos</title>
+<meta name="description" content="ROMA MOTOR, taller mecánico y electromecánico en Pl. Roma 9 (L'Olivereta, València). Mecánica general, mantenimiento, neumáticos y especialidad en vehículos híbridos y eléctricos. 4,9 estrellas en Google. WhatsApp 614 23 51 43.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --grafito:#1F2933;
+    --grafito-osc:#161E26;
+    --grafito-noche:#0F151B;
+    --grafito-medio:#323F4B;
+    --niebla:#F2F4F6;
+    --blanco:#FFFFFF;
+    --rojo:#D64541;
+    --rojo-osc:#B93531;
+    --rojo-suave:#FBEAE9;
+    --texto:#222D36;
+    --texto-suave:#52606D;
+    --gris:#9AA5B1;
+    --linea:#E0E5EA;
+    --dorado:#F0B429;
+    --wasap:#1EBE5D;
+    --wasap-osc:#17A34F;
+    --radio:20px;
+    --sombra:0 10px 30px rgba(31,41,51,.09);
+    --sombra-fuerte:0 22px 52px rgba(31,41,51,.2);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--texto);
+    background:var(--niebla);
+    line-height:1.65;
+    font-size:17px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Archivo','Inter',sans-serif;line-height:1.1;letter-spacing:-.02em}
+  img{max-width:100%}
+
+  /* ====== Barra de progreso de scroll ====== */
+  #progreso{
+    position:fixed;top:0;left:0;height:4px;width:0%;
+    background:linear-gradient(90deg,var(--rojo),var(--dorado));
+    z-index:1200;transition:width 110ms linear;
+  }
+
+  /* ====== Marca de agua DEMO ====== */
+  .marca-demo{
+    position:fixed;right:14px;bottom:14px;z-index:1100;
+    background:rgba(15,21,27,.9);color:#fff;
+    border:1px solid rgba(255,255,255,.3);
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;
+    letter-spacing:3px;text-transform:uppercase;
+    padding:7px 14px;border-radius:999px;
+    backdrop-filter:blur(6px);
+    box-shadow:0 6px 18px rgba(15,21,27,.35);
+    pointer-events:none;
+  }
+  .marca-demo::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--rojo);margin-right:8px;vertical-align:1px}
+
+  /* ====== Animaciones con red de seguridad ====== */
+  .anim{opacity:0;transform:translateY(26px);transition:opacity 520ms var(--ease),transform 520ms var(--ease)}
+  .anim.visible{opacity:1;transform:none}
+  .anim-izq{opacity:0;transform:translateX(-30px);transition:opacity 540ms var(--ease),transform 540ms var(--ease)}
+  .anim-izq.visible{opacity:1;transform:none}
+  .anim-der{opacity:0;transform:translateX(30px);transition:opacity 540ms var(--ease),transform 540ms var(--ease)}
+  .anim-der.visible{opacity:1;transform:none}
+  .palabra{display:inline-block;opacity:0;transform:translateY(.5em);transition:opacity 430ms var(--ease),transform 430ms var(--ease)}
+  .palabra.visible{opacity:1;transform:none}
+  @keyframes marquesina{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important;transition:none!important}
+    *{animation:none!important;transition:none!important}
+  }
+
+  /* ====== Cabecera ====== */
+  .cabecera{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--linea);
+  }
+  .cabecera nav{
+    max-width:1140px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:12px 20px;
+  }
+  .logo{display:flex;align-items:center;gap:12px;color:var(--grafito);text-decoration:none}
+  .logo-sello{
+    width:46px;height:46px;border-radius:13px;flex:0 0 auto;
+    background:linear-gradient(140deg,var(--grafito) 0%,var(--grafito-noche) 100%);
+    display:grid;place-items:center;position:relative;overflow:hidden;
+    font-family:'Archivo',sans-serif;font-weight:900;font-size:15px;color:#fff;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 5px 12px rgba(15,21,27,.3);
+  }
+  .logo-sello::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--rojo)}
+  .logo-texto{font-family:'Archivo',sans-serif;font-weight:800;font-size:18px;letter-spacing:.4px}
+  .logo-texto small{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:2.4px;color:var(--texto-suave);text-transform:uppercase}
+  .nav-enlaces{display:flex;gap:22px;align-items:center}
+  .nav-enlaces a.enlace{color:var(--texto-suave);text-decoration:none;font-weight:600;font-size:15px;transition:color 220ms var(--ease)}
+  .nav-enlaces a.enlace:hover{color:var(--grafito)}
+  @media (max-width:820px){.nav-enlaces a.enlace{display:none}}
+  .btn-nav{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--wasap);color:#fff;text-decoration:none;
+    font-weight:700;font-size:15px;
+    padding:10px 18px;border-radius:12px;white-space:nowrap;
+    transition:transform 250ms var(--ease),background 250ms var(--ease),box-shadow 250ms var(--ease);
+    box-shadow:0 5px 14px rgba(30,190,93,.35);
+  }
+  .btn-nav:hover{background:var(--wasap-osc);transform:translateY(-2px);box-shadow:0 9px 20px rgba(30,190,93,.45)}
+  .btn-nav svg{flex:0 0 auto}
+
+  /* ====== Hero (claro) ====== */
+  .hero{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(900px 480px at 108% -10%,rgba(214,69,65,.09),transparent 60%),
+      linear-gradient(180deg,var(--blanco) 0%,var(--niebla) 100%);
+    padding:78px 20px 0;
+  }
+  .hero-trama{
+    position:absolute;inset:-6%;pointer-events:none;opacity:.55;
+    background:
+      repeating-linear-gradient(90deg,transparent 0 110px,rgba(31,41,51,.035) 110px 111px),
+      repeating-linear-gradient(0deg,transparent 0 110px,rgba(31,41,51,.035) 110px 111px);
+    will-change:transform;
+  }
+  .hero-int{position:relative;max-width:1140px;margin:0 auto;z-index:2;display:grid;gap:44px;padding-bottom:64px}
+  @media (min-width:960px){.hero-int{grid-template-columns:1.25fr .75fr;align-items:center}}
+  .hero-etiqueta{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--rojo-suave);border:1px solid rgba(214,69,65,.35);
+    color:var(--rojo-osc);border-radius:999px;
+    font-weight:700;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;
+    padding:8px 16px;margin-bottom:22px;
+  }
+  .hero-etiqueta svg{flex:0 0 auto}
+  .hero h1{
+    font-size:clamp(2.5rem,8vw,4.4rem);font-weight:900;color:var(--grafito);
+    max-width:760px;margin-bottom:8px;text-transform:none;
+  }
+  .hero h1 .acento{color:var(--rojo)}
+  .hero-sub{
+    font-size:clamp(1.05rem,3.3vw,1.26rem);color:var(--texto-suave);
+    max-width:620px;margin:16px 0 30px;
+  }
+  .hero-sub strong{color:var(--grafito);font-weight:700}
+  .hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:34px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:16.5px;letter-spacing:.2px;
+    padding:16px 26px;border-radius:14px;
+    transition:transform 260ms var(--ease),box-shadow 260ms var(--ease),background 260ms var(--ease);
+  }
+  .btn svg{flex:0 0 auto}
+  .btn-wasap{background:linear-gradient(135deg,var(--wasap),var(--wasap-osc));color:#fff;box-shadow:0 10px 26px rgba(30,190,93,.4)}
+  .btn-wasap:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 34px rgba(30,190,93,.5)}
+  .btn-oscuro{background:var(--grafito);color:#fff;box-shadow:0 10px 26px rgba(31,41,51,.35)}
+  .btn-oscuro:hover{background:var(--grafito-noche);transform:translateY(-3px) scale(1.02);box-shadow:0 16px 34px rgba(31,41,51,.45)}
+  .btn-rojo{background:linear-gradient(135deg,var(--rojo),var(--rojo-osc));color:#fff;box-shadow:0 10px 26px rgba(214,69,65,.4)}
+  .btn-rojo:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 34px rgba(214,69,65,.5)}
+  .btn-borde{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(4px)}
+  .btn-borde:hover{transform:translateY(-3px) scale(1.02);background:rgba(255,255,255,.16)}
+  .hero-datos{display:flex;flex-wrap:wrap;gap:12px}
+  .dato{
+    background:var(--blanco);border:1px solid var(--linea);
+    border-radius:var(--radio);padding:16px 22px;min-width:140px;
+    box-shadow:var(--sombra);
+  }
+  .dato-cifra{
+    font-family:'Archivo',sans-serif;font-weight:900;font-size:2.05rem;color:var(--grafito);
+    display:flex;align-items:baseline;gap:4px;line-height:1;
+  }
+  .dato-cifra .estrella-mini{color:var(--dorado);font-size:1.3rem}
+  .dato-etq{font-size:.78rem;color:var(--texto-suave);letter-spacing:1.3px;text-transform:uppercase;margin-top:7px;font-weight:700}
+
+  /* Tarjeta lateral del hero */
+  .hero-tarjeta{
+    position:relative;border-radius:var(--radio);overflow:hidden;
+    background:
+      radial-gradient(420px 240px at 90% -10%,rgba(214,69,65,.35),transparent 62%),
+      linear-gradient(155deg,var(--grafito) 0%,var(--grafito-noche) 100%);
+    color:#fff;padding:34px 30px;box-shadow:var(--sombra-fuerte);
+    will-change:transform;
+  }
+  .hero-tarjeta::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(-55deg,transparent 0 26px,rgba(255,255,255,.03) 26px 52px);
+  }
+  .hero-tarjeta > *{position:relative;z-index:1}
+  .hero-tarjeta .chip-hibrido{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(214,69,65,.18);border:1px solid rgba(214,69,65,.55);color:#F6A9A6;
+    font-size:.76rem;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;
+    padding:6px 13px;border-radius:999px;margin-bottom:16px;
+  }
+  .hero-tarjeta h3{font-size:1.45rem;color:#fff;margin-bottom:10px}
+  .hero-tarjeta p{color:#C3CCD5;font-size:.98rem;margin-bottom:18px}
+  .hero-tarjeta .cita{
+    border-left:3px solid var(--rojo);padding:4px 0 4px 16px;
+    font-style:italic;color:#ECF0F3;font-size:1.02rem;
+  }
+  .hero-tarjeta .cita-pie{font-size:.8rem;color:#9AA5B1;margin-top:10px;font-style:normal;letter-spacing:.4px}
+  .hero-franja{
+    height:10px;
+    background:repeating-linear-gradient(-45deg,var(--rojo) 0 16px,transparent 16px 32px);
+    opacity:.9;
+  }
+
+  /* ====== Marquesina de servicios ====== */
+  .marquesina{
+    background:var(--grafito-noche);color:#fff;overflow:hidden;
+    border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
+    padding:14px 0;
+  }
+  .marquesina-pista{
+    display:flex;gap:0;white-space:nowrap;width:max-content;
+    animation:marquesina 26s linear infinite;
+  }
+  .marquesina span{
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:.92rem;
+    letter-spacing:2.6px;text-transform:uppercase;color:#C3CCD5;
+    padding:0 26px;display:inline-flex;align-items:center;gap:26px;
+  }
+  .marquesina span::after{content:"◆";color:var(--rojo);font-size:.7rem}
+
+  /* ====== Secciones genéricas ====== */
+  section{padding:84px 20px}
+  .int{max-width:1140px;margin:0 auto}
+  .sobretitulo{
+    font-weight:700;font-size:13.5px;
+    letter-spacing:2.6px;text-transform:uppercase;color:var(--rojo);
+    display:inline-flex;align-items:center;gap:10px;margin-bottom:12px;
+  }
+  .sobretitulo::before{content:"";width:34px;height:3px;background:var(--grafito);border-radius:2px;display:inline-block}
+  h2{font-size:clamp(1.95rem,6vw,2.9rem);font-weight:900;color:var(--grafito);margin-bottom:18px}
+
+  /* ====== Sobre nosotros ====== */
+  .sobre{background:var(--blanco)}
+  .sobre-grid{display:grid;gap:38px;align-items:center}
+  @media (min-width:900px){.sobre-grid{grid-template-columns:1.1fr .9fr}}
+  .sobre p{color:var(--texto-suave);font-size:1.07rem;margin-bottom:14px}
+  .sobre p strong{color:var(--grafito)}
+  .sobre-puntos{list-style:none;margin-top:22px;display:grid;gap:12px}
+  .sobre-puntos li{display:flex;gap:12px;align-items:flex-start;color:var(--texto);font-weight:600}
+  .sobre-puntos svg{flex:0 0 auto;margin-top:3px}
+  .sobre-cita{
+    position:relative;border-radius:var(--radio);
+    background:var(--niebla);border:1px solid var(--linea);
+    padding:40px 34px;box-shadow:var(--sombra);
+  }
+  .sobre-cita::before{
+    content:"“";position:absolute;top:-6px;left:22px;
+    font-family:'Archivo',sans-serif;font-weight:900;font-size:5.5rem;line-height:1;
+    color:var(--rojo);opacity:.9;
+  }
+  .sobre-cita blockquote{
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(1.25rem,3.4vw,1.6rem);
+    color:var(--grafito);line-height:1.35;margin:26px 0 18px;border:0;
+  }
+  .sobre-cita blockquote em{color:var(--rojo);font-style:normal}
+  .sobre-cita .firma{font-size:.86rem;color:var(--texto-suave);letter-spacing:.4px}
+  .sobre-cita .estrellas{color:var(--dorado);letter-spacing:2px;font-size:1.05rem;margin-bottom:6px}
+
+  /* ====== Servicios ====== */
+  .servicios{background:var(--niebla)}
+  .servicios-grid{display:grid;gap:18px;margin-top:36px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .servicio{
+    background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:28px 24px;box-shadow:var(--sombra);
+    transition:transform 300ms var(--ease),box-shadow 300ms var(--ease),border-color 300ms var(--ease);
+    will-change:transform;
+  }
+  .servicio:hover{transform:translateY(-7px) rotate(.4deg);box-shadow:var(--sombra-fuerte);border-color:rgba(31,41,51,.3)}
+  .servicio-icono{
+    width:52px;height:52px;border-radius:14px;margin-bottom:18px;
+    background:linear-gradient(135deg,rgba(31,41,51,.07),rgba(31,41,51,.15));
+    display:grid;place-items:center;color:var(--grafito);
+    transition:transform 300ms var(--ease),background 300ms var(--ease),color 300ms var(--ease);
+  }
+  .servicio:hover .servicio-icono{background:linear-gradient(135deg,var(--rojo),var(--rojo-osc));color:#fff;transform:scale(1.08) rotate(-4deg)}
+  .servicio h3{font-size:1.16rem;color:var(--grafito);margin-bottom:8px}
+  .servicio p{color:var(--texto-suave);font-size:.96rem}
+
+  /* ====== Híbridos y eléctricos (especialidad) ====== */
+  .hibridos{
+    position:relative;overflow:hidden;color:#fff;
+    background:
+      radial-gradient(1000px 520px at 88% -14%,rgba(214,69,65,.3),transparent 62%),
+      radial-gradient(700px 420px at -8% 112%,rgba(50,63,75,.6),transparent 58%),
+      linear-gradient(155deg,var(--grafito-noche) 0%,var(--grafito-osc) 48%,var(--grafito) 100%);
+  }
+  .hibridos::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:
+      repeating-linear-gradient(90deg,transparent 0 96px,rgba(255,255,255,.03) 96px 97px),
+      repeating-linear-gradient(0deg,transparent 0 96px,rgba(255,255,255,.03) 96px 97px);
+  }
+  .hibridos .int{position:relative;z-index:1}
+  .hibridos .sobretitulo{color:#F6A9A6}
+  .hibridos .sobretitulo::before{background:var(--rojo)}
+  .hibridos h2{color:#fff}
+  .hibridos-grid{display:grid;gap:38px;align-items:center;margin-top:8px}
+  @media (min-width:920px){.hibridos-grid{grid-template-columns:1.05fr .95fr}}
+  .hibridos p.intro{color:#C3CCD5;font-size:1.08rem;margin-bottom:14px;max-width:600px}
+  .hibridos p.intro strong{color:#fff}
+  .hibrido-lista{list-style:none;margin-top:24px;display:grid;gap:14px}
+  .hibrido-lista li{
+    display:flex;gap:14px;align-items:flex-start;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);
+    border-radius:16px;padding:16px 18px;
+    transition:transform 280ms var(--ease),background 280ms var(--ease);
+  }
+  .hibrido-lista li:hover{transform:translateX(6px);background:rgba(255,255,255,.09)}
+  .hibrido-lista .icono-rayo{
+    width:40px;height:40px;border-radius:11px;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--rojo),var(--rojo-osc));
+    display:grid;place-items:center;color:#fff;
+    box-shadow:0 6px 16px rgba(214,69,65,.4);
+  }
+  .hibrido-lista strong{display:block;color:#fff;font-size:1rem}
+  .hibrido-lista span{font-size:.9rem;color:#9AA5B1}
+  .hibridos-panel{
+    position:relative;border-radius:var(--radio);overflow:hidden;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+    padding:36px 30px;backdrop-filter:blur(4px);
+  }
+  .hibridos-panel .sello-rayo{
+    width:72px;height:72px;border-radius:20px;margin-bottom:20px;
+    background:linear-gradient(135deg,var(--rojo),var(--rojo-osc));
+    display:grid;place-items:center;color:#fff;
+    box-shadow:0 12px 28px rgba(214,69,65,.45);
+    animation:latido 3.2s ease-in-out infinite;
+  }
+  .hibridos-panel h3{font-size:1.5rem;color:#fff;margin-bottom:12px}
+  .hibridos-panel p{color:#C3CCD5;font-size:1rem;margin-bottom:20px}
+  .hibridos-panel .nota-vecino{font-size:.86rem;color:#9AA5B1;margin-top:16px;margin-bottom:0}
+
+  /* ====== Reseñas ====== */
+  .resenas{background:var(--blanco)}
+  .resenas-cabecera{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:36px}
+  .nota-google{
+    display:flex;align-items:center;gap:14px;
+    background:var(--niebla);border:1px solid var(--linea);
+    border-radius:var(--radio);padding:16px 22px;box-shadow:var(--sombra);
+  }
+  .nota-google .nota{font-family:'Archivo',sans-serif;font-weight:900;font-size:2.3rem;color:var(--grafito);line-height:1}
+  .nota-google .detalle{font-size:.88rem;color:var(--texto-suave)}
+  .estrellas{color:var(--dorado);letter-spacing:2px;font-size:1.05rem}
+  .resenas-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .resena{
+    background:var(--niebla);border:1px solid var(--linea);
+    border-radius:var(--radio);padding:28px 24px;
+    transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+  }
+  .resena:hover{transform:translateY(-6px);box-shadow:var(--sombra-fuerte)}
+  .resena p{color:var(--texto);font-size:1.02rem;margin:12px 0 16px;font-style:italic}
+  .resena footer{font-size:.84rem;color:var(--texto-suave);font-style:normal;letter-spacing:.4px}
+
+  /* ====== Contacto ====== */
+  .contacto{background:var(--niebla)}
+  .contacto-grid{display:grid;gap:20px;margin-top:36px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .ficha{
+    background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:28px 24px;transition:transform 300ms var(--ease),box-shadow 300ms var(--ease);
+    box-shadow:var(--sombra);
+  }
+  .ficha:hover{transform:translateY(-5px);box-shadow:var(--sombra-fuerte)}
+  .ficha-icono{
+    width:48px;height:48px;border-radius:13px;margin-bottom:16px;
+    background:linear-gradient(135deg,var(--grafito),var(--grafito-medio));
+    display:grid;place-items:center;color:#fff;
+  }
+  .ficha-icono.verde{background:linear-gradient(135deg,var(--wasap),var(--wasap-osc))}
+  .ficha-icono.rojo{background:linear-gradient(135deg,var(--rojo),var(--rojo-osc))}
+  .ficha h3{font-size:1.12rem;color:var(--grafito);margin-bottom:8px}
+  .ficha p{color:var(--texto-suave);font-size:.97rem}
+  .ficha a{color:var(--grafito);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(214,69,65,.35);transition:border-color 220ms var(--ease)}
+  .ficha a:hover{border-color:var(--rojo)}
+  .horario-tabla{list-style:none;margin-top:4px}
+  .horario-tabla li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--linea);font-size:.95rem}
+  .horario-tabla li:last-child{border-bottom:0}
+  .horario-tabla .dia{font-weight:700;color:var(--grafito)}
+  .horario-tabla .cerrado{color:var(--rojo);font-weight:700}
+
+  /* ====== CTA final ====== */
+  .cta-final{
+    position:relative;overflow:hidden;color:#fff;text-align:center;
+    background:
+      radial-gradient(900px 480px at 50% -30%,rgba(214,69,65,.4),transparent 65%),
+      linear-gradient(160deg,var(--grafito-osc) 0%,var(--grafito-noche) 100%);
+  }
+  .cta-final h2{color:#fff;max-width:800px;margin:0 auto 14px}
+  .cta-final p{color:#C3CCD5;max-width:600px;margin:0 auto 32px;font-size:1.08rem}
+  .cta-final .hero-botones{justify-content:center;margin-bottom:0}
+
+  /* ====== Pie ====== */
+  .pie{
+    background:var(--grafito-noche);color:#9AA5B1;
+    padding:44px 20px 110px;font-size:.92rem;
+    border-top:1px solid rgba(255,255,255,.08);
+  }
+  .pie-int{max-width:1140px;margin:0 auto;display:grid;gap:22px}
+  .pie-marca{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+  .pie-marca strong{color:#fff;font-family:'Archivo',sans-serif;font-size:1.05rem}
+  .pie-marca a{color:#9AA5B1}
+  .aviso-demo{
+    background:rgba(214,69,65,.1);border:1px solid rgba(214,69,65,.4);
+    border-radius:14px;padding:18px 22px;color:#F3C2C0;line-height:1.6;
+  }
+  .aviso-demo strong{color:#fff}
+  .aviso-demo a{color:#F6A9A6;font-weight:700;text-decoration:underline}
+  .pie-legal{font-size:.8rem;color:#616E7C}
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD sin JavaScript: todo visible, siempre. */
+  .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+  #progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<header class="cabecera">
+  <nav>
+    <a class="logo" href="#inicio" aria-label="ROMA MOTOR, inicio">
+      <span class="logo-sello">RM</span>
+      <span class="logo-texto">ROMA MOTOR<small>L'Olivereta · València</small></span>
+    </a>
+    <div class="nav-enlaces">
+      <a class="enlace" href="#servicios">Servicios</a>
+      <a class="enlace" href="#hibridos">Híbridos y eléctricos</a>
+      <a class="enlace" href="#opiniones">Opiniones</a>
+      <a class="enlace" href="#contacto">Contacto</a>
+      <a class="btn-nav" href="https://wa.me/34614235143" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.7 14.2c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.2-3.7-.8-3.1-1.3-5.1-4.5-5.3-4.7-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.2.5.1.7-.1l1.1-1.3c.2-.3.5-.2.8-.1l2.2 1c.3.2.6.3.6.4.1.2.1.9-.2 1.7z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero" id="inicio">
+  <div class="hero-trama" data-parallax="0.1"></div>
+  <div class="hero-int">
+    <div>
+      <span class="hero-etiqueta anim">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+        4,9 en Google · 50 reseñas
+      </span>
+      <h1 id="titulo-hero">Mecánica honesta, <span class="acento">de gasolina a eléctrico</span></h1>
+      <p class="hero-sub anim" style="transition-delay:180ms">Taller <strong>mecánico y electromecánico</strong> en la Plaza de Roma, en el barrio de <strong>L'Olivereta (València)</strong>. Años de experiencia, precios justos y una especialidad que pocos talleres de barrio dominan: los <strong>vehículos híbridos y eléctricos</strong>.</p>
+      <div class="hero-botones anim" style="transition-delay:300ms">
+        <a class="btn btn-wasap" href="https://wa.me/34614235143" target="_blank" rel="noopener">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.7 14.2c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.2-3.7-.8-3.1-1.3-5.1-4.5-5.3-4.7-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.2.5.1.7-.1l1.1-1.3c.2-.3.5-.2.8-.1l2.2 1c.3.2.6.3.6.4.1.2.1.9-.2 1.7z"/></svg>
+          Pedir cita por WhatsApp
+        </a>
+        <a class="btn btn-oscuro" href="tel:+34614235143">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          614 23 51 43
+        </a>
+      </div>
+      <div class="hero-datos">
+        <div class="dato anim" style="transition-delay:380ms">
+          <div class="dato-cifra"><span class="contador" data-objetivo="4.9" data-decimales="1">4,9</span><span class="estrella-mini">★</span></div>
+          <div class="dato-etq">Nota en Google</div>
+        </div>
+        <div class="dato anim" style="transition-delay:460ms">
+          <div class="dato-cifra"><span class="contador" data-objetivo="50">50</span></div>
+          <div class="dato-etq">Reseñas reales</div>
+        </div>
+        <div class="dato anim" style="transition-delay:540ms">
+          <div class="dato-cifra">⚡</div>
+          <div class="dato-etq">Híbridos y eléctricos</div>
+        </div>
+      </div>
+    </div>
+    <aside class="hero-tarjeta anim-der" data-parallax="-0.03">
+      <span class="chip-hibrido">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5L13 2z"/></svg>
+        Su sello: la honestidad
+      </span>
+      <h3>El taller que no infla facturas</h3>
+      <p>En un sector con fama de sorpresas, ROMA MOTOR ha construido su reputación con lo contrario: claridad y precios justos.</p>
+      <div class="cita">
+        «Extremadamente sincero, no infla facturas.»
+        <div class="cita-pie">Así lo describen sus clientes en las reseñas</div>
+      </div>
+    </aside>
+  </div>
+  <div class="hero-franja"></div>
+</section>
+
+<div class="marquesina" aria-hidden="true">
+  <div class="marquesina-pista">
+    <span>Mecánica general</span><span>Mantenimiento</span><span>Aceite y filtros</span><span>Frenos</span><span>Motor</span><span>Transmisión</span><span>Neumáticos</span><span>Híbridos</span><span>Eléctricos</span>
+    <span>Mecánica general</span><span>Mantenimiento</span><span>Aceite y filtros</span><span>Frenos</span><span>Motor</span><span>Transmisión</span><span>Neumáticos</span><span>Híbridos</span><span>Eléctricos</span>
+  </div>
+</div>
+
+<section class="sobre" id="sobre">
+  <div class="int">
+    <div class="sobre-grid">
+      <div class="anim-izq">
+        <span class="sobretitulo">Sobre el taller</span>
+        <h2>La honestidad como forma de trabajar</h2>
+        <p>ROMA MOTOR es un <strong>taller mecánico y electromecánico</strong> en la Plaza de Roma, a pie de calle en el barrio de L'Olivereta. Un taller con <strong>años de experiencia</strong> donde el trato es directo: te dicen qué tiene tu coche, qué urge y qué puede esperar.</p>
+        <p>Sus clientes lo resumen mejor que nadie: lo describen como <strong>«extremadamente sincero»</strong>, un taller que <strong>no infla facturas</strong>. Esa reputación se refleja en su <strong>4,9 sobre 5 en Google</strong> con 50 reseñas.</p>
+        <ul class="sobre-puntos">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D64541" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Presupuestos claros y precios justos, sin sorpresas
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D64541" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Mecánica y electromecánica: años de oficio en el mismo barrio
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D64541" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Especialistas en vehículos híbridos y eléctricos
+          </li>
+        </ul>
+      </div>
+      <div class="sobre-cita anim-der">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <blockquote>«Extremadamente sincero, <em>no infla facturas</em>.»</blockquote>
+        <div class="firma">Así describen sus clientes a ROMA MOTOR · 4,9 sobre 5 con 50 reseñas en Google</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="int">
+    <span class="sobretitulo anim">Servicios</span>
+    <h2 class="anim" style="transition-delay:100ms">Todo lo que tu coche necesita, en un mismo taller</h2>
+    <div class="servicios-grid">
+      <article class="servicio anim" style="transition-delay:80ms">
+        <div class="servicio-icono">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+        </div>
+        <h3>Mecánica general</h3>
+        <p>Diagnóstico y reparación de averías con años de experiencia. Te contamos qué tiene tu coche sin rodeos.</p>
+      </article>
+      <article class="servicio anim" style="transition-delay:160ms">
+        <div class="servicio-icono">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.7S6 9.2 6 13.5a6 6 0 0 0 12 0C18 9.2 12 2.7 12 2.7zm0 15.8a3.5 3.5 0 0 1-3.5-3.5c0-.6.4-1 1-1s1 .4 1 1a1.5 1.5 0 0 0 1.5 1.5c.6 0 1 .4 1 1s-.4 1-1 1z"/></svg>
+        </div>
+        <h3>Mantenimiento y aceite</h3>
+        <p>Cambio de aceite y filtros y revisiones periódicas: el cuidado que alarga la vida de tu coche, a precio justo.</p>
+      </article>
+      <article class="servicio anim" style="transition-delay:240ms">
+        <div class="servicio-icono">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 16a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
+        </div>
+        <h3>Frenos</h3>
+        <p>Pastillas, discos y todo el sistema de frenado. La parte de tu coche donde no se escatima ni se improvisa.</p>
+      </article>
+      <article class="servicio anim" style="transition-delay:320ms">
+        <div class="servicio-icono">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.9 12.7c.1-.2.1-.5.1-.7s0-.5-.1-.7l1.6-1.3c.1-.1.2-.3.1-.5l-1.5-2.6c-.1-.2-.3-.2-.5-.2l-1.9.8c-.4-.3-.8-.6-1.3-.8l-.3-2c0-.2-.2-.3-.4-.3h-3c-.2 0-.4.1-.4.3l-.3 2c-.5.2-.9.5-1.3.8l-1.9-.8c-.2-.1-.4 0-.5.2L6.8 9.5c-.1.2 0 .4.1.5l1.6 1.3c-.1.2-.1.5-.1.7s0 .5.1.7l-1.6 1.3c-.1.1-.2.3-.1.5l1.5 2.6c.1.2.3.2.5.2l1.9-.8c.4.3.8.6 1.3.8l.3 2c0 .2.2.3.4.3h3c.2 0 .4-.1.4-.3l.3-2c.5-.2.9-.5 1.3-.8l1.9.8c.2.1.4 0 .5-.2l1.5-2.6c.1-.2 0-.4-.1-.5l-1.6-1.3zM14 14.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+        </div>
+        <h3>Motor y transmisión</h3>
+        <p>Reparaciones de motor y transmisión hechas por manos expertas, con presupuesto claro antes de tocar nada.</p>
+      </article>
+      <article class="servicio anim" style="transition-delay:400ms">
+        <div class="servicio-icono">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 17a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-11.5L13 10l2.6-.9-1.6 2.3 2.7.6-2.7.6 1.6 2.3-2.6-.9-1 2.5-1-2.5-2.6.9 1.6-2.3-2.7-.6 2.7-.6L8.4 9.1l2.6.9 1-2.5z"/></svg>
+        </div>
+        <h3>Neumáticos</h3>
+        <p>Montaje y sustitución de neumáticos para que tu coche agarre como debe, en seco y en mojado.</p>
+      </article>
+      <article class="servicio anim" style="transition-delay:480ms">
+        <div class="servicio-icono">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5L13 2z"/></svg>
+        </div>
+        <h3>Electromecánica</h3>
+        <p>La parte eléctrica y electrónica del vehículo: la base que les permite dominar también híbridos y eléctricos.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="hibridos" id="hibridos">
+  <div class="int">
+    <span class="sobretitulo anim">Especialidad de la casa</span>
+    <h2 class="anim" style="transition-delay:100ms">Especialistas en híbridos y eléctricos</h2>
+    <div class="hibridos-grid">
+      <div class="anim-izq">
+        <p class="intro">Cada vez más coches en València son híbridos o eléctricos, pero <strong>muy pocos talleres de barrio están preparados para ellos</strong>. ROMA MOTOR sí: su base electromecánica le permite trabajar estas tecnologías con garantías.</p>
+        <ul class="hibrido-lista">
+          <li>
+            <span class="icono-rayo">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5L13 2z"/></svg>
+            </span>
+            <div>
+              <strong>Vehículos híbridos</strong>
+              <span>Mantenimiento y reparación sin pasar por la casa oficial.</span>
+            </div>
+          </li>
+          <li>
+            <span class="icono-rayo">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.7 8V4.7c0-.4-.3-.7-.7-.7s-.7.3-.7.7V8h-2.6V4.7c0-.4-.3-.7-.7-.7s-.7.3-.7.7V8H7v4a5 5 0 0 0 4 4.9V21h2v-4.1a5 5 0 0 0 4-4.9V8h-2.3z"/></svg>
+            </span>
+            <div>
+              <strong>Vehículos eléctricos</strong>
+              <span>Un taller de confianza también para tu coche eléctrico.</span>
+            </div>
+          </li>
+          <li>
+            <span class="icono-rayo">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.6 3.8 10.7 9 12 5.2-1.3 9-6.4 9-12V5l-9-4zm-1.5 15.5l-3.5-3.5 1.4-1.4 2.1 2.1 5.6-5.6 1.4 1.4-7 7z"/></svg>
+            </span>
+            <div>
+              <strong>Con la misma honestidad de siempre</strong>
+              <span>Tecnología nueva, filosofía de siempre: precios justos y claridad.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <aside class="hibridos-panel anim-der">
+        <div class="sello-rayo">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5L13 2z"/></svg>
+        </div>
+        <h3>¿Tienes un híbrido o un eléctrico?</h3>
+        <p>No hace falta ir al concesionario para cuidarlo bien. Escríbenos por WhatsApp, cuéntanos qué coche tienes y te decimos cómo podemos ayudarte.</p>
+        <a class="btn btn-rojo" href="https://wa.me/34614235143" target="_blank" rel="noopener">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.7 14.2c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.2-3.7-.8-3.1-1.3-5.1-4.5-5.3-4.7-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.2.5.1.7-.1l1.1-1.3c.2-.3.5-.2.8-.1l2.2 1c.3.2.6.3.6.4.1.2.1.9-.2 1.7z"/></svg>
+          Consultar por WhatsApp
+        </a>
+        <p class="nota-vecino">Ventaja de barrio: tu especialista en híbridos, en la Plaza de Roma.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="resenas" id="opiniones">
+  <div class="int">
+    <div class="resenas-cabecera">
+      <div class="anim-izq">
+        <span class="sobretitulo">Opiniones</span>
+        <h2>4,9 sobre 5: la reputación se gana</h2>
+      </div>
+      <div class="nota-google anim-der">
+        <span class="nota">4,9</span>
+        <div>
+          <div class="estrellas" aria-label="4,9 de 5 estrellas">★★★★★</div>
+          <div class="detalle">50 reseñas en Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="resenas-grid">
+      <article class="resena anim" style="transition-delay:80ms">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>«Extremadamente sincero, no infla facturas.» Así describen sus clientes al taller: la honestidad y los precios justos son su sello.</p>
+        <footer>Lo que dicen los clientes · reseñas de Google</footer>
+      </article>
+      <article class="resena anim" style="transition-delay:200ms">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>4,9 sobre 5 con 50 reseñas: una nota que en un taller mecánico solo se consigue haciendo las cosas bien, coche a coche.</p>
+        <footer>Valoración media real en Google</footer>
+      </article>
+      <article class="resena anim" style="transition-delay:320ms">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <p>Mecánica de toda la vida y especialidad en híbridos y eléctricos: la combinación que hace que los vecinos de L'Olivereta repitan.</p>
+        <footer>Taller mecánico y electromecánico · Pl. Roma 9</footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="int">
+    <span class="sobretitulo anim">Contacto</span>
+    <h2 class="anim" style="transition-delay:100ms">En la Plaza de Roma, a pie de calle</h2>
+    <div class="contacto-grid">
+      <div class="ficha anim" style="transition-delay:80ms">
+        <div class="ficha-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        </div>
+        <h3>Dirección</h3>
+        <p>Pl. Roma 9, bajo<br>L'Olivereta, 46018 València</p>
+        <p style="margin-top:10px"><a href="https://www.google.com/maps/search/?api=1&amp;query=ROMA%20MOTOR%20Pla%C3%A7a%20de%20Roma%209%20Valencia" target="_blank" rel="noopener">Ver en Google Maps →</a></p>
+      </div>
+      <div class="ficha anim" style="transition-delay:160ms">
+        <div class="ficha-icono verde">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.7 14.2c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.2-3.7-.8-3.1-1.3-5.1-4.5-5.3-4.7-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.2.5.1.7-.1l1.1-1.3c.2-.3.5-.2.8-.1l2.2 1c.3.2.6.3.6.4.1.2.1.9-.2 1.7z"/></svg>
+        </div>
+        <h3>WhatsApp y teléfono</h3>
+        <p><a href="https://wa.me/34614235143" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></p>
+        <p style="margin-top:10px">O llama al <a href="tel:+34614235143">614 23 51 43</a> y cuéntanos qué le pasa a tu coche.</p>
+      </div>
+      <div class="ficha anim" style="transition-delay:240ms">
+        <div class="ficha-icono rojo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
+        </div>
+        <h3>Horario</h3>
+        <ul class="horario-tabla">
+          <li><span class="dia">Lunes a viernes</span><span>9:00–14:00</span></li>
+          <li><span class="dia">&nbsp;</span><span>15:30–20:00</span></li>
+          <li><span class="dia">Sábado y domingo</span><span class="cerrado">Cerrado</span></li>
+        </ul>
+      </div>
+      <div class="ficha anim" style="transition-delay:320ms">
+        <div class="ficha-icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7.4A4.6 4.6 0 1 0 16.6 12 4.6 4.6 0 0 0 12 7.4zm0 7.6a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm5.9-7.8a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1zM12 4.2c2.5 0 2.8 0 3.8.1a5.2 5.2 0 0 1 1.8.3 3.2 3.2 0 0 1 1.8 1.8 5.2 5.2 0 0 1 .3 1.8c.1 1 .1 1.3.1 3.8s0 2.8-.1 3.8a5.2 5.2 0 0 1-.3 1.8 3.2 3.2 0 0 1-1.8 1.8 5.2 5.2 0 0 1-1.8.3c-1 .1-1.3.1-3.8.1s-2.8 0-3.8-.1a5.2 5.2 0 0 1-1.8-.3 3.2 3.2 0 0 1-1.8-1.8 5.2 5.2 0 0 1-.3-1.8c-.1-1-.1-1.3-.1-3.8s0-2.8.1-3.8a5.2 5.2 0 0 1 .3-1.8 3.2 3.2 0 0 1 1.8-1.8 5.2 5.2 0 0 1 1.8-.3c1-.1 1.3-.1 3.8-.1M12 2.5c-2.6 0-2.9 0-3.9.1a6.9 6.9 0 0 0-2.3.4A4.9 4.9 0 0 0 3 5.8a6.9 6.9 0 0 0-.4 2.3c-.1 1-.1 1.3-.1 3.9s0 2.9.1 3.9a6.9 6.9 0 0 0 .4 2.3 4.9 4.9 0 0 0 2.8 2.8 6.9 6.9 0 0 0 2.3.4c1 .1 1.3.1 3.9.1s2.9 0 3.9-.1a6.9 6.9 0 0 0 2.3-.4 4.9 4.9 0 0 0 2.8-2.8 6.9 6.9 0 0 0 .4-2.3c.1-1 .1-1.3.1-3.9s0-2.9-.1-3.9a6.9 6.9 0 0 0-.4-2.3A4.9 4.9 0 0 0 18.2 3a6.9 6.9 0 0 0-2.3-.4c-1-.1-1.3-.1-3.9-.1z"/></svg>
+        </div>
+        <h3>Instagram</h3>
+        <p>Síguenos y ve el día a día del taller.</p>
+        <p style="margin-top:10px"><a href="https://www.instagram.com/tallerromamotor" target="_blank" rel="noopener">@tallerromamotor →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="int">
+    <h2 class="anim">Un taller sincero para tu coche, sea gasolina, híbrido o eléctrico</h2>
+    <p class="anim" style="transition-delay:140ms">Escríbenos por WhatsApp, cuéntanos qué le pasa a tu coche y te respondemos con claridad: qué tiene, qué urge y qué cuesta.</p>
+    <div class="hero-botones anim" style="transition-delay:260ms">
+      <a class="btn btn-wasap" href="https://wa.me/34614235143" target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.7 14.2c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.2-3.7-.8-3.1-1.3-5.1-4.5-5.3-4.7-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.2.5.1.7-.1l1.1-1.3c.2-.3.5-.2.8-.1l2.2 1c.3.2.6.3.6.4.1.2.1.9-.2 1.7z"/></svg>
+        WhatsApp: 614 23 51 43
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=ROMA%20MOTOR%20Pla%C3%A7a%20de%20Roma%209%20Valencia" target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        Cómo llegar
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="pie-int">
+    <div class="aviso-demo">
+      <strong>Demo creada por Eleven AI — esta web puede ser tuya.</strong><br>
+      ¿Te gusta cómo queda ROMA MOTOR en internet? Dinos qué te parece y la dejamos lista para publicar con tu dominio propio.<br>
+      <a href="https://elevenai-webs.netlify.app/formulario/?id=257&amp;sede=pablo">Quiero esta web / dar mi opinión →</a>
+    </div>
+    <div class="pie-marca">
+      <div>
+        <strong>ROMA MOTOR</strong><br>
+        Pl. Roma 9, bajo · L'Olivereta, 46018 València · <a href="tel:+34614235143">614 23 51 43</a> · <a href="https://www.instagram.com/tallerromamotor" target="_blank" rel="noopener">@tallerromamotor</a>
+      </div>
+      <div class="estrellas" aria-hidden="true">★★★★★ 4,9 · 50 reseñas</div>
+    </div>
+    <div class="pie-legal">Página de demostración no contratada. Datos públicos obtenidos de la ficha de Google del negocio. Ninguna vinculación comercial hasta la aprobación del propietario.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Texto del hero palabra a palabra ===== */
+  var h1 = document.getElementById('titulo-hero');
+  if (h1 && !reduceMotion){
+    var nodos = Array.prototype.slice.call(h1.childNodes);
+    h1.textContent = '';
+    nodos.forEach(function(nodo){
+      var esAcento = nodo.nodeType === 1;
+      var texto = nodo.textContent;
+      texto.split(/\s+/).forEach(function(pal){
+        if (!pal) return;
+        var s = document.createElement('span');
+        s.className = 'palabra';
+        if (esAcento) s.style.color = '#D64541';
+        s.textContent = pal;
+        h1.appendChild(s);
+        h1.appendChild(document.createTextNode(' '));
+      });
+    });
+    Array.prototype.forEach.call(h1.querySelectorAll('.palabra'), function(el, i){
+      setTimeout(function(){ el.classList.add('visible'); }, 120 + i * 90);
+    });
+  }
+
+  /* ===== Contadores animados ===== */
+  function animarContador(el){
+    if (el.dataset.hecho) return;
+    el.dataset.hecho = '1';
+    var objetivo = parseFloat(el.dataset.objetivo || '0');
+    var decimales = parseInt(el.dataset.decimales || '0', 10);
+    if (reduceMotion){ el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    var inicio = null, dur = 1400;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var p = Math.min((t - inicio) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (objetivo * suave).toFixed(decimales).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  /* ===== Entradas escalonadas con IntersectionObserver ===== */
+  var animados = document.querySelectorAll('.anim, .anim-izq, .anim-der');
+  if ('IntersectionObserver' in window && !reduceMotion){
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(en){
+        if (en.isIntersecting){
+          en.target.classList.add('visible');
+          Array.prototype.forEach.call(en.target.querySelectorAll('.contador'), animarContador);
+          if (en.target.classList.contains('contador')) animarContador(en.target);
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    Array.prototype.forEach.call(animados, function(el){ io.observe(el); });
+  } else {
+    Array.prototype.forEach.call(animados, function(el){ el.classList.add('visible'); });
+    Array.prototype.forEach.call(document.querySelectorAll('.contador'), animarContador);
+  }
+
+  /* ===== Barra de progreso + parallax suave ===== */
+  var barra = document.getElementById('progreso');
+  var capas = document.querySelectorAll('[data-parallax]');
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || document.documentElement.scrollTop;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra) barra.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (!reduceMotion){
+        Array.prototype.forEach.call(capas, function(capa){
+          var f = parseFloat(capa.dataset.parallax || '0');
+          capa.style.transform = 'translateY(' + (y * f) + 'px)';
+        });
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía (GARANTÍA DE VISIBILIDAD) =====
+     Si a los 1,2 s algo sigue oculto (visor de email, WebView raro, JS a medias),
+     se fuerza visible sin animación. La página JAMÁS puede quedarse en blanco. */
+  function rescateVisibilidad(){
+    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra');
+    Array.prototype.forEach.call(ocultos, function(el){
+      if (!el.classList.contains('visible')){
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.classList.add('visible');
+      }
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.contador'), function(el){
+      if (!el.dataset.hecho){
+        var objetivo = parseFloat(el.dataset.objetivo || '0');
+        var decimales = parseInt(el.dataset.decimales || '0', 10);
+        el.dataset.hecho = '1';
+        el.textContent = objetivo.toFixed(decimales).replace('.', ',');
+      }
+    });
+  }
+  setTimeout(rescateVisibilidad, 1200);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clínica Dental Del Turia — Dentista en Campanar, València | Ortodoncia invisible</title>
+<meta name="description" content="Clínica Dental Del Turia, en C/ de la Vall de la Ballestera 24 (Campanar, València). Ortodoncia invisible, odontología general e infantil. 4,8★ en Google con 183 reseñas. Tel. 722 23 34 72.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primario:#0E6BA8;
+    --primario-osc:#0A4E7C;
+    --secundario:#F4F9FC;
+    --acento:#35B6B4;
+    --acento-suave:#E1F4F3;
+    --tinta:#12303F;
+    --tinta-suave:#4A6472;
+    --blanco:#FFFFFF;
+    --sombra:0 10px 30px rgba(14,107,168,.12);
+    --radio:22px;
+    --trans:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--tinta);
+    background:var(--secundario);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;line-height:1.15;letter-spacing:-.01em}
+  img{max-width:100%}
+  a{color:inherit}
+
+  /* ====== Barra de progreso de scroll ====== */
+  #progreso{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--primario),var(--acento));z-index:1000;transition:width .1s linear}
+
+  /* ====== Marca de agua DEMO ====== */
+  .demo-badge{
+    position:fixed;bottom:18px;right:18px;z-index:999;
+    background:rgba(18,48,63,.88);color:#fff;
+    font-size:.75rem;font-weight:700;letter-spacing:.14em;
+    padding:.5rem 1rem;border-radius:999px;
+    backdrop-filter:blur(6px);
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+    pointer-events:none;
+  }
+  .demo-badge span{color:var(--acento)}
+
+  /* ====== Cabecera ====== */
+  header.top{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    background:rgba(244,249,252,.82);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(14,107,168,.08);
+  }
+  nav.barra{
+    max-width:1120px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.8rem 1.2rem;
+  }
+  .logo{display:flex;align-items:center;gap:.6rem;font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;color:var(--primario);text-decoration:none}
+  .logo svg{flex:none}
+  .nav-links{display:none;gap:1.6rem;list-style:none;font-size:.92rem;font-weight:500}
+  .nav-links a{text-decoration:none;color:var(--tinta-suave);transition:color .25s var(--trans)}
+  .nav-links a:hover{color:var(--primario)}
+  .btn-nav{
+    background:var(--primario);color:#fff;text-decoration:none;
+    font-size:.88rem;font-weight:600;padding:.6rem 1.15rem;border-radius:999px;
+    transition:transform .25s var(--trans),background .25s var(--trans),box-shadow .25s var(--trans);
+    box-shadow:0 4px 14px rgba(14,107,168,.3);
+    white-space:nowrap;
+  }
+  .btn-nav:hover{background:var(--primario-osc);transform:translateY(-2px)}
+  @media(min-width:820px){.nav-links{display:flex}}
+
+  /* ====== Hero ====== */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:7.2rem 1.2rem 4.5rem;
+    background:
+      radial-gradient(60rem 40rem at 110% -10%,rgba(53,182,180,.18),transparent 60%),
+      radial-gradient(50rem 36rem at -20% 30%,rgba(14,107,168,.14),transparent 55%),
+      linear-gradient(180deg,#EAF4FA 0%,var(--secundario) 90%);
+  }
+  .hero-inner{max-width:1120px;margin:0 auto;display:grid;gap:2.6rem;align-items:center}
+  @media(min-width:900px){.hero{padding:9.5rem 1.2rem 6rem}.hero-inner{grid-template-columns:1.15fr .85fr}}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:var(--acento-suave);color:#177270;
+    font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:.45rem 1rem;border-radius:999px;margin-bottom:1.2rem;
+  }
+  .hero h1{font-size:clamp(2.3rem,6.5vw,3.9rem);color:var(--tinta);font-weight:700}
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em);animation:subir .7s var(--trans) forwards}
+  .hero h1 em{font-style:normal;color:var(--primario)}
+  @keyframes subir{to{opacity:1;transform:translateY(0)}}
+  .hero p.sub{margin:1.3rem 0 2rem;font-size:1.08rem;color:var(--tinta-suave);max-width:34rem}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:.9rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;
+    text-decoration:none;font-weight:600;font-size:1rem;
+    padding:.95rem 1.7rem;border-radius:999px;
+    transition:transform .3s var(--trans),box-shadow .3s var(--trans),background .3s var(--trans);
+  }
+  .btn-primario{background:var(--primario);color:#fff;box-shadow:0 8px 24px rgba(14,107,168,.35)}
+  .btn-primario:hover{background:var(--primario-osc);transform:translateY(-3px)}
+  .btn-secundario{background:#fff;color:var(--primario);border:1.5px solid rgba(14,107,168,.25)}
+  .btn-secundario:hover{border-color:var(--primario);transform:translateY(-3px);box-shadow:var(--sombra)}
+  .hero-nota{margin-top:1.1rem;font-size:.88rem;color:var(--tinta-suave)}
+  .hero-nota strong{color:var(--tinta)}
+
+  /* Tarjeta flotante del hero (parallax suave) */
+  .hero-card{
+    background:#fff;border-radius:var(--radio);padding:2rem 1.8rem;
+    box-shadow:0 24px 60px rgba(14,107,168,.16);
+    border:1px solid rgba(14,107,168,.07);
+    will-change:transform;
+  }
+  .hero-card .estrellas{color:#F5A623;font-size:1.35rem;letter-spacing:.15em}
+  .hero-card .nota-google{display:flex;align-items:baseline;gap:.6rem;margin:.4rem 0 .9rem}
+  .hero-card .nota-google b{font-family:'Fraunces',serif;font-size:2.6rem;color:var(--tinta)}
+  .hero-card .nota-google span{color:var(--tinta-suave);font-size:.95rem}
+  .hero-card ul{list-style:none;display:grid;gap:.65rem;margin-top:1rem}
+  .hero-card li{display:flex;gap:.6rem;align-items:flex-start;font-size:.94rem;color:var(--tinta-suave)}
+  .hero-card li svg{flex:none;margin-top:.2rem}
+
+  /* ====== Franja de cifras ====== */
+  .stats{background:var(--primario);color:#fff;padding:2.6rem 1.2rem}
+  .stats-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:center}
+  .stat b{display:block;font-family:'Fraunces',serif;font-size:clamp(1.7rem,5vw,2.7rem);font-weight:700}
+  .stat span{font-size:.82rem;opacity:.85;letter-spacing:.04em}
+  @media(max-width:520px){.stat span{font-size:.72rem}}
+
+  /* ====== Secciones genéricas ====== */
+  section{padding:4.5rem 1.2rem}
+  .contenedor{max-width:1120px;margin:0 auto}
+  .kicker{color:var(--acento);font-weight:700;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.7rem}
+  h2.titulo{font-size:clamp(1.8rem,4.5vw,2.6rem);margin-bottom:1rem;color:var(--tinta)}
+  .intro{color:var(--tinta-suave);max-width:44rem;font-size:1.05rem}
+
+  /* ====== Sobre nosotros ====== */
+  .sobre{background:var(--secundario)}
+  .sobre-grid{display:grid;gap:2.2rem;margin-top:2.4rem}
+  @media(min-width:820px){.sobre-grid{grid-template-columns:repeat(3,1fr)}}
+  .pilar{
+    background:#fff;border-radius:var(--radio);padding:1.8rem 1.6rem;
+    box-shadow:var(--sombra);border:1px solid rgba(14,107,168,.06);
+    transition:transform .35s var(--trans),box-shadow .35s var(--trans);
+  }
+  .pilar:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(14,107,168,.18)}
+  .pilar .icono{
+    width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--acento-suave),#DCEEF8);margin-bottom:1.1rem;
+  }
+  .pilar h3{font-size:1.18rem;margin-bottom:.5rem}
+  .pilar p{font-size:.95rem;color:var(--tinta-suave)}
+
+  /* ====== Servicios ====== */
+  .servicios{background:linear-gradient(180deg,var(--secundario) 0%,#EAF4FA 100%)}
+  .serv-grid{display:grid;gap:1.4rem;margin-top:2.4rem}
+  @media(min-width:640px){.serv-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:980px){.serv-grid{grid-template-columns:repeat(3,1fr)}}
+  .serv{
+    position:relative;background:#fff;border-radius:var(--radio);
+    padding:1.9rem 1.7rem;box-shadow:var(--sombra);
+    border:1px solid rgba(14,107,168,.06);overflow:hidden;
+    transition:transform .35s var(--trans),box-shadow .35s var(--trans);
+  }
+  .serv:hover{transform:translateY(-6px) scale(1.015);box-shadow:0 20px 48px rgba(14,107,168,.2)}
+  .serv::after{
+    content:"";position:absolute;inset:auto 0 0 0;height:4px;
+    background:linear-gradient(90deg,var(--primario),var(--acento));
+    transform:scaleX(0);transform-origin:left;transition:transform .4s var(--trans);
+  }
+  .serv:hover::after{transform:scaleX(1)}
+  .serv .icono{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:var(--acento-suave);margin-bottom:1rem}
+  .serv h3{font-size:1.15rem;margin-bottom:.45rem}
+  .serv p{font-size:.93rem;color:var(--tinta-suave)}
+  .serv .destacado{
+    position:absolute;top:1.1rem;right:1.1rem;
+    background:var(--acento);color:#fff;font-size:.68rem;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px;
+  }
+
+  /* ====== Reseñas ====== */
+  .resenas{background:var(--secundario)}
+  .res-grid{display:grid;gap:1.4rem;margin-top:2.4rem}
+  @media(min-width:820px){.res-grid{grid-template-columns:repeat(2,1fr)}}
+  .resena{
+    background:#fff;border-radius:var(--radio);padding:2rem 1.8rem;
+    box-shadow:var(--sombra);border:1px solid rgba(14,107,168,.06);
+    display:flex;flex-direction:column;gap:1rem;
+    transition:transform .35s var(--trans),box-shadow .35s var(--trans);
+  }
+  .resena:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(14,107,168,.18)}
+  .resena .estrellas{color:#F5A623;letter-spacing:.18em;font-size:1.05rem}
+  .resena blockquote{font-size:1rem;color:var(--tinta);font-style:italic}
+  .resena .autor{display:flex;align-items:center;gap:.8rem;margin-top:auto}
+  .resena .avatar{
+    width:42px;height:42px;border-radius:50%;flex:none;
+    background:linear-gradient(135deg,var(--primario),var(--acento));
+    color:#fff;display:grid;place-items:center;font-weight:700;font-size:.95rem;
+  }
+  .resena .autor b{display:block;font-size:.95rem}
+  .resena .autor span{font-size:.8rem;color:var(--tinta-suave)}
+  .res-pie{margin-top:1.8rem;font-size:.9rem;color:var(--tinta-suave)}
+  .res-pie a{color:var(--primario);font-weight:600}
+
+  /* ====== Contacto ====== */
+  .contacto{background:linear-gradient(180deg,var(--secundario) 0%,#EAF4FA 100%)}
+  .cont-grid{display:grid;gap:1.4rem;margin-top:2.4rem}
+  @media(min-width:900px){.cont-grid{grid-template-columns:1.05fr .95fr}}
+  .cont-card{
+    background:#fff;border-radius:var(--radio);padding:2.1rem 1.9rem;
+    box-shadow:var(--sombra);border:1px solid rgba(14,107,168,.06);
+  }
+  .cont-item{display:flex;gap:1rem;align-items:flex-start;padding:1rem 0;border-bottom:1px solid rgba(14,107,168,.08)}
+  .cont-item:last-child{border-bottom:none}
+  .cont-item .icono{width:44px;height:44px;border-radius:12px;flex:none;display:grid;place-items:center;background:var(--acento-suave)}
+  .cont-item b{display:block;font-size:.95rem;margin-bottom:.15rem}
+  .cont-item p,.cont-item a{font-size:.93rem;color:var(--tinta-suave);text-decoration:none}
+  .cont-item a:hover{color:var(--primario)}
+  .cont-cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.4rem}
+  .mapa-card{
+    border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);
+    background:linear-gradient(135deg,#DCEEF8,var(--acento-suave));
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:2.5rem 1.8rem;gap:1rem;min-height:320px;
+  }
+  .mapa-card h3{font-size:1.4rem;color:var(--tinta)}
+  .mapa-card p{color:var(--tinta-suave);font-size:.95rem;max-width:26rem}
+
+  /* ====== Pie ====== */
+  footer.pie{background:var(--tinta);color:#B9CDD8;padding:3rem 1.2rem 5.5rem;text-align:center}
+  footer.pie .marca{font-family:'Fraunces',serif;font-size:1.25rem;color:#fff;margin-bottom:.6rem}
+  footer.pie p{font-size:.88rem;max-width:40rem;margin:0 auto .4rem}
+  footer.pie .redes{display:flex;justify-content:center;gap:1.2rem;margin:1.2rem 0}
+  footer.pie .redes a{color:#B9CDD8;text-decoration:none;font-size:.85rem;font-weight:600;transition:color .25s var(--trans)}
+  footer.pie .redes a:hover{color:var(--acento)}
+  footer.pie .agencia{margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.12);font-size:.85rem}
+  footer.pie .agencia a{color:var(--acento);font-weight:700;text-decoration:none}
+
+  /* ====== Animaciones de entrada (con red de seguridad) ====== */
+  .anim{opacity:0;transform:translateY(26px);transition:opacity .7s var(--trans),transform .7s var(--trans)}
+  .anim.visible{opacity:1;transform:none}
+
+  /* Garantía de visibilidad si no hay JS */
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    .anim,.hero h1 .palabra{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+    .anim,.hero h1 .palabra,[style*="opacity"]{opacity:1 !important;transform:none !important;animation:none !important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"></div>
+<div class="demo-badge" aria-hidden="true"><span>●</span>&nbsp;DEMO — Eleven AI</div>
+
+<header class="top">
+  <nav class="barra" aria-label="principal">
+    <a class="logo" href="#inicio">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C8 2 5 4.5 5 8.5c0 3 1.2 5 1.8 8 .4 2 .8 5.5 2.4 5.5 1.7 0 1.2-4.5 2.8-4.5s1.1 4.5 2.8 4.5c1.6 0 2-3.5 2.4-5.5.6-3 1.8-5 1.8-8C19 4.5 16 2 12 2Z" stroke="#0E6BA8" stroke-width="1.8" fill="#E1F4F3"/></svg>
+      Clínica Dental Del Turia
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">La clínica</a></li>
+      <li><a href="#servicios">Tratamientos</a></li>
+      <li><a href="#resenas">Opiniones</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="btn-nav" href="tel:+34722233472">☎ 722 23 34 72</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-eyebrow">✦ Tu dentista en Campanar, València</span>
+      <h1 aria-label="Sonríe con confianza. Ortodoncia invisible y cuidado cercano en Campanar.">
+        <span class="palabra" style="animation-delay:.05s">Sonríe</span>
+        <span class="palabra" style="animation-delay:.15s">con</span>
+        <span class="palabra" style="animation-delay:.25s">confianza.</span><br>
+        <span class="palabra" style="animation-delay:.4s"><em>Ortodoncia</em></span>
+        <span class="palabra" style="animation-delay:.5s"><em>invisible</em></span>
+        <span class="palabra" style="animation-delay:.6s">y</span>
+        <span class="palabra" style="animation-delay:.7s">trato</span>
+        <span class="palabra" style="animation-delay:.8s">cercano.</span>
+      </h1>
+      <p class="sub anim">En Clínica Dental Del Turia cuidamos tu sonrisa con tecnología de diagnóstico 3D y un equipo que te explica cada paso. Nuestros pacientes nos avalan: <strong>4,8 sobre 5 en Google</strong>.</p>
+      <div class="hero-cta anim">
+        <a class="btn btn-primario" href="tel:+34722233472">☎ Llamar ahora</a>
+        <a class="btn btn-secundario" href="#contacto">📅 Pedir cita</a>
+      </div>
+      <p class="hero-nota anim">C/ de la Vall de la Ballestera, 24 · Campanar · <strong>L–V 10:00–14:00 y 16:00–20:00</strong></p>
+    </div>
+    <div class="hero-card anim" id="tarjeta-hero">
+      <div class="estrellas" aria-hidden="true">★★★★★</div>
+      <div class="nota-google"><b data-contador="4.8" data-decimales="1">0,0</b><span>· 183 reseñas en Google</span></div>
+      <ul>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="#35B6B4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Especialistas en ortodoncia invisible</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="#35B6B4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Diagnóstico con escáner 3D</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="#35B6B4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Trato cercano, sin prisas y con toda la información</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CIFRAS ============ -->
+<section class="stats" aria-label="La clínica en cifras">
+  <div class="stats-inner">
+    <div class="stat anim"><b><span data-contador="4.8" data-decimales="1">0,0</span>★</b><span>Valoración en Google</span></div>
+    <div class="stat anim"><b data-contador="183">0</b><span>Reseñas de pacientes</span></div>
+    <div class="stat anim"><b>3D</b><span>Diagnóstico con escáner</span></div>
+  </div>
+</section>
+
+<!-- ============ SOBRE NOSOTROS ============ -->
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <p class="kicker anim">La clínica</p>
+    <h2 class="titulo anim">Una clínica de barrio con nivel de gran clínica</h2>
+    <p class="intro anim">Estamos en la calle de la Vall de la Ballestera, en Campanar. Si algo repiten nuestros pacientes en sus reseñas es el <strong>trato cercano y honesto</strong>: te explicamos qué le pasa a tu boca, te lo enseñamos en el escáner 3D y decidimos contigo el tratamiento. Sin prisas y sin sorpresas.</p>
+    <div class="sobre-grid">
+      <div class="pilar anim">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 6.3 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21Z" stroke="#0E6BA8" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Trato cercano</h3>
+        <p>Atención amable y personalizada: nuestros pacientes destacan la simpatía y la honestidad del equipo en cada visita.</p>
+      </div>
+      <div class="pilar anim">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2.5" stroke="#0E6BA8" stroke-width="1.8"/><path d="M8 21h8M12 18v3" stroke="#0E6BA8" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="11" r="3" stroke="#35B6B4" stroke-width="1.8"/></svg></div>
+        <h3>Tecnología 3D</h3>
+        <p>Escáner intraoral 3D para que veas tu boca como la vemos nosotros y entiendas tu diagnóstico desde el primer día.</p>
+      </div>
+      <div class="pilar anim">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 2.5 5.3 5.5.7-4 4 1 5.7-5-2.8-5 2.8 1-5.7-4-4 5.5-.7L12 3Z" stroke="#0E6BA8" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Avalados por pacientes</h3>
+        <p>4,8 sobre 5 con 183 reseñas en Google: la mejor garantía es lo que cuentan quienes ya se tratan con nosotros.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <p class="kicker anim">Tratamientos</p>
+    <h2 class="titulo anim">Todo el cuidado que tu sonrisa necesita</h2>
+    <p class="intro anim">De la revisión rutinaria a la ortodoncia invisible, en una misma clínica y con el mismo equipo de confianza.</p>
+    <div class="serv-grid">
+      <article class="serv anim">
+        <span class="destacado">Especialidad</span>
+        <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 13c0-5 3.6-8 8-8s8 3 8 8" stroke="#0E6BA8" stroke-width="1.8" stroke-linecap="round"/><path d="M4 13c0 3 1.5 5 4 5s4-2 4-5c0 3 1.5 5 4 5s4-2 4-5" stroke="#35B6B4" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Ortodoncia invisible</h3>
+        <p>Alinea tus dientes de forma discreta y cómoda. Es nuestra especialidad y la que más destacan nuestros pacientes.</p>
+      </article>
+      <article class="serv anim">
+        <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3C8.7 3 6 5.2 6 8.4c0 2.5 1 4.1 1.5 6.6.3 1.7.6 4.5 2 4.5s1-3.7 2.5-3.7 1.1 3.7 2.5 3.7c1.4 0 1.7-2.8 2-4.5.5-2.5 1.5-4.1 1.5-6.6C18 5.2 15.3 3 12 3Z" stroke="#0E6BA8" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Odontología general</h3>
+        <p>Revisiones, limpiezas y empastes para mantener tu boca sana todo el año, con diagnóstico apoyado en escáner 3D.</p>
+      </article>
+      <article class="serv anim">
+        <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="#0E6BA8" stroke-width="1.8"/><path d="M5 20c1-3.5 3.8-5 7-5s6 1.5 7 5" stroke="#35B6B4" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Odontología infantil</h3>
+        <p>Cuidamos la sonrisa de los más pequeños con paciencia y un trato que les quita el miedo al dentista.</p>
+      </article>
+      <article class="serv anim">
+        <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21V10M12 10c0-3 1.5-6 4-7M12 10c0-3-1.5-6-4-7" stroke="#0E6BA8" stroke-width="1.8" stroke-linecap="round"/><path d="M8 21c1.5-1.5 6.5-1.5 8 0" stroke="#35B6B4" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Endodoncia</h3>
+        <p>Tratamos el interior del diente para salvarlo y evitar la extracción, eliminando el dolor de raíz.</p>
+      </article>
+      <article class="serv anim">
+        <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10c2-4 5-6 8-6s6 2 8 6" stroke="#0E6BA8" stroke-width="1.8" stroke-linecap="round"/><path d="M4 14h16M6 14v4m4-4v4m4-4v4m4-4v4" stroke="#35B6B4" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Periodoncia</h3>
+        <p>Prevención y tratamiento de las encías: la base de una boca sana empieza por unas encías fuertes.</p>
+      </article>
+      <article class="serv anim">
+        <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 15 9-9 4 4-9 9H5v-4Z" stroke="#0E6BA8" stroke-width="1.8" stroke-linejoin="round"/><path d="m17 3 1.2 2.5L20.5 7l-2.3 1.2L17 10.5l-1.2-2.3L13.5 7l2.3-1.5L17 3Z" stroke="#35B6B4" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <h3>Blanqueamiento y prótesis</h3>
+        <p>Recupera el blanco de tu sonrisa o repón piezas con prótesis a medida, con un resultado natural.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESEÑAS ============ -->
+<section class="resenas" id="resenas">
+  <div class="contenedor">
+    <p class="kicker anim">Opiniones reales</p>
+    <h2 class="titulo anim">Lo que dicen nuestros pacientes</h2>
+    <p class="intro anim">Reseñas publicadas en Google por pacientes de la clínica.</p>
+    <div class="res-grid">
+      <article class="resena anim">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>&laquo;Muy agradables y me dieron toda la información que necesitaba, volveré.&raquo;</blockquote>
+        <div class="autor">
+          <div class="avatar" aria-hidden="true">MS</div>
+          <div><b>Manuela Sánchez</b><span>Reseña de Google</span></div>
+        </div>
+      </article>
+      <article class="resena anim">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>&laquo;Me atendieron fenomenal, con simpatía y honestidad [...] tuve la oportunidad de ver cómo estaba mi boca al ver el escáner 3D.&raquo;</blockquote>
+        <div class="autor">
+          <div class="avatar" aria-hidden="true">AS</div>
+          <div><b>Alejandro Soto</b><span>Reseña de Google</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="res-pie anim">⭐ 4,8 de valoración media con 183 reseñas — <a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica+Dental+Del+Turia+C%2F+de+la+Vall+de+la+Ballestera+24+Valencia" target="_blank" rel="noopener">léelas todas en Google</a>.</p>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <p class="kicker anim">Contacto y cita</p>
+    <h2 class="titulo anim">Pide tu cita hoy mismo</h2>
+    <p class="intro anim">Llámanos o escríbenos y buscamos el hueco que mejor te venga.</p>
+    <div class="cont-grid">
+      <div class="cont-card anim">
+        <div class="cont-item">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-6.5-5.3-8.5-9.5A7.4 7.4 0 0 1 12 2.6a7.4 7.4 0 0 1 8.5 8.9C18.5 15.7 12 21 12 21Z" stroke="#0E6BA8" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" stroke="#35B6B4" stroke-width="1.7"/></svg></div>
+          <div><b>Dirección</b><p>C/ de la Vall de la Ballestera, 24 · Campanar · 46015 València</p></div>
+        </div>
+        <div class="cont-item">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="#0E6BA8" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+          <div><b>Teléfono</b><p><a href="tel:+34722233472">722 23 34 72</a></p></div>
+        </div>
+        <div class="cont-item">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#0E6BA8" stroke-width="1.7"/><path d="m4 7 8 6 8-6" stroke="#35B6B4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><b>Email</b><p><a href="mailto:clinicadentaldelturia@gmail.com">clinicadentaldelturia@gmail.com</a></p></div>
+        </div>
+        <div class="cont-item">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#0E6BA8" stroke-width="1.7"/><path d="M12 7v5l3.5 2" stroke="#35B6B4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><b>Horario</b><p>Lunes a viernes: 10:00–14:00 y 16:00–20:00</p></div>
+        </div>
+        <div class="cont-cta">
+          <a class="btn btn-primario" href="tel:+34722233472">☎ Llamar a la clínica</a>
+          <a class="btn btn-secundario" href="mailto:clinicadentaldelturia@gmail.com?subject=Quiero%20pedir%20cita">✉ Pedir cita por email</a>
+        </div>
+      </div>
+      <div class="mapa-card anim">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-6.5-5.3-8.5-9.5A7.4 7.4 0 0 1 12 2.6a7.4 7.4 0 0 1 8.5 8.9C18.5 15.7 12 21 12 21Z" stroke="#0E6BA8" stroke-width="1.4" fill="#fff"/><circle cx="12" cy="9.5" r="2.6" fill="#35B6B4"/></svg>
+        <h3>Estamos en Campanar</h3>
+        <p>Muy cerca del antiguo cauce del Turia. Abre la ruta en tu móvil y llega sin complicarte.</p>
+        <a class="btn btn-primario" href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica+Dental+Del+Turia+C%2F+de+la+Vall+de+la+Ballestera+24+46015+Valencia" target="_blank" rel="noopener">🧭 Cómo llegar (Google Maps)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ PIE ============ -->
+<footer class="pie">
+  <div class="marca">Clínica Dental Del Turia</div>
+  <p>C/ de la Vall de la Ballestera, 24 · Campanar · 46015 València · Tel. <a href="tel:+34722233472" style="color:#fff">722 23 34 72</a></p>
+  <div class="redes">
+    <a href="https://www.facebook.com/clinicadentaldelturia" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/clinicadentaldelturia" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@clinicadentaldelturia" target="_blank" rel="noopener">TikTok</a>
+  </div>
+  <div class="agencia">
+    Demo creada por <a href="https://elevenprime.es" target="_blank" rel="noopener">Eleven AI</a> — esta web puede ser tuya.
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Revelado en cascada con IntersectionObserver ---- */
+  var animados = Array.prototype.slice.call(document.querySelectorAll('.anim'));
+  if (reducido || !('IntersectionObserver' in window)) {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  } else {
+    var retardos = new WeakMap();
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = e.target.parentElement ? Array.prototype.slice.call(e.target.parentElement.children) : [];
+          var idx = hermanos.indexOf(e.target);
+          e.target.style.transitionDelay = Math.min(idx * 90, 450) + 'ms';
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    animados.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---- SCRIPT DE RESCATE (obligatorio): a los 1,2s, nada puede seguir oculto ---- */
+  setTimeout(function rescate(){
+    document.querySelectorAll('.anim').forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        var op = window.getComputedStyle(el).opacity;
+        if (parseFloat(op) < 1) { el.style.transition = 'none'; }
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+      if (parseFloat(window.getComputedStyle(el).opacity) < 1) {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }, 1200);
+
+  /* ---- Contadores animados ---- */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reducido) { el.textContent = fin.toFixed(dec).replace('.', ','); return; }
+    var t0 = null, dur = 1400;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll('[data-contador]');
+  if ('IntersectionObserver' in window && !reducido) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(el){ ioC.observe(el); });
+    /* rescate de contadores: si a los 2,5s alguno sigue a cero, se fija su valor final */
+    setTimeout(function(){
+      contadores.forEach(function(el){
+        var v = parseFloat((el.textContent || '0').replace(',', '.'));
+        if (!v) {
+          var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+          el.textContent = parseFloat(el.getAttribute('data-contador')).toFixed(dec).replace('.', ',');
+        }
+      });
+    }, 2500);
+  } else {
+    contadores.forEach(function(el){
+      var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+      el.textContent = parseFloat(el.getAttribute('data-contador')).toFixed(dec).replace('.', ',');
+    });
+  }
+
+  /* ---- Barra de progreso + parallax suave del hero ---- */
+  var barra = document.getElementById('progreso');
+  var tarjeta = document.getElementById('tarjeta-hero');
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || document.documentElement.scrollTop;
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      if (barra && total > 0) barra.style.width = (y / total * 100) + '%';
+      if (tarjeta && !reducido && y < 700) tarjeta.style.transform = 'translateY(' + (y * -0.06) + 'px)';
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+})();
+</script>
+</body>
+</html>

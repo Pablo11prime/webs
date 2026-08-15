@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Talleres M Porcar — taller de automóviles en Extramurs, Valencia. 4,9 estrellas en Google. Llámanos: 603 01 85 44.">
+<meta name="robots" content="noindex">
+<title>Talleres M Porcar · Taller de automóviles en Extramurs, Valencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#2B2D31;
+  --primario-2:#1E2023;
+  --secundario:#EFF1F3;
+  --acento:#C0392B;
+  --acento-osc:#A93226;
+  --blanco:#FFFFFF;
+  --gris:#6B7076;
+  --radio:18px;
+  --sombra:0 10px 30px rgba(43,45,49,.10);
+  --trans:all .35s cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--primario);
+  background:var(--secundario);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Sora',sans-serif;line-height:1.15}
+img{max-width:100%}
+a{color:inherit}
+
+/* ====== Barra de progreso de scroll ====== */
+#progreso{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:linear-gradient(90deg,var(--acento),#E74C3C);
+  z-index:1000;transition:width .1s linear;
+}
+
+/* ====== Marca de agua DEMO ====== */
+.demo-badge{
+  position:fixed;bottom:18px;right:18px;z-index:999;
+  background:var(--acento);color:var(--blanco);
+  font-family:'Sora',sans-serif;font-weight:700;font-size:.8rem;
+  letter-spacing:.12em;padding:.55rem 1.05rem;border-radius:999px;
+  box-shadow:0 6px 20px rgba(192,57,43,.45);
+  text-transform:uppercase;pointer-events:none;
+}
+.demo-marca-hero{
+  display:inline-block;border:1px solid rgba(255,255,255,.35);
+  color:rgba(255,255,255,.85);font-size:.72rem;letter-spacing:.2em;
+  padding:.3rem .9rem;border-radius:999px;margin-bottom:1.2rem;
+  text-transform:uppercase;font-weight:600;
+}
+
+/* ====== Animaciones de entrada ====== */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.rv.visible{opacity:1;transform:none}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.22s}.rv-d3{transition-delay:.34s}
+.rv-d4{transition-delay:.46s}.rv-d5{transition-delay:.58s}
+.palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity .55s ease,transform .55s cubic-bezier(.22,.61,.36,1)}
+.palabra.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  #hero-fondo{transform:none !important}
+  *{animation:none !important}
+}
+
+/* ====== Hero ====== */
+.hero{
+  position:relative;min-height:92vh;display:flex;align-items:center;
+  background:var(--primario);color:var(--blanco);overflow:hidden;
+  padding:6rem 1.5rem 5rem;
+}
+#hero-fondo{
+  position:absolute;inset:-15% 0;z-index:0;will-change:transform;
+  background:
+    radial-gradient(ellipse 80% 55% at 75% 15%,rgba(192,57,43,.28),transparent 60%),
+    radial-gradient(ellipse 60% 45% at 12% 85%,rgba(192,57,43,.14),transparent 60%),
+    linear-gradient(160deg,var(--primario-2) 0%,var(--primario) 55%,#33363B 100%);
+}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:0;opacity:.06;
+  background-image:repeating-linear-gradient(45deg,transparent 0 34px,var(--blanco) 34px 35px);
+}
+.hero-inner{position:relative;z-index:2;max-width:1080px;margin:0 auto;width:100%}
+.hero h1{
+  font-size:clamp(2.5rem,8vw,4.6rem);font-weight:800;letter-spacing:-.02em;
+  margin-bottom:1.1rem;
+}
+.hero h1 .acento{color:#E8604F}
+.hero .eslogan{
+  font-size:clamp(1.05rem,2.6vw,1.35rem);color:rgba(255,255,255,.82);
+  max-width:34em;margin-bottom:2.4rem;font-weight:400;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.9rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;
+  padding:1rem 1.9rem;border-radius:999px;text-decoration:none;
+  transition:var(--trans);border:2px solid transparent;
+}
+.btn svg{flex-shrink:0}
+.btn-acento{background:var(--acento);color:var(--blanco);box-shadow:0 8px 24px rgba(192,57,43,.4)}
+.btn-acento:hover{background:var(--acento-osc);transform:translateY(-3px);box-shadow:0 14px 30px rgba(192,57,43,.5)}
+.btn-borde{border-color:rgba(255,255,255,.4);color:var(--blanco)}
+.btn-borde:hover{border-color:var(--blanco);background:rgba(255,255,255,.08);transform:translateY(-3px)}
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:3rem;
+  color:rgba(255,255,255,.75);font-size:.92rem;align-items:center;
+}
+.hero-meta .estrellas{color:#F5B301;letter-spacing:.1em;font-size:1.05rem}
+.hero-meta strong{color:var(--blanco)}
+
+/* ====== Secciones ====== */
+section{padding:5.5rem 1.5rem}
+.contenedor{max-width:1080px;margin:0 auto}
+.etiqueta{
+  display:inline-block;font-family:'Sora',sans-serif;font-weight:700;
+  font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--acento);margin-bottom:.9rem;
+}
+h2{font-size:clamp(1.8rem,5vw,2.7rem);font-weight:800;letter-spacing:-.01em;margin-bottom:1.1rem}
+.sub{color:var(--gris);max-width:38em;font-size:1.05rem}
+
+/* Sobre nosotros */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:2.5rem;align-items:center}
+@media(min-width:820px){.sobre-grid{grid-template-columns:1.1fr .9fr}}
+.sobre p{margin-bottom:1rem;color:#3d4045}
+.panel-cifras{
+  background:var(--primario);color:var(--blanco);border-radius:var(--radio);
+  padding:2.4rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;
+  box-shadow:var(--sombra);
+}
+.cifra{text-align:center}
+.cifra .num{
+  font-family:'Sora',sans-serif;font-size:clamp(2.2rem,6vw,3rem);
+  font-weight:800;color:#E8604F;display:block;line-height:1;
+}
+.cifra .txt{font-size:.85rem;color:rgba(255,255,255,.75);margin-top:.5rem;display:block}
+.cifra-ancha{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.15);padding-top:1.6rem}
+.cifra-ancha .estrellas{color:#F5B301;font-size:1.3rem;letter-spacing:.15em}
+.cifra-ancha .txt{margin-top:.3rem}
+
+/* Servicios */
+.servicios{background:var(--secundario)}
+.grid-serv{display:grid;gap:1.4rem;margin-top:2.8rem}
+@media(min-width:640px){.grid-serv{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.grid-serv{grid-template-columns:repeat(3,1fr)}}
+.tarjeta{
+  background:var(--blanco);border-radius:var(--radio);padding:2rem 1.7rem;
+  box-shadow:var(--sombra);transition:var(--trans);
+  border:1px solid rgba(43,45,49,.05);
+}
+.tarjeta:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:0 20px 45px rgba(43,45,49,.16)}
+.tarjeta .icono{
+  width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  background:rgba(192,57,43,.1);color:var(--acento);margin-bottom:1.2rem;
+  transition:var(--trans);
+}
+.tarjeta:hover .icono{background:var(--acento);color:var(--blanco);transform:scale(1.08)}
+.tarjeta h3{font-size:1.15rem;margin-bottom:.55rem}
+.tarjeta p{color:var(--gris);font-size:.95rem}
+.nota-serv{margin-top:2rem;font-size:.85rem;color:var(--gris)}
+
+/* Reputación */
+.reputacion{background:var(--primario);color:var(--blanco)}
+.reputacion .sub{color:rgba(255,255,255,.75)}
+.rep-caja{
+  margin-top:2.8rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--radio);padding:2.6rem 2rem;text-align:center;
+}
+.rep-caja .nota-media{
+  font-family:'Sora',sans-serif;font-size:clamp(3.4rem,11vw,5.2rem);font-weight:800;
+  color:var(--blanco);line-height:1;
+}
+.rep-caja .estrellas{color:#F5B301;font-size:clamp(1.4rem,4vw,1.9rem);letter-spacing:.18em;display:block;margin:.7rem 0}
+.rep-caja .detalle{color:rgba(255,255,255,.75);font-size:1rem}
+.rep-caja .btn{margin-top:1.8rem}
+.rep-frase{
+  margin-top:2.2rem;text-align:center;color:rgba(255,255,255,.65);
+  font-size:.92rem;max-width:36em;margin-left:auto;margin-right:auto;
+}
+
+/* Contacto */
+.contacto{background:var(--blanco)}
+.contacto-grid{display:grid;gap:1.4rem;margin-top:2.6rem}
+@media(min-width:820px){.contacto-grid{grid-template-columns:repeat(3,1fr)}}
+.dato{
+  background:var(--secundario);border-radius:var(--radio);padding:1.9rem 1.6rem;
+  transition:var(--trans);
+}
+.dato:hover{transform:translateY(-5px);box-shadow:var(--sombra)}
+.dato .icono{
+  width:46px;height:46px;border-radius:12px;background:var(--primario);color:var(--blanco);
+  display:flex;align-items:center;justify-content:center;margin-bottom:1rem;
+}
+.dato h3{font-size:1.05rem;margin-bottom:.4rem}
+.dato p,.dato a{color:var(--gris);font-size:.95rem;text-decoration:none}
+.dato a:hover{color:var(--acento)}
+.dato a.enlace{color:var(--acento);font-weight:600}
+.cta-final{
+  margin-top:3rem;background:var(--primario);border-radius:var(--radio);
+  padding:2.8rem 2rem;text-align:center;color:var(--blanco);
+}
+.cta-final h3{font-size:clamp(1.4rem,4vw,1.9rem);margin-bottom:.7rem}
+.cta-final p{color:rgba(255,255,255,.75);margin-bottom:1.6rem}
+
+/* Footer */
+footer{
+  background:var(--primario-2);color:rgba(255,255,255,.65);
+  padding:2.6rem 1.5rem;text-align:center;font-size:.9rem;
+}
+footer .marca-agencia{
+  color:var(--blanco);font-family:'Sora',sans-serif;font-weight:700;
+}
+footer a{color:#E8604F;text-decoration:none}
+footer .aviso-demo{
+  margin-top:1rem;display:inline-block;background:rgba(192,57,43,.18);
+  border:1px solid rgba(192,57,43,.45);color:#F0A79E;
+  padding:.55rem 1.2rem;border-radius:999px;font-size:.82rem;
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.rv,.palabra{opacity:1 !important;transform:none !important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="demo-badge" aria-hidden="true">Demo</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <span class="demo-marca-hero">Demo · propuesta de web</span>
+    <h1 id="titulo-hero">TALLERES <span class="acento">M&nbsp;PORCAR</span></h1>
+    <p class="eslogan rv rv-d2">Tu taller de confianza en Extramurs, València. La reparación bien hecha, explicada con claridad y al precio justo.</p>
+    <div class="hero-cta rv rv-d3">
+      <a class="btn btn-acento" href="tel:+34603018544" aria-label="Llamar al taller">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar: 603 01 85 44
+      </a>
+      <a class="btn btn-borde" href="#contacto">Pedir cita</a>
+    </div>
+    <div class="hero-meta rv rv-d4">
+      <span><span class="estrellas" aria-hidden="true">★★★★★</span></span>
+      <span><strong>4,9</strong> en Google · <strong>129</strong> reseñas</span>
+      <span>Barrio de Arrancapins · Extramurs</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ SOBRE NOSOTROS ============ -->
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div>
+        <span class="etiqueta rv">Sobre nosotros</span>
+        <h2 class="rv rv-d1">Un taller de barrio con nota de sobresaliente</h2>
+        <p class="rv rv-d2">En Talleres M Porcar cuidamos cada coche como si fuera nuestro. Estamos en la calle del Pintor Navarro Llorens, en pleno barrio de Arrancapins, y nuestros clientes nos avalan: un 4,9 sobre 5 en Google con 129 reseñas.</p>
+        <p class="rv rv-d3">Esa valoración no se consigue por casualidad: se consigue trabajando bien, tratando a las personas con honestidad y entregando cada vehículo a punto.</p>
+        <p class="rv rv-d4">Si buscas un taller cercano, serio y muy bien valorado en València, ven a conocernos o llámanos.</p>
+      </div>
+      <div class="panel-cifras rv rv-d2">
+        <div class="cifra">
+          <span class="num" data-contador="4.9" data-decimales="1">0.0</span>
+          <span class="txt">Valoración media en Google</span>
+        </div>
+        <div class="cifra">
+          <span class="num" data-contador="129">0</span>
+          <span class="txt">Reseñas de clientes</span>
+        </div>
+        <div class="cifra cifra-ancha">
+          <span class="estrellas" aria-hidden="true">★★★★★</span>
+          <span class="txt">Clientes que confían en nosotros en Extramurs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <span class="etiqueta rv">Servicios</span>
+    <h2 class="rv rv-d1">Todo lo que tu coche necesita, en un mismo taller</h2>
+    <p class="sub rv rv-d2">Servicio de taller de automóviles en València. Llámanos y te confirmamos disponibilidad y presupuesto sin compromiso.</p>
+    <div class="grid-serv">
+      <div class="tarjeta rv rv-d1">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Mecánica general</h3>
+        <p>Reparación y puesta a punto de tu vehículo, con diagnóstico previo y presupuesto claro antes de tocar nada.</p>
+      </div>
+      <div class="tarjeta rv rv-d2">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Mantenimiento y revisiones</h3>
+        <p>Revisiones periódicas para alargar la vida de tu coche y evitar averías mayores. Tu coche, siempre a punto.</p>
+      </div>
+      <div class="tarjeta rv rv-d3">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Diagnóstico de averías</h3>
+        <p>Localizamos el origen del problema y te explicamos qué le pasa a tu coche y qué opciones tienes, sin sorpresas.</p>
+      </div>
+      <div class="tarjeta rv rv-d1">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
+        <h3>Pre-ITV y puesta a punto</h3>
+        <p>Preparamos tu vehículo para que llegue a la inspección en las mejores condiciones posibles.</p>
+      </div>
+      <div class="tarjeta rv rv-d2">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Trato honesto</h3>
+        <p>Presupuesto antes de reparar, explicación de cada trabajo y solo lo que tu coche de verdad necesita.</p>
+      </div>
+      <div class="tarjeta rv rv-d3">
+        <div class="icono"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Atención cercana</h3>
+        <p>Un taller de barrio de toda la vida: nos cuentas el problema por teléfono y te decimos cómo lo vemos.</p>
+      </div>
+    </div>
+    <p class="nota-serv rv">¿No ves lo que buscas? Llámanos al <a href="tel:+34603018544" style="color:var(--acento);font-weight:600">603 01 85 44</a> y te confirmamos si podemos ayudarte.</p>
+  </div>
+</section>
+
+<!-- ============ REPUTACIÓN ============ -->
+<section class="reputacion" id="resenas">
+  <div class="contenedor">
+    <span class="etiqueta rv">Nuestros clientes</span>
+    <h2 class="rv rv-d1">129 reseñas reales nos avalan</h2>
+    <p class="sub rv rv-d2">La mejor publicidad de un taller son sus clientes. Estas son nuestras cifras públicas en Google.</p>
+    <div class="rep-caja rv rv-d3">
+      <span class="nota-media"><span data-contador="4.9" data-decimales="1">0.0</span><span style="font-size:.4em;color:rgba(255,255,255,.6)"> / 5</span></span>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <p class="detalle">Valoración media basada en <strong>129 reseñas</strong> de clientes en Google</p>
+      <a class="btn btn-acento" href="https://www.google.com/maps/search/?api=1&amp;query=TALLERES%20M%20PORCAR%2C%20C.%20del%20Pintor%20Navarro%20Llorens%2C%2021%2C%2046008%20Valencia" target="_blank" rel="noopener">Leer las reseñas en Google</a>
+    </div>
+    <p class="rep-frase rv rv-d4">Lee las opiniones completas y verificadas de nuestros clientes directamente en nuestra ficha de Google Maps.</p>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <span class="etiqueta rv">Contacto</span>
+    <h2 class="rv rv-d1">Ven a vernos o llámanos</h2>
+    <p class="sub rv rv-d2">Estamos en el barrio de Arrancapins, distrito de Extramurs, muy cerca del centro de València.</p>
+    <div class="contacto-grid">
+      <div class="dato rv rv-d1">
+        <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Dirección</h3>
+        <p>C. del Pintor Navarro Llorens, 21, Bajo<br>Extramurs, 46008 València</p>
+        <p style="margin-top:.6rem"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=TALLERES%20M%20PORCAR%2C%20C.%20del%20Pintor%20Navarro%20Llorens%2C%2021%2C%2046008%20Valencia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="dato rv rv-d2">
+        <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <h3>Teléfono</h3>
+        <p><a href="tel:+34603018544">603 01 85 44</a></p>
+        <p style="margin-top:.6rem;font-size:.85rem">Llámanos y te atendemos directamente desde el taller.</p>
+      </div>
+      <div class="dato rv rv-d3">
+        <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Horario</h3>
+        <p>Consulta nuestro horario actualizado en la ficha de Google Maps o llámanos por teléfono.</p>
+      </div>
+    </div>
+    <div class="cta-final rv rv-d2">
+      <h3>¿Tu coche necesita un repaso?</h3>
+      <p>Llámanos y cuéntanos qué le pasa: te decimos cómo lo vemos y te damos cita.</p>
+      <a class="btn btn-acento" href="tel:+34603018544">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar ahora: 603 01 85 44
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ PIE ============ -->
+<footer>
+  <p>Talleres M Porcar · C. del Pintor Navarro Llorens, 21, Bajo · 46008 València</p>
+  <p style="margin-top:.8rem">Demo creada por <span class="marca-agencia">Eleven AI</span> — <a href="https://elevenprime.es" target="_blank" rel="noopener">elevenprime.es</a> · esta web puede ser tuya.</p>
+  <span class="aviso-demo">PÁGINA DE DEMOSTRACIÓN — no es la web oficial del negocio</span>
+</footer>
+
+<script>
+(function(){
+  var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Título del hero palabra a palabra ---- */
+  var titulo = document.getElementById('titulo-hero');
+  if (titulo && !reducido) {
+    var nodos = [];
+    function trocear(nodo){
+      if (nodo.nodeType === 3) {
+        var partes = nodo.textContent.split(/(\s+)/);
+        var frag = document.createDocumentFragment();
+        partes.forEach(function(p){
+          if (/^\s+$/.test(p) || p === '') { frag.appendChild(document.createTextNode(p)); }
+          else {
+            var s = document.createElement('span');
+            s.className = 'palabra'; s.textContent = p;
+            frag.appendChild(s); nodos.push(s);
+          }
+        });
+        nodo.parentNode.replaceChild(frag, nodo);
+      } else if (nodo.nodeType === 1) {
+        Array.prototype.slice.call(nodo.childNodes).forEach(trocear);
+      }
+    }
+    trocear(titulo);
+    nodos.forEach(function(s, i){
+      setTimeout(function(){ s.classList.add('visible'); }, 120 + i * 140);
+    });
+  }
+
+  /* ---- Entradas escalonadas con IntersectionObserver ---- */
+  var revelables = document.querySelectorAll('.rv');
+  if (reducido || !('IntersectionObserver' in window)) {
+    revelables.forEach(function(el){ el.classList.add('visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revelables.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---- Contadores animados ---- */
+  var contadores = document.querySelectorAll('[data-contador]');
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-contador'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reducido) { el.textContent = fin.toFixed(dec).replace('.', ','); return; }
+    var dur = 1400, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suav = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suav).toFixed(dec).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+      else el.textContent = fin.toFixed(dec).replace('.', ',');
+    }
+    requestAnimationFrame(paso);
+  }
+  if ('IntersectionObserver' in window && !reducido) {
+    var ioC = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    contadores.forEach(function(c){ ioC.observe(c); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ---- Parallax suave del hero ---- */
+  var fondo = document.getElementById('hero-fondo');
+  if (fondo && !reducido) {
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if (!ticking) {
+        requestAnimationFrame(function(){
+          fondo.style.transform = 'translateY(' + (window.scrollY * 0.28) + 'px)';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  /* ---- Barra de progreso de scroll ---- */
+  var barra = document.getElementById('progreso');
+  if (barra) {
+    window.addEventListener('scroll', function(){
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      barra.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    }, { passive: true });
+  }
+
+  /* ---- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ----
+     Lección del 03/08/2026: si algo falla (visores de email, WebViews raros),
+     a los 1,2 segundos forzamos visible TODO lo que siga oculto. */
+  function forzarVisible(el){
+    el.classList.add('visible');
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  }
+  setTimeout(function rescate(){
+    var todos = document.querySelectorAll('.rv, .palabra');
+    var algunoVisible = false;
+    todos.forEach(function(el){ if (el.classList.contains('visible')) algunoVisible = true; });
+    if (!algunoVisible) {
+      // El observador no ha revelado NADA: entorno roto (visor de email, WebView raro).
+      // Se fuerza visible absolutamente todo para que la página nunca quede en blanco.
+      todos.forEach(forzarVisible);
+      return;
+    }
+    // El observador funciona: se rescata solo lo que ya debería verse en pantalla.
+    var alto = window.innerHeight || document.documentElement.clientHeight;
+    todos.forEach(function(el){
+      if (!el.classList.contains('visible')) {
+        var r = el.getBoundingClientRect();
+        if (r.top < alto && r.bottom > 0) forzarVisible(el);
+      }
+    });
+  }, 1200);
+  // Última red de seguridad: a los 3,5s, todo visible pase lo que pase.
+  setTimeout(function(){
+    var alto = window.innerHeight || document.documentElement.clientHeight;
+    document.querySelectorAll('.rv, .palabra').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (!el.classList.contains('visible') && r.top < alto * 1.3 && r.bottom > -alto * 0.3) forzarVisible(el);
+    });
+  }, 3500);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGB Motorsport — Taller mecánico en Quatre Carreres, València</title>
+<meta name="description" content="AGB Motorsport, taller mecánico de confianza en Quatre Carreres (València). Mecánica general y reparaciones complejas de motor. 4,8★ en Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#111418;
+    --negro-2:#1a1e24;
+    --claro:#F5F6F7;
+    --rojo:#E10600;
+    --rojo-osc:#b30500;
+    --gris:#8b929c;
+    --blanco:#ffffff;
+    --radio:18px;
+    --sombra:0 12px 40px rgba(17,20,24,.12);
+    --trans:all .35s cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--claro);
+    color:var(--negro);
+    line-height:1.65;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.stat-num{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em}
+
+  /* ====== BARRA DE PROGRESO DE SCROLL ====== */
+  #barra-scroll{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--rojo),#ff5a3c);z-index:1000;transition:width .1s linear}
+
+  /* ====== BADGE DEMO ====== */
+  .demo-badge{
+    position:fixed;bottom:18px;left:18px;z-index:999;
+    background:rgba(17,20,24,.92);color:#fff;
+    font-size:.72rem;font-weight:700;letter-spacing:.18em;
+    padding:8px 16px;border-radius:999px;
+    border:1px solid var(--rojo);
+    backdrop-filter:blur(6px);
+    pointer-events:none;text-transform:uppercase;
+  }
+  .demo-badge span{color:var(--rojo)}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 22px;
+    background:rgba(17,20,24,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.35rem;color:#fff;text-decoration:none;text-transform:uppercase;letter-spacing:.04em}
+  .logo em{font-style:normal;color:var(--rojo)}
+  .nav-cta{
+    background:var(--rojo);color:#fff;text-decoration:none;
+    font-weight:700;font-size:.85rem;
+    padding:10px 18px;border-radius:999px;
+    transition:var(--trans);white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--rojo-osc);transform:translateY(-2px)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;align-items:center;
+    background:
+      radial-gradient(1100px 520px at 80% -10%, rgba(225,6,0,.28), transparent 60%),
+      linear-gradient(160deg,#0c0e11 0%, var(--negro) 45%, #16191e 100%);
+    color:#fff;overflow:hidden;
+    padding:120px 22px 80px;
+  }
+  .hero::before{ /* textura sutil tipo asfalto */
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.025) 0 1px,transparent 1px 9px);
+    pointer-events:none;
+  }
+  .hero-franja{ /* franja diagonal racing */
+    position:absolute;top:-15%;right:-22%;width:60%;height:150%;
+    background:linear-gradient(180deg,rgba(225,6,0,.16),rgba(225,6,0,.03));
+    transform:skewX(-14deg);
+    border-left:2px solid rgba(225,6,0,.45);
+    will-change:transform;
+  }
+  .hero-inner{position:relative;max-width:1080px;margin:0 auto;width:100%}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    color:#d6d9dd;margin-bottom:22px;
+  }
+  .hero-tag::before{content:"";width:34px;height:2px;background:var(--rojo)}
+  .hero h1{
+    font-size:clamp(3rem,11vw,6.2rem);
+    font-weight:800;line-height:.95;margin-bottom:18px;
+  }
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.6em);animation:palabra .7s cubic-bezier(.22,.61,.36,1) forwards}
+  .hero h1 .roja{color:var(--rojo)}
+  @keyframes palabra{to{opacity:1;transform:translateY(0)}}
+  .hero p.sub{
+    max-width:560px;color:#c3c8ce;font-size:clamp(1rem,2.6vw,1.2rem);
+    margin-bottom:36px;
+  }
+  .hero-botones{display:flex;flex-wrap:wrap;gap:14px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    text-decoration:none;font-weight:700;font-size:1rem;
+    padding:16px 28px;border-radius:999px;transition:var(--trans);
+  }
+  .btn-rojo{background:var(--rojo);color:#fff;box-shadow:0 10px 30px rgba(225,6,0,.35)}
+  .btn-rojo:hover{background:var(--rojo-osc);transform:translateY(-3px) scale(1.02)}
+  .btn-borde{border:1.5px solid rgba(255,255,255,.35);color:#fff}
+  .btn-borde:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-3px)}
+  .hero-nota{margin-top:26px;font-size:.85rem;color:#9aa0a8}
+  .hero-nota strong{color:#fff}
+
+  /* ====== STATS ====== */
+  .stats{background:var(--negro);color:#fff;padding:0 22px}
+  .stats-inner{
+    max-width:1080px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:8px;
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:46px 0 54px;
+  }
+  .stat{text-align:center}
+  .stat-num{font-size:clamp(3rem,9vw,4.6rem);font-weight:800;color:#fff;line-height:1}
+  .stat-num em{font-style:normal;color:var(--rojo);font-size:.5em;vertical-align:super}
+  .stat-label{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);margin-top:8px}
+
+  /* ====== SECCIONES GENERALES ====== */
+  section{padding:90px 22px}
+  .contenedor{max-width:1080px;margin:0 auto}
+  .kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    color:var(--rojo);font-weight:700;font-size:.8rem;
+    letter-spacing:.24em;text-transform:uppercase;margin-bottom:14px;
+  }
+  .kicker::before{content:"";width:26px;height:2px;background:var(--rojo)}
+  h2{font-size:clamp(2.2rem,7vw,3.6rem);font-weight:800;line-height:1.02;margin-bottom:22px}
+
+  /* ====== SOBRE NOSOTROS ====== */
+  .sobre .contenedor{display:grid;gap:44px;align-items:center}
+  .sobre p{color:#3d434b;font-size:1.05rem;margin-bottom:16px;max-width:60ch}
+  .sobre p strong{color:var(--negro)}
+  .sobre-panel{
+    background:var(--negro);color:#fff;border-radius:var(--radio);
+    padding:38px 32px;box-shadow:var(--sombra);
+    position:relative;overflow:hidden;
+  }
+  .sobre-panel::after{content:"";position:absolute;top:-30%;right:-18%;width:55%;height:160%;background:linear-gradient(180deg,rgba(225,6,0,.25),transparent);transform:skewX(-16deg)}
+  .sobre-panel h3{font-size:1.7rem;margin-bottom:12px;position:relative;z-index:1}
+  .sobre-panel h3 span{color:var(--rojo)}
+  .sobre-panel p{color:#c3c8ce;position:relative;z-index:1;font-size:.98rem}
+
+  /* ====== SERVICIOS ====== */
+  .servicios{background:#fff}
+  .grid-serv{display:grid;grid-template-columns:1fr;gap:18px;margin-top:44px}
+  .card{
+    background:var(--claro);border-radius:var(--radio);
+    padding:32px 28px;border:1px solid #e6e8ea;
+    transition:var(--trans);position:relative;overflow:hidden;
+  }
+  .card::before{
+    content:"";position:absolute;top:0;left:0;width:100%;height:4px;
+    background:linear-gradient(90deg,var(--rojo),transparent 70%);
+    transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.22,.61,.36,1);
+  }
+  .card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:var(--sombra);border-color:#d8dadd}
+  .card:hover::before{transform:scaleX(1)}
+  .card-num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:var(--rojo);letter-spacing:.14em;margin-bottom:14px}
+  .card h3{font-size:1.5rem;margin-bottom:10px}
+  .card p{color:#4a5058;font-size:.96rem}
+
+  /* ====== RESEÑAS ====== */
+  .resenas{background:var(--negro);color:#fff}
+  .resenas .kicker{color:#ff453f}
+  .resenas h2{color:#fff}
+  .resenas .intro{color:#b9bec5;max-width:56ch;margin-bottom:44px}
+  .grid-res{display:grid;grid-template-columns:1fr;gap:18px}
+  .res-card{
+    background:var(--negro-2);border:1px solid rgba(255,255,255,.08);
+    border-radius:var(--radio);padding:30px 26px;
+    transition:var(--trans);
+  }
+  .res-card:hover{transform:translateY(-6px);border-color:rgba(225,6,0,.5)}
+  .estrellas{color:#FFB400;font-size:1.05rem;letter-spacing:.15em;margin-bottom:14px}
+  .res-card blockquote{font-size:1.02rem;color:#e8eaec;margin-bottom:18px;font-style:italic}
+  .res-autor{font-size:.85rem;font-weight:600;color:var(--gris);text-transform:uppercase;letter-spacing:.12em}
+  .res-fuente{text-align:center;margin-top:34px;font-size:.85rem;color:var(--gris)}
+  .res-fuente strong{color:#fff}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:#fff}
+  .grid-cont{display:grid;grid-template-columns:1fr;gap:18px;margin-top:44px}
+  .cont-card{
+    background:var(--claro);border:1px solid #e6e8ea;border-radius:var(--radio);
+    padding:30px 26px;transition:var(--trans);
+  }
+  .cont-card:hover{transform:translateY(-5px);box-shadow:var(--sombra)}
+  .cont-card h3{font-size:1.35rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .cont-card h3::before{content:"";width:10px;height:10px;background:var(--rojo);border-radius:2px;transform:rotate(45deg)}
+  .cont-card p,.cont-card a{color:#3d434b;font-size:1rem;text-decoration:none;word-break:break-word}
+  .cont-card a:hover{color:var(--rojo)}
+  .cont-card a.destacado{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:700;color:var(--negro)}
+  .cont-card a.destacado:hover{color:var(--rojo)}
+  .cta-final{
+    margin-top:44px;background:var(--negro);color:#fff;
+    border-radius:var(--radio);padding:44px 30px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .cta-final::before{content:"";position:absolute;top:-40%;left:-10%;width:45%;height:180%;background:linear-gradient(180deg,rgba(225,6,0,.22),transparent);transform:skewX(-16deg)}
+  .cta-final h3{font-size:clamp(1.8rem,6vw,2.6rem);margin-bottom:12px;position:relative}
+  .cta-final p{color:#c3c8ce;margin-bottom:26px;position:relative}
+  .cta-final .btn{position:relative}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:#0c0e11;color:#9aa0a8;
+    padding:44px 22px;text-align:center;font-size:.9rem;
+  }
+  footer .logo{display:inline-block;margin-bottom:14px;font-size:1.5rem}
+  footer .aviso-demo{
+    margin:18px auto 0;max-width:520px;
+    background:rgba(225,6,0,.1);border:1px solid rgba(225,6,0,.4);
+    border-radius:12px;padding:14px 18px;color:#e8eaec;font-size:.85rem;
+  }
+  footer .aviso-demo a{color:#ff6b64;text-decoration:none;font-weight:600}
+
+  /* ====== ANIMACIONES DE ENTRADA (con red de seguridad) ====== */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+  /* ====== RESPONSIVE ====== */
+  @media(min-width:760px){
+    .stats-inner{grid-template-columns:repeat(4,1fr)}
+    .grid-serv{grid-template-columns:repeat(2,1fr)}
+    .grid-res{grid-template-columns:repeat(3,1fr)}
+    .grid-cont{grid-template-columns:repeat(3,1fr)}
+    .sobre .contenedor{grid-template-columns:1.2fr .8fr}
+    nav{padding:18px 40px}
+    section{padding:110px 22px}
+  }
+
+  /* ====== MOVIMIENTO REDUCIDO ====== */
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    html{scroll-behavior:auto}
+    .reveal,.hero h1 .palabra{opacity:1!important;transform:none!important}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+    .reveal,.hero h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+    #barra-scroll{display:none}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="demo-badge" aria-hidden="true"><span>●</span>&nbsp;DEMO — vista previa</div>
+
+<nav>
+  <a class="logo" href="#inicio">AGB <em>Motorsport</em></a>
+  <a class="nav-cta" href="tel:+34659907559">Llamar ahora</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-franja" id="franja"></div>
+  <div class="hero-inner">
+    <p class="hero-tag">Taller mecánico · Quatre Carreres · València</p>
+    <h1 aria-label="Tu coche, en manos de verdad">
+      <span class="palabra" style="animation-delay:.1s">Tu</span>
+      <span class="palabra" style="animation-delay:.22s">coche,</span><br>
+      <span class="palabra" style="animation-delay:.38s">en</span>
+      <span class="palabra roja" style="animation-delay:.52s">manos</span>
+      <span class="palabra" style="animation-delay:.66s">de</span>
+      <span class="palabra roja" style="animation-delay:.8s">verdad</span>
+    </h1>
+    <p class="sub">Mecánica honesta en el barrio de Quatre Carreres: te explicamos todo lo que vamos a hacer, sin sorpresas en la factura. Desde la revisión de siempre hasta las reparaciones de motor más complejas.</p>
+    <div class="hero-botones">
+      <a class="btn btn-rojo" href="tel:+34659907559">📞 659 90 75 59</a>
+      <a class="btn btn-borde" href="#contacto">Pedir cita</a>
+    </div>
+    <p class="hero-nota">★ <strong>4,8 sobre 5</strong> en Google · más de 60 reseñas de clientes reales</p>
+  </div>
+</header>
+
+<section class="stats" aria-label="Cifras del taller">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-num"><span class="contador" data-target="4.8" data-decimal="1">0.0</span><em>★</em></div>
+      <div class="stat-label">Valoración en Google</div>
+    </div>
+    <div class="stat reveal d1">
+      <div class="stat-num"><span class="contador" data-target="61">0</span><em>+</em></div>
+      <div class="stat-label">Reseñas de clientes</div>
+    </div>
+    <div class="stat reveal d2">
+      <div class="stat-num">100<em>%</em></div>
+      <div class="stat-label">Presupuesto explicado</div>
+    </div>
+    <div class="stat reveal d3">
+      <div class="stat-num">Top</div>
+      <div class="stat-label">Talleres de València*</div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <div class="reveal">
+      <p class="kicker">Sobre nosotros</p>
+      <h2>Un taller familiar<br>que se gana tu confianza</h2>
+      <p>AGB Motorsport es un <strong>taller familiar de Quatre Carreres</strong> liderado por <strong>Adrián</strong>, a quien sus clientes describen en Google como <em>"un profesional de primera y de gran calidad humana"</em>.</p>
+      <p>Nuestra forma de trabajar es simple: <strong>te explicamos todo lo que vamos a hacer antes de tocar el coche y no te cobramos de más</strong>. Por eso quien nos prueba, repite — y así lo cuentan más de 60 reseñas.</p>
+      <p>Y cuando la avería es de las serias, también: nos confían <strong>trabajos complejos de motor</strong>, como cambios de cadena de distribución en vehículos de alta gama.</p>
+    </div>
+    <div class="sobre-panel reveal d2">
+      <h3>Claridad <span>ante todo</span></h3>
+      <p>Diagnóstico claro, presupuesto explicado y solo las reparaciones que tu coche necesita. Sin letra pequeña, sin sorpresas al recoger las llaves.</p>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <div class="reveal">
+      <p class="kicker">Servicios</p>
+      <h2>Lo que hacemos<br>por tu coche</h2>
+    </div>
+    <div class="grid-serv">
+      <article class="card reveal">
+        <p class="card-num">01</p>
+        <h3>Mecánica general</h3>
+        <p>Mantenimiento y reparación integral de tu vehículo, con diagnóstico claro y las explicaciones que necesites antes de empezar.</p>
+      </article>
+      <article class="card reveal d1">
+        <p class="card-num">02</p>
+        <h3>Reparaciones complejas de motor</h3>
+        <p>Intervenciones de gran calado, como cambios de cadena de distribución, que nuestros clientes destacan en sus reseñas.</p>
+      </article>
+      <article class="card reveal d2">
+        <p class="card-num">03</p>
+        <h3>Vehículos de alta gama</h3>
+        <p>Experiencia real con vehículos premium: el mismo trato cercano de barrio, con el rigor técnico que exige un coche exigente.</p>
+      </article>
+      <article class="card reveal d3">
+        <p class="card-num">04</p>
+        <h3>Presupuesto sin sorpresas</h3>
+        <p>Antes de reparar, te contamos qué haremos y cuánto costará. Tú decides con toda la información sobre la mesa.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="resenas" id="resenas">
+  <div class="contenedor">
+    <div class="reveal">
+      <p class="kicker">Reseñas</p>
+      <h2>Lo dicen nuestros clientes</h2>
+      <p class="intro">Opiniones reales publicadas en Google por clientes del taller.</p>
+    </div>
+    <div class="grid-res">
+      <article class="res-card reveal">
+        <p class="estrellas" aria-label="5 estrellas">★★★★★</p>
+        <blockquote>"Nunca en mi vida había confiado tanto en un taller. Te explican todo lo que van a hacer y no te cobran de más."</blockquote>
+        <p class="res-autor">Eva García Villalba</p>
+      </article>
+      <article class="res-card reveal d1">
+        <p class="estrellas" aria-label="5 estrellas">★★★★★</p>
+        <blockquote>"Buscaba un taller en el barrio de verdadera confianza y tranquilidad."</blockquote>
+        <p class="res-autor">Daniel Muñoz</p>
+      </article>
+      <article class="res-card reveal d2">
+        <p class="estrellas" aria-label="5 estrellas">★★★★★</p>
+        <blockquote>"Un profesional de primera y de gran calidad humana."</blockquote>
+        <p class="res-autor">Así describen a Adrián en Google</p>
+      </article>
+    </div>
+    <p class="res-fuente reveal">★ <strong>4,8 / 5</strong> con 61 reseñas en Google · *entre los talleres mejor valorados de València según elmejortaller.info</p>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <div class="reveal">
+      <p class="kicker">Contacto</p>
+      <h2>Ven a vernos<br>o llámanos</h2>
+    </div>
+    <div class="grid-cont">
+      <div class="cont-card reveal">
+        <h3>Dónde estamos</h3>
+        <p>C/ de l'Illa Cabrera, 18<br>Quatre Carreres · 46026 València</p>
+        <p style="margin-top:10px"><a href="https://www.google.com/maps/search/?api=1&amp;query=AGB%20motorsport%20C%2F%20de%20l%27Illa%20Cabrera%2018%2046026%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="cont-card reveal d1">
+        <h3>Llámanos</h3>
+        <p><a class="destacado" href="tel:+34659907559">659 90 75 59</a></p>
+        <p style="margin-top:6px">Cuéntanos qué le pasa a tu coche y te decimos cómo lo vemos.</p>
+      </div>
+      <div class="cont-card reveal d2">
+        <h3>Escríbenos</h3>
+        <p><a href="mailto:agb.motorsport21@gmail.com">agb.motorsport21@gmail.com</a></p>
+        <p style="margin-top:6px">Respondemos lo antes posible para darte cita.</p>
+      </div>
+    </div>
+    <div class="cta-final reveal">
+      <h3>¿Tu coche necesita un vistazo?</h3>
+      <p>Llámanos y te atendemos con la misma claridad que cuentan nuestras reseñas.</p>
+      <a class="btn btn-rojo" href="tel:+34659907559">📞 Llamar al 659 90 75 59</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="logo">AGB <em>Motorsport</em></span>
+  <p>C/ de l'Illa Cabrera, 18 · Quatre Carreres · 46026 València · <a href="tel:+34659907559" style="color:#c3c8ce;text-decoration:none">659 90 75 59</a></p>
+  <div class="aviso-demo">
+    <strong>DEMO</strong> creada por <a href="https://elevenprime.es" target="_blank" rel="noopener">Eleven AI</a> — esta web puede ser tuya. Página de muestra no oficial: los datos proceden de fuentes públicas (Google y directorios locales).
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Barra de progreso de scroll ---- */
+  var barra = document.getElementById('barra-scroll');
+  function actualizarBarra(){
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    if (barra) barra.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', actualizarBarra, {passive:true});
+  actualizarBarra();
+
+  /* ---- Parallax suave en la franja del hero ---- */
+  var franja = document.getElementById('franja');
+  if (franja && !reduceMotion){
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight * 1.2){
+        franja.style.transform = 'skewX(-14deg) translateY(' + (y * 0.18) + 'px)';
+      }
+    }, {passive:true});
+  }
+
+  /* ---- Contadores animados ---- */
+  function animarContador(el){
+    var target = parseFloat(el.getAttribute('data-target'));
+    var decimales = parseInt(el.getAttribute('data-decimal') || '0', 10);
+    if (reduceMotion){ el.textContent = target.toFixed(decimales).replace('.',','); return; }
+    var dur = 1400, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(decimales).replace('.',',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  /* ---- Entradas escalonadas con IntersectionObserver ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('.contador').forEach(function(c){
+            if (!c.dataset.hecho){ c.dataset.hecho = '1'; animarContador(c); }
+          });
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -30px 0px'});
+    reveals.forEach(function(el){ obs.observe(el); });
+  } else {
+    /* Sin IO o con movimiento reducido: todo visible y contadores en su valor final */
+    reveals.forEach(function(el){ el.classList.add('visible'); });
+    document.querySelectorAll('.contador').forEach(function(c){
+      var d = parseInt(c.getAttribute('data-decimal') || '0', 10);
+      c.textContent = parseFloat(c.getAttribute('data-target')).toFixed(d).replace('.',',');
+    });
+  }
+
+  /* ---- SCRIPT DE RESCATE anti-página-vacía (lección 03/08/2026) ----
+     A los 1,2 s, cualquier cosa que siga oculta se fuerza visible,
+     pase lo que pase con IntersectionObserver o las animaciones. */
+  setTimeout(function rescate(){
+    document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+      if (getComputedStyle(el).opacity === '0'){
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    document.querySelectorAll('.contador').forEach(function(c){
+      if (!c.dataset.hecho){
+        c.dataset.hecho = '1';
+        var d = parseInt(c.getAttribute('data-decimal') || '0', 10);
+        c.textContent = parseFloat(c.getAttribute('data-target')).toFixed(d).replace('.',',');
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

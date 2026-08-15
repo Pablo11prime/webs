@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Tecniauto BCN — Taller mecánico en el Eixample, Barcelona | Ràpid i ben fet</title>
+<meta name="description" content="Tecniauto BCN: servicio integral del automóvil en Carrer de la Indústria 185, Barcelona. Especialistas en filtros de partículas, revisiones exprés y recogida a domicilio gratuita.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primario:#0F3D5C;
+    --primario-oscuro:#0A2C43;
+    --primario-claro:#155078;
+    --secundario:#ECEFF1;
+    --acento:#F39C12;
+    --acento-oscuro:#D9880B;
+    --tinta:#122530;
+    --tinta-suave:#4A606E;
+    --blanco:#FFFFFF;
+    --radio:18px;
+    --sombra:0 10px 30px rgba(15,61,92,.12);
+    --sombra-hover:0 18px 44px rgba(15,61,92,.20);
+    --transicion:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--tinta);
+    background:var(--secundario);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Sora',sans-serif;line-height:1.15}
+
+  /* ====== GARANTÍA DE VISIBILIDAD (lección 03/08/2026) ====== */
+  .rev{opacity:0;transform:translateY(26px);transition:opacity .7s var(--transicion),transform .7s var(--transicion)}
+  .rev.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .rev{opacity:1 !important;transform:none !important;transition:none !important}
+    *{animation:none !important;transition:none !important}
+    html{scroll-behavior:auto}
+  }
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--acento),#FFC14D);z-index:1200;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .demo-badge{
+    position:fixed;bottom:18px;right:18px;z-index:1100;
+    background:rgba(15,61,92,.92);color:#fff;
+    font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.14em;
+    padding:.55em 1.1em;border-radius:999px;border:1px solid rgba(243,156,18,.7);
+    box-shadow:0 6px 18px rgba(0,0,0,.25);pointer-events:none;
+  }
+  .demo-badge span{color:var(--acento)}
+
+  .contenedor{width:min(1120px,92%);margin:0 auto}
+
+  /* ====== HEADER ====== */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(10,44,67,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0}
+  .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.15rem;color:#fff;text-decoration:none;letter-spacing:.02em}
+  .logo em{font-style:normal;color:var(--acento)}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:.45em;
+    background:var(--acento);color:#20303B;text-decoration:none;
+    font-weight:600;font-size:.9rem;padding:.55em 1.1em;border-radius:999px;
+    transition:transform .25s var(--transicion),box-shadow .25s var(--transicion),background .25s;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(243,156,18,.4);background:#FFB033}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;display:flex;align-items:center;
+    background:linear-gradient(160deg,var(--primario-oscuro) 0%,var(--primario) 55%,var(--primario-claro) 100%);
+    background-size:180% 180%;
+    animation:degradado 14s ease infinite alternate;
+    color:#fff;overflow:hidden;padding:7.5rem 0 5rem;
+  }
+  @keyframes degradado{from{background-position:0% 0%}to{background-position:100% 100%}}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 45% at 85% 15%,rgba(243,156,18,.16),transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 90%,rgba(255,255,255,.06),transparent 65%);
+    pointer-events:none;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;opacity:.10;
+    background-image:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,255,255,.5) 46px 48px);
+    will-change:transform;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:720px}
+  .hero-etiqueta{
+    display:inline-flex;align-items:center;gap:.5em;
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);
+    border-radius:999px;padding:.45em 1.05em;font-size:.85rem;font-weight:500;margin-bottom:1.4rem;
+  }
+  .hero-etiqueta b{color:var(--acento);font-weight:700}
+  .hero h1{font-size:clamp(2.5rem,7.5vw,4.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem}
+  .hero h1 .acento{color:var(--acento)}
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em);animation:palabra .7s var(--transicion) forwards}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero p.sub{font-size:clamp(1.05rem,2.4vw,1.3rem);color:rgba(255,255,255,.82);max-width:34em;margin-bottom:2.2rem}
+  .hero-botones{display:flex;flex-wrap:wrap;gap:.9rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55em;text-decoration:none;
+    font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;
+    padding:.95em 1.7em;border-radius:999px;
+    transition:transform .3s var(--transicion),box-shadow .3s var(--transicion),background .3s;
+  }
+  .btn svg{flex:none}
+  .btn-acento{background:var(--acento);color:#20303B;box-shadow:0 10px 26px rgba(243,156,18,.35)}
+  .btn-acento:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 34px rgba(243,156,18,.5);background:#FFB033}
+  .btn-borde{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+  .btn-borde:hover{transform:translateY(-3px);background:rgba(255,255,255,.16);border-color:#fff}
+  .hero-stats{display:flex;flex-wrap:wrap;gap:2.2rem;margin-top:3rem}
+  .stat .num{font-family:'Sora',sans-serif;font-size:1.9rem;font-weight:800;color:var(--acento)}
+  .stat .lbl{font-size:.85rem;color:rgba(255,255,255,.72);max-width:11em}
+
+  /* ====== SECCIONES ====== */
+  section{padding:5.5rem 0}
+  .kicker{
+    display:inline-block;font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--acento-oscuro);margin-bottom:.8rem;
+  }
+  .titulo{font-size:clamp(1.8rem,4.5vw,2.7rem);font-weight:800;letter-spacing:-.015em;color:var(--primario);margin-bottom:1rem}
+  .intro{color:var(--tinta-suave);max-width:38em;font-size:1.05rem}
+
+  /* Sobre nosotros */
+  .sobre{background:var(--blanco)}
+  .sobre-grid{display:grid;gap:2.5rem;align-items:center}
+  @media(min-width:840px){.sobre-grid{grid-template-columns:1.1fr .9fr}}
+  .sobre-card{
+    background:linear-gradient(160deg,var(--primario),var(--primario-claro));
+    color:#fff;border-radius:var(--radio);padding:2.2rem;box-shadow:var(--sombra);
+  }
+  .sobre-card h3{font-size:1.15rem;color:var(--acento);margin-bottom:.6rem}
+  .sobre-card p{color:rgba(255,255,255,.88);font-size:.98rem}
+  .sobre-card .firma{margin-top:1.2rem;font-weight:600;font-size:.9rem;color:#fff}
+  .sobre-lista{list-style:none;margin-top:1.6rem;display:grid;gap:.85rem}
+  .sobre-lista li{display:flex;gap:.7em;align-items:flex-start;color:var(--tinta)}
+  .sobre-lista .tick{
+    flex:none;width:1.5em;height:1.5em;border-radius:50%;margin-top:.1em;
+    background:rgba(243,156,18,.16);color:var(--acento-oscuro);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;
+  }
+
+  /* Servicios */
+  .servicios-grid{display:grid;gap:1.4rem;margin-top:2.8rem}
+  @media(min-width:640px){.servicios-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:980px){.servicios-grid{grid-template-columns:repeat(3,1fr)}}
+  .tarjeta{
+    background:var(--blanco);border-radius:var(--radio);padding:2rem 1.7rem;
+    box-shadow:var(--sombra);border:1px solid rgba(15,61,92,.06);
+    transition:transform .35s var(--transicion),box-shadow .35s var(--transicion);
+    will-change:transform;
+  }
+  .tarjeta:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:var(--sombra-hover)}
+  .tarjeta .icono{
+    width:3.2rem;height:3.2rem;border-radius:14px;margin-bottom:1.2rem;
+    background:linear-gradient(140deg,var(--primario),var(--primario-claro));
+    color:var(--acento);display:flex;align-items:center;justify-content:center;
+  }
+  .tarjeta h3{font-size:1.12rem;color:var(--primario);margin-bottom:.5rem}
+  .tarjeta p{font-size:.93rem;color:var(--tinta-suave)}
+  .tarjeta .sello{
+    display:inline-block;margin-top:.9rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+    color:var(--acento-oscuro);background:rgba(243,156,18,.14);border-radius:999px;padding:.3em .9em;
+  }
+
+  /* Reseñas */
+  .resenas{background:var(--primario-oscuro);color:#fff}
+  .resenas .titulo{color:#fff}
+  .resenas .intro{color:rgba(255,255,255,.75)}
+  .resenas-grid{display:grid;gap:1.4rem;margin-top:2.8rem}
+  @media(min-width:840px){.resenas-grid{grid-template-columns:repeat(3,1fr)}}
+  .resena{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+    border-radius:var(--radio);padding:1.8rem;display:flex;flex-direction:column;gap:.9rem;
+    transition:transform .35s var(--transicion),background .35s;
+  }
+  .resena:hover{transform:translateY(-6px);background:rgba(255,255,255,.10)}
+  .estrellas{color:var(--acento);font-size:1.05rem;letter-spacing:.15em}
+  .resena p{font-size:.95rem;color:rgba(255,255,255,.88);flex:1}
+  .resena .autor{font-weight:600;font-size:.9rem;color:#fff}
+  .resena .fuente{font-size:.78rem;color:rgba(255,255,255,.55)}
+  .resenas-nota{margin-top:2rem;text-align:center;font-size:.92rem;color:rgba(255,255,255,.65)}
+  .resenas-nota b{color:var(--acento)}
+
+  /* Contacto */
+  .contacto{background:var(--blanco)}
+  .contacto-grid{display:grid;gap:2rem;margin-top:2.6rem}
+  @media(min-width:840px){.contacto-grid{grid-template-columns:1fr 1fr}}
+  .dato{
+    display:flex;gap:1rem;align-items:flex-start;background:var(--secundario);
+    border-radius:var(--radio);padding:1.4rem 1.5rem;
+    transition:transform .3s var(--transicion),box-shadow .3s var(--transicion);
+  }
+  .dato:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+  .dato .icono{
+    flex:none;width:2.7rem;height:2.7rem;border-radius:12px;
+    background:var(--primario);color:var(--acento);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .dato h3{font-size:1rem;color:var(--primario);margin-bottom:.15rem}
+  .dato p,.dato a{font-size:.95rem;color:var(--tinta-suave);text-decoration:none;word-break:break-word}
+  .dato a:hover{color:var(--acento-oscuro)}
+  .datos-col{display:grid;gap:1.1rem;align-content:start}
+  .mapa-card{
+    border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);
+    background:linear-gradient(160deg,var(--primario),var(--primario-claro));
+    color:#fff;display:flex;flex-direction:column;justify-content:center;
+    padding:2.4rem;min-height:320px;position:relative;
+  }
+  .mapa-card::after{
+    content:"";position:absolute;inset:0;opacity:.12;pointer-events:none;
+    background-image:radial-gradient(circle at 30% 30%,#fff 2px,transparent 2.5px),radial-gradient(circle at 70% 60%,#fff 2px,transparent 2.5px),radial-gradient(circle at 45% 80%,#fff 2px,transparent 2.5px);
+    background-size:120px 120px;
+  }
+  .mapa-card h3{font-size:1.4rem;margin-bottom:.6rem;position:relative;z-index:1}
+  .mapa-card p{color:rgba(255,255,255,.82);margin-bottom:1.6rem;position:relative;z-index:1}
+  .mapa-card .btn{position:relative;z-index:1;align-self:flex-start}
+
+  /* CTA final */
+  .cta-final{
+    background:linear-gradient(140deg,var(--acento),#FFB84D);
+    text-align:center;color:#20303B;
+  }
+  .cta-final .titulo{color:#20303B}
+  .cta-final .intro{color:rgba(32,48,59,.8);margin:0 auto 2rem}
+  .cta-final .btn-oscuro{background:var(--primario);color:#fff;box-shadow:0 12px 28px rgba(15,61,92,.35)}
+  .cta-final .btn-oscuro:hover{transform:translateY(-3px) scale(1.02);background:var(--primario-oscuro)}
+
+  /* Pie */
+  footer{background:var(--primario-oscuro);color:rgba(255,255,255,.75);padding:2.6rem 0;text-align:center;font-size:.9rem}
+  footer .marca{font-family:'Sora',sans-serif;font-weight:700;color:#fff;font-size:1.05rem;margin-bottom:.4rem}
+  footer .marca em{font-style:normal;color:var(--acento)}
+  footer .aviso-demo{
+    margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.12);
+    font-size:.85rem;color:rgba(255,255,255,.6);
+  }
+  footer .aviso-demo a{color:var(--acento);text-decoration:none;font-weight:600}
+  footer .aviso-demo a:hover{text-decoration:underline}
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+    .rev,.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="demo-badge" aria-label="Página de demostración"><span>●</span>&nbsp;DEMO</div>
+
+<header>
+  <nav class="nav contenedor" aria-label="Principal">
+    <a class="logo" href="#inicio">TECNIAUTO <em>BCN</em></a>
+    <a class="nav-cta" href="tel:+34934368696">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+      934 36 86 96
+    </a>
+  </nav>
+</header>
+
+<main id="inicio">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-label="Presentación">
+    <div class="hero-fondo" id="hero-parallax" aria-hidden="true"></div>
+    <div class="contenedor">
+      <div class="hero-inner">
+        <span class="hero-etiqueta rev">⭐ <b>4,9 en Google</b> · Taller mecánico en el Eixample</span>
+        <h1 id="hero-titulo">Ràpid i <span class="acento">ben fet</span></h1>
+        <p class="sub rev">Servicio integral del automóvil en el corazón de Barcelona. Especialistas en filtros de partículas, revisiones exprés y recogida gratuita de tu vehículo a domicilio.</p>
+        <div class="hero-botones rev">
+          <a class="btn btn-acento" href="tel:+34934368696">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+            Llamar al taller
+          </a>
+          <a class="btn btn-borde" href="https://wa.me/34647684749" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-5.8-5.1c-.7-1.1-1.1-2.3-1.2-2.7 0-.5.1-1.4.7-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.2.2-.3.4-.1.7.1.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.4.1.1.1.6-.1 1.1z"/></svg>
+            Pedir cita por WhatsApp
+          </a>
+        </div>
+        <div class="hero-stats rev">
+          <div class="stat"><div class="num"><span class="contador" data-fin="4.9" data-decimales="1">0</span>★</div><div class="lbl">valoración media en Google</div></div>
+          <div class="stat"><div class="num">Gratis</div><div class="lbl">recogida y entrega a domicilio</div></div>
+          <div class="stat"><div class="num">Exprés</div><div class="lbl">revisiones con café incluido</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOBRE NOSOTROS ================= -->
+  <section class="sobre" id="sobre" aria-label="Sobre nosotros">
+    <div class="contenedor sobre-grid">
+      <div>
+        <span class="kicker rev">Sobre nosotros</span>
+        <h2 class="titulo rev">Un taller transparente, de los que ya no abundan</h2>
+        <p class="intro rev">En Tecniauto BCN cuidamos tu coche como si fuera nuestro. Nuestros clientes nos describen como un taller <strong>transparente</strong>, que informa en todo momento y explica con claridad y detalle técnico qué le ocurre a cada vehículo, sin especular con nadie.</p>
+        <ul class="sobre-lista">
+          <li class="rev"><span class="tick">✓</span><span>Servicio integral del automóvil en pleno Eixample</span></li>
+          <li class="rev"><span class="tick">✓</span><span>Especialistas en filtros de partículas</span></li>
+          <li class="rev"><span class="tick">✓</span><span>Recogemos y entregamos tu vehículo a domicilio, gratis</span></li>
+          <li class="rev"><span class="tick">✓</span><span>Revisiones exprés: te invitamos a un café mientras la hacemos</span></li>
+        </ul>
+      </div>
+      <div class="sobre-card rev">
+        <h3>Trabajo bien hecho, sin sorpresas</h3>
+        <p>Trabajamos con cita previa para dedicarle a cada coche el tiempo que necesita. Antes de tocar nada, te explicamos el diagnóstico y el presupuesto; tú decides.</p>
+        <p class="firma">Francisco Pulido · Jefe de taller</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICIOS ================= -->
+  <section id="servicios" aria-label="Servicios">
+    <div class="contenedor">
+      <span class="kicker rev">Servicios</span>
+      <h2 class="titulo rev">Todo lo que tu coche necesita, en un solo taller</h2>
+      <p class="intro rev">Servicio integral del automóvil: de la revisión rutinaria a la reparación más compleja.</p>
+      <div class="servicios-grid">
+        <article class="tarjeta rev">
+          <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-13h-2v6l5.2 3.1 1-1.7-4.2-2.5z"/></svg></div>
+          <h3>Filtros de partículas</h3>
+          <p>Nuestra gran especialidad: diagnóstico y solución de problemas del filtro de partículas para que tu coche recupere todo su rendimiento.</p>
+          <span class="sello">Especialistas</span>
+        </article>
+        <article class="tarjeta rev">
+          <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.7 19l-9.1-9.1a6.6 6.6 0 0 0-1.6-6.6A6.5 6.5 0 0 0 4.6 1.9l4 4-3 3-4-4a6.5 6.5 0 0 0 1.4 7.4 6.6 6.6 0 0 0 6.6 1.6l9.1 9.1a1 1 0 0 0 1.4 0l2.6-2.6a1 1 0 0 0 0-1.4z"/></svg></div>
+          <h3>Mecánica general</h3>
+          <p>Reparación y mantenimiento completo de tu vehículo: cambios de aceite, frenos, suspensión y diagnosis, con explicación clara de cada intervención.</p>
+        </article>
+        <article class="tarjeta rev">
+          <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+          <h3>Revisiones exprés</h3>
+          <p>Revisamos tu coche en el momento y, mientras esperas, te invitamos a un café. Rápido y bien hecho.</p>
+          <span class="sello">Café incluido</span>
+        </article>
+        <article class="tarjeta rev">
+          <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 6.5A2 2 0 0 0 17 5H7a2 2 0 0 0-1.9 1.5L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8zM7 16a1.5 1.5 0 1 1 1.5-1.5A1.5 1.5 0 0 1 7 16zm10 0a1.5 1.5 0 1 1 1.5-1.5A1.5 1.5 0 0 1 17 16zM5.5 11 7 6.5h10L18.5 11z"/></svg></div>
+          <h3>Recogida y entrega a domicilio</h3>
+          <p>¿No te va bien acercarte al taller? Recogemos tu vehículo donde nos digas y te lo devolvemos listo, sin coste añadido.</p>
+          <span class="sello">Gratis</span>
+        </article>
+        <article class="tarjeta rev">
+          <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.6 3.8 10.7 9 12 5.2-1.3 9-6.4 9-12V5zm0 10.99h7c-.5 4.1-3.3 7.8-7 8.9V12H5V6.3l7-3.1z"/></svg></div>
+          <h3>Diagnosis y pre-ITV</h3>
+          <p>Diagnosis electrónica y puesta a punto para que llegues a la ITV con todo en regla y sin sustos.</p>
+        </article>
+        <article class="tarjeta rev">
+          <div class="icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13H5a2 2 0 0 0-2 2v4h2v-2h14v2h2v-4a2 2 0 0 0-2-2zM7.5 8.5 9 4h6l1.5 4.5zM6 10h12l1 3H5z"/></svg></div>
+          <h3>Ruedas y climatización</h3>
+          <p>Neumáticos, suspensión y aire acondicionado a punto para rodar seguro y cómodo todo el año.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESEÑAS ================= -->
+  <section class="resenas" id="resenas" aria-label="Opiniones de clientes">
+    <div class="contenedor">
+      <span class="kicker rev" style="color:var(--acento)">Opiniones reales</span>
+      <h2 class="titulo rev">Lo que dicen nuestros clientes en Google</h2>
+      <p class="intro rev">Reseñas reales publicadas en Google por clientes del taller.</p>
+      <div class="resenas-grid">
+        <article class="resena rev">
+          <div class="estrellas" aria-label="5 de 5 estrellas">★★★★★</div>
+          <p>«Encontré este taller por casualidad en Google Maps, y no podría haber tenido más suerte... un mecánico transparente, que te informa en todo momento... no especula con sus clientes.»</p>
+          <div><div class="autor">Toni Navarro</div><div class="fuente">Reseña de Google</div></div>
+        </article>
+        <article class="resena rev">
+          <div class="estrellas" aria-label="5 de 5 estrellas">★★★★★</div>
+          <p>«Se toma el tiempo de explicar con claridad y detalle técnico qué le ocurre al vehículo... destaca por su trato cercano y profesional... genera mucha confianza.»</p>
+          <div><div class="autor">Sergio</div><div class="fuente">Reseña de Google</div></div>
+        </article>
+        <article class="resena rev">
+          <div class="estrellas" aria-label="5 de 5 estrellas">★★★★★</div>
+          <p>«Javier es, sin duda, mi mecánico de confianza... totalmente transparente... muy confiable y accesible. Y además es muy muy amable.»</p>
+          <div><div class="autor">Eduard</div><div class="fuente">Reseña de Google</div></div>
+        </article>
+      </div>
+      <p class="resenas-nota rev">Valoración media de <b>4,9 sobre 5</b> en Google.</p>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO ================= -->
+  <section class="contacto" id="contacto" aria-label="Contacto">
+    <div class="contenedor">
+      <span class="kicker rev">Contacto</span>
+      <h2 class="titulo rev">Estamos en el Eixample, muy cerca de ti</h2>
+      <p class="intro rev">Llámanos o escríbenos por WhatsApp y reserva tu cita previa. Si lo prefieres, recogemos tu coche donde estés.</p>
+      <div class="contacto-grid">
+        <div class="datos-col">
+          <div class="dato rev">
+            <div class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg></div>
+            <div><h3>Dirección</h3><p>Carrer de la Indústria, 185<br>08025 Barcelona (Eixample)</p></div>
+          </div>
+          <div class="dato rev">
+            <div class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></div>
+            <div><h3>Teléfono</h3><p><a href="tel:+34934368696">934 36 86 96</a></p></div>
+          </div>
+          <div class="dato rev">
+            <div class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-5.8-5.1c-.7-1.1-1.1-2.3-1.2-2.7 0-.5.1-1.4.7-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.2.2-.3.4-.1.7.1.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.4.1.1.1.6-.1 1.1z"/></svg></div>
+            <div><h3>WhatsApp</h3><p><a href="https://wa.me/34647684749" target="_blank" rel="noopener">647 68 47 49</a></p></div>
+          </div>
+          <div class="dato rev">
+            <div class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg></div>
+            <div><h3>Email</h3><p><a href="mailto:tecniauto.bcn@gmail.com">tecniauto.bcn@gmail.com</a></p></div>
+          </div>
+          <div class="dato rev">
+            <div class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg></div>
+            <div><h3>Horario</h3><p>Trabajamos con cita previa: llámanos o escríbenos por WhatsApp y te confirmamos hora al momento.</p></div>
+          </div>
+        </div>
+        <div class="mapa-card rev">
+          <h3>¿Cómo llegar?</h3>
+          <p>Estamos en el Carrer de la Indústria 185, en el Eixample de Barcelona. Abre la ruta en Google Maps y te llevará a la puerta del taller.</p>
+          <a class="btn btn-acento" href="https://www.google.com/maps/search/?api=1&amp;query=TECNIAUTO%20BCN%2C%20Carrer%20de%20la%20Ind%C3%BAstria%20185%2C%2008025%20Barcelona" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg>
+            Ver en Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA FINAL ================= -->
+  <section class="cta-final" aria-label="Pedir cita">
+    <div class="contenedor">
+      <h2 class="titulo rev">Tu coche, en manos de un taller con 4,9★</h2>
+      <p class="intro rev">Pide tu cita previa hoy mismo. Y si no puedes venir, vamos nosotros a por tu coche: recogida y entrega gratuitas.</p>
+      <div class="hero-botones rev" style="justify-content:center">
+        <a class="btn btn-oscuro" href="tel:+34934368696">Llamar: 934 36 86 96</a>
+        <a class="btn btn-oscuro" href="https://wa.me/34647684749" target="_blank" rel="noopener">WhatsApp: 647 68 47 49</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div class="marca">TECNIAUTO <em>BCN</em></div>
+    <p>Carrer de la Indústria, 185 · 08025 Barcelona · <a href="tel:+34934368696" style="color:inherit">934 36 86 96</a></p>
+    <p class="aviso-demo">Demo creada por <a href="https://elevenprime.es" target="_blank" rel="noopener">Eleven AI</a> — esta web puede ser tuya. Página de demostración sin validez comercial.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Título del hero palabra a palabra ---- */
+  var titulo = document.getElementById("hero-titulo");
+  if (titulo && !reduceMotion) {
+    var nodos = Array.prototype.slice.call(titulo.childNodes);
+    titulo.textContent = "";
+    var idx = 0;
+    nodos.forEach(function(n){
+      var esAcento = n.nodeType === 1;
+      var texto = n.textContent;
+      texto.split(/\s+/).forEach(function(pal){
+        if (!pal) return;
+        var s = document.createElement("span");
+        s.className = "palabra" + (esAcento ? " acento" : "");
+        s.textContent = pal;
+        s.style.animationDelay = (0.15 + idx * 0.14) + "s";
+        titulo.appendChild(s);
+        titulo.appendChild(document.createTextNode(" "));
+        idx++;
+      });
+    });
+  }
+
+  /* ---- Revelado en cascada con IntersectionObserver ---- */
+  var revs = Array.prototype.slice.call(document.querySelectorAll(".rev"));
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var el = e.target;
+          var hermanos = revs.filter(function(x){ return x.parentElement === el.parentElement; });
+          var pos = hermanos.indexOf(el);
+          el.style.transitionDelay = (pos > 0 ? Math.min(pos, 6) * 0.09 : 0) + "s";
+          el.classList.add("visible");
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    revs.forEach(function(el){ io.observe(el); });
+  } else {
+    revs.forEach(function(el){ el.classList.add("visible"); });
+  }
+
+  /* ---- SCRIPT DE RESCATE (garantía de visibilidad, lección 03/08/2026):
+         a los 1,2s fuerza visible cualquier elemento que siga oculto ---- */
+  setTimeout(function(){
+    document.querySelectorAll(".rev").forEach(function(el){
+      var st = window.getComputedStyle(el);
+      if (!el.classList.contains("visible") && parseFloat(st.opacity) < 1) {
+        var r = el.getBoundingClientRect();
+        var enPantalla = r.top < (window.innerHeight || 800) && r.bottom > 0;
+        if (enPantalla || !("IntersectionObserver" in window)) el.classList.add("visible");
+      }
+    });
+    document.querySelectorAll(".hero h1 .palabra").forEach(function(el){
+      if (parseFloat(window.getComputedStyle(el).opacity) < 1) {
+        el.style.opacity = "1";
+        el.style.transform = "none";
+        el.style.animation = "none";
+      }
+    });
+  }, 1200);
+  /* Cinturón extra: a los 3s, todo visible pase lo que pase */
+  setTimeout(function(){
+    document.querySelectorAll(".rev").forEach(function(el){ el.classList.add("visible"); });
+  }, 3000);
+
+  /* ---- Contadores animados ---- */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute("data-fin")) || 0;
+    var dec = parseInt(el.getAttribute("data-decimales") || "0", 10);
+    if (reduceMotion) { el.textContent = fin.toFixed(dec).replace(".", ","); return; }
+    var dur = 1400, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suav = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suav).toFixed(dec).replace(".", ",");
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll(".contador");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var ioC = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    contadores.forEach(function(c){ ioC.observe(c); });
+    /* rescate de contadores: si a los 1,5s no han arrancado, valor final directo */
+    setTimeout(function(){
+      contadores.forEach(function(c){
+        if (c.textContent === "0") animarContador(c);
+      });
+    }, 1500);
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* ---- Parallax suave del hero + barra de progreso de scroll ---- */
+  var fondo = document.getElementById("hero-parallax");
+  var barra = document.getElementById("barra-scroll");
+  var ticking = false;
+  function alScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (fondo && !reduceMotion) fondo.style.transform = "translateY(" + (y * 0.25) + "px)";
+      if (barra) {
+        var total = document.documentElement.scrollHeight - window.innerHeight;
+        barra.style.width = (total > 0 ? (y / total) * 100 : 0) + "%";
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener("scroll", alScroll, { passive: true });
+  alScroll();
+})();
+</script>
+</body>
+</html>

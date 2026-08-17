@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jk Hair / Nail Stylist — salón de peluquería en el Eixample de Barcelona. Balayage, color, cortes y tratamientos por Juank Salamanca. Reserva tu cita por WhatsApp.">
+<title>Jk Hair / Nail Stylist · Peluquería en el Eixample, Barcelona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#1F1B18;
+    --oro:#C9A227;
+    --bronce:#8C5A3C;
+    --crema:#F7F3EE;
+    --crema-2:#EFE8DE;
+    --tinta:#2B2622;
+    --suave:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Outfit',system-ui,sans-serif;
+    background:var(--crema);
+    color:var(--tinta);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:400}
+
+  /* ===== Barra de progreso de scroll ===== */
+  #progreso{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--oro),var(--bronce));z-index:1000;transition:width .1s linear}
+
+  /* ===== Marca de agua DEMO ===== */
+  .marca-demo{
+    position:fixed;bottom:16px;left:16px;z-index:999;
+    background:rgba(31,27,24,.82);color:var(--oro);
+    font-size:.72rem;letter-spacing:.28em;font-weight:600;
+    padding:.45em 1.1em;border:1px solid rgba(201,162,39,.5);
+    border-radius:999px;pointer-events:none;backdrop-filter:blur(4px);
+  }
+
+  /* ===== Animaciones de entrada (con garantía de visibilidad) ===== */
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--suave),transform .7s var(--suave)}
+  .rv.visto{opacity:1;transform:none}
+  .hero .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(2deg);transition:opacity .6s var(--suave),transform .6s var(--suave)}
+  .hero .palabra.visto{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .rv,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+    html{scroll-behavior:auto}
+    #glow,#glow2{animation:none !important}
+  }
+
+  /* ===== Header ===== */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.9rem 5vw;
+    background:linear-gradient(rgba(31,27,24,.92),rgba(31,27,24,.75) 70%,transparent);
+    transition:background .3s var(--suave);
+  }
+  .logo{color:var(--crema);text-decoration:none;font-family:'Fraunces',serif;font-size:1.15rem;letter-spacing:.06em}
+  .logo b{color:var(--oro);font-weight:600}
+  header nav{display:none;gap:1.6rem}
+  header nav a{color:rgba(247,243,238,.85);text-decoration:none;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;transition:color .25s}
+  header nav a:hover{color:var(--oro)}
+  .btn-mini{
+    background:var(--oro);color:var(--negro);text-decoration:none;
+    font-size:.8rem;font-weight:600;letter-spacing:.08em;
+    padding:.55em 1.2em;border-radius:999px;transition:transform .25s var(--suave),box-shadow .25s;
+  }
+  .btn-mini:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,162,39,.35)}
+  @media(min-width:760px){header nav{display:flex}}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:7rem 6vw 5rem;
+    background:radial-gradient(120% 90% at 80% 10%,#332b24 0%,var(--negro) 55%);
+    color:var(--crema);overflow:hidden;
+  }
+  #glow{
+    position:absolute;width:60vmax;height:60vmax;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,39,.16),transparent 60%);
+    top:-20vmax;right:-18vmax;pointer-events:none;
+    animation:flotar 9s ease-in-out infinite alternate;
+    will-change:transform;
+  }
+  #glow2{
+    position:absolute;width:44vmax;height:44vmax;border-radius:50%;
+    background:radial-gradient(circle,rgba(140,90,60,.18),transparent 62%);
+    bottom:-16vmax;left:-14vmax;pointer-events:none;
+    animation:flotar 12s ease-in-out infinite alternate-reverse;
+    will-change:transform;
+  }
+  @keyframes flotar{from{transform:translateY(0) scale(1)}to{transform:translateY(4vmax) scale(1.07)}}
+  .hero .sello{
+    display:inline-flex;align-items:center;gap:.55em;
+    font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:1.4rem;
+  }
+  .hero .sello::before{content:"";width:34px;height:1px;background:var(--oro)}
+  .hero h1{
+    font-size:clamp(2.5rem,9vw,5.6rem);
+    line-height:1.04;letter-spacing:-.01em;font-weight:300;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--oro)}
+  .hero .sub{
+    margin-top:1.5rem;max-width:46ch;color:rgba(247,243,238,.78);
+    font-size:clamp(1rem,2.5vw,1.15rem);font-weight:300;
+  }
+  .hero .acciones{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.4rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;
+    text-decoration:none;font-weight:600;font-size:.95rem;letter-spacing:.04em;
+    padding:.95em 1.9em;border-radius:999px;
+    transition:transform .3s var(--suave),box-shadow .3s var(--suave),background .3s;
+  }
+  .btn-oro{background:var(--oro);color:var(--negro)}
+  .btn-oro:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 30px rgba(201,162,39,.4)}
+  .btn-linea{border:1px solid rgba(247,243,238,.4);color:var(--crema)}
+  .btn-linea:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-3px)}
+  .hero .nota-resenas{margin-top:2.6rem;display:flex;align-items:center;gap:.8em;color:rgba(247,243,238,.7);font-size:.9rem}
+  .estrellas{color:var(--oro);letter-spacing:.15em;font-size:1rem}
+
+  /* ===== Secciones genéricas ===== */
+  section{padding:5.5rem 6vw}
+  .etiqueta{
+    font-size:.75rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--bronce);font-weight:600;margin-bottom:.9rem;display:block;
+  }
+  .titulo{font-size:clamp(1.9rem,5.5vw,3rem);line-height:1.12;max-width:20ch;margin-bottom:1.2rem}
+  .titulo em{font-style:italic;color:var(--bronce)}
+
+  /* ===== Sobre ===== */
+  #sobre{background:var(--crema)}
+  #sobre .cuerpo{max-width:62ch;font-size:1.05rem;color:#4b433c;font-weight:300}
+  #sobre .cuerpo p+p{margin-top:1em}
+  #sobre blockquote{
+    margin:2.2rem 0 0;padding:1.4rem 1.6rem;border-left:3px solid var(--oro);
+    background:#fff;border-radius:0 18px 18px 0;box-shadow:0 10px 30px rgba(31,27,24,.06);
+    font-family:'Fraunces',serif;font-size:1.15rem;font-style:italic;color:var(--negro);
+    max-width:38ch;
+  }
+  #sobre blockquote small{display:block;margin-top:.6em;font-family:'Outfit',sans-serif;font-style:normal;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bronce)}
+
+  /* ===== Cifras ===== */
+  #cifras{background:var(--negro);color:var(--crema);text-align:center}
+  #cifras .malla{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:860px;margin:0 auto}
+  #cifras .dato b{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.9rem,6vw,3.4rem);color:var(--oro)}
+  #cifras .dato span{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(247,243,238,.65)}
+
+  /* ===== Servicios ===== */
+  #servicios{background:var(--crema-2)}
+  .tarjetas{display:grid;gap:1.2rem;grid-template-columns:1fr;margin-top:2.5rem}
+  @media(min-width:640px){.tarjetas{grid-template-columns:1fr 1fr}}
+  @media(min-width:1000px){.tarjetas{grid-template-columns:repeat(3,1fr)}}
+  .tarjeta{
+    background:#fff;border-radius:22px;padding:2rem 1.7rem;
+    box-shadow:0 8px 26px rgba(31,27,24,.07);
+    transition:transform .35s var(--suave),box-shadow .35s var(--suave);
+    position:relative;overflow:hidden;
+  }
+  .tarjeta::after{
+    content:"";position:absolute;inset:auto 0 0 0;height:3px;
+    background:linear-gradient(90deg,var(--oro),var(--bronce));
+    transform:scaleX(0);transform-origin:left;transition:transform .4s var(--suave);
+  }
+  .tarjeta:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:0 22px 44px rgba(31,27,24,.13)}
+  .tarjeta:hover::after{transform:scaleX(1)}
+  .tarjeta .icono{
+    width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+    background:linear-gradient(135deg,rgba(201,162,39,.16),rgba(140,90,60,.14));
+    font-size:1.5rem;margin-bottom:1.1rem;
+  }
+  .tarjeta h3{font-size:1.25rem;margin-bottom:.5rem;font-weight:600}
+  .tarjeta p{font-size:.93rem;color:#5b524a;font-weight:300}
+
+  /* ===== Reseñas ===== */
+  #resenas{background:var(--crema)}
+  .opiniones{display:grid;gap:1.2rem;grid-template-columns:1fr;margin-top:2.5rem}
+  @media(min-width:900px){.opiniones{grid-template-columns:repeat(3,1fr)}}
+  .opinion{
+    background:#fff;border-radius:22px;padding:1.9rem 1.7rem;
+    box-shadow:0 8px 26px rgba(31,27,24,.07);
+    display:flex;flex-direction:column;gap:.9rem;
+    transition:transform .35s var(--suave),box-shadow .35s var(--suave);
+  }
+  .opinion:hover{transform:translateY(-6px) scale(1.015);box-shadow:0 20px 40px rgba(31,27,24,.12)}
+  .opinion p{font-family:'Fraunces',serif;font-style:italic;font-size:1.02rem;color:var(--negro)}
+  .opinion .quien{margin-top:auto;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bronce);font-weight:600}
+  .fuente-resenas{margin-top:1.6rem;font-size:.82rem;color:#7a7067}
+
+  /* ===== Contacto ===== */
+  #contacto{background:var(--negro);color:var(--crema)}
+  #contacto .titulo{color:var(--crema)}
+  #contacto .malla-contacto{display:grid;gap:2.5rem;grid-template-columns:1fr;margin-top:2rem}
+  @media(min-width:860px){#contacto .malla-contacto{grid-template-columns:1.1fr .9fr;align-items:start}}
+  .dato-contacto{margin-bottom:1.5rem}
+  .dato-contacto span{display:block;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);margin-bottom:.35rem}
+  .dato-contacto a{color:var(--crema);text-decoration:none;font-size:1.12rem;transition:color .25s}
+  .dato-contacto a:hover{color:var(--oro)}
+  .dato-contacto p{font-size:1.05rem;color:rgba(247,243,238,.88)}
+  .aviso-cita{
+    margin-top:.5rem;padding:1.2rem 1.4rem;border:1px solid rgba(201,162,39,.35);
+    border-radius:16px;font-size:.92rem;color:rgba(247,243,238,.8);max-width:44ch;
+  }
+  .panel-reserva{
+    background:linear-gradient(150deg,rgba(201,162,39,.14),rgba(140,90,60,.1));
+    border:1px solid rgba(201,162,39,.3);border-radius:26px;padding:2.2rem 1.9rem;
+  }
+  .panel-reserva h3{font-size:1.5rem;margin-bottom:.7rem}
+  .panel-reserva p{font-size:.95rem;color:rgba(247,243,238,.78);margin-bottom:1.5rem}
+  .panel-reserva .btn{width:100%;justify-content:center;margin-bottom:.8rem}
+  .btn-ws{background:#1f8f5f;color:#fff}
+  .btn-ws:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(31,143,95,.4)}
+
+  /* ===== Footer ===== */
+  footer{
+    background:#171310;color:rgba(247,243,238,.6);
+    padding:2.4rem 6vw;text-align:center;font-size:.85rem;
+  }
+  footer .marca-agencia{color:var(--oro)}
+  footer a{color:rgba(247,243,238,.75)}
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer render */
+    .rv,.hero .palabra{opacity:1 !important;transform:none !important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<header>
+  <a class="logo" href="#inicio">Jk <b>Hair</b> / Nail Stylist</a>
+  <nav aria-label="Navegación principal">
+    <a href="#sobre">El salón</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#resenas">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a class="btn-mini" href="https://wa.me/message/3W47ONIGLGVJC1" target="_blank" rel="noopener">Reservar</a>
+</header>
+
+<main>
+
+  <section class="hero" id="inicio">
+    <div id="glow" aria-hidden="true"></div>
+    <div id="glow2" aria-hidden="true"></div>
+    <p class="sello rv">Peluquería · Eixample, Barcelona</p>
+    <h1 id="titulo-hero" aria-label="El color que Barcelona recomienda">
+      <span class="palabra">El</span> <span class="palabra">color</span> <span class="palabra">que</span> <span class="palabra"><em>Barcelona</em></span> <span class="palabra">recomienda.</span>
+    </h1>
+    <p class="sub rv">Balayage, coloración y cortes con firma propia, de la mano de <strong>Juank Salamanca</strong>. Un salón de barrio con acabado de gran marca, a un paso del mercado de Sant Antoni.</p>
+    <div class="acciones rv">
+      <a class="btn btn-oro" href="https://wa.me/message/3W47ONIGLGVJC1" target="_blank" rel="noopener">Reservar cita</a>
+      <a class="btn btn-linea" href="tel:+34690033507">Llamar · 690 03 35 07</a>
+    </div>
+    <p class="nota-resenas rv"><span class="estrellas" aria-hidden="true">★★★★★</span> 5,0 en Google · 140 reseñas</p>
+  </section>
+
+  <section id="sobre">
+    <span class="etiqueta rv">El salón</span>
+    <h2 class="titulo rv">Manos expertas, <em>trato de siempre</em></h2>
+    <div class="cuerpo rv">
+      <p>En Jk Hair / Nail Stylist cada cita empieza escuchando: qué quieres, cómo vives tu pelo y hasta dónde quieres llegar con el cambio. Por eso quienes entran una vez, repiten.</p>
+      <p>La especialidad de la casa es el color — balayage, mechas y coloración a medida — junto a cortes de mujer y caballero, tratamientos capilares y peinados, con productos profesionales.</p>
+    </div>
+    <blockquote class="rv">
+      "El mejor colorista que puede tener Barcelona."
+      <small>— Así lo describen sus clientes en Google</small>
+    </blockquote>
+  </section>
+
+  <section id="cifras" aria-label="Cifras del salón">
+    <div class="malla">
+      <div class="dato rv"><b><span class="contador" data-fin="5" data-decimal="1">0</span></b><span>Valoración en Google</span></div>
+      <div class="dato rv"><b><span class="contador" data-fin="140">0</span></b><span>Reseñas de 5 estrellas</span></div>
+      <div class="dato rv"><b>100<small style="font-size:.5em">%</small></b><span>Color a tu medida</span></div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <span class="etiqueta rv">Servicios</span>
+    <h2 class="titulo rv">Lo que hacemos <em>mejor</em></h2>
+    <div class="tarjetas">
+      <article class="tarjeta rv">
+        <div class="icono" aria-hidden="true">🎨</div>
+        <h3>Balayage y mechas</h3>
+        <p>La firma del salón: degradados naturales y luz a medida, pensados para que el color crezca bonito.</p>
+      </article>
+      <article class="tarjeta rv">
+        <div class="icono" aria-hidden="true">✨</div>
+        <h3>Coloración</h3>
+        <p>Tintes y color personalizados para mujer y hombre, del retoque de raíz al cambio completo.</p>
+      </article>
+      <article class="tarjeta rv">
+        <div class="icono" aria-hidden="true">✂️</div>
+        <h3>Corte de mujer</h3>
+        <p>Cortes actuales que respetan tu estilo y tu rutina, con acabado de salón.</p>
+      </article>
+      <article class="tarjeta rv">
+        <div class="icono" aria-hidden="true">💈</div>
+        <h3>Corte caballero y barba</h3>
+        <p>Corte masculino y arreglo de barba con la precisión de una buena barbería.</p>
+      </article>
+      <article class="tarjeta rv">
+        <div class="icono" aria-hidden="true">💧</div>
+        <h3>Tratamientos capilares</h3>
+        <p>Queratina, Olaplex y cuidados profesionales para reparar, hidratar y proteger tu pelo.</p>
+      </article>
+      <article class="tarjeta rv">
+        <div class="icono" aria-hidden="true">💫</div>
+        <h3>Peinados</h3>
+        <p>Lavar y peinar o peinado para ocasión especial: sal del salón lista para todo.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="resenas">
+    <span class="etiqueta rv">Opiniones reales</span>
+    <h2 class="titulo rv">Lo dicen <em>sus clientes</em></h2>
+    <div class="opiniones">
+      <article class="opinion rv">
+        <span class="estrellas" aria-label="5 estrellas">★★★★★</span>
+        <p>"Estoy muy encantada como cada vez. ¡Muchas gracias, Juan Carlos!"</p>
+        <span class="quien">Katharina</span>
+      </article>
+      <article class="opinion rv">
+        <span class="estrellas" aria-label="5 estrellas">★★★★★</span>
+        <p>"La experiencia fue muy buena. Me encantó el trato y con una profesionalidad maravillosa."</p>
+        <span class="quien">Rosa</span>
+      </article>
+      <article class="opinion rv">
+        <span class="estrellas" aria-label="5 estrellas">★★★★★</span>
+        <p>"Muy contento, recomendable 100%."</p>
+        <span class="quien">Diego</span>
+      </article>
+    </div>
+    <p class="fuente-resenas rv">Opiniones verificadas de clientes en Treatwell · 5,0★ también en Google con 140 reseñas.</p>
+  </section>
+
+  <section id="contacto">
+    <span class="etiqueta rv" style="color:var(--oro)">Contacto</span>
+    <h2 class="titulo rv">Ven a <em>vernos</em></h2>
+    <div class="malla-contacto">
+      <div class="rv">
+        <div class="dato-contacto">
+          <span>Dirección</span>
+          <p>Carrer de la Diputació, 87 · Local 2<br>Eixample · 08015 Barcelona</p>
+        </div>
+        <div class="dato-contacto">
+          <span>Teléfono y WhatsApp</span>
+          <a href="tel:+34690033507">690 03 35 07</a>
+        </div>
+        <div class="dato-contacto">
+          <span>Instagram</span>
+          <a href="https://instagram.com/jk_hair.stylist" target="_blank" rel="noopener">@jk_hair.stylist</a>
+        </div>
+        <div class="aviso-cita">Atendemos <strong>con cita previa</strong>: escríbenos por WhatsApp y te confirmamos hueco y precio al momento.</div>
+      </div>
+      <div class="panel-reserva rv">
+        <h3 class="serif">Reserva tu cita</h3>
+        <p>Citas, dudas y sugerencias directamente por WhatsApp, sin esperas.</p>
+        <a class="btn btn-ws" href="https://wa.me/message/3W47ONIGLGVJC1" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+        <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Jk+Hair+Nail+Stylist+Carrer+de+la+Diputaci%C3%B3+87+Barcelona&amp;query_place_id=ChIJy5_7_M-jpBIRoBoJP0UV5qA" target="_blank" rel="noopener">Cómo llegar (Google Maps)</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Jk Hair / Nail Stylist · Carrer de la Diputació, 87, Local 2 · 08015 Barcelona</p>
+  <p style="margin-top:.6rem"><span class="marca-agencia">Demo creada por Eleven AI</span> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Barra de progreso de scroll --- */
+  var barra = document.getElementById('progreso');
+  function progreso(){
+    var alto = document.documentElement.scrollHeight - window.innerHeight;
+    if (barra) barra.style.width = (alto > 0 ? (window.scrollY / alto) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', progreso, {passive:true});
+  progreso();
+
+  /* --- Parallax suave del hero --- */
+  var glow = document.getElementById('glow');
+  if (glow && !reduceMotion) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight) glow.style.transform = 'translateY(' + (y * 0.25) + 'px)';
+    }, {passive:true});
+  }
+
+  /* --- Contadores animados --- */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin'));
+    var dec = parseInt(el.getAttribute('data-decimal') || '0', 10);
+    if (reduceMotion) { el.textContent = fin.toFixed(dec).replace('.', ','); return; }
+    var inicio = null, dur = 1400;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var p = Math.min((t - inicio) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * eased).toFixed(dec).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  /* --- Revelado escalonado con IntersectionObserver --- */
+  var revelables = Array.prototype.slice.call(document.querySelectorAll('.rv, .hero .palabra'));
+  function mostrarTodo(){
+    revelables.forEach(function(el){ el.classList.add('visto'); });
+    document.querySelectorAll('.contador').forEach(function(c){
+      c.textContent = parseFloat(c.getAttribute('data-fin')).toFixed(parseInt(c.getAttribute('data-decimal')||'0',10)).replace('.', ',');
+    });
+  }
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var contadoresHechos = false;
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        var hermanos = Array.prototype.slice.call(el.parentNode ? el.parentNode.children : []);
+        var idx = hermanos.indexOf(el);
+        el.style.transitionDelay = Math.min(idx * 90, 450) + 'ms';
+        el.classList.add('visto');
+        if (!contadoresHechos && el.closest && el.closest('#cifras')) {
+          contadoresHechos = true;
+          document.querySelectorAll('.contador').forEach(animarContador);
+        }
+        io.unobserve(el);
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    revelables.forEach(function(el){ io.observe(el); });
+  } else {
+    mostrarTodo();
+  }
+
+  /* --- Entrada palabra a palabra del hero --- */
+  var palabras = document.querySelectorAll('.hero .palabra');
+  palabras.forEach(function(p, i){
+    setTimeout(function(){ p.classList.add('visto'); }, reduceMotion ? 0 : 150 + i * 130);
+  });
+
+  /* --- SCRIPT DE RESCATE (garantía de visibilidad, lección 03/08/2026) ---
+     A los 1,2 s, cualquier elemento que siga oculto se fuerza visible.
+     Así la demo NUNCA queda en blanco en visores de email o WebViews raros. */
+  setTimeout(function rescate(){
+    revelables.forEach(function(el){
+      var estilo = window.getComputedStyle(el);
+      if (parseFloat(estilo.opacity) < 1 && !el.classList.contains('visto')) {
+        el.classList.add('visto');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

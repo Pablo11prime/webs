@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magic Hands Beauty &amp; Hair Studio — Peluquería y estética en Valencia</title>
+<meta name="description" content="Magic Hands Beauty & Hair Studio, peluquería y estética en Extramurs, Valencia. Especialistas en color, balayage, keratina y extensiones. 4,8★ en Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rosa:#B76E79;
+  --rosa-osc:#9a5560;
+  --crema:#FBF6F2;
+  --dorado:#C9A227;
+  --tinta:#2b2024;
+  --tinta-suave:#6d5d62;
+  --blanco:#ffffff;
+  --sombra:0 18px 45px rgba(43,32,36,.10);
+  --radio:22px;
+  --trans:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Jost',sans-serif;
+  color:var(--tinta);
+  background:var(--crema);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;line-height:1.15}
+
+/* ====== BARRA DE PROGRESO DE SCROLL ====== */
+#progreso{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--rosa),var(--dorado));z-index:1000;transition:width .1s linear}
+
+/* ====== MARCA DE AGUA DEMO ====== */
+.marca-demo{
+  position:fixed;bottom:14px;right:14px;z-index:999;
+  background:rgba(43,32,36,.82);color:#fff;
+  font-size:11px;letter-spacing:.22em;font-weight:600;
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  backdrop-filter:blur(4px);
+}
+
+/* ====== NAV ====== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+  background:rgba(251,246,242,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(183,110,121,.14);
+}
+.logo{font-family:'Fraunces',serif;font-size:1.15rem;letter-spacing:.02em;color:var(--tinta);text-decoration:none}
+.logo em{font-style:normal;color:var(--rosa)}
+.nav-cta{
+  background:var(--tinta);color:#fff;text-decoration:none;
+  font-size:.85rem;font-weight:500;letter-spacing:.05em;
+  padding:10px 20px;border-radius:999px;
+  transition:transform .25s var(--trans),background .25s;
+}
+.nav-cta:hover{background:var(--rosa);transform:translateY(-2px)}
+
+/* ====== HERO ====== */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:120px 24px 70px;position:relative;overflow:hidden;text-align:center;
+}
+.hero-fondo{
+  position:absolute;inset:-20% -10%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(42% 38% at 18% 22%, rgba(183,110,121,.20), transparent 70%),
+    radial-gradient(36% 34% at 84% 16%, rgba(201,162,39,.14), transparent 70%),
+    radial-gradient(50% 44% at 70% 88%, rgba(183,110,121,.13), transparent 70%);
+  animation:flotar 14s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes flotar{from{transform:translateY(-12px) scale(1)}to{transform:translateY(14px) scale(1.04)}}
+.hero-etiqueta{
+  position:relative;z-index:1;
+  display:inline-flex;align-items:center;gap:8px;margin:0 auto 22px;
+  font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rosa-osc);
+  border:1px solid rgba(183,110,121,.35);border-radius:999px;padding:8px 18px;
+  background:rgba(255,255,255,.55);
+}
+.hero h1{
+  position:relative;z-index:1;
+  font-size:clamp(2.6rem,9vw,5.2rem);
+  font-weight:500;letter-spacing:-.01em;margin-bottom:20px;
+}
+.hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(26px);animation:subir .7s var(--trans) forwards}
+.hero h1 .palabra:nth-child(1){animation-delay:.15s}
+.hero h1 .palabra:nth-child(2){animation-delay:.3s}
+.hero h1 .palabra:nth-child(3){animation-delay:.45s}
+.hero h1 .palabra:nth-child(4){animation-delay:.6s}
+.hero h1 em{font-style:italic;color:var(--rosa)}
+@keyframes subir{to{opacity:1;transform:translateY(0)}}
+.hero p{
+  position:relative;z-index:1;max-width:520px;margin:0 auto 34px;
+  font-size:1.08rem;font-weight:300;color:var(--tinta-suave);
+  opacity:0;animation:subir .7s var(--trans) .8s forwards;
+}
+.hero-botones{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;opacity:0;animation:subir .7s var(--trans) 1s forwards}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:15px 30px;border-radius:999px;text-decoration:none;
+  font-weight:500;font-size:.98rem;letter-spacing:.03em;
+  transition:transform .25s var(--trans),box-shadow .25s,background .25s;
+}
+.btn-principal{background:var(--rosa);color:#fff;box-shadow:0 12px 28px rgba(183,110,121,.35)}
+.btn-principal:hover{background:var(--rosa-osc);transform:translateY(-3px);box-shadow:0 16px 34px rgba(183,110,121,.45)}
+.btn-borde{border:1.5px solid var(--tinta);color:var(--tinta)}
+.btn-borde:hover{background:var(--tinta);color:#fff;transform:translateY(-3px)}
+.hero-nota{position:relative;z-index:1;margin-top:26px;font-size:.85rem;color:var(--tinta-suave);opacity:0;animation:subir .7s var(--trans) 1.15s forwards}
+.hero-nota strong{color:var(--dorado);font-weight:600}
+
+/* ====== SECCIONES GENERALES ====== */
+section{padding:84px 24px}
+.contenedor{max-width:1060px;margin:0 auto}
+.encabezado{text-align:center;margin-bottom:52px}
+.kicker{font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rosa);font-weight:600;display:block;margin-bottom:12px}
+.encabezado h2{font-size:clamp(1.9rem,5.5vw,3rem)}
+.encabezado p{max-width:560px;margin:14px auto 0;color:var(--tinta-suave);font-weight:300}
+
+/* revelado en cascada */
+.rev{opacity:0;transform:translateY(30px);transition:opacity .7s var(--trans),transform .7s var(--trans)}
+.rev.visto{opacity:1;transform:none}
+
+/* ====== SOBRE ====== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:36px;align-items:center}
+.sobre-texto p{color:var(--tinta-suave);font-weight:300;margin-bottom:16px;font-size:1.04rem}
+.sobre-texto p strong{color:var(--tinta);font-weight:500}
+.idiomas{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.idiomas span{font-size:.82rem;border:1px solid rgba(183,110,121,.35);color:var(--rosa-osc);border-radius:999px;padding:6px 14px;background:var(--crema)}
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.cifra{background:var(--crema);border-radius:var(--radio);padding:26px 12px;text-align:center;transition:transform .3s var(--trans)}
+.cifra:hover{transform:translateY(-5px)}
+.cifra b{display:block;font-family:'Fraunces',serif;font-size:clamp(1.7rem,6vw,2.5rem);font-weight:600;color:var(--rosa)}
+.cifra small{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave)}
+
+/* ====== SERVICIOS ====== */
+.servicios-grid{display:grid;gap:20px;grid-template-columns:1fr}
+.servicio{
+  background:var(--blanco);border-radius:var(--radio);padding:32px 28px;
+  box-shadow:var(--sombra);position:relative;overflow:hidden;
+  transition:transform .35s var(--trans),box-shadow .35s;
+}
+.servicio::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--rosa),var(--dorado));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--trans);
+}
+.servicio:hover{transform:translateY(-7px) rotate(-.4deg);box-shadow:0 26px 55px rgba(43,32,36,.15)}
+.servicio:hover::before{transform:scaleX(1)}
+.servicio .icono{font-size:1.7rem;margin-bottom:14px;display:inline-block}
+.servicio h3{font-size:1.3rem;margin-bottom:10px}
+.servicio p{color:var(--tinta-suave);font-weight:300;font-size:.96rem}
+.servicio .precio{display:inline-block;margin-top:14px;font-size:.85rem;font-weight:600;color:var(--dorado);letter-spacing:.06em}
+
+/* ====== RESEÑAS ====== */
+.resenas{background:var(--tinta);color:var(--crema)}
+.resenas .kicker{color:var(--dorado)}
+.resenas .encabezado p{color:rgba(251,246,242,.65)}
+.resenas-grid{display:grid;gap:20px;grid-template-columns:1fr}
+.resena{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+  border-radius:var(--radio);padding:30px 26px;
+  transition:transform .35s var(--trans),background .35s;
+}
+.resena:hover{transform:translateY(-6px) scale(1.01);background:rgba(255,255,255,.10)}
+.estrellas{color:var(--dorado);letter-spacing:.2em;margin-bottom:14px;font-size:.95rem}
+.resena blockquote{font-family:'Fraunces',serif;font-size:1.08rem;font-style:italic;margin-bottom:16px;line-height:1.5}
+.resena cite{font-style:normal;font-size:.85rem;color:rgba(251,246,242,.65);letter-spacing:.05em}
+.resenas-pie{text-align:center;margin-top:38px;font-size:.9rem;color:rgba(251,246,242,.7)}
+.resenas-pie a{color:var(--dorado);text-decoration:none;border-bottom:1px solid rgba(201,162,39,.4)}
+
+/* ====== CONTACTO ====== */
+.contacto-grid{display:grid;gap:20px;grid-template-columns:1fr}
+.tarjeta-contacto{
+  background:var(--blanco);border-radius:var(--radio);padding:30px 26px;
+  box-shadow:var(--sombra);text-align:center;
+  transition:transform .3s var(--trans);
+}
+.tarjeta-contacto:hover{transform:translateY(-5px)}
+.tarjeta-contacto .icono{font-size:1.6rem;display:block;margin-bottom:12px}
+.tarjeta-contacto h3{font-size:1.1rem;margin-bottom:8px}
+.tarjeta-contacto p{color:var(--tinta-suave);font-weight:300;font-size:.95rem}
+.tarjeta-contacto a{color:var(--rosa-osc);text-decoration:none;font-weight:500}
+.tarjeta-contacto a:hover{text-decoration:underline}
+.cta-final{
+  margin-top:48px;text-align:center;background:linear-gradient(120deg,var(--rosa),var(--rosa-osc));
+  border-radius:calc(var(--radio) + 6px);padding:52px 26px;color:#fff;
+  position:relative;overflow:hidden;
+}
+.cta-final::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(60% 90% at 80% 10%, rgba(201,162,39,.35), transparent 70%);
+  pointer-events:none;
+}
+.cta-final h2{font-size:clamp(1.7rem,5vw,2.5rem);margin-bottom:12px;position:relative;z-index:1}
+.cta-final p{font-weight:300;margin-bottom:26px;opacity:.9;position:relative;z-index:1}
+.cta-final .btn{background:#fff;color:var(--rosa-osc);position:relative;z-index:1}
+.cta-final .btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.2)}
+
+/* ====== FOOTER ====== */
+footer{background:var(--tinta);color:rgba(251,246,242,.7);padding:44px 24px;text-align:center;font-size:.88rem}
+footer .logo{color:#fff;font-size:1.05rem;display:inline-block;margin-bottom:14px}
+footer p{margin-bottom:8px;font-weight:300}
+footer a{color:var(--dorado);text-decoration:none}
+.aviso-demo{
+  margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+  font-size:.82rem;letter-spacing:.03em;color:rgba(251,246,242,.55);
+}
+
+/* ====== RESPONSIVE ====== */
+@media(min-width:720px){
+  nav{padding:16px 40px}
+  .servicios-grid{grid-template-columns:repeat(2,1fr)}
+  .resenas-grid{grid-template-columns:repeat(3,1fr)}
+  .contacto-grid{grid-template-columns:repeat(3,1fr)}
+  .sobre-grid{grid-template-columns:1.1fr .9fr}
+}
+@media(min-width:1000px){
+  .servicios-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ====== MOVIMIENTO REDUCIDO ====== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  .hero h1 .palabra,.hero p,.hero-botones,.hero-nota{opacity:1 !important;transform:none !important}
+  .rev{opacity:1 !important;transform:none !important}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
+.rev,.hero h1 .palabra,.hero p,.hero-botones,.hero-nota{opacity:1 !important;transform:none !important;animation:none !important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <a class="logo" href="#inicio">Magic <em>Hands</em></a>
+  <a class="nav-cta" href="tel:+34677276960">Pedir cita</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="parallax" aria-hidden="true"></div>
+  <span class="hero-etiqueta">Beauty &amp; Hair Studio · Valencia</span>
+  <h1>
+    <span class="palabra">Tu</span>
+    <span class="palabra">pelo,</span>
+    <span class="palabra"><em>tu</em></span>
+    <span class="palabra"><em>luz.</em></span>
+  </h1>
+  <p>Peluquería y estética en el corazón de Extramurs. Especialistas en color, balayage, keratina y extensiones, a 3 minutos del metro Àngel Guimerà.</p>
+  <div class="hero-botones">
+    <a class="btn btn-principal" href="tel:+34677276960">📞 Llamar ahora</a>
+    <a class="btn btn-borde" href="https://www.instagram.com/magichandsvalencia" target="_blank" rel="noopener">Reservar por Instagram</a>
+  </div>
+  <p class="hero-nota"><strong>★ 4,8</strong> en Google · 176 reseñas de clientas reales</p>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <div class="encabezado rev">
+      <span class="kicker">Sobre nosotras</span>
+      <h2>Cada persona tiene su propia luz</h2>
+    </div>
+    <div class="sobre-grid">
+      <div class="sobre-texto rev">
+        <p>En Magic Hands creemos que <strong>nuestro trabajo es hacer brillar la luz que ya tienes</strong>. Sus clientas destacan una y otra vez lo mismo: profesionalidad, cercanía y resultados que superan lo que pedían.</p>
+        <p>Al frente está <strong>Susana Oliveira Ferreira</strong>, con más de 10 años de experiencia y técnicas de vanguardia en color, tratamientos y estética. Un trato personal, sin prisas y con el resultado exacto que buscas.</p>
+        <div class="idiomas">
+          <span>Español</span><span>Português</span><span>English</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="cifras">
+          <div class="cifra"><b><span class="contador" data-fin="4.8" data-decimal="1">0</span>★</b><small>en Google</small></div>
+          <div class="cifra"><b><span class="contador" data-fin="176">0</span></b><small>reseñas</small></div>
+          <div class="cifra"><b>+<span class="contador" data-fin="10">0</span></b><small>años de oficio</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="contenedor">
+    <div class="encabezado rev">
+      <span class="kicker">Servicios</span>
+      <h2>Peluquería y estética, en un solo lugar</h2>
+      <p>Del color más trabajado al cuidado completo. Pide tu cita y cuéntanos qué necesitas.</p>
+    </div>
+    <div class="servicios-grid">
+      <article class="servicio rev">
+        <span class="icono" aria-hidden="true">🎨</span>
+        <h3>Color, mechas y balayage</h3>
+        <p>Nuestra especialidad. Balayage, babylights y color a medida para un resultado natural y luminoso.</p>
+      </article>
+      <article class="servicio rev">
+        <span class="icono" aria-hidden="true">✂️</span>
+        <h3>Corte y peinado</h3>
+        <p>Cortes personalizados para ella y para él, pensados para tu estilo y tu día a día.</p>
+        <span class="precio">Desde 25 €</span>
+      </article>
+      <article class="servicio rev">
+        <span class="icono" aria-hidden="true">✨</span>
+        <h3>Alisado de keratina</h3>
+        <p>Pelo liso, suave y sin encrespamiento durante meses. Uno de los tratamientos más valorados por las clientas.</p>
+        <span class="precio">Desde 150 €</span>
+      </article>
+      <article class="servicio rev">
+        <span class="icono" aria-hidden="true">💆‍♀️</span>
+        <h3>Tratamientos capilares</h3>
+        <p>Hidratación, reparación y brillo con productos profesionales, adaptados a cada tipo de cabello.</p>
+      </article>
+      <article class="servicio rev">
+        <span class="icono" aria-hidden="true">💁‍♀️</span>
+        <h3>Extensiones</h3>
+        <p>Largo y volumen con un acabado completamente natural y respetuoso con tu cabello.</p>
+      </article>
+      <article class="servicio rev">
+        <span class="icono" aria-hidden="true">💅</span>
+        <h3>Estética y bienestar</h3>
+        <p>Manicura y pedicura semipermanente, micropigmentación, tratamientos faciales y masajes relajantes.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="resenas" id="resenas">
+  <div class="contenedor">
+    <div class="encabezado rev">
+      <span class="kicker">Lo que dicen sus clientas</span>
+      <h2>4,8 de 5 no sale de la nada</h2>
+      <p>Opiniones verificadas de clientas reales.</p>
+    </div>
+    <div class="resenas-grid">
+      <article class="resena rev">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>“Susana es encantadora y muy profesional. Me ha dejado el cabello tal y como lo quería.”</blockquote>
+        <cite>Ginnette · Alisado de keratina</cite>
+      </article>
+      <article class="resena rev">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>“El corte de pelo con Susana fue increíble. No conocía este salón y volveré sin duda.”</blockquote>
+        <cite>Antonio · Corte</cite>
+      </article>
+      <article class="resena rev">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>“El pelo me quedó increíble.”</blockquote>
+        <cite>Alba · Alisado de keratina</cite>
+      </article>
+    </div>
+    <p class="resenas-pie rev">★ 4,8 con 176 reseñas en <a href="https://www.google.com/maps/search/?api=1&amp;query=Peluquer%C3%ADa%20Magic%20Hands%20Valencia&amp;query_place_id=ChIJ5XT6WkZPYA0RKr3mvbggaDo" target="_blank" rel="noopener">Google Maps</a></p>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="contenedor">
+    <div class="encabezado rev">
+      <span class="kicker">Contacto</span>
+      <h2>Ven a conocernos</h2>
+    </div>
+    <div class="contacto-grid">
+      <div class="tarjeta-contacto rev">
+        <span class="icono" aria-hidden="true">📍</span>
+        <h3>Dónde estamos</h3>
+        <p>C. del Palleter, 13, Bajo<br>Extramurs · 46008 València</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Peluquer%C3%ADa%20Magic%20Hands%20Valencia&amp;query_place_id=ChIJ5XT6WkZPYA0RKr3mvbggaDo" target="_blank" rel="noopener">Cómo llegar →</a></p>
+      </div>
+      <div class="tarjeta-contacto rev">
+        <span class="icono" aria-hidden="true">📞</span>
+        <h3>Pide tu cita</h3>
+        <p>Atendemos con cita previa.</p>
+        <p><a href="tel:+34677276960">677 27 69 60</a></p>
+      </div>
+      <div class="tarjeta-contacto rev">
+        <span class="icono" aria-hidden="true">📷</span>
+        <h3>Síguenos</h3>
+        <p>Nuestros trabajos, cada semana.</p>
+        <p><a href="https://www.instagram.com/magichandsvalencia" target="_blank" rel="noopener">@magichandsvalencia</a></p>
+      </div>
+    </div>
+    <div class="cta-final rev">
+      <h2>¿Lista para brillar?</h2>
+      <p>A 3 minutos del metro Àngel Guimerà. Llámanos o escríbenos por Instagram y reserva tu cita.</p>
+      <a class="btn" href="tel:+34677276960">📞 677 27 69 60</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span class="logo">Magic <em>Hands</em></span>
+  <p>C. del Palleter, 13, Bajo · 46008 València · <a href="tel:+34677276960">677 27 69 60</a></p>
+  <p><a href="https://www.instagram.com/magichandsvalencia" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=Peluquer%C3%ADa%20Magic%20Hands%20Valencia&amp;query_place_id=ChIJ5XT6WkZPYA0RKr3mvbggaDo" target="_blank" rel="noopener">Google Maps</a></p>
+  <div class="aviso-demo">
+    <p>DEMO — Demo creada por <strong>Eleven AI</strong> — esta web puede ser tuya.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Revelado en cascada con IntersectionObserver ---- */
+  var revs = Array.prototype.slice.call(document.querySelectorAll('.rev'));
+  if (!reducido && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var el = e.target;
+          var hermanos = Array.prototype.slice.call(el.parentNode.children).filter(function(h){return h.classList && h.classList.contains('rev');});
+          var idx = hermanos.indexOf(el);
+          el.style.transitionDelay = (idx > 0 ? Math.min(idx * 90, 450) : 0) + 'ms';
+          el.classList.add('visto');
+          io.unobserve(el);
+        }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    revs.forEach(function(el){ io.observe(el); });
+  } else {
+    revs.forEach(function(el){ el.classList.add('visto'); });
+  }
+
+  /* ---- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ----
+     Si a los 1,2 s algo sigue oculto (JS a medias, WebView raro, visor de email),
+     se fuerza visible TODO. La página nunca puede quedar en blanco. */
+  setTimeout(function rescate(){
+    document.querySelectorAll('.rev').forEach(function(el){
+      if (!el.classList.contains('visto')) {
+        var cs = window.getComputedStyle(el);
+        var enViewport = el.getBoundingClientRect().top < window.innerHeight * 1.5;
+        if (parseFloat(cs.opacity) < 1 && (enViewport || true)) {
+          el.style.transition = 'opacity .4s ease';
+          el.classList.add('visto');
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+      }
+    });
+    document.querySelectorAll('.hero h1 .palabra, .hero p, .hero-botones, .hero-nota').forEach(function(el){
+      if (parseFloat(window.getComputedStyle(el).opacity) < 1) {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }, 1200);
+
+  /* ---- Barra de progreso de scroll ---- */
+  var barra = document.getElementById('progreso');
+  function progreso(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    if (barra && max > 0) barra.style.width = (h.scrollTop / max * 100) + '%';
+  }
+  window.addEventListener('scroll', progreso, {passive:true});
+  progreso();
+
+  /* ---- Parallax suave del hero ---- */
+  var fondo = document.getElementById('parallax');
+  if (fondo && !reducido) {
+    window.addEventListener('scroll', function(){
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (y < window.innerHeight * 1.2) {
+        fondo.style.transform = 'translateY(' + (y * 0.25) + 'px)';
+      }
+    }, {passive:true});
+  }
+
+  /* ---- Contadores animados ---- */
+  var contadores = document.querySelectorAll('.contador');
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin'));
+    var dec = parseInt(el.getAttribute('data-decimal') || '0', 10);
+    if (reducido) { el.textContent = fin.toFixed(dec).replace('.', ','); return; }
+    var dur = 1400, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+      else el.textContent = fin.toFixed(dec).replace('.', ',');
+    }
+    requestAnimationFrame(paso);
+  }
+  if ('IntersectionObserver' in window) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    contadores.forEach(function(el){ ioC.observe(el); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+  /* rescate de contadores: si a los 2,5 s siguen a 0, valor final directo */
+  setTimeout(function(){
+    contadores.forEach(function(el){
+      if (el.textContent === '0') {
+        var dec = parseInt(el.getAttribute('data-decimal') || '0', 10);
+        el.textContent = parseFloat(el.getAttribute('data-fin')).toFixed(dec).replace('.', ',');
+      }
+    });
+  }, 2500);
+})();
+</script>
+</body>
+</html>

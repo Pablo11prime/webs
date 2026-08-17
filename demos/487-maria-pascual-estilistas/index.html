@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>María Pascual Estilistas — Peluquería de autor en Campanar, València</title>
+<meta name="description" content="María Pascual Estilistas, peluquería de autor en Campanar (València). Corte, técnicas de color, brushing, tratamientos y estilismo de novias. 4,9★ en Google con 207 reseñas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#2B2B2B;
+    --crema:#F7EFEA;
+    --cobre:#C89B7B;
+    --cobre-suave:#E3C7B0;
+    --blanco:#FFFDFB;
+    --sombra:0 18px 45px rgba(43,43,43,.10);
+    --curva:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Jost',system-ui,sans-serif;
+    color:var(--tinta);
+    background:var(--crema);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.12}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+
+  /* ---------- Barra de progreso de scroll ---------- */
+  #barra-progreso{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--cobre),var(--cobre-suave));
+    z-index:1000;transition:width .1s linear;
+  }
+
+  /* ---------- Marca de agua DEMO ---------- */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    background:rgba(43,43,43,.82);color:var(--crema);
+    font-size:.68rem;letter-spacing:.28em;font-weight:600;
+    padding:.45rem .9rem .45rem 1.1rem;border-radius:999px;
+    pointer-events:none;backdrop-filter:blur(4px);
+  }
+
+  /* ---------- Navegación ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.9rem 1.2rem;
+    background:rgba(247,239,234,.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(43,43,43,.06);
+  }
+  nav .logo{font-family:'Fraunces',serif;font-size:1.05rem;letter-spacing:.02em}
+  nav .logo em{font-style:italic;color:var(--cobre)}
+  nav .enlaces{display:none;gap:1.6rem;font-size:.86rem;letter-spacing:.08em;text-transform:uppercase}
+  nav .enlaces a{text-decoration:none;opacity:.75;transition:opacity .25s var(--curva)}
+  nav .enlaces a:hover{opacity:1;color:var(--cobre)}
+  nav .btn-nav{
+    font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+    background:var(--tinta);color:var(--crema);padding:.55rem 1.1rem;border-radius:999px;
+    transition:transform .25s var(--curva),background .25s;
+  }
+  nav .btn-nav:hover{transform:translateY(-2px);background:var(--cobre)}
+  @media(min-width:760px){nav{padding:1rem 2.4rem}nav .enlaces{display:flex}}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:7rem 1.4rem 4rem;text-align:center;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:0;z-index:-1;
+    background:
+      radial-gradient(60% 45% at 50% 0%,rgba(200,155,123,.28),transparent 70%),
+      radial-gradient(45% 40% at 85% 85%,rgba(200,155,123,.16),transparent 70%),
+      var(--crema);
+  }
+  .hero-aro{
+    position:absolute;z-index:-1;border-radius:50%;
+    border:1px solid rgba(200,155,123,.4);
+    will-change:transform;
+  }
+  .aro-1{width:64vmin;height:64vmin;top:6%;left:50%;margin-left:-32vmin}
+  .aro-2{width:88vmin;height:88vmin;top:-4%;left:50%;margin-left:-44vmin;border-color:rgba(200,155,123,.22)}
+  .hero .sello{
+    display:inline-block;margin:0 auto 1.4rem;
+    font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--cobre);
+    border:1px solid rgba(200,155,123,.5);border-radius:999px;padding:.5rem 1.2rem;
+    background:rgba(255,253,251,.6);
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,9vw,5.4rem);
+    font-weight:400;letter-spacing:-.01em;margin-bottom:1.1rem;
+  }
+  .hero h1 .palabra{display:inline-block}
+  .hero h1 em{font-style:italic;color:var(--cobre)}
+  .hero .sub{
+    max-width:34rem;margin:0 auto 2.2rem;
+    font-size:clamp(1rem,2.6vw,1.2rem);font-weight:300;opacity:.85;
+  }
+  .hero .acciones{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;
+    text-decoration:none;border-radius:999px;
+    padding:.95rem 1.9rem;font-size:.95rem;letter-spacing:.04em;font-weight:500;
+    transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s;
+  }
+  .btn-principal{background:var(--tinta);color:var(--crema);box-shadow:0 12px 30px rgba(43,43,43,.22)}
+  .btn-principal:hover{transform:translateY(-3px) scale(1.02);background:var(--cobre)}
+  .btn-borde{border:1.5px solid var(--tinta);color:var(--tinta);background:transparent}
+  .btn-borde:hover{transform:translateY(-3px);background:var(--blanco)}
+  .hero .cifras{
+    margin-top:3.2rem;display:flex;justify-content:center;gap:2.2rem;flex-wrap:wrap;
+  }
+  .cifra{min-width:5.5rem}
+  .cifra b{
+    font-family:'Fraunces',serif;font-size:clamp(1.9rem,5vw,2.6rem);font-weight:500;display:block;
+  }
+  .cifra b sup{font-size:.55em;color:var(--cobre)}
+  .cifra span{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;opacity:.65}
+  .flecha-scroll{
+    position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);
+    font-size:1.2rem;opacity:.45;animation:flota 2.4s ease-in-out infinite;
+  }
+  @keyframes flota{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,9px)}}
+
+  /* ---------- Secciones genéricas ---------- */
+  section{padding:5rem 1.4rem}
+  .caja{max-width:68rem;margin:0 auto}
+  .etiqueta{
+    font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cobre);
+    display:block;margin-bottom:.9rem;font-weight:600;
+  }
+  .titulo{font-size:clamp(1.9rem,5.5vw,3.1rem);margin-bottom:1.2rem;letter-spacing:-.01em}
+  .titulo em{font-style:italic;color:var(--cobre)}
+
+  /* ---------- Sobre nosotros ---------- */
+  #sobre{background:var(--blanco)}
+  #sobre .caja{display:grid;gap:2.4rem}
+  #sobre p{font-weight:300;font-size:1.05rem;max-width:38rem}
+  #sobre p+p{margin-top:1rem}
+  .lista-puntos{display:grid;gap:1rem;margin-top:.6rem}
+  .punto{
+    display:flex;gap:.9rem;align-items:flex-start;
+    background:var(--crema);border-radius:18px;padding:1.1rem 1.3rem;
+    transition:transform .3s var(--curva),box-shadow .3s var(--curva);
+  }
+  .punto:hover{transform:translateX(6px);box-shadow:var(--sombra)}
+  .punto .ico{
+    flex:0 0 auto;width:2.4rem;height:2.4rem;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--cobre);color:var(--blanco);font-size:1rem;
+  }
+  .punto b{display:block;font-weight:500}
+  .punto small{opacity:.7}
+  @media(min-width:820px){#sobre .caja{grid-template-columns:1.1fr .9fr;align-items:center}}
+
+  /* ---------- Servicios ---------- */
+  #servicios .rejilla{
+    display:grid;gap:1.2rem;margin-top:2.4rem;
+    grid-template-columns:1fr;
+  }
+  @media(min-width:640px){#servicios .rejilla{grid-template-columns:1fr 1fr}}
+  @media(min-width:980px){#servicios .rejilla{grid-template-columns:1fr 1fr 1fr}}
+  .tarjeta{
+    background:var(--blanco);border-radius:22px;padding:1.8rem 1.6rem;
+    border:1px solid rgba(43,43,43,.05);position:relative;overflow:hidden;
+    transition:transform .35s var(--curva),box-shadow .35s var(--curva);
+  }
+  .tarjeta::after{
+    content:"";position:absolute;inset:auto 0 0 0;height:3px;
+    background:linear-gradient(90deg,var(--cobre),var(--cobre-suave));
+    transform:scaleX(0);transform-origin:left;transition:transform .4s var(--curva);
+  }
+  .tarjeta:hover{transform:translateY(-7px) rotate(-.4deg);box-shadow:var(--sombra)}
+  .tarjeta:hover::after{transform:scaleX(1)}
+  .tarjeta .ico{
+    width:3rem;height:3rem;border-radius:14px;margin-bottom:1.1rem;
+    background:linear-gradient(135deg,var(--crema),var(--cobre-suave));
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  }
+  .tarjeta h3{font-size:1.25rem;margin-bottom:.5rem}
+  .tarjeta p{font-size:.94rem;font-weight:300;opacity:.8;margin-bottom:.9rem}
+  .tarjeta .precio{
+    font-family:'Fraunces',serif;font-size:1.05rem;color:var(--cobre);font-weight:600;
+  }
+  .nota-precios{margin-top:1.6rem;font-size:.82rem;opacity:.6;text-align:center}
+
+  /* ---------- Reseñas ---------- */
+  #resenas{background:var(--tinta);color:var(--crema)}
+  #resenas .etiqueta{color:var(--cobre-suave)}
+  #resenas .titulo em{color:var(--cobre-suave)}
+  #resenas .rejilla{display:grid;gap:1.2rem;margin-top:2.4rem}
+  @media(min-width:820px){#resenas .rejilla{grid-template-columns:repeat(3,1fr)}}
+  .resena{
+    background:rgba(247,239,234,.06);border:1px solid rgba(247,239,234,.12);
+    border-radius:22px;padding:1.7rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;
+    transition:transform .35s var(--curva),background .35s;
+  }
+  .resena:hover{transform:translateY(-6px);background:rgba(247,239,234,.1)}
+  .estrellas{color:var(--cobre-suave);letter-spacing:.2em;font-size:.95rem}
+  .resena blockquote{font-weight:300;font-size:.97rem;font-style:italic;flex:1}
+  .resena cite{font-style:normal;font-size:.82rem;letter-spacing:.06em;opacity:.75}
+  .resena cite b{display:block;font-size:.92rem;letter-spacing:.02em;opacity:1}
+  .sello-google{
+    margin-top:2.4rem;text-align:center;font-size:.85rem;opacity:.75;
+  }
+  .sello-google b{color:var(--cobre-suave)}
+
+  /* ---------- Contacto ---------- */
+  #contacto .caja{display:grid;gap:2rem}
+  @media(min-width:860px){#contacto .caja{grid-template-columns:1fr 1fr;align-items:start}}
+  .bloque-contacto{
+    background:var(--blanco);border-radius:22px;padding:1.7rem 1.5rem;
+    border:1px solid rgba(43,43,43,.05);box-shadow:var(--sombra);
+  }
+  .bloque-contacto h3{font-size:1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+  .bloque-contacto h3 span{color:var(--cobre)}
+  .dato{display:flex;gap:.8rem;align-items:flex-start;padding:.55rem 0;font-weight:300}
+  .dato a{color:var(--tinta);text-decoration:none;border-bottom:1px solid var(--cobre);transition:color .25s}
+  .dato a:hover{color:var(--cobre)}
+  table.horario{width:100%;border-collapse:collapse;font-weight:300;font-size:.96rem}
+  table.horario td{padding:.5rem 0;border-bottom:1px dashed rgba(43,43,43,.12)}
+  table.horario tr:last-child td{border-bottom:none}
+  table.horario td:last-child{text-align:right;font-weight:400}
+  .cerrado{color:var(--cobre);font-weight:500}
+  .acciones-contacto{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.3rem}
+  .redes{display:flex;gap:1rem;margin-top:1.2rem;font-size:.9rem}
+  .redes a{text-decoration:none;border-bottom:1px solid var(--cobre)}
+
+  /* ---------- Pie ---------- */
+  footer{
+    background:var(--tinta);color:var(--crema);
+    padding:2.6rem 1.4rem;text-align:center;font-size:.9rem;font-weight:300;
+  }
+  footer .logo-pie{font-family:'Fraunces',serif;font-size:1.3rem;margin-bottom:.7rem}
+  footer .logo-pie em{color:var(--cobre-suave);font-style:italic}
+  footer .aviso-demo{
+    margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid rgba(247,239,234,.15);
+    font-size:.84rem;opacity:.85;
+  }
+  footer .aviso-demo b{color:var(--cobre-suave)}
+
+  /* ---------- Animaciones de entrada ---------- */
+  .revela{opacity:0;transform:translateY(26px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+  .revela.visto{opacity:1;transform:none}
+  .hero h1 .palabra{opacity:0;transform:translateY(.6em);transition:opacity .6s var(--curva),transform .6s var(--curva)}
+  .hero h1 .palabra.visto{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .revela,.hero h1 .palabra{opacity:1!important;transform:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+    .revela,.hero h1 .palabra{opacity:1!important;transform:none!important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-progreso" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav aria-label="Principal">
+  <div class="logo">María Pascual <em>Estilistas</em></div>
+  <div class="enlaces">
+    <a href="#sobre">El salón</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#resenas">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a class="btn-nav" href="tel:+34622700056">Pedir cita</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-aro aro-1" aria-hidden="true" data-parallax="0.12"></div>
+  <div class="hero-aro aro-2" aria-hidden="true" data-parallax="0.06"></div>
+
+  <span class="sello">Peluquería de autor · Campanar, València</span>
+  <h1 aria-label="María Pascual Estilistas">
+    <span class="palabra">María</span>
+    <span class="palabra">Pascual</span><br>
+    <span class="palabra"><em>Estilistas</em></span>
+  </h1>
+  <p class="sub">Corte, color y estilismo con nombre propio. Desde 2005 en el sector de la imagen personal, y especialistas en peinado y maquillaje de novias e invitadas.</p>
+
+  <div class="acciones">
+    <a class="btn btn-principal" href="tel:+34622700056">📞 Llamar ahora</a>
+    <a class="btn btn-borde" href="#contacto">Pedir cita</a>
+  </div>
+
+  <div class="cifras">
+    <div class="cifra"><b><span class="contador" data-fin="4.9" data-decimales="1">0</span><sup>★</sup></b><span>en Google</span></div>
+    <div class="cifra"><b><span class="contador" data-fin="207">0</span></b><span>reseñas</span></div>
+    <div class="cifra"><b>+<span class="contador" data-fin="20">0</span></b><span>años de oficio</span></div>
+  </div>
+
+  <div class="flecha-scroll" aria-hidden="true">↓</div>
+</header>
+
+<main>
+
+<section id="sobre">
+  <div class="caja">
+    <div class="revela">
+      <span class="etiqueta">El salón</span>
+      <h2 class="titulo">Un salón de barrio con <em>alma de autor</em></h2>
+      <p>María empezó en el mundo de la imagen personal en 2005, formándose y trabajando desde los 16 años en uno de los mejores salones de València. Hoy dirige su propio espacio en el corazón de Campanar, con un equipo al que sus clientas describen, una y otra vez, como lo mejor de la casa.</p>
+      <p>Aquí no hay prisas ni resultados en serie: cada corte y cada color se piensa para ti. Por eso el salón mantiene un 4,9 sobre 5 en Google con más de 200 reseñas.</p>
+    </div>
+    <div class="lista-puntos">
+      <div class="punto revela"><div class="ico">✦</div><div><b>Especialistas en novias e invitadas</b><small>Más de 15 años creando peinados y maquillajes para el día más importante.</small></div></div>
+      <div class="punto revela"><div class="ico">✂</div><div><b>Trato cercano y transparente</b><small>Asesoramiento honesto: te decimos lo que le va bien a tu cabello, sin humo.</small></div></div>
+      <div class="punto revela"><div class="ico">♡</div><div><b>Un equipo que fideliza</b><small>Sus clientas repiten y lo cuentan: «el trabajo y el trato son insuperables».</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="caja">
+    <div class="revela" style="text-align:center;max-width:40rem;margin:0 auto">
+      <span class="etiqueta">Servicios</span>
+      <h2 class="titulo">Lo que hacemos <em>por tu cabello</em></h2>
+      <p style="font-weight:300">Precios claros y publicados. Sin sorpresas al pasar por caja.</p>
+    </div>
+    <div class="rejilla">
+      <article class="tarjeta revela">
+        <div class="ico">✂️</div>
+        <h3>Corte</h3>
+        <p>Especialistas en corte: estudiamos tu rostro y tu estilo antes de tocar la tijera.</p>
+        <div class="precio">9,90 €</div>
+      </article>
+      <article class="tarjeta revela">
+        <div class="ico">💨</div>
+        <h3>Brushing y peinados</h3>
+        <p>Acabados con movimiento y brillo, del liso pulido a las ondas naturales.</p>
+        <div class="precio">de 8,90 a 14,90 €</div>
+      </article>
+      <article class="tarjeta revela">
+        <div class="ico">🎨</div>
+        <h3>Técnicas de color</h3>
+        <p>Coloración, mechas y matices a medida, cuidando la salud de tu melena.</p>
+        <div class="precio">desde 16,90 €</div>
+      </article>
+      <article class="tarjeta revela">
+        <div class="ico">💧</div>
+        <h3>Tratamientos capilares</h3>
+        <p>Cuidados e hidratación para recuperar la fuerza y el brillo de tu cabello.</p>
+        <div class="precio">Consultar en el salón</div>
+      </article>
+      <article class="tarjeta revela">
+        <div class="ico">👰</div>
+        <h3>Novias e invitadas</h3>
+        <p>Peinado y maquillaje para bodas y eventos, con prueba previa y estilismo completo.</p>
+        <div class="precio">Presupuesto a medida</div>
+      </article>
+      <article class="tarjeta revela">
+        <div class="ico">✨</div>
+        <h3>Maquillaje</h3>
+        <p>Maquillaje profesional para eventos, sesiones y ocasiones especiales.</p>
+        <div class="precio">Consultar en el salón</div>
+      </article>
+    </div>
+    <p class="nota-precios revela">Precios publicados por el salón. Para novias, eventos y tratamientos, pide tu presupuesto sin compromiso.</p>
+  </div>
+</section>
+
+<section id="resenas">
+  <div class="caja">
+    <div class="revela" style="text-align:center;max-width:40rem;margin:0 auto">
+      <span class="etiqueta">Opiniones reales</span>
+      <h2 class="titulo">Lo que dicen <em>nuestras clientas</em></h2>
+    </div>
+    <div class="rejilla">
+      <article class="resena revela">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>«Era mi primera vez allí y quería un buen cambio y no podía haber terminado más contenta. Tanto el trabajo como el trato de todo el equipo son insuperables.»</blockquote>
+        <cite><b>Sara R.</b>Reseña de Google</cite>
+      </article>
+      <article class="resena revela">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>«Me ha encantado el resultado, pero es que el equipo es lo mejor: son súper transparentes, me han transmitido mucha profesionalidad.»</blockquote>
+        <cite><b>Rocío</b>Reseña de Google</cite>
+      </article>
+      <article class="resena revela">
+        <div class="estrellas" aria-label="5 estrellas">★★★★★</div>
+        <blockquote>«La recomiendo 100x100. María es un encanto de persona y una gran profesional como peluquera. A mí me da vida cada vez que voy a la peluquería. Gran equipo.»</blockquote>
+        <cite><b>M.</b>Reseña de Google</cite>
+      </article>
+    </div>
+    <p class="sello-google revela"><b>4,9 sobre 5</b> · 207 reseñas en Google</p>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="caja">
+    <div class="bloque-contacto revela">
+      <h3><span>◆</span> Dónde estamos</h3>
+      <div class="dato">📍 <span>C. del Doctor Nicasi Benlloch, 7 · Campanar · 46009 València</span></div>
+      <div class="dato">📞 <span>Móvil: <a href="tel:+34622700056">622 70 00 56</a></span></div>
+      <div class="dato">☎️ <span>Fijo: <a href="tel:+34960150759">960 15 07 59</a></span></div>
+      <div class="acciones-contacto">
+        <a class="btn btn-principal" href="tel:+34622700056">📞 Llamar y pedir cita</a>
+        <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Mar%C3%ADa%20Pascual%20Estilistas%20C.%20del%20Doctor%20Nicasi%20Benlloch%207%20Valencia&amp;query_place_id=ChIJmzbJ2vVFYA0RDG6UWvhf0MA" target="_blank" rel="noopener">🗺️ Cómo llegar (Google Maps)</a>
+      </div>
+      <div class="redes">
+        <a href="https://www.instagram.com/mariapascualestilistas/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/mariapascualestilistas/" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="bloque-contacto revela">
+      <h3><span>◆</span> Horario</h3>
+      <table class="horario">
+        <tr><td>Lunes</td><td>9:30 – 19:00</td></tr>
+        <tr><td>Martes</td><td>9:30 – 16:30</td></tr>
+        <tr><td>Miércoles</td><td>9:30 – 19:00</td></tr>
+        <tr><td>Jueves</td><td>9:30 – 19:00</td></tr>
+        <tr><td>Viernes</td><td>9:30 – 19:00</td></tr>
+        <tr><td>Sábado</td><td>9:00 – 14:30</td></tr>
+        <tr><td>Domingo</td><td class="cerrado">Cerrado</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="logo-pie">María Pascual <em>Estilistas</em></div>
+  <div>C. del Doctor Nicasi Benlloch, 7 · Campanar · 46009 València · <a href="tel:+34622700056" style="color:inherit">622 70 00 56</a></div>
+  <div class="aviso-demo">Demo creada por <b>Eleven AI</b> — esta web puede ser tuya.</div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Barra de progreso de scroll */
+  var barra = document.getElementById('barra-progreso');
+  function progreso(){
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+    if (barra) barra.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', progreso, {passive:true});
+  progreso();
+
+  /* Parallax suave en los aros del hero */
+  if (!reduceMotion) {
+    var aros = document.querySelectorAll('[data-parallax]');
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      aros.forEach(function(el){
+        el.style.transform = 'translateY(' + (y * parseFloat(el.getAttribute('data-parallax'))) + 'px)';
+      });
+    }, {passive:true});
+  }
+
+  /* Texto del hero palabra a palabra */
+  var palabras = document.querySelectorAll('.hero h1 .palabra');
+  palabras.forEach(function(p, i){
+    setTimeout(function(){ p.classList.add('visto'); }, 250 + i * 220);
+  });
+
+  /* Contadores animados */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduceMotion) { el.textContent = fin.toFixed(dec).replace('.', ','); return; }
+    var dur = 1400, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var k = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - k, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.', ',');
+      if (k < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadoresHechos = false;
+  function lanzarContadores(){
+    if (contadoresHechos) return;
+    contadoresHechos = true;
+    document.querySelectorAll('.contador').forEach(animarContador);
+  }
+
+  /* Entradas escalonadas con IntersectionObserver */
+  var revelables = document.querySelectorAll('.revela');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var retrasos = {};
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var seccion = e.target.closest('section') || document.body;
+        var idSec = seccion.id || 'x';
+        retrasos[idSec] = (retrasos[idSec] || 0);
+        var d = retrasos[idSec] * 110;
+        retrasos[idSec]++;
+        setTimeout(function(){ e.target.classList.add('visto'); }, d);
+        io.unobserve(e.target);
+      });
+      /* al agotar la cola de una sección, resetea el contador de retardo */
+      Object.keys(retrasos).forEach(function(k){ retrasos[k] = 0; });
+    }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    revelables.forEach(function(el){ io.observe(el); });
+  } else {
+    revelables.forEach(function(el){ el.classList.add('visto'); });
+  }
+  lanzarContadores();
+
+  /* SCRIPT DE RESCATE (garantía de visibilidad): a los 1,2s, todo lo que siga
+     oculto se fuerza visible. Evita demos en blanco en visores de email/WebViews. */
+  setTimeout(function rescate(){
+    document.querySelectorAll('.revela, .hero h1 .palabra').forEach(function(el){
+      var op = window.getComputedStyle ? getComputedStyle(el).opacity : '1';
+      if (!el.classList.contains('visto') && parseFloat(op) < 1) {
+        el.classList.add('visto');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    lanzarContadores();
+  }, 1200);
+})();
+</script>
+</body>
+</html>

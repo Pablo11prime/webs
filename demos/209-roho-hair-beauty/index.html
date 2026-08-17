@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ROHO Hair &amp; Beauty — Peluquería y belleza en Ruzafa, Valencia. Mejor peluquería de Valencia según la revista Mujer Hoy. Cortes, color, babylights, balayage, alisado orgánico. Reserva tu cita.">
+<title>ROHO Hair &amp; Beauty · Peluquería en Ruzafa, Valencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#1A1A1A;
+    --dorado:#C9A227;
+    --nude:#E8D5C4;
+    --crema:#FAF7F2;
+    --blanco:#FFFFFF;
+    --gris:#5c554d;
+    --sombra:0 18px 45px rgba(26,26,26,.10);
+    --transicion:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Jost',sans-serif;
+    background:var(--crema);
+    color:var(--negro);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces',serif}
+
+  /* ====== barra de progreso de scroll ====== */
+  #progreso{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--dorado),#e6c65a);
+    z-index:1000;transition:width .15s linear;
+  }
+
+  /* ====== marca de agua DEMO (discreta) ====== */
+  .marca-demo{
+    position:fixed;bottom:14px;left:14px;z-index:999;
+    font-size:.68rem;letter-spacing:.28em;font-weight:600;
+    color:rgba(26,26,26,.45);background:rgba(250,247,242,.82);
+    border:1px solid rgba(201,162,39,.5);border-radius:999px;
+    padding:.35em 1em .35em 1.2em;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== cabecera ====== */
+  header.topbar{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.9rem 1.2rem;
+    background:rgba(26,26,26,.55);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(232,213,196,.14);
+  }
+  .logo{
+    color:var(--blanco);font-family:'Fraunces',serif;font-weight:600;
+    font-size:1.05rem;letter-spacing:.14em;text-decoration:none;white-space:nowrap;
+  }
+  .logo span{color:var(--dorado)}
+  .topbar a.cta-mini{
+    font-size:.8rem;font-weight:600;letter-spacing:.08em;text-decoration:none;
+    color:var(--negro);background:var(--dorado);border-radius:999px;
+    padding:.5em 1.15em;transition:transform .25s var(--transicion),box-shadow .25s var(--transicion);
+  }
+  .topbar a.cta-mini:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,162,39,.4)}
+
+  /* ====== hero ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:6.5rem 1.4rem 4.5rem;
+    background:
+      radial-gradient(ellipse 90% 55% at 85% 10%,rgba(201,162,39,.22),transparent 60%),
+      radial-gradient(ellipse 70% 50% at 10% 90%,rgba(232,213,196,.14),transparent 55%),
+      linear-gradient(165deg,#141414 0%,#1A1A1A 55%,#241f14 100%);
+    color:var(--crema);overflow:hidden;
+  }
+  .hero::before{ /* textura sutil animada */
+    content:"";position:absolute;inset:-40%;
+    background:conic-gradient(from 0deg at 50% 50%,transparent 0 84%,rgba(201,162,39,.06) 92%,transparent 100%);
+    animation:girar 40s linear infinite;pointer-events:none;
+  }
+  @keyframes girar{to{transform:rotate(360deg)}}
+  .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
+  .sello{
+    display:inline-flex;align-items:center;gap:.55em;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;
+    color:var(--dorado);border:1px solid rgba(201,162,39,.45);border-radius:999px;
+    padding:.55em 1.25em;margin-bottom:1.6rem;background:rgba(201,162,39,.08);
+  }
+  .sello svg{flex:none}
+  .hero h1{
+    font-size:clamp(2.6rem,9vw,5.4rem);font-weight:600;line-height:1.04;
+    letter-spacing:-.01em;margin-bottom:1.3rem;
+  }
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(2deg);animation:palabra .8s var(--transicion) forwards}
+  .hero h1 .palabra:nth-child(1){animation-delay:.15s}
+  .hero h1 .palabra:nth-child(2){animation-delay:.30s}
+  .hero h1 .palabra:nth-child(3){animation-delay:.45s}
+  .hero h1 .palabra:nth-child(4){animation-delay:.60s}
+  .hero h1 em{font-style:italic;color:var(--dorado)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero p.sub{
+    max-width:34em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.25rem);
+    color:rgba(250,247,242,.82);margin-bottom:2.2rem;
+  }
+  .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;text-decoration:none;
+    font-weight:600;font-size:.95rem;letter-spacing:.05em;border-radius:999px;
+    padding:.95em 2em;transition:transform .3s var(--transicion),box-shadow .3s var(--transicion),background .3s;
+  }
+  .btn-oro{background:linear-gradient(120deg,var(--dorado),#e0be52 55%,var(--dorado));background-size:200% 100%;color:#161309;animation:brillo 5s ease infinite}
+  @keyframes brillo{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+  .btn-oro:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 32px rgba(201,162,39,.45)}
+  .btn-linea{border:1px solid rgba(250,247,242,.45);color:var(--crema)}
+  .btn-linea:hover{transform:translateY(-3px);background:rgba(250,247,242,.08);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .cifras{display:flex;flex-wrap:wrap;gap:2.2rem 3rem}
+  .cifra .num{font-family:'Fraunces',serif;font-size:clamp(1.9rem,5.5vw,2.7rem);font-weight:600;color:var(--dorado);line-height:1.1}
+  .cifra .txt{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,247,242,.65)}
+  .flecha{
+    position:absolute;left:50%;bottom:1.2rem;transform:translateX(-50%);
+    color:rgba(250,247,242,.5);font-size:1.3rem;animation:flotar 2.2s ease-in-out infinite;
+  }
+  @keyframes flotar{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+  /* ====== secciones genéricas ====== */
+  section{padding:4.8rem 1.4rem}
+  .int{max-width:1060px;margin:0 auto}
+  .etiqueta{
+    font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;font-weight:600;
+    color:var(--dorado);margin-bottom:.9rem;display:flex;align-items:center;gap:.8em;
+  }
+  .etiqueta::after{content:"";height:1px;width:3.2em;background:var(--dorado);opacity:.6}
+  h2{font-size:clamp(1.9rem,5.5vw,3rem);font-weight:600;line-height:1.12;letter-spacing:-.01em;margin-bottom:1.2rem}
+  h2 em{font-style:italic;color:var(--dorado)}
+
+  /* ====== animación de entrada (con red de seguridad) ====== */
+  [data-anim]{opacity:0;transform:translateY(28px);transition:opacity .7s var(--transicion),transform .7s var(--transicion)}
+  [data-anim].visible{opacity:1;transform:none}
+
+  /* ====== sobre nosotros ====== */
+  .sobre{background:var(--crema)}
+  .sobre-grid{display:grid;gap:2.4rem}
+  .sobre p{color:var(--gris);font-size:1.05rem;max-width:38em}
+  .sobre p strong{color:var(--negro)}
+  .marcas{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.6rem}
+  .marca{
+    font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    border:1px solid var(--nude);background:var(--blanco);color:var(--gris);
+    border-radius:999px;padding:.5em 1.2em;transition:transform .3s var(--transicion),border-color .3s;
+  }
+  .marca:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--dorado)}
+  .cita-destacada{
+    border-left:3px solid var(--dorado);padding:1.1rem 0 1.1rem 1.4rem;
+    font-family:'Fraunces',serif;font-size:clamp(1.15rem,3vw,1.5rem);font-style:italic;
+    color:var(--negro);background:linear-gradient(90deg,rgba(201,162,39,.07),transparent 70%);
+    border-radius:0 14px 14px 0;
+  }
+  .cita-destacada small{display:block;font-family:'Jost',sans-serif;font-style:normal;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);margin-top:.7em}
+
+  /* ====== servicios ====== */
+  .servicios{background:var(--negro);color:var(--crema)}
+  .servicios .etiqueta{color:var(--dorado)}
+  .servicios p.intro{color:rgba(250,247,242,.7);max-width:36em;margin-bottom:2.6rem}
+  .tarjetas{display:grid;gap:1.1rem;grid-template-columns:1fr}
+  .tarjeta{
+    position:relative;border:1px solid rgba(232,213,196,.16);border-radius:18px;
+    padding:1.7rem 1.5rem 1.5rem;background:linear-gradient(160deg,rgba(250,247,242,.05),rgba(250,247,242,.015));
+    transition:transform .35s var(--transicion),border-color .35s,box-shadow .35s;
+    overflow:hidden;
+  }
+  .tarjeta::after{
+    content:"";position:absolute;inset:0;opacity:0;pointer-events:none;
+    background:radial-gradient(circle at 85% 15%,rgba(201,162,39,.16),transparent 60%);
+    transition:opacity .4s;
+  }
+  .tarjeta:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(201,162,39,.55);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .tarjeta:hover::after{opacity:1}
+  .tarjeta .ico{font-size:1.5rem;margin-bottom:.8rem;display:block}
+  .tarjeta h3{font-size:1.22rem;font-weight:600;margin-bottom:.45rem}
+  .tarjeta p{font-size:.92rem;color:rgba(250,247,242,.68);font-weight:300}
+  .tarjeta .precio{
+    display:inline-block;margin-top:1rem;font-size:.82rem;font-weight:600;letter-spacing:.1em;
+    color:var(--dorado);border:1px solid rgba(201,162,39,.45);border-radius:999px;padding:.35em 1em;
+  }
+  .nota-precios{margin-top:1.6rem;font-size:.8rem;color:rgba(250,247,242,.5)}
+
+  /* ====== reseñas ====== */
+  .resenas{background:linear-gradient(180deg,var(--crema) 0%,#f3ece2 100%)}
+  .estrellas-grandes{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem}
+  .estrellas-grandes .nota{font-family:'Fraunces',serif;font-size:clamp(2.6rem,8vw,4rem);font-weight:700;color:var(--negro)}
+  .estrellas-grandes .detalle{color:var(--gris);font-size:.95rem}
+  .estrellas{color:var(--dorado);letter-spacing:.15em;font-size:1.05rem}
+  .opiniones{display:grid;gap:1.1rem;grid-template-columns:1fr}
+  .opinion{
+    background:var(--blanco);border-radius:18px;padding:1.6rem 1.5rem;
+    box-shadow:var(--sombra);border:1px solid rgba(232,213,196,.6);
+    transition:transform .35s var(--transicion),box-shadow .35s var(--transicion);
+    display:flex;flex-direction:column;gap:.9rem;
+  }
+  .opinion:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 55px rgba(26,26,26,.16)}
+  .opinion blockquote{font-family:'Fraunces',serif;font-style:italic;font-size:1.02rem;line-height:1.55;color:var(--negro)}
+  .opinion .quien{display:flex;align-items:center;gap:.8em;margin-top:auto}
+  .opinion .avatar{
+    width:2.4em;height:2.4em;border-radius:50%;flex:none;
+    background:linear-gradient(135deg,var(--dorado),var(--nude));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:600;color:#161309;font-size:.95rem;
+  }
+  .opinion .quien div p{font-weight:600;font-size:.9rem;line-height:1.3}
+  .opinion .quien div small{font-size:.74rem;color:var(--gris);letter-spacing:.06em}
+
+  /* ====== contacto ====== */
+  .contacto{background:var(--crema)}
+  .contacto-grid{display:grid;gap:2rem;grid-template-columns:1fr}
+  .bloque-dato{
+    background:var(--blanco);border:1px solid rgba(232,213,196,.7);border-radius:18px;
+    padding:1.5rem 1.4rem;box-shadow:var(--sombra);
+    transition:transform .3s var(--transicion);
+  }
+  .bloque-dato:hover{transform:translateY(-4px)}
+  .bloque-dato h3{font-size:1.05rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.55em}
+  .bloque-dato h3 span{color:var(--dorado)}
+  .bloque-dato p, .bloque-dato li{color:var(--gris);font-size:.95rem}
+  .bloque-dato ul{list-style:none}
+  .bloque-dato li{display:flex;justify-content:space-between;gap:1em;padding:.3em 0;border-bottom:1px dashed rgba(232,213,196,.8)}
+  .bloque-dato li:last-child{border-bottom:none}
+  .bloque-dato li strong{color:var(--negro);font-weight:500}
+  .bloque-dato a{color:var(--negro);font-weight:500;text-decoration:none;border-bottom:1px solid var(--dorado);transition:color .25s}
+  .bloque-dato a:hover{color:var(--dorado)}
+  .aviso-cita{
+    margin-top:1.8rem;text-align:center;font-size:.88rem;color:var(--gris);
+    background:rgba(201,162,39,.09);border:1px dashed rgba(201,162,39,.5);
+    border-radius:14px;padding:.9em 1.2em;
+  }
+  .cta-final{
+    margin-top:2.6rem;text-align:center;background:var(--negro);border-radius:22px;
+    padding:2.6rem 1.5rem;color:var(--crema);position:relative;overflow:hidden;
+  }
+  .cta-final::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 20%,rgba(201,162,39,.2),transparent 55%);
+  }
+  .cta-final h3{position:relative;font-size:clamp(1.4rem,4.5vw,2rem);margin-bottom:1.4rem}
+  .cta-final .botones{position:relative;justify-content:center;margin-bottom:0}
+
+  /* ====== pie ====== */
+  footer{
+    background:#111;color:rgba(250,247,242,.65);text-align:center;
+    padding:2.4rem 1.4rem;font-size:.85rem;
+  }
+  footer .logo-pie{font-family:'Fraunces',serif;color:var(--crema);font-size:1.1rem;letter-spacing:.14em;margin-bottom:.6rem}
+  footer .logo-pie span{color:var(--dorado)}
+  footer .aviso-demo{margin-top:1.1rem;font-size:.8rem;color:rgba(250,247,242,.45)}
+  footer .aviso-demo strong{color:var(--dorado);font-weight:600}
+
+  /* ====== escritorio ====== */
+  @media(min-width:720px){
+    section{padding:6.5rem 2rem}
+    .tarjetas{grid-template-columns:repeat(2,1fr)}
+    .opiniones{grid-template-columns:repeat(3,1fr)}
+    .contacto-grid{grid-template-columns:repeat(3,1fr)}
+    .sobre-grid{grid-template-columns:1.2fr 1fr;align-items:center}
+  }
+  @media(min-width:1000px){
+    .tarjetas{grid-template-columns:repeat(3,1fr)}
+  }
+
+  /* ====== accesibilidad: sin animaciones si el usuario lo pide ====== */
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    [data-anim]{opacity:1 !important;transform:none !important}
+    .hero h1 .palabra{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<header class="topbar">
+  <a class="logo" href="#inicio">ROHO <span>·</span> HAIR &amp; BEAUTY</a>
+  <a class="cta-mini" href="https://booksy.com/es-es/104372_roho-hair-beauty_peluqueria_58087_valencia" target="_blank" rel="noopener">Reservar cita</a>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="hero-int" id="heroParallax">
+      <p class="sello">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+        Mejor peluquería de Valencia · Revista Mujer Hoy
+      </p>
+      <h1>
+        <span class="palabra">Tu&nbsp;pelo,</span>
+        <span class="palabra">en</span>
+        <span class="palabra">su&nbsp;mejor</span>
+        <span class="palabra"><em>versión.</em></span>
+      </h1>
+      <p class="sub">Peluquería y belleza en el corazón de Ruzafa. Cortes, color, babylights, balayage y alisado orgánico con asesoramiento exclusivo, solo con cita previa.</p>
+      <div class="botones">
+        <a class="btn btn-oro" href="https://booksy.com/es-es/104372_roho-hair-beauty_peluqueria_58087_valencia" target="_blank" rel="noopener">✦ Reservar cita</a>
+        <a class="btn btn-linea" href="tel:+34689843642">📞 689 84 36 42</a>
+      </div>
+      <div class="cifras">
+        <div class="cifra"><div class="num"><span class="contador" data-target="4.9" data-decimales="1">0</span>★</div><div class="txt">Valoración en Google</div></div>
+        <div class="cifra"><div class="num"><span class="contador" data-target="465">0</span></div><div class="txt">Reseñas de clientes</div></div>
+        <div class="cifra"><div class="num serif">Mujer Hoy</div><div class="txt">Reconocimiento editorial</div></div>
+      </div>
+    </div>
+    <div class="flecha" aria-hidden="true">↓</div>
+  </section>
+
+  <!-- ============ SOBRE NOSOTROS ============ -->
+  <section class="sobre" id="sobre">
+    <div class="int sobre-grid">
+      <div data-anim>
+        <p class="etiqueta">El salón</p>
+        <h2>Belleza con oficio, <em>en Ruzafa</em></h2>
+        <p>En <strong>ROHO Hair &amp; Beauty</strong> un gran equipo de profesionales con gran trayectoria y experiencia te recibe cada día y te asesora de forma exclusiva para que tu pelo logre su mejor versión. Nuestras clientas destacan el resultado de las mechas y el color, y un trato cercano que convierte cada visita en un momento para ti.</p>
+        <p style="margin-top:1rem">Trabajamos con cita previa para dedicarte el tiempo que mereces, con productos de primeras marcas.</p>
+        <div class="marcas" aria-label="Marcas con las que trabajamos">
+          <span class="marca">Kérastase</span>
+          <span class="marca">Shu Uemura</span>
+          <span class="marca">Redken</span>
+        </div>
+      </div>
+      <div data-anim style="transition-delay:.15s">
+        <div class="cita-destacada">
+          “The best highlights I've had done. Everyone was so nice. I loved my hair so much!”
+          <small>Vanessa · Reseña verificada en Booksy</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="servicios" id="servicios">
+    <div class="int">
+      <p class="etiqueta" data-anim>Servicios</p>
+      <h2 data-anim>Lo que hacemos <em>por ti</em></h2>
+      <p class="intro" data-anim>De un corte impecable a una transformación completa de color. Estos son algunos de nuestros servicios más pedidos.</p>
+      <div class="tarjetas">
+        <div class="tarjeta" data-anim>
+          <span class="ico" aria-hidden="true">✂️</span>
+          <h3>Corte mujer</h3>
+          <p>Corte a medida con asesoramiento personalizado, lavado y acabado.</p>
+          <span class="precio">30 €</span>
+        </div>
+        <div class="tarjeta" data-anim style="transition-delay:.08s">
+          <span class="ico" aria-hidden="true">💈</span>
+          <h3>Corte hombre</h3>
+          <p>Cortes de tendencia y clásicos, con acabado cuidado al detalle.</p>
+          <span class="precio">23 €</span>
+        </div>
+        <div class="tarjeta" data-anim style="transition-delay:.16s">
+          <span class="ico" aria-hidden="true">🎨</span>
+          <h3>Color y tinte</h3>
+          <p>Color raíz o tinte completo con productos de primeras marcas.</p>
+          <span class="precio">desde 35 €</span>
+        </div>
+        <div class="tarjeta" data-anim style="transition-delay:.24s">
+          <span class="ico" aria-hidden="true">✨</span>
+          <h3>Babylights &amp; Balayage</h3>
+          <p>Mechas de efecto natural y luminoso, nuestra especialidad más valorada.</p>
+          <span class="precio">Consultar</span>
+        </div>
+        <div class="tarjeta" data-anim style="transition-delay:.32s">
+          <span class="ico" aria-hidden="true">🌿</span>
+          <h3>Alisado orgánico</h3>
+          <p>Melena lisa y saludable con tratamiento de alisado respetuoso con tu pelo.</p>
+          <span class="precio">Consultar</span>
+        </div>
+        <div class="tarjeta" data-anim style="transition-delay:.40s">
+          <span class="ico" aria-hidden="true">💆</span>
+          <h3>Belleza y bienestar</h3>
+          <p>Maquillaje (65 €), depilación de cejas (10 €) y masaje relajante (50 €).</p>
+          <span class="precio">desde 10 €</span>
+        </div>
+      </div>
+      <p class="nota-precios" data-anim>Precios publicados en nuestro perfil de Booksy. Reserva online y elige tu servicio.</p>
+    </div>
+  </section>
+
+  <!-- ============ RESEÑAS ============ -->
+  <section class="resenas" id="resenas">
+    <div class="int">
+      <p class="etiqueta" data-anim>Opiniones reales</p>
+      <h2 data-anim>Nuestras clientas <em>lo cuentan mejor</em></h2>
+      <div class="estrellas-grandes" data-anim>
+        <span class="nota"><span class="contador" data-target="4.9" data-decimales="1">0</span></span>
+        <div>
+          <div class="estrellas" aria-label="4,9 de 5 estrellas">★★★★★</div>
+          <div class="detalle"><span class="contador" data-target="465">0</span> reseñas en Google</div>
+        </div>
+      </div>
+      <div class="opiniones">
+        <article class="opinion" data-anim>
+          <div class="estrellas" aria-hidden="true">★★★★★</div>
+          <blockquote>“Barato no es, lo reconozco. Pero el resultado maravilloso lo vale y es garantía de que vas a obtener exactamente lo que quieres.”</blockquote>
+          <div class="quien"><span class="avatar">G</span><div><p>Geysel</p><small>Reseña verificada · Booksy</small></div></div>
+        </article>
+        <article class="opinion" data-anim style="transition-delay:.12s">
+          <div class="estrellas" aria-hidden="true">★★★★★</div>
+          <blockquote>“Me hice color entero y me encantó, el color perfecto.”</blockquote>
+          <div class="quien"><span class="avatar">J</span><div><p>Jimena</p><small>Reseña verificada · Treatwell</small></div></div>
+        </article>
+        <article class="opinion" data-anim style="transition-delay:.24s">
+          <div class="estrellas" aria-hidden="true">★★★★★</div>
+          <blockquote>“Súper puntual y rápido todo el proceso de lavado, corte y secado.”</blockquote>
+          <div class="quien"><span class="avatar">L</span><div><p>Lian</p><small>Reseña verificada · Treatwell</small></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="contacto" id="contacto">
+    <div class="int">
+      <p class="etiqueta" data-anim>Contacto</p>
+      <h2 data-anim>Ven a <em>conocernos</em></h2>
+      <div class="contacto-grid">
+        <div class="bloque-dato" data-anim>
+          <h3><span>📍</span> Dónde estamos</h3>
+          <p>Calle de Castellón, 22<br>Ensanche · Ruzafa<br>46004 Valencia</p>
+          <p style="margin-top:.9rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=ROHO%20HAIR%20%26%20BEAUTY%20Calle%20de%20Castell%C3%B3n%2022%20Valencia&amp;query_place_id=ChIJpW97C4dPYA0RbkFQcUxVqsM" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+        </div>
+        <div class="bloque-dato" data-anim style="transition-delay:.1s">
+          <h3><span>🕐</span> Horario</h3>
+          <ul>
+            <li><strong>Lunes a viernes</strong> 10:00 – 20:00</li>
+            <li><strong>Sábado</strong> 10:00 – 15:00</li>
+            <li><strong>Domingo</strong> Cerrado</li>
+          </ul>
+        </div>
+        <div class="bloque-dato" data-anim style="transition-delay:.2s">
+          <h3><span>💬</span> Habla con nosotros</h3>
+          <p>Teléfono y WhatsApp:<br><a href="tel:+34689843642">689 84 36 42</a></p>
+          <p style="margin-top:.9rem"><a href="https://wa.me/34689843642" target="_blank" rel="noopener">Escríbenos por WhatsApp →</a></p>
+          <p style="margin-top:.9rem"><a href="https://www.instagram.com/rohohairnbeauty/" target="_blank" rel="noopener">Instagram @rohohairnbeauty →</a></p>
+        </div>
+      </div>
+      <p class="aviso-cita" data-anim>Atendemos <strong>solo con cita previa</strong> para dedicarte toda nuestra atención.</p>
+      <div class="cta-final" data-anim>
+        <h3 class="serif">Tu momento empieza con una cita</h3>
+        <div class="botones">
+          <a class="btn btn-oro" href="https://booksy.com/es-es/104372_roho-hair-beauty_peluqueria_58087_valencia" target="_blank" rel="noopener">✦ Reservar online</a>
+          <a class="btn btn-linea" href="tel:+34689843642">📞 Llamar ahora</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ PIE ============ -->
+<footer>
+  <p class="logo-pie">ROHO <span>·</span> HAIR &amp; BEAUTY</p>
+  <p>Calle de Castellón, 22 · 46004 Valencia · <a href="tel:+34689843642" style="color:inherit">689 84 36 42</a></p>
+  <p class="aviso-demo"><strong>DEMO</strong> creada por <strong>Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- barra de progreso de scroll ---- */
+  var barra = document.getElementById('progreso');
+  function actualizarBarra(){
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    barra.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', actualizarBarra, {passive:true});
+  actualizarBarra();
+
+  /* ---- parallax suave en el hero ---- */
+  var heroInt = document.getElementById('heroParallax');
+  if (heroInt && !reduceMotion) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroInt.style.transform = 'translateY(' + (y * 0.18) + 'px)';
+        heroInt.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.9));
+      }
+    }, {passive:true});
+  }
+
+  /* ---- contadores animados ---- */
+  function animarContador(el){
+    var objetivo = parseFloat(el.getAttribute('data-target'));
+    var decimales = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduceMotion) { el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    var inicio = null, dur = 1600;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var p = Math.min((t - inicio) / dur, 1);
+      var suav = 1 - Math.pow(1 - p, 3);
+      el.textContent = (objetivo * suav).toFixed(decimales).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  /* ---- entradas escalonadas + contadores con IntersectionObserver ---- */
+  var animados = document.querySelectorAll('[data-anim]');
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    animados.forEach(function(el){ io.observe(el); });
+
+    var ioNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioNum.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    contadores.forEach(function(el){ ioNum.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+    contadores.forEach(animarContador);
+  }
+
+  /* ---- SCRIPT DE RESCATE (garantía de visibilidad, lección 03/08/2026) ----
+     Pase lo que pase (JS a medias, WebView raro, visor de email), a los 1,2s
+     cualquier elemento que siga invisible se fuerza a visible. */
+  setTimeout(function rescate(){
+    document.querySelectorAll('[data-anim]:not(.visible)').forEach(function(el){
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+      if (getComputedStyle(el).opacity === '0') {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (el.textContent === '0') {
+        var d = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = parseFloat(el.getAttribute('data-target')).toFixed(d).replace('.', ',');
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

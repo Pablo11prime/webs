@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Automundo — Mecánica, Eléctrica, Diagnóstico y Neumáticos en Valencia</title>
+<meta name="description" content="Talleres Automundo, en Av. Gaspar Aguilar 21 (barrio de Jesús, Valencia). Mecánica general, electricidad, diagnóstico, neumáticos, chapa y pre-ITV. 4,7★ en Google con 132 reseñas.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#1C1C1E;
+  --secundario:#F2F2F2;
+  --acento:#D62828;
+  --blanco:#FFFFFF;
+  --gris:#6E6E73;
+  --radio:18px;
+  --sombra:0 12px 34px rgba(28,28,30,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--secundario);color:var(--primario);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.5px;line-height:1.1}
+img{max-width:100%}
+a{color:inherit}
+
+/* Barra de progreso de scroll */
+#progreso{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--acento),#ff6b6b);z-index:1000;transition:width .15s ease-out}
+
+/* Marca de agua DEMO */
+.demo-marca{position:fixed;top:14px;right:-40px;transform:rotate(38deg);background:var(--acento);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:3px;padding:6px 48px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,.3);pointer-events:none}
+
+/* Animaciones de entrada (con rescate garantizado) */
+.anim{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+.anim.visible{opacity:1;transform:none}
+.hero .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1)}
+.hero .palabra.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .anim,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+
+/* HERO */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;background:
+  radial-gradient(ellipse at 80% -10%, rgba(214,40,40,.35), transparent 55%),
+  linear-gradient(160deg,#1C1C1E 0%,#2A2A2E 60%,#1C1C1E 100%);
+  color:#fff;padding:96px 22px 70px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(115deg,transparent 0 42px,rgba(255,255,255,.025) 42px 44px);
+  will-change:transform}
+.hero-etiqueta{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:600;margin-bottom:22px;backdrop-filter:blur(4px)}
+.hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 10px #3ddc84}
+.hero h1{font-size:clamp(2.6rem,10vw,4.6rem);font-weight:800;margin-bottom:14px}
+.hero h1 .rojo{color:var(--acento)}
+.hero p.sub{font-size:1.06rem;color:rgba(255,255,255,.78);max-width:34ch;margin-bottom:30px}
+.hero-botones{display:flex;flex-direction:column;gap:12px;max-width:340px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s}
+.btn:active{transform:scale(.97)}
+.btn-rojo{background:var(--acento);color:#fff;box-shadow:0 10px 28px rgba(214,40,40,.42)}
+.btn-rojo:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(214,40,40,.5)}
+.btn-borde{border:2px solid rgba(255,255,255,.35);color:#fff}
+.btn-borde:hover{transform:translateY(-3px);border-color:#fff}
+.hero-nota{margin-top:26px;font-size:.86rem;color:rgba(255,255,255,.55)}
+.hero-nota strong{color:#FFD166}
+
+/* CONTADORES */
+.stats{background:var(--primario);color:#fff;padding:44px 22px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin:0 auto;text-align:center}
+.stat .num{font-family:'Barlow Condensed';font-size:clamp(2rem,8vw,3.4rem);font-weight:800;color:var(--acento)}
+.stat .txt{font-size:.78rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+
+/* SECCIONES GENERALES */
+section{padding:70px 22px}
+.contenedor{max-width:960px;margin:0 auto}
+.sobretitulo{color:var(--acento);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:3px;margin-bottom:10px}
+h2{font-size:clamp(2rem,7.5vw,3.2rem);font-weight:800;margin-bottom:18px}
+
+/* SOBRE NOSOTROS */
+.sobre p{color:#3c3c41;font-size:1.02rem;max-width:60ch;margin-bottom:14px}
+.sobre .destacado{border-left:4px solid var(--acento);padding:14px 18px;background:var(--blanco);border-radius:0 var(--radio) var(--radio) 0;box-shadow:var(--sombra);font-weight:500;margin-top:22px}
+
+/* SERVICIOS */
+.servicios{background:var(--blanco)}
+.serv-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:34px}
+.serv{background:var(--secundario);border-radius:var(--radio);padding:26px 22px;transition:transform .3s cubic-bezier(.22,.61,.36,1),box-shadow .3s;border:1px solid rgba(28,28,30,.06)}
+.serv:hover{transform:translateY(-6px) scale(1.015);box-shadow:var(--sombra)}
+.serv .icono{width:52px;height:52px;border-radius:14px;background:var(--primario);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px}
+.serv h3{font-size:1.35rem;margin-bottom:8px}
+.serv p{color:var(--gris);font-size:.94rem}
+
+/* RESEÑAS */
+.resenas{background:linear-gradient(160deg,#1C1C1E,#2c2c31);color:#fff}
+.resena-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--radio);padding:28px 24px;margin-top:30px;backdrop-filter:blur(4px);transition:transform .3s}
+.resena-card:hover{transform:translateY(-4px)}
+.estrellas{color:#FFD166;font-size:1.15rem;letter-spacing:3px;margin-bottom:12px}
+.resena-card blockquote{font-size:1.08rem;line-height:1.65;font-style:italic;color:rgba(255,255,255,.92)}
+.resena-card .autor{margin-top:14px;font-size:.88rem;color:rgba(255,255,255,.6);font-weight:600}
+.resenas .cta-resenas{display:inline-block;margin-top:28px;color:#FFD166;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,209,102,.4);padding-bottom:2px;transition:opacity .2s}
+.resenas .cta-resenas:hover{opacity:.8}
+.nota-global{margin-top:22px;font-size:.95rem;color:rgba(255,255,255,.7)}
+.nota-global b{color:#FFD166}
+
+/* CONTACTO */
+.contacto{background:var(--blanco)}
+.cont-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:30px}
+.cont-item{background:var(--secundario);border-radius:var(--radio);padding:24px 22px;display:flex;gap:16px;align-items:flex-start;transition:transform .3s}
+.cont-item:hover{transform:translateY(-4px)}
+.cont-item .ic{font-size:1.5rem;background:var(--primario);color:#fff;width:48px;height:48px;min-width:48px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.cont-item h3{font-size:1.15rem;margin-bottom:4px}
+.cont-item p, .cont-item a{color:var(--gris);font-size:.95rem;text-decoration:none}
+.cont-item a:hover{color:var(--acento)}
+.cont-botones{display:flex;flex-direction:column;gap:12px;margin-top:26px;max-width:360px}
+.btn-oscuro{background:var(--primario);color:#fff;box-shadow:0 10px 24px rgba(28,28,30,.25)}
+.btn-oscuro:hover{transform:translateY(-3px)}
+
+/* FOOTER */
+footer{background:var(--primario);color:rgba(255,255,255,.7);padding:44px 22px;text-align:center;font-size:.88rem}
+footer .aviso-demo{display:inline-block;background:rgba(214,40,40,.15);border:1px solid rgba(214,40,40,.5);color:#ff8f8f;padding:12px 20px;border-radius:12px;margin-bottom:18px;font-weight:600}
+footer a{color:#fff}
+
+/* ESCRITORIO */
+@media (min-width:760px){
+  .hero{padding:120px 60px}
+  .hero-botones{flex-direction:row;max-width:none}
+  .serv-grid{grid-template-columns:repeat(3,1fr)}
+  .cont-grid{grid-template-columns:repeat(2,1fr)}
+  .cont-botones{flex-direction:row;max-width:none}
+  section{padding:90px 60px}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
+.anim,.hero .palabra{opacity:1 !important;transform:none !important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="demo-marca">DEMO</div>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="contenedor">
+    <span class="hero-etiqueta anim"><span class="punto"></span> Taller en el barrio de Jesús · València</span>
+    <h1 id="titulo-hero">
+      <span class="palabra">Talleres</span> <span class="palabra rojo">Automundo</span><br>
+      <span class="palabra">Damos</span> <span class="palabra">con</span> <span class="palabra">la</span> <span class="palabra rojo">avería.</span>
+    </h1>
+    <p class="sub anim">Mecánica general, electricidad, diagnóstico, neumáticos, chapa y pre-ITV en Av. de Gaspar Aguilar, 21.</p>
+    <div class="hero-botones anim">
+      <a class="btn btn-rojo" href="tel:+34962067566">📞 Llamar: 962 06 75 66</a>
+      <a class="btn btn-borde" href="tel:+34633303080">📱 Móvil: 633 30 30 80</a>
+    </div>
+    <p class="hero-nota anim"><strong>★ 4,7</strong> en Google · 132 reseñas de clientes reales</p>
+  </div>
+</header>
+
+<!-- CONTADORES -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat anim"><div class="num" data-contar="4.7" data-decimales="1">0</div><div class="txt">Estrellas en Google</div></div>
+    <div class="stat anim"><div class="num" data-contar="132">0</div><div class="txt">Reseñas reales</div></div>
+    <div class="stat anim"><div class="num" data-contar="6">0</div><div class="txt">Especialidades</div></div>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section class="sobre">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Sobre nosotros</p>
+    <h2 class="anim">El taller al que se llega cuando los demás no encuentran el problema</h2>
+    <p class="anim">En Talleres Automundo nos hemos ganado la confianza del barrio de Jesús resolviendo averías que otros talleres no consiguen localizar. Diagnóstico serio, explicación clara y reparación a la primera.</p>
+    <p class="anim">Mecánica general, sistema eléctrico, diagnosis electrónica, neumáticos, chapa y preparación de la ITV: tu coche entra con un problema y sale con una solución.</p>
+    <div class="destacado anim">★ 4,7 sobre 5 con 132 reseñas en Google: la reputación no se compra, se trabaja.</div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="servicios">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Qué hacemos</p>
+    <h2 class="anim">Servicios del taller</h2>
+    <div class="serv-grid">
+      <div class="serv anim"><div class="icono">🔧</div><h3>Mecánica general</h3><p>Mantenimiento y reparación integral de tu vehículo, con diagnóstico previo y presupuesto claro.</p></div>
+      <div class="serv anim"><div class="icono">⚡</div><h3>Electricidad</h3><p>Sistema eléctrico y electrónico del automóvil: baterías, alternadores, sensores y fallos intermitentes.</p></div>
+      <div class="serv anim"><div class="icono">🖥️</div><h3>Diagnóstico</h3><p>Nuestra especialidad: localizar la avería que otros no encuentran, con equipos de diagnosis.</p></div>
+      <div class="serv anim"><div class="icono">🛞</div><h3>Neumáticos</h3><p>Montaje, equilibrado y sustitución de neumáticos para que llegues seguro a donde vayas.</p></div>
+      <div class="serv anim"><div class="icono">🚗</div><h3>Chapa</h3><p>Reparación de carrocería para dejar tu coche como debe estar.</p></div>
+      <div class="serv anim"><div class="icono">✅</div><h3>Pre-ITV</h3><p>Revisamos tu coche antes de la inspección para que pases la ITV a la primera.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section class="resenas">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Opiniones</p>
+    <h2 class="anim">Lo que dicen nuestros clientes</h2>
+    <div class="resena-card anim">
+      <div class="estrellas">★★★★★</div>
+      <blockquote>«Después de visitar varios talleres que no supieron encontrar el problema de mi coche, Edgar sí dio con la avería y la reparó a la primera.»</blockquote>
+      <div class="autor">Sol Ji · Reseña de Google</div>
+    </div>
+    <p class="nota-global anim">Valoración global: <b>★ 4,7 sobre 5</b> con <b>132 reseñas</b> en Google.</p>
+    <a class="cta-resenas anim" href="https://www.google.com/maps/search/?api=1&query=Talleres%20Automundo%20Av.%20de%20Gaspar%20Aguilar%2021%20Valencia&query_place_id=ChIJNcIly_xOYA0R0OVtLNTmycc" target="_blank" rel="noopener">Leer las 132 reseñas en Google Maps →</a>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Contacto</p>
+    <h2 class="anim">Ven a vernos o llámanos</h2>
+    <div class="cont-grid">
+      <div class="cont-item anim">
+        <div class="ic">📍</div>
+        <div><h3>Dirección</h3>
+        <p>Av. de Gaspar Aguilar, 21<br>Barrio de Jesús · 46007 València</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Talleres%20Automundo%20Av.%20de%20Gaspar%20Aguilar%2021%20Valencia&query_place_id=ChIJNcIly_xOYA0R0OVtLNTmycc" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></div>
+      </div>
+      <div class="cont-item anim">
+        <div class="ic">📞</div>
+        <div><h3>Teléfonos</h3>
+        <p><a href="tel:+34962067566">962 06 75 66</a> (fijo)<br><a href="tel:+34633303080">633 30 30 80</a> (móvil)</p></div>
+      </div>
+      <div class="cont-item anim">
+        <div class="ic">✉️</div>
+        <div><h3>Email</h3>
+        <p><a href="mailto:info@automundo.es">info@automundo.es</a></p></div>
+      </div>
+      <div class="cont-item anim">
+        <div class="ic">📸</div>
+        <div><h3>Instagram</h3>
+        <p><a href="https://www.instagram.com/talleresautomundo/" target="_blank" rel="noopener">@talleresautomundo</a></p></div>
+      </div>
+    </div>
+    <div class="cont-botones">
+      <a class="btn btn-rojo anim" href="tel:+34962067566">📞 Llamar ahora</a>
+      <a class="btn btn-oscuro anim" href="https://www.google.com/maps/search/?api=1&query=Talleres%20Automundo%20Av.%20de%20Gaspar%20Aguilar%2021%20Valencia&query_place_id=ChIJNcIly_xOYA0R0OVtLNTmycc" target="_blank" rel="noopener">📍 Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+<!-- PIE -->
+<footer>
+  <div class="aviso-demo">⚠ DEMO creada por Eleven AI — esta web puede ser tuya</div>
+  <p>Demo de página web para <strong>Talleres Automundo</strong> · No es la web oficial del negocio.</p>
+  <p style="margin-top:10px">Creada por <a href="https://elevenprime.es" target="_blank" rel="noopener">Eleven AI</a> · ELEVEN AGENCIA DE MARKETING DIGITAL, S.L.</p>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Barra de progreso de scroll
+  var barra = document.getElementById('progreso');
+  function progreso(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    if (barra && max > 0) barra.style.width = (h.scrollTop / max * 100) + '%';
+  }
+  window.addEventListener('scroll', progreso, {passive:true});
+  progreso();
+
+  // Parallax suave en el hero
+  var hero = document.querySelector('.hero');
+  if (hero && !reduce) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight) hero.style.backgroundPosition = '0 ' + (y * 0.25) + 'px';
+    }, {passive:true});
+  }
+
+  // Título del hero palabra a palabra
+  var palabras = document.querySelectorAll('.hero .palabra');
+  palabras.forEach(function(p, i){
+    setTimeout(function(){ p.classList.add('visible'); }, reduce ? 0 : 120 + i * 110);
+  });
+
+  // Entradas escalonadas con IntersectionObserver
+  var animados = document.querySelectorAll('.anim');
+  if ('IntersectionObserver' in window && !reduce) {
+    var retardos = new WeakMap();
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var padre = e.target.parentElement;
+          var i = retardos.get(padre) || 0;
+          retardos.set(padre, i + 1);
+          setTimeout(function(){ e.target.classList.add('visible'); }, i * 90);
+          io.unobserve(e.target);
+        }
+      });
+      setTimeout(function(){ retardos = new WeakMap(); }, 400);
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    animados.forEach(function(el){ io.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  // Contadores animados
+  function contar(el){
+    var fin = parseFloat(el.getAttribute('data-contar'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduce) { el.textContent = fin.toFixed(dec); return; }
+    var t0 = null, dur = 1400;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec);
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fin.toFixed(dec);
+    }
+    requestAnimationFrame(paso);
+  }
+  var nums = document.querySelectorAll('[data-contar]');
+  if ('IntersectionObserver' in window) {
+    var ioNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { contar(e.target); ioNum.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    nums.forEach(function(el){ ioNum.observe(el); });
+  } else {
+    nums.forEach(contar);
+  }
+
+  // SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad, lección 03/08/2026):
+  // a los 1,2 s fuerza visible todo lo que siga oculto, pase lo que pase con el observer.
+  setTimeout(function rescate(){
+    document.querySelectorAll('.anim, .hero .palabra, [data-contar]').forEach(function(el){
+      el.classList.add('visible');
+      var cs = window.getComputedStyle(el);
+      if (parseFloat(cs.opacity) < 1) { el.style.opacity = '1'; el.style.transform = 'none'; }
+      if (el.hasAttribute('data-contar') && parseFloat(el.textContent) === 0) {
+        el.textContent = parseFloat(el.getAttribute('data-contar')).toFixed(parseInt(el.getAttribute('data-decimales') || '0', 10));
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

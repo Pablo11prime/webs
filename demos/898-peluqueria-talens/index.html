@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Peluquería TALENS — Peluquería familiar unisex en Algirós, Valencia. Cortes modernos, peinados y tratamientos capilares. 5,0★ en Google con 167 reseñas. C/ de Yecla, 10. Llama al 677 86 62 75.">
+<title>Peluquería TALENS · Peluquería familiar en Algirós, Valencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#2B2320;        /* primario */
+    --crema:#F4EDE4;        /* secundario */
+    --oro:#C9A05C;          /* acento */
+    --oro-claro:#DDBE8A;
+    --blanco:#FFFDF9;
+    --gris:#6b5f56;
+    --sombra:0 20px 50px rgba(43,35,32,.12);
+    --curva:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Outfit',sans-serif;
+    background:var(--crema);
+    color:var(--tinta);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif}
+
+  /* ====== barra de progreso de scroll ====== */
+  #progreso{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--oro),var(--oro-claro));
+    z-index:1000;transition:width .15s linear;
+  }
+
+  /* ====== marca de agua DEMO (discreta) ====== */
+  .marca-demo{
+    position:fixed;bottom:14px;left:14px;z-index:999;
+    font-size:.68rem;letter-spacing:.3em;font-weight:600;
+    color:rgba(43,35,32,.5);background:rgba(244,237,228,.85);
+    border:1px solid rgba(201,160,92,.55);border-radius:999px;
+    padding:.35em 1em .35em 1.25em;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== cabecera ====== */
+  header.topbar{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:.9rem 1.2rem;
+    background:rgba(43,35,32,.6);backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(201,160,92,.22);
+  }
+  .logo{
+    color:var(--crema);font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.12rem;letter-spacing:.2em;text-decoration:none;white-space:nowrap;
+  }
+  .logo span{color:var(--oro)}
+  .topbar a.cta-mini{
+    font-size:.8rem;font-weight:600;letter-spacing:.07em;text-decoration:none;
+    color:var(--tinta);background:var(--oro);border-radius:999px;white-space:nowrap;
+    padding:.55em 1.2em;transition:transform .25s var(--curva),box-shadow .25s var(--curva);
+  }
+  .topbar a.cta-mini:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(201,160,92,.45)}
+
+  /* ====== hero ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:6.5rem 1.4rem 4.5rem;
+    background:
+      radial-gradient(ellipse 85% 55% at 12% 8%,rgba(201,160,92,.24),transparent 60%),
+      radial-gradient(ellipse 70% 50% at 92% 92%,rgba(221,190,138,.12),transparent 55%),
+      linear-gradient(158deg,#211a17 0%,#2B2320 52%,#352a1e 100%);
+    color:var(--crema);overflow:hidden;
+  }
+  .hero::before{ /* halo giratorio sutil */
+    content:"";position:absolute;inset:-45%;
+    background:conic-gradient(from 90deg at 50% 50%,transparent 0 82%,rgba(201,160,92,.07) 91%,transparent 100%);
+    animation:girar 46s linear infinite;pointer-events:none;
+  }
+  .hero::after{ /* línea dorada decorativa */
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(201,160,92,.55),transparent);
+  }
+  @keyframes girar{to{transform:rotate(360deg)}}
+  .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
+  .sello{
+    display:inline-flex;align-items:center;gap:.55em;
+    font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;
+    color:var(--oro-claro);border:1px solid rgba(201,160,92,.5);border-radius:999px;
+    padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(201,160,92,.09);
+  }
+  .sello svg{flex:none}
+  .hero h1{
+    font-size:clamp(2.7rem,10vw,5.6rem);font-weight:600;line-height:1.02;
+    letter-spacing:.005em;margin-bottom:1.3rem;
+  }
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
+  .hero h1 .palabra:nth-child(1){animation-delay:.15s}
+  .hero h1 .palabra:nth-child(2){animation-delay:.32s}
+  .hero h1 .palabra:nth-child(3){animation-delay:.49s}
+  .hero h1 .palabra:nth-child(4){animation-delay:.66s}
+  .hero h1 .palabra:nth-child(5){animation-delay:.83s}
+  .hero h1 em{font-style:italic;color:var(--oro)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero p.sub{
+    max-width:33em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);
+    color:rgba(244,237,228,.85);margin-bottom:2.3rem;
+  }
+  .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;text-decoration:none;
+    font-weight:600;font-size:.95rem;letter-spacing:.05em;border-radius:999px;
+    padding:.95em 2em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s;
+  }
+  .btn-oro{background:linear-gradient(120deg,var(--oro),var(--oro-claro) 55%,var(--oro));background-size:200% 100%;color:#241b10;animation:brillo 5s ease infinite}
+  @keyframes brillo{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+  .btn-oro:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 34px rgba(201,160,92,.5)}
+  .btn-linea{border:1px solid rgba(244,237,228,.5);color:var(--crema)}
+  .btn-linea:hover{transform:translateY(-3px);background:rgba(244,237,228,.08);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .cifras{display:flex;flex-wrap:wrap;gap:2.2rem 3rem}
+  .cifra .num{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,6vw,2.9rem);font-weight:700;color:var(--oro);line-height:1.1}
+  .cifra .txt{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,237,228,.65)}
+  .flecha{
+    position:absolute;left:50%;bottom:1.2rem;transform:translateX(-50%);
+    color:rgba(244,237,228,.5);font-size:1.3rem;animation:flotar 2.2s ease-in-out infinite;
+  }
+  @keyframes flotar{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+  /* ====== secciones genéricas ====== */
+  section{padding:4.8rem 1.4rem}
+  .int{max-width:1060px;margin:0 auto}
+  .etiqueta{
+    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;
+    color:var(--oro);margin-bottom:.9rem;display:flex;align-items:center;gap:.8em;
+  }
+  .etiqueta::after{content:"";height:1px;width:3.2em;background:var(--oro);opacity:.6}
+  h2{font-size:clamp(2rem,6vw,3.2rem);font-weight:600;line-height:1.1;letter-spacing:.005em;margin-bottom:1.2rem}
+  h2 em{font-style:italic;color:var(--oro)}
+
+  /* ====== animación de entrada (con red de seguridad) ====== */
+  [data-anim]{opacity:0;transform:translateY(28px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+  [data-anim].visible{opacity:1;transform:none}
+
+  /* ====== sobre nosotros ====== */
+  .sobre{background:var(--crema)}
+  .sobre-grid{display:grid;gap:2.4rem}
+  .sobre p{color:var(--gris);font-size:1.05rem;max-width:38em}
+  .sobre p strong{color:var(--tinta)}
+  .valores{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.6rem}
+  .valor{
+    font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    border:1px solid rgba(201,160,92,.45);background:var(--blanco);color:var(--gris);
+    border-radius:999px;padding:.5em 1.2em;transition:transform .3s var(--curva),border-color .3s;
+  }
+  .valor:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--oro)}
+  .cita-destacada{
+    border-left:3px solid var(--oro);padding:1.1rem 0 1.1rem 1.4rem;
+    font-family:'Cormorant Garamond',serif;font-size:clamp(1.25rem,3.4vw,1.7rem);font-style:italic;
+    color:var(--tinta);background:linear-gradient(90deg,rgba(201,160,92,.1),transparent 70%);
+    border-radius:0 14px 14px 0;line-height:1.4;
+  }
+  .cita-destacada small{display:block;font-family:'Outfit',sans-serif;font-style:normal;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-top:.8em}
+
+  /* ====== servicios ====== */
+  .servicios{background:var(--tinta);color:var(--crema)}
+  .servicios p.intro{color:rgba(244,237,228,.72);max-width:36em;margin-bottom:2.6rem}
+  .tarjetas{display:grid;gap:1.1rem;grid-template-columns:1fr}
+  .tarjeta{
+    position:relative;border:1px solid rgba(244,237,228,.15);border-radius:18px;
+    padding:1.8rem 1.5rem 1.6rem;background:linear-gradient(160deg,rgba(244,237,228,.055),rgba(244,237,228,.015));
+    transition:transform .35s var(--curva),border-color .35s,box-shadow .35s;
+    overflow:hidden;
+  }
+  .tarjeta::after{
+    content:"";position:absolute;inset:0;opacity:0;pointer-events:none;
+    background:radial-gradient(circle at 85% 12%,rgba(201,160,92,.2),transparent 60%);
+    transition:opacity .4s;
+  }
+  .tarjeta:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(201,160,92,.6);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .tarjeta:hover::after{opacity:1}
+  .tarjeta .ico{
+    width:2.7em;height:2.7em;border-radius:12px;margin-bottom:1rem;
+    display:flex;align-items:center;justify-content:center;font-size:1.25rem;
+    background:rgba(201,160,92,.14);border:1px solid rgba(201,160,92,.4);
+  }
+  .tarjeta h3{font-size:1.45rem;font-weight:600;margin-bottom:.45rem}
+  .tarjeta p{font-size:.92rem;color:rgba(244,237,228,.7);font-weight:300}
+  .nota-servicios{margin-top:1.7rem;font-size:.82rem;color:rgba(244,237,228,.55)}
+
+  /* ====== reseñas ====== */
+  .resenas{background:linear-gradient(180deg,var(--crema) 0%,#ece2d3 100%)}
+  .estrellas-grandes{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem}
+  .estrellas-grandes .nota{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,9vw,4.4rem);font-weight:700;color:var(--tinta)}
+  .estrellas-grandes .detalle{color:var(--gris);font-size:.95rem}
+  .estrellas{color:var(--oro);letter-spacing:.15em;font-size:1.05rem}
+  .opiniones{display:grid;gap:1.1rem;grid-template-columns:1fr}
+  .opinion{
+    background:var(--blanco);border-radius:18px;padding:1.7rem 1.5rem;
+    box-shadow:var(--sombra);border:1px solid rgba(201,160,92,.28);
+    transition:transform .35s var(--curva),box-shadow .35s var(--curva);
+    display:flex;flex-direction:column;gap:.9rem;
+  }
+  .opinion:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 55px rgba(43,35,32,.18)}
+  .opinion blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;line-height:1.5;color:var(--tinta)}
+  .opinion .quien{display:flex;align-items:center;gap:.8em;margin-top:auto}
+  .opinion .avatar{
+    width:2.4em;height:2.4em;border-radius:50%;flex:none;
+    background:linear-gradient(135deg,var(--oro),var(--oro-claro));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:600;color:#241b10;font-size:.95rem;
+  }
+  .opinion .quien div p{font-weight:600;font-size:.9rem;line-height:1.3}
+  .opinion .quien div small{font-size:.74rem;color:var(--gris);letter-spacing:.06em}
+
+  /* ====== contacto ====== */
+  .contacto{background:var(--crema)}
+  .contacto-grid{display:grid;gap:1.4rem;grid-template-columns:1fr}
+  .bloque-dato{
+    background:var(--blanco);border:1px solid rgba(201,160,92,.32);border-radius:18px;
+    padding:1.6rem 1.4rem;box-shadow:var(--sombra);
+    transition:transform .3s var(--curva);
+  }
+  .bloque-dato:hover{transform:translateY(-4px)}
+  .bloque-dato h3{font-size:1.35rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.55em}
+  .bloque-dato h3 span{color:var(--oro)}
+  .bloque-dato p, .bloque-dato li{color:var(--gris);font-size:.95rem}
+  .bloque-dato ul{list-style:none}
+  .bloque-dato li{display:flex;justify-content:space-between;gap:1em;padding:.32em 0;border-bottom:1px dashed rgba(201,160,92,.35)}
+  .bloque-dato li:last-child{border-bottom:none}
+  .bloque-dato li strong{color:var(--tinta);font-weight:500}
+  .bloque-dato a{color:var(--tinta);font-weight:500;text-decoration:none;border-bottom:1px solid var(--oro);transition:color .25s}
+  .bloque-dato a:hover{color:var(--oro)}
+  .aviso-cita{
+    margin-top:1.8rem;text-align:center;font-size:.88rem;color:var(--gris);
+    background:rgba(201,160,92,.1);border:1px dashed rgba(201,160,92,.55);
+    border-radius:14px;padding:.9em 1.2em;
+  }
+  .cta-final{
+    margin-top:2.6rem;text-align:center;background:var(--tinta);border-radius:22px;
+    padding:2.8rem 1.5rem;color:var(--crema);position:relative;overflow:hidden;
+  }
+  .cta-final::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 18% 22%,rgba(201,160,92,.24),transparent 55%);
+  }
+  .cta-final h3{position:relative;font-size:clamp(1.6rem,5vw,2.3rem);margin-bottom:1.4rem}
+  .cta-final h3 em{font-style:italic;color:var(--oro)}
+  .cta-final .botones{position:relative;justify-content:center;margin-bottom:0}
+
+  /* ====== pie ====== */
+  footer{
+    background:#1d1714;color:rgba(244,237,228,.65);text-align:center;
+    padding:2.4rem 1.4rem;font-size:.85rem;
+  }
+  footer .logo-pie{font-family:'Cormorant Garamond',serif;color:var(--crema);font-size:1.15rem;letter-spacing:.2em;margin-bottom:.6rem}
+  footer .logo-pie span{color:var(--oro)}
+  footer .aviso-demo{margin-top:1.1rem;font-size:.8rem;color:rgba(244,237,228,.45)}
+  footer .aviso-demo strong{color:var(--oro);font-weight:600}
+
+  /* ====== escritorio ====== */
+  @media(min-width:720px){
+    section{padding:6.5rem 2rem}
+    .tarjetas{grid-template-columns:repeat(2,1fr)}
+    .opiniones{grid-template-columns:repeat(3,1fr)}
+    .contacto-grid{grid-template-columns:repeat(3,1fr)}
+    .sobre-grid{grid-template-columns:1.2fr 1fr;align-items:center}
+  }
+  @media(min-width:1000px){
+    .tarjetas{grid-template-columns:repeat(4,1fr)}
+  }
+
+  /* ====== accesibilidad: sin animaciones si el usuario lo pide ====== */
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    [data-anim]{opacity:1 !important;transform:none !important}
+    .hero h1 .palabra{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<header class="topbar">
+  <a class="logo" href="#inicio">PELUQUERÍA <span>TALENS</span></a>
+  <a class="cta-mini" href="tel:+34677866275">Pedir cita · 677 86 62 75</a>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="hero-int" id="heroParallax">
+      <p class="sello">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+        Peluquería familiar unisex · Algirós, Valencia
+      </p>
+      <h1>
+        <span class="palabra">El&nbsp;salón</span>
+        <span class="palabra">de&nbsp;siempre,</span>
+        <span class="palabra">con</span>
+        <span class="palabra">estilo</span>
+        <span class="palabra"><em>de&nbsp;hoy.</em></span>
+      </h1>
+      <p class="sub">Cortes modernos, peinados y tratamientos capilares para toda la familia. Trato cercano y manos expertas en pleno barrio de Algirós, con Juan Carlos al frente.</p>
+      <div class="botones">
+        <a class="btn btn-oro" href="tel:+34677866275">📞 Llamar y pedir cita</a>
+        <a class="btn btn-linea" href="https://wa.me/34677866275" target="_blank" rel="noopener">💬 WhatsApp</a>
+      </div>
+      <div class="cifras">
+        <div class="cifra"><div class="num"><span class="contador" data-target="5.0" data-decimales="1">0</span>★</div><div class="txt">Valoración en Google</div></div>
+        <div class="cifra"><div class="num"><span class="contador" data-target="167">0</span></div><div class="txt">Reseñas de clientes</div></div>
+        <div class="cifra"><div class="num serif">Unisex</div><div class="txt">Mujer · Hombre · Familia</div></div>
+      </div>
+    </div>
+    <div class="flecha" aria-hidden="true">↓</div>
+  </section>
+
+  <!-- ============ SOBRE NOSOTROS ============ -->
+  <section class="sobre" id="sobre">
+    <div class="int sobre-grid">
+      <div data-anim>
+        <p class="etiqueta">El salón</p>
+        <h2>Una peluquería <em>de verdad familiar</em></h2>
+        <p>En <strong>Peluquería TALENS</strong> te recibimos como en casa. Nuestros clientes destacan el trato amable y cercano, los consejos sinceros y unos resultados <strong>muy naturales</strong>: ese equilibrio entre el oficio de toda la vida y las tendencias de hoy.</p>
+        <p style="margin-top:1rem">Con <strong>Juan Carlos</strong> al frente, cada visita es atención personalizada de principio a fin: te escuchamos, te asesoramos y salimos a por el corte que de verdad te favorece.</p>
+        <div class="valores" aria-label="Lo que nos define">
+          <span class="valor">Trato cercano</span>
+          <span class="valor">Resultados naturales</span>
+          <span class="valor">Para toda la familia</span>
+        </div>
+      </div>
+      <div data-anim style="transition-delay:.15s">
+        <div class="cita-destacada">
+          “La atención por Juan Carlos es excelente, no dejaría que nadie más toque mi pelo.”
+          <small>Reseña real · Google</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="servicios" id="servicios">
+    <div class="int">
+      <p class="etiqueta" data-anim>Servicios</p>
+      <h2 data-anim>Lo que hacemos <em>por tu pelo</em></h2>
+      <p class="intro" data-anim>Peluquería unisex completa: del corte que te rejuvenece al tratamiento que tu melena estaba pidiendo.</p>
+      <div class="tarjetas">
+        <article class="tarjeta" data-anim>
+          <span class="ico" aria-hidden="true">✂️</span>
+          <h3>Corte de mujer</h3>
+          <p>Cortes modernos y clásicos con asesoramiento personalizado para tu rostro y tu estilo.</p>
+        </article>
+        <article class="tarjeta" data-anim style="transition-delay:.08s">
+          <span class="ico" aria-hidden="true">💈</span>
+          <h3>Corte de hombre</h3>
+          <p>Del corte de siempre a las tendencias actuales, con acabado cuidado al detalle.</p>
+        </article>
+        <article class="tarjeta" data-anim style="transition-delay:.16s">
+          <span class="ico" aria-hidden="true">💫</span>
+          <h3>Peinados</h3>
+          <p>Peinados para el día a día y para ocasiones especiales: naturales, con movimiento y a tu medida.</p>
+        </article>
+        <article class="tarjeta" data-anim style="transition-delay:.24s">
+          <span class="ico" aria-hidden="true">🌿</span>
+          <h3>Tratamientos capilares</h3>
+          <p>Cuidamos la salud de tu cabello con tratamientos que devuelven fuerza y brillo.</p>
+        </article>
+      </div>
+      <p class="nota-servicios" data-anim>¿Dudas con tu caso? Llámanos al <a href="tel:+34677866275" style="color:var(--oro-claro)">677 86 62 75</a> y te asesoramos sin compromiso.</p>
+    </div>
+  </section>
+
+  <!-- ============ RESEÑAS ============ -->
+  <section class="resenas" id="resenas">
+    <div class="int">
+      <p class="etiqueta" data-anim>Opiniones reales</p>
+      <h2 data-anim>Nuestros clientes <em>lo cuentan mejor</em></h2>
+      <div class="estrellas-grandes" data-anim>
+        <span class="nota"><span class="contador" data-target="5.0" data-decimales="1">0</span></span>
+        <div>
+          <div class="estrellas" aria-label="5,0 de 5 estrellas">★★★★★</div>
+          <div class="detalle"><span class="contador" data-target="167">0</span> reseñas en Google</div>
+        </div>
+      </div>
+      <div class="opiniones">
+        <article class="opinion" data-anim>
+          <div class="estrellas" aria-hidden="true">★★★★★</div>
+          <blockquote>“La atención por Juan Carlos es excelente, no dejaría que nadie más toque mi pelo.”</blockquote>
+          <div class="quien"><span class="avatar">G</span><div><p>Cliente de TALENS</p><small>Reseña verificada · Google</small></div></div>
+        </article>
+        <article class="opinion" data-anim style="transition-delay:.12s">
+          <div class="estrellas" aria-hidden="true">★★★★★</div>
+          <blockquote>“Quedé encantada con el trato y el resultado (muy natural). Peluquería muy familiar.”</blockquote>
+          <div class="quien"><span class="avatar">C</span><div><p>Cliente de TALENS</p><small>Reseña verificada · Google</small></div></div>
+        </article>
+        <article class="opinion" data-anim style="transition-delay:.24s">
+          <div class="estrellas" aria-hidden="true">★★★★★</div>
+          <blockquote>“¡La mejor peluquería que he probado en Valencia!”</blockquote>
+          <div class="quien"><span class="avatar">V</span><div><p>Cliente de TALENS</p><small>Reseña verificada · Google</small></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="contacto" id="contacto">
+    <div class="int">
+      <p class="etiqueta" data-anim>Contacto</p>
+      <h2 data-anim>Ven a <em>conocernos</em></h2>
+      <div class="contacto-grid">
+        <div class="bloque-dato" data-anim>
+          <h3><span>📍</span> Dónde estamos</h3>
+          <p>C/ de Yecla, 10<br>Algirós<br>46021 València</p>
+          <p style="margin-top:.9rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=Peluquer%C3%ADa%20TALENS%20C%2F%20de%20Yecla%2010%2046021%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+        </div>
+        <div class="bloque-dato" data-anim style="transition-delay:.1s">
+          <h3><span>🕐</span> Horario</h3>
+          <ul>
+            <li><strong>Martes a sábado</strong> Mañanas desde las 9:00</li>
+            <li><strong>Lunes y domingo</strong> Cerrado</li>
+          </ul>
+          <p style="margin-top:.9rem;font-size:.85rem">Confirma tu hora por teléfono: <a href="tel:+34677866275">677 86 62 75</a></p>
+        </div>
+        <div class="bloque-dato" data-anim style="transition-delay:.2s">
+          <h3><span>💬</span> Habla con nosotros</h3>
+          <p>Teléfono:<br><a href="tel:+34677866275">677 86 62 75</a></p>
+          <p style="margin-top:.9rem"><a href="https://wa.me/34677866275" target="_blank" rel="noopener">Escríbenos por WhatsApp →</a></p>
+        </div>
+      </div>
+      <p class="aviso-cita" data-anim>Llámanos antes de venir y te reservamos tu hueco: <strong>así no esperas</strong>.</p>
+      <div class="cta-final" data-anim>
+        <h3 class="serif">Tu mejor corte está a <em>una llamada</em></h3>
+        <div class="botones">
+          <a class="btn btn-oro" href="tel:+34677866275">📞 677 86 62 75</a>
+          <a class="btn btn-linea" href="https://wa.me/34677866275" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ PIE ============ -->
+<footer>
+  <p class="logo-pie">PELUQUERÍA <span>TALENS</span></p>
+  <p>C/ de Yecla, 10 · Algirós · 46021 València · <a href="tel:+34677866275" style="color:inherit">677 86 62 75</a></p>
+  <p class="aviso-demo"><strong>DEMO</strong> creada por <strong>Eleven AI</strong> — esta web puede ser tuya.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- barra de progreso de scroll ---- */
+  var barra = document.getElementById('progreso');
+  function actualizarBarra(){
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    barra.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', actualizarBarra, {passive:true});
+  actualizarBarra();
+
+  /* ---- parallax suave en el hero ---- */
+  var heroInt = document.getElementById('heroParallax');
+  if (heroInt && !reduceMotion) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroInt.style.transform = 'translateY(' + (y * 0.18) + 'px)';
+        heroInt.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.9));
+      }
+    }, {passive:true});
+  }
+
+  /* ---- contadores animados ---- */
+  function animarContador(el){
+    var objetivo = parseFloat(el.getAttribute('data-target'));
+    var decimales = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduceMotion) { el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    var inicio = null, dur = 1600;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var p = Math.min((t - inicio) / dur, 1);
+      var suav = 1 - Math.pow(1 - p, 3);
+      el.textContent = (objetivo * suav).toFixed(decimales).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  /* ---- entradas escalonadas + contadores con IntersectionObserver ---- */
+  var animados = document.querySelectorAll('[data-anim]');
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    animados.forEach(function(el){ io.observe(el); });
+
+    var ioNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioNum.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    contadores.forEach(function(el){ ioNum.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+    contadores.forEach(animarContador);
+  }
+
+  /* ---- SCRIPT DE RESCATE (garantía de visibilidad, lección 03/08/2026) ----
+     Pase lo que pase (JS a medias, WebView raro, visor de email), a los 1,2s
+     cualquier elemento que siga invisible se fuerza a visible. */
+  setTimeout(function rescate(){
+    document.querySelectorAll('[data-anim]:not(.visible)').forEach(function(el){
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+      if (getComputedStyle(el).opacity === '0') {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (el.textContent === '0') {
+        var d = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = parseFloat(el.getAttribute('data-target')).toFixed(d).replace('.', ',');
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

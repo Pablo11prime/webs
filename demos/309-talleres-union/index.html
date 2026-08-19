@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Unión — Taller multiservicio en Zona Franca (Barcelona)</title>
+<meta name="description" content="Talleres Unión Zona Franca, Carrer de la Foneria 48 (Sants-Montjuïc, Barcelona). Mecánica integral, chapa y pintura, electrónica, reprogramaciones, anulaciones y adaptaciones, neumáticos. Vehículo de cortesía. 4,5★ en Google con 110 reseñas.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#1F2937;
+  --secundario:#F3F4F6;
+  --acento:#F59E0B;
+  --acento-suave:#FBBF24;
+  --blanco:#FFFFFF;
+  --gris:#5C6672;
+  --tinta:#111827;
+  --radio:18px;
+  --sombra:0 14px 38px rgba(31,41,55,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--secundario);color:var(--tinta);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.5px}
+a{color:inherit}
+
+/* Barra de progreso de scroll */
+#progreso{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--acento),var(--acento-suave));z-index:1000;transition:width .15s ease-out}
+
+/* Marca de agua DEMO */
+.demo-marca{position:fixed;top:14px;right:-42px;transform:rotate(38deg);background:var(--acento);color:#1F2937;font-weight:800;font-size:.78rem;letter-spacing:3px;padding:6px 50px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,.3);pointer-events:none}
+
+/* Animaciones de entrada (con rescate garantizado) */
+.anim{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+.anim.visible{opacity:1;transform:none}
+.hero .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1)}
+.hero .palabra.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .anim,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+
+/* HERO */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;background:
+  radial-gradient(ellipse at 85% -10%, rgba(245,158,11,.30), transparent 55%),
+  linear-gradient(150deg,#111827 0%,#1F2937 55%,#151d2a 100%);
+  color:#fff;padding:96px 22px 70px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(115deg,transparent 0 52px,rgba(255,255,255,.03) 52px 54px)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(45deg,var(--acento) 0 22px,#1F2937 22px 44px);opacity:.85}
+.hero-etiqueta{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:600;margin-bottom:22px;backdrop-filter:blur(4px)}
+.hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:#34D399;box-shadow:0 0 10px #34D399}
+.hero h1{font-size:clamp(2.3rem,9.5vw,4.3rem);font-weight:800;margin-bottom:14px}
+.hero h1 .ambar{color:var(--acento-suave)}
+.hero p.sub{font-size:1.05rem;color:rgba(255,255,255,.82);max-width:40ch;margin-bottom:30px}
+.hero-botones{display:flex;flex-direction:column;gap:12px;max-width:340px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s}
+.btn:active{transform:scale(.97)}
+.btn-ambar{background:var(--acento);color:#1F2937;box-shadow:0 10px 28px rgba(245,158,11,.4)}
+.btn-ambar:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(245,158,11,.5)}
+.btn-borde{border:2px solid rgba(255,255,255,.4);color:#fff}
+.btn-borde:hover{transform:translateY(-3px);border-color:var(--acento-suave);color:var(--acento-suave)}
+.hero-nota{margin-top:26px;font-size:.86rem;color:rgba(255,255,255,.6)}
+.hero-nota strong{color:var(--acento-suave)}
+
+/* EXTRAS DESTACADOS */
+.extras{background:var(--primario);color:#fff;padding:44px 22px}
+.extras-grid{display:grid;grid-template-columns:1fr;gap:14px;max-width:960px;margin:0 auto}
+.extra{display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:var(--radio);padding:18px 20px;transition:transform .3s}
+.extra:hover{transform:translateY(-4px)}
+.extra .ic{font-size:1.7rem}
+.extra b{display:block;font-size:1rem}
+.extra span{font-size:.85rem;color:rgba(255,255,255,.65)}
+
+/* CONTADORES */
+.stats{background:var(--blanco);padding:48px 22px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin:0 auto;text-align:center}
+.stat .num{font-family:'Sora';font-size:clamp(2rem,8vw,3.4rem);font-weight:800;color:var(--primario)}
+.stat .num .mas{color:var(--acento)}
+.stat .txt{font-size:.78rem;color:var(--gris);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+
+/* SECCIONES GENERALES */
+section{padding:70px 22px}
+.contenedor{max-width:960px;margin:0 auto}
+.sobretitulo{color:var(--acento);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:3px;margin-bottom:10px}
+h2{font-size:clamp(1.9rem,7vw,3rem);font-weight:800;color:var(--primario);margin-bottom:18px}
+
+/* SOBRE NOSOTROS */
+.sobre p{color:#3d4653;font-size:1.02rem;max-width:62ch;margin-bottom:14px}
+.sobre .destacado{border-left:4px solid var(--acento);padding:14px 18px;background:var(--blanco);border-radius:0 var(--radio) var(--radio) 0;box-shadow:var(--sombra);font-weight:500;margin-top:22px}
+
+/* SERVICIOS */
+.servicios{background:var(--blanco)}
+.serv-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:34px}
+.serv{background:var(--secundario);border-radius:var(--radio);padding:26px 22px;transition:transform .3s cubic-bezier(.22,.61,.36,1),box-shadow .3s;border:1px solid rgba(31,41,55,.07)}
+.serv:hover{transform:translateY(-6px) scale(1.015);box-shadow:var(--sombra)}
+.serv .icono{width:52px;height:52px;border-radius:14px;background:var(--primario);color:var(--acento-suave);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px}
+.serv h3{font-size:1.2rem;margin-bottom:8px;color:var(--primario)}
+.serv p{color:var(--gris);font-size:.94rem}
+
+/* OPINIONES */
+.resenas{background:linear-gradient(150deg,#111827,#1F2937);color:#fff}
+.resenas h2{color:#fff}
+.nota-grande{display:flex;align-items:center;gap:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radio);padding:24px 22px;margin-top:26px;backdrop-filter:blur(4px)}
+.nota-grande .cifra{font-family:'Sora';font-size:clamp(2.6rem,10vw,3.8rem);font-weight:800;color:var(--acento-suave);line-height:1}
+.nota-grande .detalle{font-size:.95rem;color:rgba(255,255,255,.85)}
+.nota-grande .estrellas{color:var(--acento-suave);font-size:1.15rem;letter-spacing:3px}
+.temas-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:26px}
+.tema-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radio);padding:26px 22px;transition:transform .3s}
+.tema-card:hover{transform:translateY(-4px)}
+.tema-card .ic{font-size:1.6rem;margin-bottom:10px}
+.tema-card h3{font-size:1.1rem;margin-bottom:6px;color:var(--acento-suave)}
+.tema-card p{font-size:.95rem;color:rgba(255,255,255,.85)}
+.resenas .cta-resenas{display:inline-block;margin-top:26px;color:var(--acento-suave);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(251,191,36,.4);padding-bottom:2px;transition:opacity .2s}
+.resenas .cta-resenas:hover{opacity:.8}
+
+/* CONTACTO */
+.contacto{background:var(--blanco)}
+.cont-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:30px}
+.cont-item{background:var(--secundario);border-radius:var(--radio);padding:24px 22px;display:flex;gap:16px;align-items:flex-start;transition:transform .3s}
+.cont-item:hover{transform:translateY(-4px)}
+.cont-item .ic{font-size:1.5rem;background:var(--primario);color:var(--acento-suave);width:48px;height:48px;min-width:48px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.cont-item h3{font-size:1.1rem;margin-bottom:4px;color:var(--primario)}
+.cont-item p, .cont-item a{color:var(--gris);font-size:.95rem;text-decoration:none}
+.cont-item a:hover{color:var(--acento)}
+.cont-botones{display:flex;flex-direction:column;gap:12px;margin-top:26px;max-width:360px}
+.btn-oscuro{background:var(--primario);color:#fff;box-shadow:0 10px 24px rgba(31,41,55,.3)}
+.btn-oscuro:hover{transform:translateY(-3px)}
+
+/* FOOTER */
+footer{background:var(--primario);color:rgba(255,255,255,.7);padding:44px 22px;text-align:center;font-size:.88rem}
+footer .aviso-demo{display:inline-block;background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.55);color:var(--acento-suave);padding:12px 20px;border-radius:12px;margin-bottom:18px;font-weight:600}
+footer a{color:#fff}
+
+/* ESCRITORIO */
+@media (min-width:760px){
+  .hero{padding:120px 60px}
+  .hero-botones{flex-direction:row;max-width:none}
+  .extras-grid{grid-template-columns:repeat(3,1fr)}
+  .serv-grid{grid-template-columns:repeat(3,1fr)}
+  .temas-grid{grid-template-columns:repeat(3,1fr)}
+  .cont-grid{grid-template-columns:repeat(2,1fr)}
+  .cont-botones{flex-direction:row;max-width:none}
+  section{padding:90px 60px}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
+.anim,.hero .palabra{opacity:1 !important;transform:none !important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="demo-marca">DEMO</div>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="contenedor">
+    <span class="hero-etiqueta anim"><span class="punto"></span> Taller multiservicio · Zona Franca, Barcelona</span>
+    <h1 id="titulo-hero">
+      <span class="palabra">Talleres</span> <span class="palabra ambar">Unión</span><br>
+      <span class="palabra">Mecánica</span> <span class="palabra">de</span> <span class="palabra ambar">confianza</span> <span class="palabra">en</span> <span class="palabra">la</span> <span class="palabra">Zona</span> <span class="palabra">Franca.</span>
+    </h1>
+    <p class="sub anim">Mecánica integral, chapa y pintura, electrónica y reprogramaciones en Carrer de la Foneria, 48. Con vehículo de cortesía mientras reparamos el tuyo.</p>
+    <div class="hero-botones anim">
+      <a class="btn btn-ambar" href="tel:+34933324396">📞 Llamar: 933 32 43 96</a>
+      <a class="btn btn-borde" href="mailto:info@talleresunion.es">✉️ Pedir cita por email</a>
+    </div>
+    <p class="hero-nota anim"><strong>★ 4,5</strong> en Google · 110 reseñas de clientes reales</p>
+  </div>
+</header>
+
+<!-- EXTRAS QUE POCOS OFRECEN -->
+<section class="extras">
+  <div class="extras-grid">
+    <div class="extra anim"><span class="ic">🚙</span><div><b>Vehículo de cortesía</b><span>Para que no pares mientras reparamos el tuyo</span></div></div>
+    <div class="extra anim"><span class="ic">💻</span><div><b>Reprogramaciones y software</b><span>Optimización electrónica de tu vehículo</span></div></div>
+    <div class="extra anim"><span class="ic">🛠️</span><div><b>Todo en un mismo taller</b><span>Mecánica, chapa y pintura, electrónica y neumáticos</span></div></div>
+  </div>
+</section>
+
+<!-- CONTADORES -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat anim"><div class="num" data-contar="4.5" data-decimales="1">0</div><div class="txt">Estrellas en Google</div></div>
+    <div class="stat anim"><div class="num" data-contar="110">0</div><div class="txt">Reseñas reales</div></div>
+    <div class="stat anim"><div class="num"><span data-contar="6">0</span></div><div class="txt">Especialidades</div></div>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section class="sobre">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Sobre nosotros</p>
+    <h2 class="anim">El taller de siempre de la Zona Franca</h2>
+    <p class="anim">En Talleres Unión cuidamos tu coche con lo que más valoran nuestros clientes: amabilidad, transparencia y trabajo bien hecho. Hay quien nos define como su taller de confianza desde hace más de treinta años.</p>
+    <p class="anim">Somos un taller multiservicio en Sants-Montjuïc: mecánica integral, chapa y pintura, electrónica, reprogramaciones y optimización de software, anulaciones y adaptaciones, y neumáticos. Y para que no te quedes a pie, te dejamos un vehículo de cortesía mientras reparamos el tuyo.</p>
+    <div class="destacado anim">★ 4,5 sobre 5 con 110 reseñas en Google: los conductores de la Zona Franca ya nos conocen.</div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="servicios">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Qué hacemos</p>
+    <h2 class="anim">Servicios del taller</h2>
+    <div class="serv-grid">
+      <div class="serv anim"><div class="icono">🔧</div><h3>Mecánica integral</h3><p>Mantenimiento y reparación mecánica completa de tu vehículo, con diagnóstico claro.</p></div>
+      <div class="serv anim"><div class="icono">🎨</div><h3>Chapa y pintura</h3><p>Reparamos golpes y arañazos y dejamos la carrocería como recién salida de fábrica.</p></div>
+      <div class="serv anim"><div class="icono">⚡</div><h3>Electrónica</h3><p>Diagnosis y reparación de la electrónica del vehículo: sensores, centralitas y fallos eléctricos.</p></div>
+      <div class="serv anim"><div class="icono">💻</div><h3>Reprogramaciones</h3><p>Optimización de software y reprogramación de centralitas para sacar lo mejor de tu motor.</p></div>
+      <div class="serv anim"><div class="icono">🔩</div><h3>Anulaciones y adaptaciones</h3><p>Soluciones a medida: anulaciones y adaptaciones según las necesidades de tu vehículo.</p></div>
+      <div class="serv anim"><div class="icono">🛞</div><h3>Neumáticos</h3><p>Montaje, equilibrado y sustitución de neumáticos para rodar seguro todo el año.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPINIONES -->
+<section class="resenas">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Opiniones</p>
+    <h2 class="anim">Lo que dicen nuestros clientes</h2>
+    <div class="nota-grande anim">
+      <div class="cifra">4,5</div>
+      <div class="detalle">
+        <div class="estrellas">★★★★★</div>
+        <b>110 reseñas en Google</b><br>de clientes reales del taller
+      </div>
+    </div>
+    <div class="temas-grid">
+      <div class="tema-card anim"><div class="ic">🤝</div><h3>Amabilidad</h3><p>El trato cercano y atento del equipo es lo primero que destacan las reseñas.</p></div>
+      <div class="tema-card anim"><div class="ic">🔍</div><h3>Transparencia</h3><p>Diagnóstico claro y sin sorpresas: sabes qué se hace y por qué, antes de empezar.</p></div>
+      <div class="tema-card anim"><div class="ic">🏅</div><h3>Fidelidad</h3><p>Clientes que repiten año tras año; hay quien confía en el taller desde hace más de treinta años.</p></div>
+    </div>
+    <a class="cta-resenas anim" href="https://www.google.com/maps/search/?api=1&query=Talleres%20Uni%C3%B3n%20Zona%20Franca%20Carrer%20de%20la%20Foneria%2048%20Barcelona" target="_blank" rel="noopener">Leer las 110 reseñas en Google Maps →</a>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <p class="sobretitulo anim">Contacto</p>
+    <h2 class="anim">Ven a vernos o llámanos</h2>
+    <div class="cont-grid">
+      <div class="cont-item anim">
+        <div class="ic">📍</div>
+        <div><h3>Dirección</h3>
+        <p>Carrer de la Foneria, 48<br>Sants-Montjuïc (Zona Franca) · 08038 Barcelona</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Talleres%20Uni%C3%B3n%20Zona%20Franca%20Carrer%20de%20la%20Foneria%2048%20Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></div>
+      </div>
+      <div class="cont-item anim">
+        <div class="ic">📞</div>
+        <div><h3>Teléfono</h3>
+        <p><a href="tel:+34933324396">933 32 43 96</a></p></div>
+      </div>
+      <div class="cont-item anim">
+        <div class="ic">✉️</div>
+        <div><h3>Email</h3>
+        <p><a href="mailto:info@talleresunion.es">info@talleresunion.es</a></p></div>
+      </div>
+      <div class="cont-item anim">
+        <div class="ic">🕒</div>
+        <div><h3>Horario</h3>
+        <p>Lunes a jueves: 7:30–19:00<br>Viernes: 7:00–15:00<br>Fines de semana: cerrado</p></div>
+      </div>
+    </div>
+    <div class="cont-botones">
+      <a class="btn btn-ambar anim" href="tel:+34933324396">📞 Llamar ahora</a>
+      <a class="btn btn-oscuro anim" href="https://www.google.com/maps/search/?api=1&query=Talleres%20Uni%C3%B3n%20Zona%20Franca%20Carrer%20de%20la%20Foneria%2048%20Barcelona" target="_blank" rel="noopener">📍 Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+<!-- PIE -->
+<footer>
+  <div class="aviso-demo">⚠ DEMO creada por Eleven AI — esta web puede ser tuya</div>
+  <p>Demo de página web para <strong>Talleres Unión Zona Franca Barcelona</strong> · No es la web oficial del negocio.</p>
+  <p style="margin-top:10px">Creada por <a href="https://elevenprime.es" target="_blank" rel="noopener">Eleven AI</a> · ELEVEN AGENCIA DE MARKETING DIGITAL, S.L.</p>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Barra de progreso de scroll
+  var barra = document.getElementById('progreso');
+  function progreso(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    if (barra && max > 0) barra.style.width = (h.scrollTop / max * 100) + '%';
+  }
+  window.addEventListener('scroll', progreso, {passive:true});
+  progreso();
+
+  // Parallax suave en el hero
+  var hero = document.querySelector('.hero');
+  if (hero && !reduce) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight) hero.style.backgroundPosition = '0 ' + (y * 0.25) + 'px';
+    }, {passive:true});
+  }
+
+  // Título del hero palabra a palabra
+  var palabras = document.querySelectorAll('.hero .palabra');
+  palabras.forEach(function(p, i){
+    setTimeout(function(){ p.classList.add('visible'); }, reduce ? 0 : 120 + i * 100);
+  });
+
+  // Entradas escalonadas con IntersectionObserver
+  var animados = document.querySelectorAll('.anim');
+  if ('IntersectionObserver' in window && !reduce) {
+    var retardos = new WeakMap();
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var padre = e.target.parentElement;
+          var i = retardos.get(padre) || 0;
+          retardos.set(padre, i + 1);
+          setTimeout(function(){ e.target.classList.add('visible'); }, i * 90);
+          io.unobserve(e.target);
+        }
+      });
+      setTimeout(function(){ retardos = new WeakMap(); }, 400);
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    animados.forEach(function(el){ io.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  // Contadores animados
+  function contar(el){
+    var fin = parseFloat(el.getAttribute('data-contar'));
+    var dec = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduce) { el.textContent = fin.toFixed(dec).replace('.', ','); return; }
+    var t0 = null, dur = 1400;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fin.toFixed(dec).replace('.', ',');
+    }
+    requestAnimationFrame(paso);
+  }
+  var nums = document.querySelectorAll('[data-contar]');
+  if ('IntersectionObserver' in window) {
+    var ioNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { contar(e.target); ioNum.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    nums.forEach(function(el){ ioNum.observe(el); });
+  } else {
+    nums.forEach(contar);
+  }
+
+  // SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad, lección 03/08/2026):
+  // a los 1,2 s fuerza visible todo lo que siga oculto, pase lo que pase con el observer.
+  setTimeout(function rescate(){
+    document.querySelectorAll('.anim, .hero .palabra, [data-contar]').forEach(function(el){
+      el.classList.add('visible');
+      var cs = window.getComputedStyle(el);
+      if (parseFloat(cs.opacity) < 1) { el.style.opacity = '1'; el.style.transform = 'none'; }
+      if (el.hasAttribute('data-contar') && parseFloat(el.textContent) === 0) {
+        el.textContent = parseFloat(el.getAttribute('data-contar')).toFixed(parseInt(el.getAttribute('data-decimales') || '0', 10)).replace('.', ',');
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

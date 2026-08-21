@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pro Style Peluquería — Peluquería en Patraix, Valencia. Trato cercano y personalizado, ambiente acogedor. 4,9★ en Google. C. d'Enguera, 3. Pide cita en el 614 67 73 44.">
+<title>Pro Style Peluquería · Peluquería en Patraix, Valencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#2B2B2B;      /* primario */
+    --nude:#F6EFE9;       /* secundario */
+    --cobre:#C89B6C;      /* acento */
+    --cobre-claro:#E0BC96;
+    --blanco:#FFFCF9;
+    --gris:#6f6661;
+    --sombra:0 20px 50px rgba(43,43,43,.10);
+    --curva:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;background:var(--nude);color:var(--tinta);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+
+  #progreso{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--cobre),var(--cobre-claro));z-index:1000;transition:width .15s linear}
+
+  .marca-demo{position:fixed;bottom:14px;left:14px;z-index:999;font-size:.68rem;letter-spacing:.3em;font-weight:600;color:rgba(43,43,43,.55);background:rgba(246,239,233,.88);border:1px solid rgba(200,155,108,.6);border-radius:999px;padding:.35em 1em .35em 1.25em;pointer-events:none;backdrop-filter:blur(4px)}
+
+  header.topbar{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1.2rem;background:rgba(43,43,43,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,155,108,.25)}
+  .logo{color:var(--nude);font-family:'Playfair Display',serif;font-weight:600;font-size:1.1rem;letter-spacing:.18em;text-decoration:none;white-space:nowrap}
+  .logo span{color:var(--cobre)}
+  .topbar a.cta-mini{font-size:.8rem;font-weight:600;letter-spacing:.07em;text-decoration:none;color:var(--tinta);background:var(--cobre);border-radius:999px;white-space:nowrap;padding:.55em 1.2em;transition:transform .25s var(--curva),box-shadow .25s var(--curva)}
+  .topbar a.cta-mini:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,155,108,.45)}
+
+  /* hero */
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:6.5rem 1.4rem 4.5rem;color:var(--nude);overflow:hidden;
+    background:radial-gradient(ellipse 80% 55% at 85% 10%,rgba(200,155,108,.26),transparent 60%),radial-gradient(ellipse 70% 50% at 5% 95%,rgba(224,188,150,.12),transparent 55%),linear-gradient(160deg,#1f1f1f 0%,#2B2B2B 55%,#36302b 100%)}
+  .hero::before{content:"";position:absolute;inset:-45%;background:conic-gradient(from 0deg at 50% 50%,transparent 0 80%,rgba(200,155,108,.08) 90%,transparent 100%);animation:girar 50s linear infinite;pointer-events:none}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,155,108,.6),transparent)}
+  @keyframes girar{to{transform:rotate(360deg)}}
+  .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
+  .sello{display:inline-flex;align-items:center;gap:.55em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--cobre-claro);border:1px solid rgba(200,155,108,.5);border-radius:999px;padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(200,155,108,.09)}
+  .hero h1{font-size:clamp(2.6rem,9.5vw,5.4rem);font-weight:500;line-height:1.05;margin-bottom:1.3rem}
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
+  .hero h1 .palabra:nth-child(1){animation-delay:.15s}
+  .hero h1 .palabra:nth-child(2){animation-delay:.32s}
+  .hero h1 .palabra:nth-child(3){animation-delay:.49s}
+  .hero h1 .palabra:nth-child(4){animation-delay:.66s}
+  .hero h1 .palabra:nth-child(5){animation-delay:.83s}
+  .hero h1 em{font-style:italic;color:var(--cobre)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero p.sub{max-width:33em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(246,239,233,.85);margin-bottom:2.3rem}
+  .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
+  .btn{display:inline-flex;align-items:center;gap:.6em;text-decoration:none;font-weight:600;font-size:.95rem;letter-spacing:.05em;border-radius:999px;padding:.95em 2em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s}
+  .btn-cobre{background:linear-gradient(120deg,var(--cobre),var(--cobre-claro) 55%,var(--cobre));background-size:200% 100%;color:#24190f;animation:brillo 5s ease infinite}
+  @keyframes brillo{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+  .btn-cobre:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 34px rgba(200,155,108,.5)}
+  .btn-linea{border:1px solid rgba(246,239,233,.5);color:var(--nude)}
+  .btn-linea:hover{transform:translateY(-3px);background:rgba(246,239,233,.08);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .cifras{display:flex;flex-wrap:wrap;gap:2.2rem 3rem}
+  .cifra .num{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,2.9rem);font-weight:600;color:var(--cobre);line-height:1.1}
+  .cifra .txt{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,239,233,.65)}
+  .flecha{position:absolute;left:50%;bottom:1.2rem;transform:translateX(-50%);color:rgba(246,239,233,.5);font-size:1.3rem;animation:flotar 2.2s ease-in-out infinite}
+  @keyframes flotar{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+  section{padding:4.8rem 1.4rem}
+  .int{max-width:1060px;margin:0 auto}
+  .etiqueta{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--cobre);margin-bottom:.9rem;display:flex;align-items:center;gap:.8em}
+  .etiqueta::after{content:"";height:1px;width:3.2em;background:var(--cobre);opacity:.6}
+  h2{font-size:clamp(2rem,6vw,3.2rem);font-weight:500;line-height:1.1;margin-bottom:1.2rem}
+  h2 em{font-style:italic;color:var(--cobre)}
+
+  [data-anim]{opacity:0;transform:translateY(28px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+  [data-anim].visible{opacity:1;transform:none}
+
+  .sobre{background:var(--nude)}
+  .sobre-grid{display:grid;gap:2.4rem}
+  .sobre p{color:var(--gris);font-size:1.05rem;max-width:38em}
+  .sobre p strong{color:var(--tinta)}
+  .valores{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.6rem}
+  .valor{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:1px solid rgba(200,155,108,.45);background:var(--blanco);color:var(--gris);border-radius:999px;padding:.5em 1.2em;transition:transform .3s var(--curva),border-color .3s}
+  .valor:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--cobre)}
+  .cita-destacada{border-left:3px solid var(--cobre);padding:1.1rem 0 1.1rem 1.4rem;font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.2vw,1.6rem);font-style:italic;color:var(--tinta);background:linear-gradient(90deg,rgba(200,155,108,.12),transparent 70%);border-radius:0 14px 14px 0;line-height:1.4}
+  .cita-destacada small{display:block;font-family:'Jost',sans-serif;font-style:normal;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cobre);margin-top:.8em}
+
+  .servicios{background:var(--tinta);color:var(--nude)}
+  .servicios p.intro{color:rgba(246,239,233,.72);max-width:36em;margin-bottom:2.6rem}
+  .tarjetas{display:grid;gap:1.1rem;grid-template-columns:1fr}
+  .tarjeta{position:relative;border:1px solid rgba(246,239,233,.15);border-radius:18px;padding:1.8rem 1.5rem 1.6rem;background:linear-gradient(160deg,rgba(246,239,233,.055),rgba(246,239,233,.015));transition:transform .35s var(--curva),border-color .35s,box-shadow .35s;overflow:hidden}
+  .tarjeta::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(circle at 85% 12%,rgba(200,155,108,.22),transparent 60%);transition:opacity .4s}
+  .tarjeta:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(200,155,108,.6);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .tarjeta:hover::after{opacity:1}
+  .tarjeta .ico{width:2.7em;height:2.7em;border-radius:12px;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:rgba(200,155,108,.14);border:1px solid rgba(200,155,108,.4)}
+  .tarjeta h3{font-size:1.4rem;font-weight:500;margin-bottom:.45rem}
+  .tarjeta p{font-size:.92rem;color:rgba(246,239,233,.7);font-weight:300}
+  .nota-servicios{margin-top:1.7rem;font-size:.82rem;color:rgba(246,239,233,.55)}
+
+  .resenas{background:linear-gradient(180deg,var(--nude) 0%,#efe3d8 100%)}
+  .estrellas-grandes{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem}
+  .estrellas-grandes .nota{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,9vw,4.4rem);font-weight:600;color:var(--tinta)}
+  .estrellas-grandes .detalle{color:var(--gris);font-size:.95rem}
+  .estrellas{color:var(--cobre);letter-spacing:.15em;font-size:1.05rem}
+  .opiniones{display:grid;gap:1.1rem;grid-template-columns:1fr}
+  .opinion{background:var(--blanco);border-radius:18px;padding:1.7rem 1.5rem;box-shadow:var(--sombra);border:1px solid rgba(200,155,108,.28);transition:transform .35s var(--curva),box-shadow .35s var(--curva);display:flex;flex-direction:column;gap:.9rem}
+  .opinion:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 55px rgba(43,43,43,.18)}
+  .opinion h3{font-size:1.3rem;font-weight:500}
+  .opinion p{font-size:.95rem;color:var(--gris)}
+  .opinion .ico{font-size:1.6rem}
+  .fuente{margin-top:1.6rem;font-size:.82rem;color:var(--gris)}
+  .fuente a{color:var(--tinta);border-bottom:1px solid var(--cobre);text-decoration:none}
+
+  .contacto{background:var(--nude)}
+  .contacto-grid{display:grid;gap:1.4rem;grid-template-columns:1fr}
+  .bloque-dato{background:var(--blanco);border:1px solid rgba(200,155,108,.32);border-radius:18px;padding:1.6rem 1.4rem;box-shadow:var(--sombra);transition:transform .3s var(--curva)}
+  .bloque-dato:hover{transform:translateY(-4px)}
+  .bloque-dato h3{font-size:1.3rem;font-weight:500;margin-bottom:.7rem;display:flex;align-items:center;gap:.55em}
+  .bloque-dato h3 span{color:var(--cobre)}
+  .bloque-dato p,.bloque-dato li{color:var(--gris);font-size:.95rem}
+  .bloque-dato ul{list-style:none}
+  .bloque-dato li{display:flex;justify-content:space-between;gap:1em;padding:.32em 0;border-bottom:1px dashed rgba(200,155,108,.35)}
+  .bloque-dato li:last-child{border-bottom:none}
+  .bloque-dato li strong{color:var(--tinta);font-weight:500}
+  .bloque-dato a{color:var(--tinta);font-weight:500;text-decoration:none;border-bottom:1px solid var(--cobre);transition:color .25s}
+  .bloque-dato a:hover{color:var(--cobre)}
+  .aviso-cita{margin-top:1.8rem;text-align:center;font-size:.88rem;color:var(--gris);background:rgba(200,155,108,.1);border:1px dashed rgba(200,155,108,.55);border-radius:14px;padding:.9em 1.2em}
+  .cta-final{margin-top:2.6rem;text-align:center;background:var(--tinta);border-radius:22px;padding:2.8rem 1.5rem;color:var(--nude);position:relative;overflow:hidden}
+  .cta-final::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 22%,rgba(200,155,108,.24),transparent 55%)}
+  .cta-final h3{position:relative;font-size:clamp(1.6rem,5vw,2.3rem);font-weight:500;margin-bottom:1.4rem}
+  .cta-final h3 em{font-style:italic;color:var(--cobre)}
+  .cta-final .botones{position:relative;justify-content:center;margin-bottom:0}
+
+  footer{background:#1c1c1c;color:rgba(246,239,233,.65);text-align:center;padding:2.4rem 1.4rem;font-size:.85rem}
+  footer .logo-pie{font-family:'Playfair Display',serif;color:var(--nude);font-size:1.15rem;letter-spacing:.18em;margin-bottom:.6rem}
+  footer .logo-pie span{color:var(--cobre)}
+  footer .aviso-demo{margin-top:1.1rem;font-size:.8rem;color:rgba(246,239,233,.45)}
+  footer .aviso-demo strong{color:var(--cobre);font-weight:600}
+  footer .aviso-demo a{color:var(--cobre-claro)}
+
+  @media(min-width:720px){
+    section{padding:6.5rem 2rem}
+    .tarjetas{grid-template-columns:repeat(2,1fr)}
+    .opiniones{grid-template-columns:repeat(3,1fr)}
+    .contacto-grid{grid-template-columns:repeat(3,1fr)}
+    .sobre-grid{grid-template-columns:1.2fr 1fr;align-items:center}
+  }
+  @media(min-width:1000px){.tarjetas{grid-template-columns:repeat(4,1fr)}}
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    [data-anim]{opacity:1 !important;transform:none !important}
+    .hero h1 .palabra{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<header class="topbar">
+  <a class="logo" href="#inicio">PRO <span>STYLE</span></a>
+  <a class="cta-mini" href="tel:+34614677344">Pedir cita · 614 67 73 44</a>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-int" id="heroParallax">
+      <p class="sello">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+        Peluquería · Patraix, Valencia
+      </p>
+      <h1>
+        <span class="palabra">Tu&nbsp;estilo,</span>
+        <span class="palabra">cuidado</span>
+        <span class="palabra">con</span>
+        <span class="palabra"><em>cariño</em></span>
+        <span class="palabra">y&nbsp;oficio.</span>
+      </h1>
+      <p class="sub">En Pro Style Peluquería te escuchamos antes de coger las tijeras. Trato cercano, atención personalizada y un ambiente acogedor en pleno corazón de Patraix.</p>
+      <div class="botones">
+        <a class="btn btn-cobre" href="tel:+34614677344">📞 Llamar y pedir cita</a>
+        <a class="btn btn-linea" href="https://wa.me/34614677344" target="_blank" rel="noopener">💬 WhatsApp</a>
+      </div>
+      <div class="cifras">
+        <div class="cifra"><div class="num"><span class="contador" data-target="4.9" data-decimales="1">0</span>★</div><div class="txt">Valoración en Google</div></div>
+        <div class="cifra"><div class="num"><span class="contador" data-target="146">0</span></div><div class="txt">Reseñas de clientas</div></div>
+        <div class="cifra"><div class="num serif">L–S</div><div class="txt">Abierto de lunes a sábado</div></div>
+      </div>
+    </div>
+    <div class="flecha" aria-hidden="true">↓</div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="sobre" id="sobre">
+    <div class="int sobre-grid">
+      <div data-anim>
+        <p class="etiqueta">El salón</p>
+        <h2>Una peluquería <em>donde te conocen</em></h2>
+        <p>En <strong>Pro Style Peluquería</strong> cada clienta es única. Lo que más repiten quienes nos visitan es el <strong>trato cercano y personalizado</strong>: miramos tu tipo de pelo, tu rostro y tu día a día antes de proponerte nada.</p>
+        <p style="margin-top:1rem">Un <strong>ambiente acogedor</strong> en la calle Enguera, en Patraix, donde venir a cuidarte es también un rato para ti. Con horario de mañana y tarde, de lunes a sábado, para que encajes la cita cuando mejor te venga.</p>
+        <div class="valores" aria-label="Lo que nos define">
+          <span class="valor">Trato cercano</span>
+          <span class="valor">Atención personalizada</span>
+          <span class="valor">Ambiente acogedor</span>
+        </div>
+      </div>
+      <div data-anim style="transition-delay:.15s">
+        <div class="cita-destacada">
+          Trato cercano y personalizado, y un ambiente acogedor: así nos describen nuestras clientas en Google.
+          <small>4,9★ · 146 reseñas en Google</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="servicios" id="servicios">
+    <div class="int">
+      <p class="etiqueta" data-anim>Servicios</p>
+      <h2 data-anim>Todo lo que tu pelo <em>necesita</em></h2>
+      <p class="intro" data-anim>Peluquería completa, del corte al color, siempre con asesoramiento previo y productos cuidados.</p>
+      <div class="tarjetas">
+        <article class="tarjeta" data-anim>
+          <span class="ico" aria-hidden="true">✂️</span>
+          <h3>Corte y peinado</h3>
+          <p>Cortes a medida de tu rostro y tu estilo, con el acabado y el peinado que mejor te sientan.</p>
+        </article>
+        <article class="tarjeta" data-anim style="transition-delay:.08s">
+          <span class="ico" aria-hidden="true">🎨</span>
+          <h3>Color y mechas</h3>
+          <p>Tintes, mechas y matices naturales, pensados para realzar tu tono y cuidar tu cabello.</p>
+        </article>
+        <article class="tarjeta" data-anim style="transition-delay:.16s">
+          <span class="ico" aria-hidden="true">🌿</span>
+          <h3>Tratamientos</h3>
+          <p>Hidratación, nutrición y reparación para devolverle a tu melena fuerza, brillo y suavidad.</p>
+        </article>
+        <article class="tarjeta" data-anim style="transition-delay:.24s">
+          <span class="ico" aria-hidden="true">💫</span>
+          <h3>Eventos y ocasiones</h3>
+          <p>Recogidos y peinados para bodas, celebraciones y esos días en los que quieres brillar.</p>
+        </article>
+      </div>
+      <p class="nota-servicios" data-anim>¿Tienes dudas sobre qué te conviene? Llámanos al <a href="tel:+34614677344" style="color:var(--cobre-claro)">614 67 73 44</a> y te asesoramos sin compromiso.</p>
+    </div>
+  </section>
+
+  <!-- RESEÑAS -->
+  <section class="resenas" id="resenas">
+    <div class="int">
+      <p class="etiqueta" data-anim>Opiniones</p>
+      <h2 data-anim>Lo que más <em>valoran</em> nuestras clientas</h2>
+      <div class="estrellas-grandes" data-anim>
+        <span class="nota"><span class="contador" data-target="4.9" data-decimales="1">0</span></span>
+        <div>
+          <div class="estrellas" aria-label="4,9 de 5 estrellas">★★★★★</div>
+          <div class="detalle"><span class="contador" data-target="146">0</span> reseñas en Google</div>
+        </div>
+      </div>
+      <div class="opiniones">
+        <article class="opinion" data-anim>
+          <span class="ico" aria-hidden="true">🤍</span>
+          <h3>Trato cercano</h3>
+          <p>Es lo que más se repite en las reseñas: te reciben con una sonrisa, te escuchan y te tratan como en casa.</p>
+        </article>
+        <article class="opinion" data-anim style="transition-delay:.12s">
+          <span class="ico" aria-hidden="true">✨</span>
+          <h3>Atención personalizada</h3>
+          <p>Nada de cortes en serie: cada propuesta se adapta a tu pelo, tu cara y lo que de verdad quieres.</p>
+        </article>
+        <article class="opinion" data-anim style="transition-delay:.24s">
+          <span class="ico" aria-hidden="true">🛋️</span>
+          <h3>Ambiente acogedor</h3>
+          <p>Un salón tranquilo y agradable en Patraix, donde la cita se convierte en un rato para desconectar.</p>
+        </article>
+      </div>
+      <p class="fuente" data-anim>Resumen de las opiniones públicas en Google. Puedes leerlas todas en <a href="https://www.google.com/maps/search/?api=1&amp;query=Pro%20Style%20Peluquer%C3%ADa%20C.%20d%27Enguera%203%2046018%20Val%C3%A8ncia" target="_blank" rel="noopener">nuestra ficha de Google</a>.</p>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contacto" id="contacto">
+    <div class="int">
+      <p class="etiqueta" data-anim>Contacto</p>
+      <h2 data-anim>Ven a <em>vernos</em></h2>
+      <div class="contacto-grid">
+        <div class="bloque-dato" data-anim>
+          <h3><span>📍</span> Dónde estamos</h3>
+          <p>C. d'Enguera, 3<br>Patraix<br>46018 València</p>
+          <p style="margin-top:.9rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=Pro%20Style%20Peluquer%C3%ADa%20C.%20d%27Enguera%203%2046018%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+        </div>
+        <div class="bloque-dato" data-anim style="transition-delay:.1s">
+          <h3><span>🕐</span> Horario</h3>
+          <ul>
+            <li><strong>Lunes a sábado</strong> 9:30–14:00 · 15:30–21:00</li>
+            <li><strong>Domingo</strong> Cerrado</li>
+          </ul>
+          <p style="margin-top:.9rem;font-size:.85rem">Reserva tu hora: <a href="tel:+34614677344">614 67 73 44</a></p>
+        </div>
+        <div class="bloque-dato" data-anim style="transition-delay:.2s">
+          <h3><span>💬</span> Habla con nosotras</h3>
+          <p>Teléfono:<br><a href="tel:+34614677344">614 67 73 44</a></p>
+          <p style="margin-top:.9rem"><a href="https://wa.me/34614677344" target="_blank" rel="noopener">Escríbenos por WhatsApp →</a></p>
+        </div>
+      </div>
+      <p class="aviso-cita" data-anim>Llámanos o escríbenos antes de venir y te guardamos tu hueco: <strong>sin esperas</strong>.</p>
+      <div class="cta-final" data-anim>
+        <h3 class="serif">Tu próxima cita está a <em>un mensaje</em></h3>
+        <div class="botones">
+          <a class="btn btn-cobre" href="tel:+34614677344">📞 614 67 73 44</a>
+          <a class="btn btn-linea" href="https://wa.me/34614677344" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">PRO <span>STYLE</span> PELUQUERÍA</p>
+  <p>C. d'Enguera, 3 · Patraix · 46018 València · <a href="tel:+34614677344" style="color:inherit">614 67 73 44</a></p>
+  <p class="aviso-demo"><strong>DEMO</strong> creada por <strong>Eleven AI</strong> — esta web puede ser tuya. <a href="https://elevenai-webs.netlify.app/formulario/?id=629&amp;sede=pablo">Dinos si la quieres tal cual o con cambios →</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var barra = document.getElementById('progreso');
+  function actualizarBarra(){
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    barra.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', actualizarBarra, {passive:true});
+  actualizarBarra();
+
+  var heroInt = document.getElementById('heroParallax');
+  if (heroInt && !reduceMotion) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroInt.style.transform = 'translateY(' + (y * 0.18) + 'px)';
+        heroInt.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.9));
+      }
+    }, {passive:true});
+  }
+
+  function animarContador(el){
+    var objetivo = parseFloat(el.getAttribute('data-target'));
+    var decimales = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduceMotion) { el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    var inicio = null, dur = 1600;
+    function paso(t){
+      if (!inicio) inicio = t;
+      var p = Math.min((t - inicio) / dur, 1);
+      var suav = 1 - Math.pow(1 - p, 3);
+      el.textContent = (objetivo * suav).toFixed(decimales).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  var animados = document.querySelectorAll('[data-anim]');
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    animados.forEach(function(el){ io.observe(el); });
+    var ioNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioNum.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    contadores.forEach(function(el){ ioNum.observe(el); });
+  } else {
+    animados.forEach(function(el){ el.classList.add('visible'); });
+    contadores.forEach(animarContador);
+  }
+
+  /* SCRIPT DE RESCATE (garantía de visibilidad, lección 03/08/2026):
+     a los 1,2s cualquier elemento que siga invisible se fuerza a visible. */
+  setTimeout(function rescate(){
+    document.querySelectorAll('[data-anim]:not(.visible)').forEach(function(el){
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+      if (getComputedStyle(el).opacity === '0') {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    contadores.forEach(function(el){
+      if (el.textContent === '0') {
+        var d = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = parseFloat(el.getAttribute('data-target')).toFixed(d).replace('.', ',');
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

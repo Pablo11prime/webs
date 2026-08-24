@@ -7,136 +7,197 @@
 <title>Auto Team R-N · Taller mecánico en Patraix, Valencia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --azul:#1B2A4A;        /* primario */
-    --claro:#F4F6F8;       /* secundario */
-    --rojo:#D64541;        /* acento */
-    --rojo-claro:#E8706C;
-    --azul-osc:#121d33;
-    --blanco:#FFFFFF;
-    --gris:#5b6577;
-    --sombra:0 20px 50px rgba(27,42,74,.12);
+    --carbon:#1A1714;      /* primario */
+    --crema:#F2ECE1;       /* secundario */
+    --brasa:#C0392B;       /* acento */
+    --brasa-viva:#E05A3A;
+    --ambar:#E8A848;
+    --blanco:#FFFCF6;
+    --gris:#6C635A;
+    --sombra:0 22px 55px rgba(26,23,20,.14);
     --curva:cubic-bezier(.22,.61,.36,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Barlow',sans-serif;background:var(--claro);color:var(--azul);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  h1,h2,h3,.cond{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.01em}
+  body{
+    font-family:'Inter',sans-serif;background:var(--crema);color:var(--carbon);
+    line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 
-  #progreso{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--rojo),var(--rojo-claro));z-index:1000;transition:width .15s linear}
-  .marca-demo{position:fixed;bottom:14px;left:14px;z-index:999;font-size:.68rem;letter-spacing:.3em;font-weight:700;color:rgba(27,42,74,.6);background:rgba(244,246,248,.9);border:1px solid rgba(214,69,65,.6);border-radius:6px;padding:.35em 1em .35em 1.25em;pointer-events:none;backdrop-filter:blur(4px)}
+  /* barra de progreso de scroll */
+  #progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:1000;
+    background:linear-gradient(90deg,var(--brasa),var(--ambar));transition:width .15s linear}
 
-  header.topbar{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.2rem;background:rgba(18,29,51,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
-  .logo{color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:.5em}
-  .logo i{display:inline-block;width:.55em;height:.55em;background:var(--rojo);transform:skewX(-12deg)}
-  .logo span{color:var(--rojo-claro)}
-  .topbar a.cta-mini{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-decoration:none;color:#fff;background:var(--rojo);border-radius:8px;white-space:nowrap;padding:.6em 1.2em;transition:transform .25s var(--curva),box-shadow .25s var(--curva)}
-  .topbar a.cta-mini:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(214,69,65,.45)}
+  /* marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;left:14px;z-index:999;font-size:.68rem;letter-spacing:.3em;font-weight:600;
+    color:rgba(26,23,20,.55);background:rgba(242,236,225,.88);border:1px solid rgba(192,57,43,.5);
+    border-radius:999px;padding:.35em 1em .35em 1.25em;pointer-events:none;backdrop-filter:blur(4px);
+  }
+
+  /* cabecera */
+  header.topbar{
+    position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:.9rem 1.2rem;background:rgba(26,23,20,.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(232,168,72,.2);
+  }
+  .logo{color:var(--crema);font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;letter-spacing:.12em;text-decoration:none;white-space:nowrap}
+  .logo span{color:var(--brasa-viva)}
+  .topbar a.cta-mini{
+    font-size:.8rem;font-weight:600;letter-spacing:.06em;text-decoration:none;color:#fff;background:var(--brasa);
+    border-radius:999px;white-space:nowrap;padding:.55em 1.2em;transition:transform .25s var(--curva),box-shadow .25s var(--curva);
+  }
+  .topbar a.cta-mini:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(192,57,43,.5)}
 
   /* hero */
-  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:6.5rem 1.4rem 4.5rem;color:#fff;overflow:hidden;
-    background:radial-gradient(ellipse 70% 60% at 90% 10%,rgba(214,69,65,.28),transparent 60%),linear-gradient(160deg,#0f1828 0%,#1B2A4A 55%,#22355d 100%)}
-  .hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 38px,rgba(255,255,255,.025) 38px 40px);pointer-events:none;animation:desliza 18s linear infinite}
-  @keyframes desliza{to{background-position:113px 113px}}
-  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--rojo) 0 60%,transparent 60%)}
+  .hero{
+    position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    padding:6.5rem 1.4rem 4.5rem;color:var(--crema);overflow:hidden;
+    background:
+      radial-gradient(ellipse 80% 55% at 15% 10%,rgba(192,57,43,.35),transparent 60%),
+      radial-gradient(ellipse 60% 45% at 90% 95%,rgba(232,168,72,.16),transparent 55%),
+      linear-gradient(160deg,#131010 0%,#1A1714 50%,#271b14 100%);
+  }
+  .hero::before{ /* chispas del taller: degradado animado */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(circle at 20% 80%,rgba(224,90,58,.18) 0 2px,transparent 3px),
+      radial-gradient(circle at 70% 60%,rgba(232,168,72,.2) 0 1.5px,transparent 3px),
+      radial-gradient(circle at 45% 30%,rgba(224,90,58,.15) 0 2px,transparent 3px),
+      radial-gradient(circle at 85% 25%,rgba(232,168,72,.16) 0 1.5px,transparent 3px);
+    background-size:420px 420px,360px 360px,500px 500px,300px 300px;
+    animation:chispas 18s linear infinite;opacity:.9;
+  }
+  @keyframes chispas{to{background-position:0 -420px,0 -360px,0 -500px,0 -300px}}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(232,168,72,.6),transparent)}
   .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
-  .sello{display:inline-flex;align-items:center;gap:.55em;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:#fff;border-left:3px solid var(--rojo);padding:.3em 0 .3em .9em;margin-bottom:1.7rem}
-  .hero h1{font-size:clamp(3rem,11vw,6.4rem);font-weight:800;line-height:.95;margin-bottom:1.3rem}
-  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.5em) skewX(-6deg);animation:palabra .7s var(--curva) forwards}
+  .sello{
+    display:inline-flex;align-items:center;gap:.55em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;
+    color:var(--ambar);border:1px solid rgba(232,168,72,.5);border-radius:999px;padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(232,168,72,.08);
+  }
+  .hero h1{font-size:clamp(2.7rem,10vw,5.8rem);font-weight:700;line-height:1.02;margin-bottom:1.3rem}
+  .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
   .hero h1 .palabra:nth-child(1){animation-delay:.15s}
-  .hero h1 .palabra:nth-child(2){animation-delay:.3s}
-  .hero h1 .palabra:nth-child(3){animation-delay:.45s}
-  .hero h1 .palabra:nth-child(4){animation-delay:.6s}
-  .hero h1 .palabra:nth-child(5){animation-delay:.75s}
-  .hero h1 em{font-style:normal;color:var(--rojo-claro)}
+  .hero h1 .palabra:nth-child(2){animation-delay:.32s}
+  .hero h1 .palabra:nth-child(3){animation-delay:.49s}
+  .hero h1 .palabra:nth-child(4){animation-delay:.66s}
+  .hero h1 .palabra:nth-child(5){animation-delay:.83s}
+  .hero h1 em{font-style:italic;color:var(--brasa-viva)}
   @keyframes palabra{to{opacity:1;transform:none}}
-  .hero p.sub{max-width:34em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(255,255,255,.82);margin-bottom:2.3rem}
+  .hero p.sub{max-width:34em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(242,236,225,.85);margin-bottom:2.3rem}
   .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
-  .btn{display:inline-flex;align-items:center;gap:.6em;text-decoration:none;font-weight:700;font-size:.95rem;letter-spacing:.05em;border-radius:10px;padding:.95em 1.9em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem}
-  .btn-rojo{background:var(--rojo);color:#fff}
-  .btn-rojo:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 34px rgba(214,69,65,.5);background:var(--rojo-claro)}
-  .btn-linea{border:1px solid rgba(255,255,255,.45);color:#fff}
-  .btn-linea:hover{transform:translateY(-3px);background:rgba(255,255,255,.08);box-shadow:0 10px 26px rgba(0,0,0,.35)}
-  .cifras{display:flex;flex-wrap:wrap;gap:2rem 3rem}
-  .cifra .num{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.2rem,6vw,3.2rem);font-weight:800;color:var(--rojo-claro);line-height:1.05}
-  .cifra .txt{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.65)}
-  .flecha{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);color:rgba(255,255,255,.5);font-size:1.3rem;animation:flotar 2.2s ease-in-out infinite}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;text-decoration:none;font-weight:600;font-size:.95rem;letter-spacing:.04em;
+    border-radius:999px;padding:.95em 2em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s;
+  }
+  .btn-brasa{background:linear-gradient(120deg,var(--brasa),var(--brasa-viva) 55%,var(--brasa));background-size:200% 100%;color:#fff;animation:brillo 5s ease infinite}
+  @keyframes brillo{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+  .btn-brasa:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 34px rgba(192,57,43,.55)}
+  .btn-linea{border:1px solid rgba(242,236,225,.5);color:var(--crema)}
+  .btn-linea:hover{transform:translateY(-3px);background:rgba(242,236,225,.08);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .cifras{display:flex;flex-wrap:wrap;gap:2.2rem 3rem}
+  .cifra .num{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,2.9rem);font-weight:700;color:var(--ambar);line-height:1.1}
+  .cifra .txt{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,236,225,.65)}
+  .flecha{position:absolute;left:50%;bottom:1.2rem;transform:translateX(-50%);color:rgba(242,236,225,.5);font-size:1.3rem;animation:flotar 2.2s ease-in-out infinite}
   @keyframes flotar{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
+  /* secciones */
   section{padding:4.8rem 1.4rem}
   .int{max-width:1060px;margin:0 auto}
-  .etiqueta{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:var(--rojo);margin-bottom:.9rem;display:flex;align-items:center;gap:.8em}
-  .etiqueta::before{content:"";height:3px;width:2.2em;background:var(--rojo)}
-  h2{font-size:clamp(2.2rem,6.5vw,3.6rem);font-weight:800;line-height:1;margin-bottom:1.2rem}
-  h2 em{font-style:normal;color:var(--rojo)}
+  .etiqueta{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--brasa);margin-bottom:.9rem;display:flex;align-items:center;gap:.8em}
+  .etiqueta::after{content:"";height:1px;width:3.2em;background:var(--brasa);opacity:.6}
+  h2{font-size:clamp(2rem,6vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1.2rem}
+  h2 em{font-style:italic;color:var(--brasa)}
 
+  /* animación de entrada (con red de seguridad) */
   [data-anim]{opacity:0;transform:translateY(28px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
   [data-anim].visible{opacity:1;transform:none}
 
-  .sobre{background:var(--claro)}
+  /* sobre */
+  .sobre{background:var(--crema)}
   .sobre-grid{display:grid;gap:2.4rem}
   .sobre p{color:var(--gris);font-size:1.05rem;max-width:38em}
-  .sobre p strong{color:var(--azul)}
+  .sobre p strong{color:var(--carbon)}
   .valores{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.6rem}
-  .valor{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;border:1px solid rgba(27,42,74,.2);background:var(--blanco);color:var(--azul);border-radius:8px;padding:.5em 1.1em;transition:transform .3s var(--curva),border-color .3s}
-  .valor:hover{transform:translateY(-3px);border-color:var(--rojo)}
-  .cita-destacada{border-left:4px solid var(--rojo);padding:1.2rem 1.4rem;font-size:clamp(1.15rem,3vw,1.45rem);font-weight:500;color:var(--azul);background:var(--blanco);border-radius:0 14px 14px 0;line-height:1.45;box-shadow:var(--sombra)}
-  .cita-destacada small{display:block;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rojo);margin-top:.8em;font-weight:700}
+  .valor{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:1px solid rgba(192,57,43,.4);background:var(--blanco);color:var(--gris);border-radius:999px;padding:.5em 1.2em;transition:transform .3s var(--curva),border-color .3s}
+  .valor:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--brasa)}
+  .cita-destacada{
+    border-left:3px solid var(--brasa);padding:1.1rem 0 1.1rem 1.4rem;font-family:'Playfair Display',serif;
+    font-size:clamp(1.2rem,3.4vw,1.6rem);font-style:italic;color:var(--carbon);
+    background:linear-gradient(90deg,rgba(192,57,43,.1),transparent 70%);border-radius:0 14px 14px 0;line-height:1.4;
+  }
+  .cita-destacada small{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brasa);margin-top:.8em}
 
-  .servicios{background:var(--azul);color:#fff}
-  .servicios p.intro{color:rgba(255,255,255,.72);max-width:36em;margin-bottom:2.6rem}
+  /* servicios */
+  .servicios{background:var(--carbon);color:var(--crema)}
+  .servicios p.intro{color:rgba(242,236,225,.72);max-width:36em;margin-bottom:2.6rem}
   .tarjetas{display:grid;gap:1.1rem;grid-template-columns:1fr}
-  .tarjeta{position:relative;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:1.8rem 1.5rem 1.6rem;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));transition:transform .35s var(--curva),border-color .35s,box-shadow .35s;overflow:hidden}
-  .tarjeta::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--rojo);transform:scaleY(0);transform-origin:top;transition:transform .35s var(--curva)}
-  .tarjeta:hover{transform:translateY(-6px);border-color:rgba(214,69,65,.6);box-shadow:0 18px 40px rgba(0,0,0,.45)}
-  .tarjeta:hover::before{transform:scaleY(1)}
-  .tarjeta .ico{width:2.7em;height:2.7em;border-radius:10px;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:rgba(214,69,65,.16);border:1px solid rgba(214,69,65,.4)}
-  .tarjeta h3{font-size:1.5rem;font-weight:700;margin-bottom:.45rem}
-  .tarjeta p{font-size:.92rem;color:rgba(255,255,255,.72);font-weight:300}
-  .nota-servicios{margin-top:1.7rem;font-size:.85rem;color:rgba(255,255,255,.6)}
-  .nota-servicios a{color:var(--rojo-claro)}
+  .tarjeta{
+    position:relative;border:1px solid rgba(242,236,225,.14);border-radius:18px;padding:1.8rem 1.5rem 1.6rem;
+    background:linear-gradient(160deg,rgba(242,236,225,.055),rgba(242,236,225,.015));
+    transition:transform .35s var(--curva),border-color .35s,box-shadow .35s;overflow:hidden;
+  }
+  .tarjeta::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(circle at 85% 12%,rgba(224,90,58,.25),transparent 60%);transition:opacity .4s}
+  .tarjeta:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(224,90,58,.6);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .tarjeta:hover::after{opacity:1}
+  .tarjeta .ico{width:2.7em;height:2.7em;border-radius:12px;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:rgba(192,57,43,.16);border:1px solid rgba(224,90,58,.4)}
+  .tarjeta h3{font-size:1.4rem;font-weight:600;margin-bottom:.45rem}
+  .tarjeta p{font-size:.92rem;color:rgba(242,236,225,.7);font-weight:300}
+  .nota-servicios{margin-top:1.7rem;font-size:.82rem;color:rgba(242,236,225,.55)}
+  .nota-servicios a{color:var(--ambar)}
 
-  .resenas{background:linear-gradient(180deg,var(--claro) 0%,#e6eaf0 100%)}
+  /* reseñas */
+  .resenas{background:linear-gradient(180deg,var(--crema) 0%,#e8dfd0 100%)}
   .estrellas-grandes{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem}
-  .estrellas-grandes .nota{font-family:'Barlow Condensed',sans-serif;font-size:clamp(3rem,9vw,4.8rem);font-weight:800;color:var(--azul)}
+  .estrellas-grandes .nota{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,9vw,4.4rem);font-weight:700;color:var(--carbon)}
   .estrellas-grandes .detalle{color:var(--gris);font-size:.95rem}
-  .estrellas{color:#e8a13a;letter-spacing:.15em;font-size:1.05rem}
+  .estrellas{color:var(--ambar);letter-spacing:.15em;font-size:1.05rem}
   .opiniones{display:grid;gap:1.1rem;grid-template-columns:1fr}
-  .opinion{background:var(--blanco);border-radius:14px;padding:1.7rem 1.5rem;box-shadow:var(--sombra);border:1px solid rgba(27,42,74,.08);transition:transform .35s var(--curva),box-shadow .35s var(--curva);display:flex;flex-direction:column;gap:.9rem}
-  .opinion:hover{transform:translateY(-6px);box-shadow:0 26px 55px rgba(27,42,74,.18)}
-  .opinion blockquote{font-size:1.1rem;line-height:1.5;color:var(--azul);font-weight:500}
+  .opinion{
+    background:var(--blanco);border-radius:18px;padding:1.7rem 1.5rem;box-shadow:var(--sombra);border:1px solid rgba(192,57,43,.2);
+    transition:transform .35s var(--curva),box-shadow .35s var(--curva);display:flex;flex-direction:column;gap:.9rem;
+  }
+  .opinion:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 55px rgba(26,23,20,.2)}
+  .opinion blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;line-height:1.5;color:var(--carbon)}
   .opinion .quien{display:flex;align-items:center;gap:.8em;margin-top:auto}
-  .opinion .avatar{width:2.4em;height:2.4em;border-radius:8px;flex:none;background:var(--azul);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.95rem}
+  .opinion .avatar{width:2.4em;height:2.4em;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--brasa),var(--ambar));display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:.95rem}
   .opinion .quien div p{font-weight:600;font-size:.9rem;line-height:1.3}
   .opinion .quien div small{font-size:.74rem;color:var(--gris);letter-spacing:.06em}
 
-  .contacto{background:var(--claro)}
+  /* contacto */
+  .contacto{background:var(--crema)}
   .contacto-grid{display:grid;gap:1.4rem;grid-template-columns:1fr}
-  .bloque-dato{background:var(--blanco);border:1px solid rgba(27,42,74,.1);border-radius:14px;padding:1.6rem 1.4rem;box-shadow:var(--sombra);transition:transform .3s var(--curva)}
+  .bloque-dato{background:var(--blanco);border:1px solid rgba(192,57,43,.25);border-radius:18px;padding:1.6rem 1.4rem;box-shadow:var(--sombra);transition:transform .3s var(--curva)}
   .bloque-dato:hover{transform:translateY(-4px)}
-  .bloque-dato h3{font-size:1.45rem;font-weight:700;margin-bottom:.7rem;display:flex;align-items:center;gap:.55em}
+  .bloque-dato h3{font-size:1.35rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.55em}
+  .bloque-dato h3 span{color:var(--brasa)}
   .bloque-dato p,.bloque-dato li{color:var(--gris);font-size:.95rem}
   .bloque-dato ul{list-style:none}
-  .bloque-dato li{display:flex;justify-content:space-between;gap:1em;padding:.32em 0;border-bottom:1px dashed rgba(27,42,74,.2)}
+  .bloque-dato li{display:flex;justify-content:space-between;gap:1em;padding:.32em 0;border-bottom:1px dashed rgba(192,57,43,.3)}
   .bloque-dato li:last-child{border-bottom:none}
-  .bloque-dato li strong{color:var(--azul);font-weight:600}
-  .bloque-dato a{color:var(--azul);font-weight:600;text-decoration:none;border-bottom:2px solid var(--rojo);transition:color .25s}
-  .bloque-dato a:hover{color:var(--rojo)}
-  .aviso-cita{margin-top:1.8rem;text-align:center;font-size:.9rem;color:var(--gris);background:rgba(214,69,65,.07);border:1px dashed rgba(214,69,65,.5);border-radius:12px;padding:.9em 1.2em}
-  .cta-final{margin-top:2.6rem;text-align:center;background:var(--azul);border-radius:18px;padding:2.8rem 1.5rem;color:#fff;position:relative;overflow:hidden}
-  .cta-final::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,rgba(214,69,65,.3),transparent 55%)}
-  .cta-final h3{position:relative;font-size:clamp(1.8rem,5.5vw,2.6rem);font-weight:800;margin-bottom:1.4rem}
-  .cta-final h3 em{font-style:normal;color:var(--rojo-claro)}
+  .bloque-dato li strong{color:var(--carbon);font-weight:500}
+  .bloque-dato a{color:var(--carbon);font-weight:500;text-decoration:none;border-bottom:1px solid var(--brasa);transition:color .25s}
+  .bloque-dato a:hover{color:var(--brasa)}
+  .aviso-cita{margin-top:1.8rem;text-align:center;font-size:.88rem;color:var(--gris);background:rgba(232,168,72,.12);border:1px dashed rgba(192,57,43,.5);border-radius:14px;padding:.9em 1.2em}
+  .cta-final{margin-top:2.6rem;text-align:center;background:var(--carbon);border-radius:22px;padding:2.8rem 1.5rem;color:var(--crema);position:relative;overflow:hidden}
+  .cta-final::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 22%,rgba(192,57,43,.35),transparent 55%)}
+  .cta-final h3{position:relative;font-size:clamp(1.6rem,5vw,2.3rem);margin-bottom:1.4rem}
+  .cta-final h3 em{font-style:italic;color:var(--brasa-viva)}
   .cta-final .botones{position:relative;justify-content:center;margin-bottom:0}
 
-  footer{background:var(--azul-osc);color:rgba(255,255,255,.65);text-align:center;padding:2.4rem 1.4rem;font-size:.85rem}
-  footer .logo-pie{font-family:'Barlow Condensed',sans-serif;color:#fff;font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase;font-weight:800;margin-bottom:.6rem}
-  footer .logo-pie span{color:var(--rojo-claro)}
-  footer .aviso-demo{margin-top:1.1rem;font-size:.8rem;color:rgba(255,255,255,.45)}
-  footer .aviso-demo strong{color:var(--rojo-claro);font-weight:700}
-  footer .aviso-demo a{color:#fff}
+  /* pie */
+  footer{background:#131010;color:rgba(242,236,225,.65);text-align:center;padding:2.4rem 1.4rem;font-size:.85rem}
+  footer .logo-pie{font-family:'Playfair Display',serif;color:var(--crema);font-size:1.15rem;letter-spacing:.12em;margin-bottom:.6rem}
+  footer .logo-pie span{color:var(--brasa-viva)}
+  footer .aviso-demo{margin-top:1.1rem;font-size:.8rem;color:rgba(242,236,225,.45)}
+  footer .aviso-demo strong{color:var(--ambar);font-weight:600}
+  footer a{color:inherit}
+  footer .aviso-demo a{color:var(--crema)}
 
   @media(min-width:720px){
     section{padding:6.5rem 2rem}
@@ -146,6 +207,7 @@
     .sobre-grid{grid-template-columns:1.2fr 1fr;align-items:center}
   }
   @media(min-width:1000px){.tarjetas{grid-template-columns:repeat(3,1fr)}}
+
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
     [data-anim]{opacity:1 !important;transform:none !important}
@@ -166,7 +228,7 @@
 <div class="marca-demo" aria-hidden="true">DEMO</div>
 
 <header class="topbar">
-  <a class="logo" href="#inicio"><i aria-hidden="true"></i>Auto Team <span>R-N</span></a>
+  <a class="logo" href="#inicio">AUTO TEAM <span>R-N</span></a>
   <a class="cta-mini" href="tel:+34963776126">Llamar · 963 77 61 26</a>
 </header>
 
@@ -175,23 +237,27 @@
   <!-- HERO -->
   <section class="hero" id="inicio">
     <div class="hero-int" id="heroParallax">
-      <p class="sello">Taller mecánico · Patraix, València</p>
+      <p class="sello">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+        Taller mecánico · Patraix, València
+      </p>
       <h1>
-        <span class="palabra">Tu&nbsp;taller</span>
-        <span class="palabra">de</span>
-        <span class="palabra"><em>confianza</em></span>
+        <span class="palabra">El&nbsp;taller</span>
         <span class="palabra">en</span>
-        <span class="palabra">Patraix.</span>
+        <span class="palabra">el</span>
+        <span class="palabra">que</span>
+        <span class="palabra"><em>confiar.</em></span>
       </h1>
-      <p class="sub">Mecánica general, frenos, amortiguadores, lunas y preparación de ITV. Diagnóstico honesto, reparación rápida y el coche listo cuando te lo prometemos.</p>
+      <p class="sub">Mecánica general, frenos, amortiguadores, lunas y preparación de ITV en Patraix. Diagnóstico honesto, reparación rápida y el coche listo cuando te lo prometemos.</p>
       <div class="botones">
-        <a class="btn btn-rojo" href="tel:+34963776126">📞 Llamar al taller</a>
+        <a class="btn btn-brasa" href="tel:+34963776126">📞 Llamar al taller</a>
         <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Auto%20Team%20R-N%20Carrer%20del%20Periodista%20Roberto%20Castrovido%203%2046014%20Val%C3%A8ncia" target="_blank" rel="noopener">📍 Cómo llegar</a>
+        <a class="btn btn-linea" href="#servicios">🔧 Ver servicios</a>
       </div>
       <div class="cifras">
         <div class="cifra"><div class="num"><span class="contador" data-target="4.9" data-decimales="1">0</span>★</div><div class="txt">Valoración en Google</div></div>
         <div class="cifra"><div class="num">+10</div><div class="txt">Años con clientes fieles</div></div>
-        <div class="cifra"><div class="num cond">L–V</div><div class="txt">8:30–14:00 · 15:30–19:30</div></div>
+        <div class="cifra"><div class="num">L–V</div><div class="txt">8:30–14:00 · 15:30–19:30</div></div>
       </div>
     </div>
     <div class="flecha" aria-hidden="true">↓</div>
@@ -296,12 +362,12 @@
       <h2 data-anim>Pásate por <em>el taller</em></h2>
       <div class="contacto-grid">
         <div class="bloque-dato" data-anim>
-          <h3>📍 Dónde estamos</h3>
+          <h3><span>📍</span> Dónde estamos</h3>
           <p>Carrer del Periodista Roberto Castrovido, 3<br>Patraix<br>46014 València</p>
           <p style="margin-top:.9rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=Auto%20Team%20R-N%20Carrer%20del%20Periodista%20Roberto%20Castrovido%203%2046014%20Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
         </div>
         <div class="bloque-dato" data-anim style="transition-delay:.1s">
-          <h3>🕐 Horario</h3>
+          <h3><span>🕐</span> Horario</h3>
           <ul>
             <li><strong>Lunes a viernes</strong> 8:30–14:00</li>
             <li><strong></strong> 15:30–19:30</li>
@@ -309,16 +375,16 @@
           </ul>
         </div>
         <div class="bloque-dato" data-anim style="transition-delay:.2s">
-          <h3>📞 Llámanos</h3>
+          <h3><span>📞</span> Llámanos</h3>
           <p>Teléfono del taller:<br><a href="tel:+34963776126">963 77 61 26</a></p>
           <p style="margin-top:.9rem;font-size:.88rem">Aceptamos tarjeta · Acceso para silla de ruedas</p>
         </div>
       </div>
       <p class="aviso-cita" data-anim>Llama antes de venir y te reservamos hueco: <strong>así tu coche entra sin esperas</strong>.</p>
       <div class="cta-final" data-anim>
-        <h3>¿Tu coche necesita <em>un vistazo</em>?</h3>
+        <h3 class="serif">¿Tu coche necesita <em>un vistazo</em>?</h3>
         <div class="botones">
-          <a class="btn btn-rojo" href="tel:+34963776126">📞 963 77 61 26</a>
+          <a class="btn btn-brasa" href="tel:+34963776126">📞 963 77 61 26</a>
           <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Auto%20Team%20R-N%20Carrer%20del%20Periodista%20Roberto%20Castrovido%203%2046014%20Val%C3%A8ncia" target="_blank" rel="noopener">📍 Cómo llegar</a>
         </div>
       </div>
@@ -327,9 +393,10 @@
 
 </main>
 
+<!-- PIE -->
 <footer>
-  <p class="logo-pie">Auto Team <span>R-N</span></p>
-  <p>C/ Periodista Roberto Castrovido, 3 · Patraix · 46014 València · <a href="tel:+34963776126" style="color:inherit">963 77 61 26</a></p>
+  <p class="logo-pie">AUTO TEAM <span>R-N</span> · TALLER MECÁNICO</p>
+  <p>C/ Periodista Roberto Castrovido, 3 · Patraix · 46014 València · <a href="tel:+34963776126">963 77 61 26</a></p>
   <p class="aviso-demo"><strong>DEMO</strong> creada por <strong>Eleven AI</strong> — esta web puede ser tuya. <a href="https://elevenai-webs.netlify.app/formulario/?id=375&amp;sede=pablo">Dinos si la quieres tal cual o con cambios →</a></p>
 </footer>
 
@@ -337,6 +404,8 @@
 (function(){
   'use strict';
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* barra de progreso */
   var barra = document.getElementById('progreso');
   function actualizarBarra(){
     var total = document.documentElement.scrollHeight - window.innerHeight;
@@ -345,6 +414,7 @@
   window.addEventListener('scroll', actualizarBarra, {passive:true});
   actualizarBarra();
 
+  /* parallax hero */
   var heroInt = document.getElementById('heroParallax');
   if (heroInt && !reduceMotion) {
     window.addEventListener('scroll', function(){
@@ -356,21 +426,28 @@
     }, {passive:true});
   }
 
+  /* contadores */
+  function formatear(n, decimales){
+    var s = n.toFixed(decimales).replace('.', ',');
+    if (decimales === 0) s = s.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return s;
+  }
   function animarContador(el){
     var objetivo = parseFloat(el.getAttribute('data-target'));
     var decimales = parseInt(el.getAttribute('data-decimales') || '0', 10);
-    if (reduceMotion) { el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    if (reduceMotion) { el.textContent = formatear(objetivo, decimales); return; }
     var inicio = null, dur = 1600;
     function paso(t){
       if (!inicio) inicio = t;
       var p = Math.min((t - inicio) / dur, 1);
       var suav = 1 - Math.pow(1 - p, 3);
-      el.textContent = (objetivo * suav).toFixed(decimales).replace('.', ',');
+      el.textContent = formatear(objetivo * suav, decimales);
       if (p < 1) requestAnimationFrame(paso);
     }
     requestAnimationFrame(paso);
   }
 
+  /* entradas escalonadas */
   var animados = document.querySelectorAll('[data-anim]');
   var contadores = document.querySelectorAll('.contador');
   if ('IntersectionObserver' in window && !reduceMotion) {
@@ -392,24 +469,18 @@
   }
 
   /* SCRIPT DE RESCATE (garantía de visibilidad, lección 03/08/2026):
-     a los 1,2s cualquier elemento que siga invisible se fuerza a visible. */
+     a los 1,2 s cualquier elemento que siga invisible se fuerza a visible. */
   setTimeout(function rescate(){
     document.querySelectorAll('[data-anim]:not(.visible)').forEach(function(el){
-      el.classList.add('visible');
-      el.style.opacity = '1';
-      el.style.transform = 'none';
+      el.classList.add('visible'); el.style.opacity = '1'; el.style.transform = 'none';
     });
     document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
-      if (getComputedStyle(el).opacity === '0') {
-        el.style.animation = 'none';
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-      }
+      if (getComputedStyle(el).opacity === '0') { el.style.animation = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }
     });
     contadores.forEach(function(el){
       if (el.textContent === '0') {
         var d = parseInt(el.getAttribute('data-decimales') || '0', 10);
-        el.textContent = parseFloat(el.getAttribute('data-target')).toFixed(d).replace('.', ',');
+        el.textContent = formatear(parseFloat(el.getAttribute('data-target')), d);
       }
     });
   }, 1200);

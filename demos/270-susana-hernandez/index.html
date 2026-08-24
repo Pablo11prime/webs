@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SH Boutique — Susana Hernández. Boutique de moda en Ciutat Vella, València. Prendas de alta calidad seleccionadas pieza a pieza y asesoramiento personalizado.">
+<title>SH Boutique · Susana Hernández — Moda en València</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#3B2F33;
+  --cream:#F6F1EC;
+  --tan:#B98A6E;
+  --tan-soft:rgba(185,138,110,.14);
+  --ink-soft:rgba(59,47,51,.72);
+  --white:#FFFDFB;
+  --radius:22px;
+  --shadow:0 18px 50px -18px rgba(59,47,51,.22);
+  --serif:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans:'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.12}
+a{color:inherit}
+img{max-width:100%}
+.wrap{width:min(1120px,92%);margin-inline:auto}
+
+/* ——— Marca de agua DEMO ——— */
+.demo-badge{
+  position:fixed;top:14px;right:14px;z-index:999;
+  font-size:.68rem;letter-spacing:.22em;font-weight:600;
+  padding:.45em 1em;border-radius:999px;
+  background:rgba(59,47,51,.85);color:var(--cream);
+  backdrop-filter:blur(6px);
+  box-shadow:0 6px 18px rgba(59,47,51,.25);
+  pointer-events:none;
+}
+
+/* ——— Animaciones de entrada ——— */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.hero-word{display:inline-block;opacity:0;transform:translateY(.6em) rotate(1.5deg);transition:opacity .8s ease,transform .8s cubic-bezier(.22,.61,.36,1)}
+.hero-word.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal,.hero-word{opacity:1!important;transform:none!important;transition:none!important}
+  .card:hover{transform:none!important}
+  .hero-bg{transform:none!important}
+}
+
+/* ——— Header ——— */
+header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  padding:1.4rem 0;
+}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--serif);font-size:1.35rem;letter-spacing:.14em;font-weight:600;text-decoration:none;color:var(--cream)}
+.logo span{color:var(--tan)}
+.nav-links{display:none;gap:2rem;list-style:none}
+.nav-links a{color:rgba(246,241,236,.85);text-decoration:none;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--tan)}
+@media(min-width:760px){.nav-links{display:flex}}
+
+/* ——— Hero ——— */
+.hero{
+  position:relative;min-height:92vh;
+  display:flex;align-items:center;
+  color:var(--cream);
+  overflow:hidden;
+  background:var(--ink);
+}
+.hero-bg{
+  position:absolute;inset:-12% 0;
+  background:
+    radial-gradient(60% 50% at 78% 24%, rgba(185,138,110,.38), transparent 65%),
+    radial-gradient(45% 40% at 15% 80%, rgba(185,138,110,.22), transparent 60%),
+    linear-gradient(160deg,#332a2e 0%, #3B2F33 45%, #2c2427 100%);
+  will-change:transform;
+}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(115deg, rgba(246,241,236,.035) 0 1px, transparent 1px 90px);
+}
+.hero-inner{position:relative;z-index:2;padding:8.5rem 0 5rem}
+.eyebrow{
+  font-size:.74rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--tan);font-weight:500;margin-bottom:1.4rem;
+}
+.hero h1{
+  font-size:clamp(2.9rem,9vw,5.6rem);
+  max-width:12ch;
+  margin-bottom:1.5rem;
+}
+.hero h1 em{font-style:italic;color:var(--tan)}
+.hero p.lead{
+  max-width:46ch;font-weight:300;font-size:clamp(1rem,2.4vw,1.15rem);
+  color:rgba(246,241,236,.82);margin-bottom:2.4rem;
+}
+.cta-row{display:flex;flex-wrap:wrap;gap:1rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;
+  padding:1em 1.9em;border-radius:999px;
+  font-size:.85rem;letter-spacing:.08em;font-weight:500;text-decoration:none;
+  transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s,background .35s,color .35s;
+}
+.btn-primary{background:var(--tan);color:#fff;box-shadow:0 14px 34px -12px rgba(185,138,110,.6)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 44px -12px rgba(185,138,110,.75)}
+.btn-ghost{border:1px solid rgba(246,241,236,.4);color:var(--cream)}
+.btn-ghost:hover{background:rgba(246,241,236,.1);transform:translateY(-3px)}
+.hero-note{margin-top:2.2rem;font-size:.78rem;color:rgba(246,241,236,.55);letter-spacing:.05em}
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;
+  width:1px;height:56px;background:linear-gradient(to bottom,var(--tan),transparent);
+  animation:drop 2.4s ease-in-out infinite;
+}
+@keyframes drop{0%{transform:translateX(-50%) scaleY(.2);transform-origin:top}55%{transform:translateX(-50%) scaleY(1)}100%{opacity:0;transform:translateX(-50%) scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.scroll-hint{animation:none}}
+
+/* ——— Secciones ——— */
+section{padding:6rem 0}
+.kicker{
+  font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--tan);font-weight:600;margin-bottom:1rem;
+}
+.section-title{font-size:clamp(2rem,5.5vw,3.2rem);margin-bottom:1.6rem;max-width:20ch}
+.section-title em{font-style:italic;color:var(--tan)}
+
+/* Sobre */
+.about-grid{display:grid;gap:3rem}
+@media(min-width:880px){.about-grid{grid-template-columns:1.1fr .9fr;align-items:center;gap:5rem}}
+.about-text p{color:var(--ink-soft);font-weight:300;font-size:1.05rem;margin-bottom:1.2rem;max-width:55ch}
+.about-quote{
+  font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,3.6vw,2.1rem);
+  line-height:1.3;color:var(--ink);
+  border-left:3px solid var(--tan);padding-left:1.4rem;margin-top:2rem;
+}
+.about-visual{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(150deg,var(--ink) 0%,#4a3b40 60%,var(--tan) 160%);
+  min-height:380px;display:flex;align-items:flex-end;
+  box-shadow:var(--shadow);
+}
+.about-visual::before{
+  content:"SH";position:absolute;top:50%;left:50%;transform:translate(-50%,-56%);
+  font-family:var(--serif);font-size:clamp(7rem,20vw,11rem);font-weight:600;
+  color:rgba(246,241,236,.1);letter-spacing:.05em;
+}
+.about-caption{position:relative;padding:1.6rem;color:rgba(246,241,236,.85);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase}
+
+/* Selección */
+.select-section{background:var(--white);border-radius:48px 48px 0 0}
+.cards{display:grid;gap:1.4rem;margin-top:3rem}
+@media(min-width:680px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.cards{grid-template-columns:repeat(4,1fr)}}
+.card{
+  background:var(--cream);border-radius:var(--radius);
+  padding:2.2rem 1.8rem;
+  border:1px solid rgba(185,138,110,.18);
+  transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s;
+}
+.card:hover{transform:translateY(-8px) scale(1.02);box-shadow:var(--shadow)}
+.card-num{
+  font-family:var(--serif);font-size:.95rem;font-style:italic;
+  color:var(--tan);display:block;margin-bottom:1.1rem;letter-spacing:.1em;
+}
+.card h3{font-size:1.45rem;margin-bottom:.7rem}
+.card p{font-size:.92rem;color:var(--ink-soft);font-weight:300}
+
+/* Testimonio */
+.review{background:var(--ink);color:var(--cream);text-align:center;border-radius:0}
+.review .kicker{color:var(--tan)}
+.review blockquote{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.9rem,5.5vw,3.4rem);line-height:1.25;
+  max-width:22ch;margin:1.2rem auto 1.8rem;
+}
+.review blockquote::before{content:"“";color:var(--tan)}
+.review blockquote::after{content:"”";color:var(--tan)}
+.review cite{font-style:normal;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(246,241,236,.6)}
+.review .ig-line{margin-top:2.6rem;font-size:.9rem;color:rgba(246,241,236,.75)}
+.review .ig-line a{color:var(--tan);text-decoration:none;border-bottom:1px solid rgba(185,138,110,.5);transition:border-color .3s}
+.review .ig-line a:hover{border-color:var(--tan)}
+
+/* Contacto */
+.contact-grid{display:grid;gap:2.5rem;margin-top:2.5rem}
+@media(min-width:880px){.contact-grid{grid-template-columns:1fr 1fr;gap:4rem}}
+.contact-block{
+  background:var(--white);border-radius:var(--radius);
+  padding:2.4rem;box-shadow:0 10px 34px -20px rgba(59,47,51,.25);
+  border:1px solid rgba(185,138,110,.15);
+}
+.contact-block h3{font-size:1.6rem;margin-bottom:1.2rem}
+.contact-item{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.3rem}
+.contact-item:last-child{margin-bottom:0}
+.dot{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  background:var(--tan-soft);color:var(--tan);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.contact-item strong{display:block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tan);margin-bottom:.2rem}
+.contact-item a{text-decoration:none;color:var(--ink);border-bottom:1px solid rgba(185,138,110,.4);transition:border-color .3s}
+.contact-item a:hover{border-color:var(--tan)}
+.contact-item p{font-weight:300;color:var(--ink-soft);font-size:.95rem}
+.hours-note{
+  margin-top:1.6rem;padding:1rem 1.2rem;border-radius:14px;
+  background:var(--tan-soft);font-size:.88rem;color:var(--ink);
+}
+
+/* Footer */
+footer{
+  background:var(--ink);color:rgba(246,241,236,.7);
+  padding:3rem 0 2.4rem;text-align:center;font-size:.85rem;font-weight:300;
+}
+footer .foot-logo{font-family:var(--serif);font-size:1.3rem;color:var(--cream);letter-spacing:.14em;margin-bottom:.9rem}
+footer .foot-logo span{color:var(--tan)}
+footer p{margin-bottom:.5rem}
+footer a{color:var(--tan);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.foot-agency{
+  margin-top:1.8rem;padding-top:1.6rem;
+  border-top:1px solid rgba(246,241,236,.12);
+  font-size:.8rem;color:rgba(246,241,236,.55);
+}
+</style>
+<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+<div class="demo-badge" aria-hidden="true">DEMO</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#inicio">SH <span>Boutique</span></a>
+    <ul class="nav-links">
+      <li><a href="#sobre">La boutique</a></li>
+      <li><a href="#seleccion">La selección</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- (1) HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="wrap hero-inner">
+    <p class="eyebrow reveal">Boutique de moda · Ciutat Vella, València</p>
+    <h1 id="heroTitle">Moda elegida <em>pieza a pieza</em>, para ti</h1>
+    <p class="lead reveal">SH Boutique, el sueño hecho realidad de Susana Hernández: prendas de alta calidad, asesoramiento personalizado y un ambiente íntimo en pleno corazón de València.</p>
+    <div class="cta-row reveal">
+      <a class="btn btn-primary" href="tel:+34961043362">📞 Llamar · 961 04 33 62</a>
+      <a class="btn btn-ghost" href="https://www.instagram.com/shboutiquevalencia" target="_blank" rel="noopener">Visítanos · @shboutiquevalencia</a>
+    </div>
+    <p class="hero-note reveal">C/ de la Pau, 18 · 46003 València</p>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"></div>
+</section>
+
+<!-- (2) SOBRE NOSOTROS -->
+<section id="sobre">
+  <div class="wrap about-grid">
+    <div class="about-text">
+      <p class="kicker reveal">Sobre nosotros</p>
+      <h2 class="section-title reveal">El alma de la tienda es <em>Susana</em></h2>
+      <p class="reveal">SH Boutique es el sueño hecho realidad de Susana Hernández, el alma de la tienda. Cada prenda que encontrarás aquí ha sido seleccionada pieza a pieza, con una sensibilidad especial por la estética y el diseño.</p>
+      <p class="reveal">En la calle de la Pau, en pleno Ciutat Vella, te espera un espacio íntimo donde la moda se vive de cerca, con asesoramiento personalizado y calma.</p>
+      <p class="about-quote reveal">«Alta calidad, cercanía y una mirada propia sobre el diseño.»</p>
+    </div>
+    <div class="about-visual reveal">
+      <p class="about-caption">Susana Hernández Boutique · marca registrada</p>
+    </div>
+  </div>
+</section>
+
+<!-- (3) LA SELECCIÓN -->
+<section class="select-section" id="seleccion">
+  <div class="wrap">
+    <p class="kicker reveal">La selección</p>
+    <h2 class="section-title reveal">Lo que hace <em>única</em> a SH Boutique</h2>
+    <div class="cards">
+      <article class="card reveal">
+        <span class="card-num">— 01</span>
+        <h3>Pieza a pieza</h3>
+        <p>Prendas de alta calidad elegidas una a una por Susana, con criterio y sensibilidad por el diseño.</p>
+      </article>
+      <article class="card reveal">
+        <span class="card-num">— 02</span>
+        <h3>Asesoramiento personal</h3>
+        <p>Atención cercana y dedicada para encontrar la prenda que de verdad va contigo.</p>
+      </article>
+      <article class="card reveal">
+        <span class="card-num">— 03</span>
+        <h3>Ambiente íntimo</h3>
+        <p>Una boutique recogida en Ciutat Vella donde comprar es una experiencia tranquila y personal.</p>
+      </article>
+      <article class="card reveal">
+        <span class="card-num">— 04</span>
+        <h3>Estética y diseño</h3>
+        <p>Una mirada propia sobre la moda, con especial cuidado por la estética en cada detalle.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- (4) TESTIMONIO -->
+<section class="review">
+  <div class="wrap">
+    <p class="kicker reveal">Dicen de nosotras</p>
+    <blockquote class="reveal">Gran calidad y servicio</blockquote>
+    <cite class="reveal">— Clienta de SH Boutique</cite>
+    <p class="ig-line reveal">Descubre las novedades cada semana en <a href="https://www.instagram.com/shboutiquevalencia" target="_blank" rel="noopener">Instagram @shboutiquevalencia</a> y en Facebook: Sh Boutique Valencia.</p>
+  </div>
+</section>
+
+<!-- (5) CONTACTO -->
+<section id="contacto">
+  <div class="wrap">
+    <p class="kicker reveal">Contacto</p>
+    <h2 class="section-title reveal">Ven a <em>conocernos</em></h2>
+    <div class="contact-grid">
+      <div class="contact-block reveal">
+        <h3>Dónde estamos</h3>
+        <div class="contact-item">
+          <div class="dot" aria-hidden="true">📍</div>
+          <div>
+            <strong>Dirección</strong>
+            <a href="https://maps.google.com/?q=SH+Boutique+Carrer+de+la+Pau+18+Valencia" target="_blank" rel="noopener">C/ de la Pau, 18 · Ciutat Vella · 46003 València</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="dot" aria-hidden="true">🗺️</div>
+          <div>
+            <strong>Cómo llegar</strong>
+            <a href="https://maps.google.com/?q=SH+Boutique+Carrer+de+la+Pau+18+Valencia" target="_blank" rel="noopener">Abrir en Google Maps</a>
+          </div>
+        </div>
+        <div class="hours-note">🕰️ Consulta nuestro horario actualizado por Instagram o por teléfono antes de tu visita.</div>
+      </div>
+      <div class="contact-block reveal">
+        <h3>Habla con nosotras</h3>
+        <div class="contact-item">
+          <div class="dot" aria-hidden="true">📞</div>
+          <div>
+            <strong>Teléfono</strong>
+            <a href="tel:+34961043362">961 04 33 62</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="dot" aria-hidden="true">📷</div>
+          <div>
+            <strong>Instagram</strong>
+            <a href="https://www.instagram.com/shboutiquevalencia" target="_blank" rel="noopener">@shboutiquevalencia</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="dot" aria-hidden="true">👍</div>
+          <div>
+            <strong>Facebook</strong>
+            <p>Sh Boutique Valencia</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-logo">SH <span>Boutique</span></p>
+    <p>Susana Hernández Boutique · C/ de la Pau, 18 · 46003 València · <a href="tel:+34961043362">961 04 33 62</a></p>
+    <p class="foot-agency">Demo creada por <strong>Eleven AI</strong> — esta web puede ser tuya · <a href="https://elevenprime.es" target="_blank" rel="noopener">elevenprime.es</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Hero palabra a palabra */
+  var title = document.getElementById('heroTitle');
+  if (title && !reduced) {
+    var walk = function(node){
+      var out = [];
+      Array.prototype.slice.call(node.childNodes).forEach(function(child){
+        if (child.nodeType === 3) {
+          child.textContent.split(/\s+/).forEach(function(w){
+            if (!w) return;
+            var s = document.createElement('span');
+            s.className = 'hero-word';
+            s.textContent = w;
+            out.push(s);
+          });
+        } else if (child.nodeType === 1) {
+          child.querySelectorAll ? null : null;
+          var inner = walk(child);
+          child.innerHTML = '';
+          inner.forEach(function(s){ child.appendChild(s); child.appendChild(document.createTextNode(' ')); });
+          out.push(child);
+        }
+      });
+      return out;
+    };
+    var pieces = walk(title);
+    title.innerHTML = '';
+    pieces.forEach(function(p){ title.appendChild(p); title.appendChild(document.createTextNode(' ')); });
+    var words = title.querySelectorAll('.hero-word');
+    words.forEach(function(w,i){ setTimeout(function(){ w.classList.add('in'); }, 180 + i*110); });
+  } else if (title) {
+    title.style.opacity = 1;
+  }
+
+  /* Cascada con IntersectionObserver */
+  var reveals = document.querySelectorAll('.reveal');
+  if (!reduced && 'IntersectionObserver' in window) {
+    var delay = 0;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          var el = e.target;
+          var siblings = el.parentNode ? el.parentNode.querySelectorAll('.reveal') : [];
+          var idx = Array.prototype.indexOf.call(siblings, el);
+          setTimeout(function(){ el.classList.add('in'); }, Math.max(0, idx) * 110);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* Parallax suave del fondo del hero */
+  var bg = document.getElementById('heroBg');
+  if (bg && !reduced) {
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY || window.pageYOffset;
+        bg.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  /* Script de rescate anti-página-vacía: a los 1,2 s fuerza visible
+     todo elemento que siga con opacity 0 (lección demos en blanco 03/08/2026). */
+  setTimeout(function(){
+    document.querySelectorAll('.reveal, .hero-word').forEach(function(el){
+      var op = window.getComputedStyle(el).opacity;
+      if (op === '0' || parseFloat(op) < 1) {
+        el.style.transition = 'opacity .4s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    if (title) { title.style.opacity = '1'; }
+  }, 1200);
+})();
+</script>
+</body>
+</html>

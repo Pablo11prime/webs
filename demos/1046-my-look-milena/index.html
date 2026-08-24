@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Look Peluquería · Milena Estilista — Extramurs, València</title>
+<meta name="description" content="My Look by Milena: peluquería en Extramurs, València. Especialistas en tratamientos reparadores con macadamia efecto Olaplex, cortes, mechas y alisados. 5,0 en Booksy con 203 reseñas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+  :root{
+    --ink:#2B2B2B;
+    --crema:#F7EDE8;
+    --oro:#C89B5A;
+    --rosa:#D8A7B1;
+    --blanco:#FFFDFB;
+    --sombra:0 18px 50px rgba(43,43,43,.10);
+    --sombra-suave:0 8px 26px rgba(43,43,43,.07);
+    --radio:26px;
+    --serif:'Playfair Display', Georgia, serif;
+    --sans:'Inter', system-ui, -apple-system, sans-serif;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--blanco);
+    line-height:1.65;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%}
+  a{color:inherit}
+
+  /* ====== marca de agua DEMO ====== */
+  .demo-badge{
+    position:fixed;top:16px;right:16px;z-index:999;
+    background:rgba(43,43,43,.82);color:var(--crema);
+    font-size:11px;letter-spacing:.22em;font-weight:600;
+    padding:7px 14px;border-radius:999px;
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(200,155,90,.55);
+    pointer-events:none;
+  }
+
+  /* ====== animaciones de entrada ====== */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,.61,.36,1)}
+  .reveal-left.visible{opacity:1;transform:none}
+  .hero-word{display:inline-block;opacity:0;transform:translateY(.6em) rotate(2deg);animation:wordUp .8s cubic-bezier(.22,.61,.36,1) forwards}
+  @keyframes wordUp{to{opacity:1;transform:none}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .reveal,.reveal-left,.hero-word{opacity:1!important;transform:none!important}
+    html{scroll-behavior:auto}
+  }
+
+  /* ====== botones ====== */
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;
+    padding:16px 32px;border-radius:999px;
+    font-weight:600;font-size:16px;text-decoration:none;
+    transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s ease,background .35s ease;
+    will-change:transform;
+  }
+  .btn:hover{transform:translateY(-3px) scale(1.02)}
+  .btn-primario{background:var(--ink);color:var(--crema);box-shadow:var(--sombra-suave)}
+  .btn-primario:hover{box-shadow:0 16px 34px rgba(43,43,43,.22)}
+  .btn-oro{background:linear-gradient(120deg,var(--oro),#d9b077,var(--oro));background-size:200% auto;color:#fff;box-shadow:0 10px 28px rgba(200,155,90,.35)}
+  .btn-oro:hover{animation:shimmer 2.2s linear infinite}
+  .btn-fantasma{background:transparent;color:var(--ink);border:1.5px solid rgba(43,43,43,.25)}
+  .btn-fantasma:hover{border-color:var(--oro);color:var(--oro)}
+
+  .contenedor{width:min(1120px,92%);margin-inline:auto}
+
+  .etiqueta{
+    display:inline-block;font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--oro);font-weight:600;margin-bottom:18px;
+  }
+  h2.titulo{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(2rem,5vw,3rem);line-height:1.15;margin-bottom:22px;
+  }
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;align-items:center;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 15%,rgba(216,167,177,.35),transparent 60%),
+      radial-gradient(ellipse 50% 60% at 10% 90%,rgba(200,155,90,.18),transparent 60%),
+      var(--crema);
+    overflow:hidden;
+    padding:110px 0 90px;
+  }
+  .hero-deco{
+    position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none;
+    animation:floaty 9s ease-in-out infinite;
+  }
+  .deco-1{width:280px;height:280px;border:1.5px solid rgba(200,155,90,.4);top:8%;right:6%}
+  .deco-2{width:150px;height:150px;background:rgba(216,167,177,.28);bottom:12%;right:18%;animation-delay:-3s}
+  .deco-3{width:90px;height:90px;background:rgba(200,155,90,.20);top:22%;left:5%;animation-delay:-6s}
+  .hero-inner{position:relative;z-index:2;max-width:760px;will-change:transform}
+  .hero-kicker{
+    font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--oro);
+    font-weight:600;margin-bottom:26px;display:flex;align-items:center;gap:14px;
+  }
+  .hero-kicker::before{content:"";width:44px;height:1.5px;background:var(--oro);display:inline-block}
+  .hero h1{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(2.6rem,8vw,4.6rem);
+    line-height:1.08;margin-bottom:10px;
+  }
+  .hero h1 em{font-style:italic;color:var(--oro)}
+  .hero-sub{
+    font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.6vw,1.45rem);
+    color:rgba(43,43,43,.75);margin:18px 0 14px;max-width:34ch;
+  }
+  .hero-desc{color:rgba(43,43,43,.65);max-width:52ch;margin-bottom:38px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:34px}
+  .hero-prueba{
+    display:inline-flex;align-items:center;gap:10px;font-size:14px;color:rgba(43,43,43,.7);
+    background:rgba(255,253,251,.7);border:1px solid rgba(200,155,90,.35);
+    padding:10px 18px;border-radius:999px;backdrop-filter:blur(4px);
+  }
+  .estrellas{color:var(--oro);letter-spacing:2px;font-size:15px}
+
+  /* ====== SOBRE MILENA ====== */
+  .sobre{padding:110px 0;background:var(--blanco)}
+  .sobre-grid{display:grid;gap:56px;align-items:center}
+  @media(min-width:880px){.sobre-grid{grid-template-columns:1fr 1.15fr}}
+  .sobre-visual{
+    position:relative;aspect-ratio:4/5;border-radius:var(--radio);
+    background:
+      radial-gradient(circle at 30% 25%,rgba(216,167,177,.55),transparent 55%),
+      radial-gradient(circle at 75% 75%,rgba(200,155,90,.45),transparent 55%),
+      linear-gradient(160deg,#efe0d8,#f7ede8);
+    box-shadow:var(--sombra);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .sobre-visual::after{
+    content:"";position:absolute;inset:18px;border:1.5px solid rgba(255,255,255,.65);
+    border-radius:calc(var(--radio) - 10px);
+  }
+  .monograma{
+    font-family:var(--serif);font-size:clamp(4rem,10vw,7rem);font-style:italic;
+    color:rgba(43,43,43,.85);
+  }
+  .monograma small{display:block;font-family:var(--sans);font-style:normal;font-size:12px;letter-spacing:.35em;text-transform:uppercase;text-align:center;color:var(--oro);margin-top:8px}
+  .sobre-texto p{color:rgba(43,43,43,.72);margin-bottom:18px;font-size:1.05rem}
+  .sobre-firma{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--oro);margin-top:10px}
+  .sobre-puntos{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .punto{
+    font-size:13.5px;font-weight:500;padding:9px 18px;border-radius:999px;
+    background:var(--crema);border:1px solid rgba(200,155,90,.3);
+  }
+
+  /* ====== SERVICIOS ====== */
+  .servicios{padding:110px 0;background:linear-gradient(180deg,var(--crema),#fdf6f2)}
+  .servicios-cabecera{max-width:640px;margin-bottom:60px}
+  .servicios-cabecera p{color:rgba(43,43,43,.65)}
+  .grid-servicios{display:grid;gap:26px;grid-template-columns:1fr}
+  @media(min-width:640px){.grid-servicios{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1000px){.grid-servicios{grid-template-columns:repeat(3,1fr)}}
+  .tarjeta{
+    background:var(--blanco);border-radius:var(--radio);padding:38px 32px;
+    box-shadow:var(--sombra-suave);
+    border:1px solid rgba(200,155,90,.14);
+    transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s ease,border-color .45s ease;
+    will-change:transform;
+  }
+  .tarjeta:hover{transform:translateY(-8px) scale(1.02);box-shadow:var(--sombra);border-color:rgba(200,155,90,.45)}
+  .tarjeta-icono{
+    width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,rgba(216,167,177,.35),rgba(200,155,90,.25));
+    font-size:26px;margin-bottom:22px;
+  }
+  .tarjeta h3{font-family:var(--serif);font-size:1.35rem;font-weight:600;margin-bottom:10px}
+  .tarjeta p{font-size:15px;color:rgba(43,43,43,.65)}
+  .tarjeta-destacada{position:relative;background:var(--ink);color:var(--crema)}
+  .tarjeta-destacada h3{color:var(--crema)}
+  .tarjeta-destacada p{color:rgba(247,237,232,.72)}
+  .tarjeta-destacada .tag-estrella{
+    position:absolute;top:20px;right:20px;font-size:10.5px;letter-spacing:.18em;
+    background:var(--oro);color:#fff;padding:5px 12px;border-radius:999px;font-weight:600;
+  }
+  .nota-precios{
+    margin-top:44px;text-align:center;font-size:14.5px;color:rgba(43,43,43,.6);
+    font-style:italic;
+  }
+
+  /* ====== RESEÑAS ====== */
+  .resenas{padding:110px 0;background:var(--blanco);position:relative;overflow:hidden}
+  .resenas::before{
+    content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(216,167,177,.18),transparent 70%);
+    top:-120px;left:-140px;pointer-events:none;
+  }
+  .contador-caja{
+    text-align:center;margin-bottom:64px;
+  }
+  .contador-num{
+    font-family:var(--serif);font-weight:700;font-size:clamp(3.4rem,9vw,5.5rem);
+    line-height:1;color:var(--ink);
+  }
+  .contador-num .cifra{color:var(--oro)}
+  .contador-caja .estrellas{font-size:clamp(1.2rem,3vw,1.7rem);display:block;margin:10px 0 6px}
+  .contador-caja p{color:rgba(43,43,43,.65);font-size:15.5px;letter-spacing:.04em}
+  .grid-resenas{display:grid;gap:26px;grid-template-columns:1fr}
+  @media(min-width:900px){.grid-resenas{grid-template-columns:repeat(3,1fr)}}
+  .resena{
+    background:var(--crema);border-radius:var(--radio);padding:36px 30px;
+    position:relative;box-shadow:var(--sombra-suave);
+    transition:transform .45s cubic-bezier(.22,.61,.36,1),box-shadow .45s ease;
+  }
+  .resena:hover{transform:translateY(-6px) scale(1.015);box-shadow:var(--sombra)}
+  .resena::before{
+    content:"\201C";font-family:var(--serif);font-size:5rem;line-height:1;
+    color:rgba(200,155,90,.35);position:absolute;top:14px;left:22px;
+  }
+  .resena blockquote{font-size:15.5px;color:rgba(43,43,43,.78);margin:34px 0 22px;font-style:italic}
+  .resena-autor{display:flex;align-items:center;gap:14px}
+  .avatar{
+    width:46px;height:46px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:1.15rem;color:#fff;font-weight:600;
+  }
+  .av-1{background:linear-gradient(135deg,var(--rosa),#c58e99)}
+  .av-2{background:linear-gradient(135deg,var(--oro),#b3894d)}
+  .av-3{background:linear-gradient(135deg,#2b2b2b,#5a5a5a)}
+  .resena-autor strong{display:block;font-size:15px}
+  .resena-autor span{font-size:12.5px;color:rgba(43,43,43,.55)}
+
+  /* ====== CONTACTO ====== */
+  .contacto{padding:110px 0;background:var(--ink);color:var(--crema)}
+  .contacto .etiqueta{color:var(--rosa)}
+  .contacto-grid{display:grid;gap:50px}
+  @media(min-width:900px){.contacto-grid{grid-template-columns:1.1fr 1fr}}
+  .contacto h2{color:var(--crema)}
+  .contacto-intro{color:rgba(247,237,232,.65);margin-bottom:36px;max-width:46ch}
+  .dato{
+    display:flex;gap:18px;align-items:flex-start;margin-bottom:26px;
+  }
+  .dato-icono{
+    width:46px;height:46px;border-radius:14px;flex-shrink:0;
+    background:rgba(200,155,90,.16);border:1px solid rgba(200,155,90,.4);
+    display:flex;align-items:center;justify-content:center;font-size:19px;
+  }
+  .dato h4{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--oro);margin-bottom:4px}
+  .dato p, .dato a{color:rgba(247,237,232,.85);font-size:16px;text-decoration:none}
+  .dato a:hover{color:var(--oro)}
+  .horario-tabla{
+    background:rgba(255,253,251,.05);border:1px solid rgba(200,155,90,.28);
+    border-radius:var(--radio);padding:36px 34px;
+  }
+  .horario-tabla h3{font-family:var(--serif);font-size:1.5rem;margin-bottom:22px;color:var(--crema)}
+  .fila-horario{
+    display:flex;justify-content:space-between;gap:16px;
+    padding:13px 0;border-bottom:1px dashed rgba(247,237,232,.16);font-size:15.5px;
+  }
+  .fila-horario:last-of-type{border-bottom:none}
+  .fila-horario span:first-child{color:rgba(247,237,232,.7)}
+  .fila-horario span:last-child{font-weight:600;color:var(--crema)}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+  .btn-claro{background:var(--crema);color:var(--ink)}
+  .btn-borde{background:transparent;color:var(--crema);border:1.5px solid rgba(247,237,232,.35)}
+  .btn-borde:hover{border-color:var(--oro);color:var(--oro)}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:#222020;color:rgba(247,237,232,.6);
+    padding:44px 0;text-align:center;font-size:14px;
+  }
+  footer .logo-footer{
+    font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--crema);
+    display:block;margin-bottom:12px;
+  }
+  footer a{color:var(--oro);text-decoration:none;font-weight:500}
+  footer a:hover{text-decoration:underline}
+  .footer-demo{
+    margin-top:18px;padding-top:18px;border-top:1px solid rgba(247,237,232,.1);
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-badge" aria-hidden="true">DEMO</div>
+
+<!-- ============ 1 · HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-deco deco-1"></div>
+  <div class="hero-deco deco-2"></div>
+  <div class="hero-deco deco-3"></div>
+  <div class="contenedor">
+    <div class="hero-inner" id="heroParallax">
+      <p class="hero-kicker">Extramurs · València</p>
+      <h1 id="heroTitulo">My Look <em>by Milena</em></h1>
+      <p class="hero-sub reveal">El arte de reparar tu cabello y devolverle su mejor versión.</p>
+      <p class="hero-desc reveal">Peluquería y estética en Gran Via de Ferran el Catòlic. Especialistas en tratamientos reparadores con macadamia efecto Olaplex, cortes a medida, mechas y alisados.</p>
+      <div class="hero-cta reveal">
+        <a class="btn btn-primario" href="tel:+34607638049">📞 Llamar ahora</a>
+        <a class="btn btn-oro" href="#contacto">Reservar cita</a>
+      </div>
+      <p class="hero-prueba reveal">
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <span><strong>5,0</strong> · 203 reseñas en Booksy</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · SOBRE MILENA ============ -->
+<section class="sobre" id="sobre">
+  <div class="contenedor sobre-grid">
+    <div class="sobre-visual reveal-left" aria-hidden="true">
+      <div class="monograma">M<small>Milena · Estilista</small></div>
+    </div>
+    <div class="sobre-texto">
+      <span class="etiqueta reveal">Sobre Milena</span>
+      <h2 class="titulo reveal">Una estilista que escucha antes de cortar</h2>
+      <p class="reveal">Milena es el alma de My Look: una estilista cercana que asesora con mimo a cada clienta antes de tocar una sola tijera. Sus clientas lo repiten en cada reseña: amabilidad, asesoramiento y resultados impecables.</p>
+      <p class="reveal">Su especialidad son los tratamientos reparadores con macadamia de efecto Olaplex, junto a cortes, mechas y alisados que transforman el cabello sin castigarlo.</p>
+      <p class="sobre-firma reveal">— Milena, estilista</p>
+      <div class="sobre-puntos reveal">
+        <span class="punto">💛 Asesoramiento personalizado</span>
+        <span class="punto">🌿 Tratamientos reparadores</span>
+        <span class="punto">⭐ 5,0 en Booksy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · SERVICIOS ============ -->
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <div class="servicios-cabecera">
+      <span class="etiqueta reveal">Servicios</span>
+      <h2 class="titulo reveal">Todo lo que tu cabello necesita</h2>
+      <p class="reveal">Cada servicio empieza con un diagnóstico del cabello y un asesoramiento honesto sobre lo que mejor te favorece.</p>
+    </div>
+    <div class="grid-servicios">
+      <article class="tarjeta tarjeta-destacada reveal">
+        <span class="tag-estrella">ESPECIALIDAD</span>
+        <div class="tarjeta-icono" aria-hidden="true">🌰</div>
+        <h3>Tratamiento reparador de macadamia</h3>
+        <p>Efecto Olaplex: reconstruye la fibra capilar desde dentro y devuelve brillo, fuerza y suavidad al cabello dañado.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="tarjeta-icono" aria-hidden="true">✂️</div>
+        <h3>Corte y peinado</h3>
+        <p>Cortes a medida según tu rostro, tu textura y tu estilo de vida, con acabado de salón que dura días.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="tarjeta-icono" aria-hidden="true">🎨</div>
+        <h3>Color y mechas</h3>
+        <p>Coloración y mechas trabajadas con delicadeza para un resultado luminoso, natural y cuidado.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="tarjeta-icono" aria-hidden="true">💫</div>
+        <h3>Alisados</h3>
+        <p>Alisados profesionales que disciplinan el cabello y eliminan el encrespamiento respetando su salud.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="tarjeta-icono" aria-hidden="true">💅</div>
+        <h3>Manicura y pedicura</h3>
+        <p>Manos y pies cuidados hasta el último detalle para completar tu look de salida de salón.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="tarjeta-icono" aria-hidden="true">🗓️</div>
+        <h3>Reserva online</h3>
+        <p>Elige tu hueco cómodamente desde Booksy o Fresha, o llámanos y te asesoramos por teléfono.</p>
+      </article>
+    </div>
+    <p class="nota-precios reveal">Cada cabello es distinto: pide tu diagnóstico y te asesoramos sin compromiso.</p>
+  </div>
+</section>
+
+<!-- ============ 4 · RESEÑAS ============ -->
+<section class="resenas" id="resenas">
+  <div class="contenedor">
+    <div class="contador-caja reveal">
+      <span class="etiqueta">Lo que dicen sus clientas</span>
+      <div class="contador-num"><span class="cifra" id="contador" data-objetivo="203">0</span> reseñas</div>
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <p>Valoración media de <strong>5,0</strong> en Booksy</p>
+    </div>
+    <div class="grid-resenas">
+      <article class="resena reveal">
+        <blockquote>Me ha encantado la experiencia, Milena ha sido un encanto y es un amor asesorándome.</blockquote>
+        <div class="resena-autor">
+          <div class="avatar av-1" aria-hidden="true">C</div>
+          <div><strong>Cristina</strong><span class="estrellas" aria-hidden="true">★★★★★</span> <span>Reseña en Booksy</span></div>
+        </div>
+      </article>
+      <article class="resena reveal">
+        <blockquote>Todo excelente! Milena es muy amable y me hizo el corte que quería.</blockquote>
+        <div class="resena-autor">
+          <div class="avatar av-2" aria-hidden="true">D</div>
+          <div><strong>Diana</strong><span class="estrellas" aria-hidden="true">★★★★★</span> <span>Reseña en Booksy</span></div>
+        </div>
+      </article>
+      <article class="resena reveal">
+        <blockquote>Un trabajo impecable y un cabello que me ha quitado diez años de encima.</blockquote>
+        <div class="resena-autor">
+          <div class="avatar av-3" aria-hidden="true">I</div>
+          <div><strong>Isa</strong><span class="estrellas" aria-hidden="true">★★★★★</span> <span>Reseña en Booksy</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · CONTACTO ============ -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <div class="contacto-grid">
+      <div>
+        <span class="etiqueta reveal">Contacto y reservas</span>
+        <h2 class="titulo reveal">Tu cita en el corazón de Extramurs</h2>
+        <p class="contacto-intro reveal">Llámanos, escríbenos por WhatsApp o reserva online en Booksy o Fresha. Estamos a pie de calle en Gran Via de Ferran el Catòlic.</p>
+
+        <div class="dato reveal">
+          <div class="dato-icono" aria-hidden="true">📍</div>
+          <div>
+            <h4>Dirección</h4>
+            <p>Gran Via de Ferran el Catòlic, 60 bajo<br>Extramurs · 46008 València</p>
+            <a href="https://maps.google.com/?q=My+Look+Peluqueria+Gran+Via+Ferran+el+Catolic+60+Valencia" target="_blank" rel="noopener">Ver en Google Maps →</a>
+          </div>
+        </div>
+
+        <div class="dato reveal">
+          <div class="dato-icono" aria-hidden="true">📞</div>
+          <div>
+            <h4>Teléfonos</h4>
+            <p><a href="tel:+34607638049">607 63 80 49</a> · móvil / WhatsApp</p>
+            <p><a href="tel:+34963912297">963 91 22 97</a> · fijo</p>
+          </div>
+        </div>
+
+        <div class="dato reveal">
+          <div class="dato-icono" aria-hidden="true">💻</div>
+          <div>
+            <h4>Reserva online</h4>
+            <p>Disponible en <strong>Booksy</strong> (5,0 · 203 reseñas) y <strong>Fresha</strong></p>
+          </div>
+        </div>
+
+        <div class="contacto-cta reveal">
+          <a class="btn btn-claro" href="tel:+34607638049">📞 Llamar ahora</a>
+          <a class="btn btn-borde" href="https://maps.google.com/?q=My+Look+Peluqueria+Gran+Via+Ferran+el+Catolic+60+Valencia" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+      </div>
+
+      <div class="horario-tabla reveal">
+        <h3>Horario</h3>
+        <div class="fila-horario"><span>Lunes</span><span>10:00 – 19:00</span></div>
+        <div class="fila-horario"><span>Martes</span><span>10:00 – 19:00</span></div>
+        <div class="fila-horario"><span>Miércoles</span><span>10:00 – 19:00</span></div>
+        <div class="fila-horario"><span>Jueves</span><span>10:00 – 19:00</span></div>
+        <div class="fila-horario"><span>Viernes</span><span>10:00 – 19:00</span></div>
+        <div class="fila-horario"><span>Sábado</span><span>10:00 – 19:00</span></div>
+        <div class="fila-horario"><span>Domingo</span><span>10:00 – 14:00</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="contenedor">
+    <span class="logo-footer">My Look by Milena</span>
+    <p>Gran Via de Ferran el Catòlic, 60 bajo · Extramurs · 46008 València</p>
+    <p class="footer-demo">Demo creada por <strong>Eleven AI</strong> — esta web puede ser tuya · <a href="https://elevenprime.es" target="_blank" rel="noopener">elevenprime.es</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Hero: título palabra a palabra ---- */
+  var titulo = document.getElementById("heroTitulo");
+  if (titulo && !reduceMotion) {
+    var partes = [];
+    titulo.childNodes.forEach(function(nodo){
+      if (nodo.nodeType === 3) {
+        nodo.textContent.split(/\s+/).forEach(function(p){ if(p) partes.push({t:p, em:false}); });
+      } else if (nodo.nodeType === 1) {
+        nodo.textContent.split(/\s+/).forEach(function(p){ if(p) partes.push({t:p, em:true}); });
+      }
+    });
+    titulo.innerHTML = "";
+    partes.forEach(function(p, i){
+      var s = document.createElement("span");
+      s.className = "hero-word";
+      s.style.animationDelay = (0.15 + i * 0.14) + "s";
+      s.textContent = p.t;
+      if (p.em) { var em = document.createElement("em"); em.appendChild(s.cloneNode(true)); titulo.appendChild(em); }
+      else { titulo.appendChild(s); }
+      titulo.appendChild(document.createTextNode(" "));
+    });
+  }
+
+  /* ---- Revelado en cascada con IntersectionObserver ---- */
+  var revelables = document.querySelectorAll(".reveal, .reveal-left");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var hermanos = e.target.parentElement ? Array.prototype.slice.call(e.target.parentElement.children) : [];
+          var idx = Math.max(0, hermanos.indexOf(e.target));
+          e.target.style.transitionDelay = Math.min(idx * 90, 450) + "ms";
+          e.target.classList.add("visible");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revelables.forEach(function(el){ io.observe(el); });
+  } else {
+    revelables.forEach(function(el){ el.classList.add("visible"); });
+  }
+
+  /* ---- Contador animado 0 → 203 ---- */
+  var contador = document.getElementById("contador");
+  function animarContador(){
+    var objetivo = parseInt(contador.getAttribute("data-objetivo"), 10) || 203;
+    if (reduceMotion) { contador.textContent = objetivo; return; }
+    var inicio = null, duracion = 1800;
+    function paso(ts){
+      if (!inicio) inicio = ts;
+      var p = Math.min((ts - inicio) / duracion, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      contador.textContent = Math.round(objetivo * suave);
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  if (contador) {
+    if ("IntersectionObserver" in window) {
+      var ioC = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if (e.isIntersecting) { animarContador(); ioC.disconnect(); } });
+      }, { threshold: 0.4 });
+      ioC.observe(contador);
+    } else { animarContador(); }
+  }
+
+  /* ---- Parallax suave en el hero ---- */
+  var heroInner = document.getElementById("heroParallax");
+  if (heroInner && !reduceMotion) {
+    var ticking = false;
+    window.addEventListener("scroll", function(){
+      if (!ticking) {
+        requestAnimationFrame(function(){
+          var y = window.scrollY || window.pageYOffset;
+          if (y < window.innerHeight) {
+            heroInner.style.transform = "translateY(" + (y * 0.18) + "px)";
+            heroInner.style.opacity = String(Math.max(1 - y / (window.innerHeight * 0.9), 0));
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  /* ---- Script de rescate: a los 1,2s fuerza visible todo elemento con opacity 0 ---- */
+  setTimeout(function(){
+    document.querySelectorAll("*").forEach(function(el){
+      try {
+        var st = window.getComputedStyle(el);
+        if (st && parseFloat(st.opacity) === 0) {
+          el.style.opacity = "1";
+          el.style.transform = "none";
+          el.classList.add("visible");
+        }
+      } catch (err) { /* rescate silencioso */ }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

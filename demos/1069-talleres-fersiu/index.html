@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Fersiu — Taller mecánico multimarca en Patraix, València desde 1982</title>
+<meta name="description" content="Talleres Fersiu S.L. Taller mecánico multimarca en Patraix (València) desde 1982. Mecánica general, mantenimiento, diagnosis, frenos y pre-ITV. Trato honrado. Llámanos: 963 84 53 28.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#1F2A38;
+  --secundario:#F4F6F8;
+  --acento:#E63B2E;
+  --gris:#8A94A6;
+  --blanco:#FFFFFF;
+  --oscuro-2:#16202C;
+  --radio:14px;
+  --sombra:0 10px 30px rgba(31,42,56,.12);
+  --transicion:.55s cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--secundario);
+  color:var(--primario);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{
+  font-family:'Barlow Condensed','Inter',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  line-height:1.08;
+}
+img{max-width:100%}
+a{color:inherit}
+
+/* ====== Animaciones de entrada (con garantía de visibilidad) ====== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity var(--transicion),transform var(--transicion)}
+.reveal.left{transform:translateX(-34px)}
+.reveal.right{transform:translateX(34px)}
+.reveal.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ====== Badge DEMO ====== */
+.demo-badge{
+  position:fixed;top:14px;right:14px;z-index:999;
+  background:rgba(31,42,56,.82);color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding:.35rem .8rem;border-radius:999px;
+  border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(4px);
+  pointer-events:none;
+}
+
+/* ====== Barra superior ====== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.8rem 1.2rem;
+  background:linear-gradient(180deg,rgba(22,32,44,.92),rgba(22,32,44,.75));
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.topbar .logo{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.35rem;
+  color:#fff;text-decoration:none;text-transform:uppercase;letter-spacing:.05em;
+  display:flex;align-items:center;gap:.5rem;
+}
+.topbar .logo .chispa{color:var(--acento)}
+.topbar nav{display:none;gap:1.4rem}
+.topbar nav a{
+  color:#d7dde5;text-decoration:none;font-size:.9rem;font-weight:500;
+  transition:color .25s;
+}
+.topbar nav a:hover{color:var(--acento)}
+.topbar .tel-mini{
+  background:var(--acento);color:#fff;text-decoration:none;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;
+  padding:.45rem 1rem;border-radius:999px;letter-spacing:.04em;
+  transition:transform .25s,box-shadow .25s;white-space:nowrap;
+}
+.topbar .tel-mini:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(230,59,46,.4)}
+@media(min-width:820px){.topbar nav{display:flex}.topbar{padding:.9rem 2.4rem}}
+
+/* ====== HERO ====== */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  color:#fff;overflow:hidden;
+  background:
+    radial-gradient(1100px 500px at 80% -10%, rgba(230,59,46,.28), transparent 60%),
+    radial-gradient(900px 600px at 10% 110%, rgba(138,148,166,.22), transparent 60%),
+    linear-gradient(160deg,#16202C 0%,#1F2A38 55%,#232F3F 100%);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;opacity:.10;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(45deg,transparent 0 34px,rgba(255,255,255,.5) 34px 35px),
+    repeating-linear-gradient(-45deg,transparent 0 34px,rgba(255,255,255,.28) 34px 35px);
+}
+.hero-parallax{position:relative;z-index:2;will-change:transform;padding:7rem 1.4rem 5rem;max-width:900px}
+.hero .desde{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:1rem;
+  letter-spacing:.32em;text-transform:uppercase;color:#c9d2dd;
+  border:1px solid rgba(255,255,255,.28);border-radius:999px;
+  padding:.4rem 1.2rem;margin-bottom:1.6rem;
+}
+.hero .desde .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);box-shadow:0 0 12px var(--acento)}
+.hero h1{
+  font-size:clamp(3rem,11vw,6.2rem);font-weight:800;color:#fff;
+}
+.hero h1 .acc{color:var(--acento)}
+.hero .eslogan{
+  font-size:clamp(1.05rem,3vw,1.35rem);color:#c9d2dd;max-width:620px;
+  margin:1.2rem auto 0;font-weight:400;
+}
+.hero .eslogan strong{color:#fff;font-weight:600}
+.hero .cta-row{
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.4rem;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.2rem;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+  padding:.95rem 2rem;border-radius:12px;
+  transition:transform .28s,box-shadow .28s,background .28s;
+}
+.btn-rojo{background:var(--acento);color:#fff;box-shadow:0 12px 28px rgba(230,59,46,.38)}
+.btn-rojo:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(230,59,46,.5)}
+.btn-borde{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45)}
+.btn-borde:hover{transform:translateY(-3px);background:rgba(255,255,255,.1);border-color:#fff}
+.hero .mini-datos{
+  display:flex;flex-wrap:wrap;gap:1.6rem;justify-content:center;margin-top:2.8rem;
+  color:#aeb8c6;font-size:.88rem;
+}
+.hero .mini-datos span{display:inline-flex;align-items:center;gap:.45rem}
+.hero .mini-datos .ico{color:var(--acento);font-style:normal}
+.hero .scroll-hint{
+  position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);
+  color:#8a94a6;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;
+  animation:flota 2.4s ease-in-out infinite;z-index:2;
+}
+@keyframes flota{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ====== Secciones genéricas ====== */
+section{padding:5.5rem 1.4rem}
+.contenedor{max-width:1080px;margin:0 auto}
+.etiqueta{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;
+  letter-spacing:.34em;text-transform:uppercase;color:var(--acento);
+  display:block;margin-bottom:.7rem;
+}
+.titulo{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:800;margin-bottom:1.1rem}
+.subtexto{color:#4c5765;max-width:640px;font-size:1.02rem}
+
+/* ====== Sobre nosotros ====== */
+.sobre{background:var(--blanco)}
+.sobre .grid{display:grid;gap:2.6rem;align-items:center}
+@media(min-width:880px){.sobre .grid{grid-template-columns:1.1fr .9fr}}
+.sobre p{color:#4c5765;margin-bottom:1rem}
+.sobre p strong{color:var(--primario)}
+.sobre .placa{
+  position:relative;background:var(--primario);color:#fff;border-radius:var(--radio);
+  padding:2.4rem 2rem;box-shadow:var(--sombra);overflow:hidden;
+}
+.sobre .placa::after{
+  content:"1982";position:absolute;right:-14px;bottom:-32px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:8rem;
+  color:rgba(255,255,255,.06);line-height:1;pointer-events:none;
+}
+.sobre .placa h3{font-size:1.6rem;margin-bottom:.8rem}
+.sobre .placa h3 span{color:var(--acento)}
+.sobre .placa ul{list-style:none;display:grid;gap:.75rem;position:relative;z-index:1}
+.sobre .placa li{display:flex;gap:.7rem;align-items:flex-start;color:#c9d2dd;font-size:.95rem}
+.sobre .placa li::before{content:"■";color:var(--acento);font-size:.7rem;line-height:1.9}
+
+/* ====== Servicios ====== */
+.servicios{background:var(--secundario)}
+.servicios .rejilla{
+  display:grid;gap:1.3rem;margin-top:2.6rem;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+.tarjeta{
+  background:var(--blanco);border-radius:var(--radio);padding:2rem 1.7rem;
+  box-shadow:0 4px 14px rgba(31,42,56,.07);
+  border-top:4px solid transparent;
+  transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease;
+}
+.tarjeta:hover{transform:translateY(-8px);box-shadow:0 18px 38px rgba(31,42,56,.16);border-top-color:var(--acento)}
+.tarjeta .icono{
+  width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#1F2A38,#33415A);color:#fff;font-size:1.5rem;
+  margin-bottom:1.1rem;
+}
+.tarjeta h3{font-size:1.35rem;margin-bottom:.5rem}
+.tarjeta p{color:#5b6675;font-size:.93rem}
+
+/* ====== Reseñas / contadores ====== */
+.resenas{background:var(--primario);color:#fff;position:relative;overflow:hidden}
+.resenas::before{
+  content:"";position:absolute;inset:0;opacity:.07;pointer-events:none;
+  background-image:repeating-linear-gradient(90deg,transparent 0 60px,rgba(255,255,255,.6) 60px 61px);
+}
+.resenas .contenedor{position:relative;z-index:1}
+.resenas .subtexto{color:#aeb8c6}
+.contadores{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1.2rem;margin:2.8rem 0 3rem;
+}
+.contador{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--radio);padding:1.6rem 1rem;text-align:center;
+  transition:transform .3s,border-color .3s;
+}
+.contador:hover{transform:translateY(-5px);border-color:rgba(230,59,46,.6)}
+.contador .num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;
+  font-size:clamp(2.4rem,7vw,3.4rem);color:var(--acento);line-height:1;
+}
+.contador .desc{color:#c9d2dd;font-size:.85rem;margin-top:.5rem;letter-spacing:.06em;text-transform:uppercase}
+.citas{display:grid;gap:1.3rem}
+@media(min-width:880px){.citas{grid-template-columns:1fr 1fr}}
+.cita{
+  background:rgba(255,255,255,.06);border-left:4px solid var(--acento);
+  border-radius:0 var(--radio) var(--radio) 0;padding:1.7rem 1.6rem;
+  transition:background .3s,transform .3s;
+}
+.cita:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+.cita .estrellas{color:#FFB400;letter-spacing:.2em;margin-bottom:.7rem;font-size:.95rem}
+.cita p{color:#e4e9ef;font-size:.98rem;font-style:italic}
+.cita .fuente{display:block;margin-top:.9rem;color:#8a94a6;font-size:.8rem;font-style:normal;letter-spacing:.08em;text-transform:uppercase}
+
+/* ====== Contacto ====== */
+.contacto{background:var(--blanco)}
+.contacto .grid{display:grid;gap:2.4rem;margin-top:2.4rem}
+@media(min-width:880px){.contacto .grid{grid-template-columns:1fr 1fr}}
+.ficha{
+  background:var(--secundario);border-radius:var(--radio);padding:2rem 1.8rem;
+  box-shadow:0 4px 14px rgba(31,42,56,.06);
+}
+.ficha h3{font-size:1.4rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.6rem}
+.ficha h3 .pin{color:var(--acento)}
+.ficha .linea{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:1rem;color:#4c5765;font-size:.96rem}
+.ficha .linea .ico{color:var(--acento);font-style:normal;min-width:20px;text-align:center}
+.ficha .linea a{color:var(--primario);font-weight:600;text-decoration:none;border-bottom:2px solid rgba(230,59,46,.35);transition:border-color .25s}
+.ficha .linea a:hover{border-color:var(--acento)}
+.tabla-horario{width:100%;border-collapse:collapse;font-size:.94rem}
+.tabla-horario td{padding:.55rem .2rem;border-bottom:1px solid #e2e7ec;color:#4c5765}
+.tabla-horario td:last-child{text-align:right;font-weight:600;color:var(--primario)}
+.tabla-horario tr.cerrado td:last-child{color:var(--gris);font-weight:500}
+.pagos{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem}
+.chip{
+  background:#fff;border:1px solid #dde3ea;border-radius:999px;
+  padding:.38rem .95rem;font-size:.8rem;font-weight:600;color:var(--primario);
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.chip .p{color:var(--acento);font-style:normal}
+.contacto .cta-final{
+  margin-top:2.6rem;text-align:center;background:var(--primario);color:#fff;
+  border-radius:var(--radio);padding:2.6rem 1.6rem;
+}
+.contacto .cta-final h3{font-size:clamp(1.6rem,5vw,2.3rem);margin-bottom:.6rem}
+.contacto .cta-final p{color:#aeb8c6;margin-bottom:1.5rem;font-size:.95rem}
+
+/* ====== Footer ====== */
+footer{
+  background:var(--oscuro-2);color:#8a94a6;text-align:center;
+  padding:2.6rem 1.4rem;font-size:.85rem;
+}
+footer .marca{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;
+  color:#fff;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;
+}
+footer .marca span{color:var(--acento)}
+footer a{color:#c9d2dd;text-decoration:none;border-bottom:1px solid rgba(230,59,46,.4)}
+footer a:hover{color:#fff;border-color:var(--acento)}
+footer .agencia{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.08)}
+</style>
+<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+<div class="demo-badge">Demo</div>
+
+<header class="topbar">
+  <a class="logo" href="#inicio"><span class="chispa">◆</span>Talleres Fersiu</a>
+  <nav aria-label="Navegación principal">
+    <a href="#sobre">El taller</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#resenas">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a class="tel-mini" href="tel:+34963845328">☎ 963 84 53 28</a>
+</header>
+
+<!-- ============ 1. HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-parallax" id="heroParallax">
+    <span class="desde"><span class="punto"></span> Desde 1982 · Patraix, València</span>
+    <h1>Mecánica honrada,<br><span class="acc">de las de siempre</span></h1>
+    <p class="eslogan">Taller mecánico <strong>multimarca</strong> de barrio con <strong>más de 40 años</strong> reparando con honestidad: te contamos lo que tiene tu coche, lo arreglamos bien y al mejor precio posible.</p>
+    <div class="cta-row">
+      <a class="btn btn-rojo" href="tel:+34963845328">☎ Llamar al taller</a>
+      <a class="btn btn-borde" href="https://maps.google.com/?q=Talleres+Fersiu+Carrer+d'Aiora+23+Valencia" target="_blank" rel="noopener">➤ Cómo llegar</a>
+    </div>
+    <div class="mini-datos">
+      <span><i class="ico">★</i> 4,7 en Google (~200 reseñas)</span>
+      <span><i class="ico">📍</i> Carrer d'Aiora, 23 · Patraix</span>
+      <span><i class="ico">🕗</i> L-V 8:00-14:00 · 16:00-19:30</span>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ Desliza</div>
+</section>
+
+<!-- ============ 2. SOBRE NOSOTROS ============ -->
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <div class="grid">
+      <div class="reveal left">
+        <span class="etiqueta">El taller</span>
+        <h2 class="titulo">Un taller familiar de Patraix, desde el 15 de septiembre de 1982</h2>
+        <p>Talleres Fersiu S.L. lleva <strong>más de cuatro décadas</strong> con la persiana abierta en el barrio de Patraix, en València. Generaciones enteras de vecinos han pasado por el Carrer d'Aiora con su coche, y siguen volviendo por lo mismo de siempre: <strong>un trato honrado y un trabajo bien hecho</strong>.</p>
+        <p>Aquí no se infla ninguna factura. Se diagnostica, se explica con claridad qué necesita tu vehículo y se repara <strong>lo mejor posible y al precio más ajustado posible</strong>. Así se trabaja desde 1982, y así lo cuentan nuestros clientes en Google.</p>
+        <p>Trabajamos con <strong>todas las marcas</strong>, con la experiencia de un taller de toda la vida y la profesionalidad que exige el coche de hoy.</p>
+      </div>
+      <div class="reveal right">
+        <div class="placa">
+          <h3>Por qué confiar en <span>Fersiu</span></h3>
+          <ul>
+            <li>Más de 40 años de oficio en el mismo barrio: Patraix.</li>
+            <li>Taller multimarca: cualquier vehículo, cualquier marca.</li>
+            <li>Presupuesto claro antes de tocar nada: sin sorpresas.</li>
+            <li>4,7★ en Google con alrededor de 200 reseñas.</li>
+            <li>Pago con tarjeta y móvil (NFC) y acceso para silla de ruedas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. SERVICIOS ============ -->
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <div class="reveal">
+      <span class="etiqueta">Servicios</span>
+      <h2 class="titulo">Todo lo que tu coche necesita, en un solo taller</h2>
+      <p class="subtexto">Mecánica multimarca con la experiencia de más de 40 años. Nos ocupamos de tu coche de principio a fin y te lo explicamos todo con claridad.</p>
+    </div>
+    <div class="rejilla">
+      <article class="tarjeta reveal">
+        <div class="icono">🔧</div>
+        <h3>Mecánica general</h3>
+        <p>Reparación mecánica multimarca: averías de motor y componentes, con diagnóstico claro y solución al mejor precio posible.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="icono">🛠️</div>
+        <h3>Mantenimiento y revisiones</h3>
+        <p>Revisiones periódicas, cambios de aceite y filtros y mantenimiento programado para alargar la vida de tu vehículo.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="icono">💻</div>
+        <h3>Diagnosis</h3>
+        <p>Lectura y diagnóstico electrónico de averías: localizamos el fallo y te explicamos qué tiene tu coche antes de intervenir.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="icono">🛑</div>
+        <h3>Frenos</h3>
+        <p>Revisión y sustitución de pastillas, discos y sistema de frenado. Tu seguridad, siempre lo primero.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="icono">✅</div>
+        <h3>Pre-ITV</h3>
+        <p>Revisamos tu coche antes de la ITV y ponemos a punto lo necesario para que pases la inspección a la primera.</p>
+      </article>
+      <article class="tarjeta reveal">
+        <div class="icono">🚗</div>
+        <h3>Multimarca</h3>
+        <p>Da igual la marca o el modelo: más de 40 años de experiencia trabajando con vehículos de todo tipo.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. RESEÑAS + CONTADORES ============ -->
+<section class="resenas" id="resenas">
+  <div class="contenedor">
+    <div class="reveal">
+      <span class="etiqueta">Opiniones reales</span>
+      <h2 class="titulo">Lo que dicen los clientes del taller</h2>
+      <p class="subtexto">La mejor publicidad de un taller es lo que cuentan sus clientes. Estas son opiniones publicadas en Google.</p>
+    </div>
+    <div class="contadores">
+      <div class="contador reveal">
+        <div class="num"><span class="cnt" data-target="4.7" data-decimales="1">0</span>★</div>
+        <div class="desc">Valoración en Google</div>
+      </div>
+      <div class="contador reveal">
+        <div class="num">~<span class="cnt" data-target="200">0</span></div>
+        <div class="desc">Reseñas de clientes</div>
+      </div>
+      <div class="contador reveal">
+        <div class="num"><span class="cnt" data-target="40">0</span>+</div>
+        <div class="desc">Años de experiencia</div>
+      </div>
+    </div>
+    <div class="citas">
+      <blockquote class="cita reveal left">
+        <div class="estrellas">★★★★★</div>
+        <p>«Sergio es un tío honrado, que no busca sacarte el dinero sino hacerte la reparación lo mejor posible y lo más barato posible.»</p>
+        <span class="fuente">Reseña de Google — cliente del taller</span>
+      </blockquote>
+      <blockquote class="cita reveal right">
+        <div class="estrellas">★★★★★</div>
+        <p>«Súper profesional, honesto, rápido… con un trato inmejorable.» Así describen otros clientes del taller su experiencia en Fersiu.</p>
+        <span class="fuente">Reseña de Google — clientes del taller</span>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. CONTACTO ============ -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <div class="reveal">
+      <span class="etiqueta">Contacto</span>
+      <h2 class="titulo">Ven a vernos o llámanos</h2>
+      <p class="subtexto">Estamos en el corazón de Patraix, en València. Llama y te atendemos sin compromiso.</p>
+    </div>
+    <div class="grid">
+      <div class="ficha reveal left">
+        <h3><span class="pin">📍</span> Dónde estamos</h3>
+        <div class="linea"><i class="ico">🏠</i><span>Carrer d'Aiora, 23 bajo-izda<br>Patraix, 46018 València</span></div>
+        <div class="linea"><i class="ico">☎</i><span><a href="tel:+34963845328">963 84 53 28</a></span></div>
+        <div class="linea"><i class="ico">🗺️</i><span><a href="https://maps.google.com/?q=Talleres+Fersiu+Carrer+d'Aiora+23+Valencia" target="_blank" rel="noopener">Abrir en Google Maps</a></span></div>
+        <div class="pagos">
+          <span class="chip"><i class="p">💳</i> Tarjeta</span>
+          <span class="chip"><i class="p">📱</i> Pago móvil NFC</span>
+          <span class="chip"><i class="p">♿</i> Acceso silla de ruedas</span>
+        </div>
+      </div>
+      <div class="ficha reveal right">
+        <h3><span class="pin">🕗</span> Horario</h3>
+        <table class="tabla-horario">
+          <tbody>
+            <tr><td>Lunes a viernes (mañana)</td><td>8:00 – 14:00</td></tr>
+            <tr><td>Lunes a viernes (tarde)</td><td>16:00 – 19:30</td></tr>
+            <tr class="cerrado"><td>Sábado</td><td>Cerrado</td></tr>
+            <tr class="cerrado"><td>Domingo</td><td>Cerrado</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="cta-final reveal">
+      <h3>¿Tu coche necesita un vistazo?</h3>
+      <p>Llámanos y cuéntanos qué le pasa. Te decimos qué tiene y qué cuesta, sin rodeos.</p>
+      <a class="btn btn-rojo" href="tel:+34963845328">☎ 963 84 53 28</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="marca"><span>◆</span> Talleres Fersiu S.L.</div>
+  <p>Carrer d'Aiora, 23 bajo-izda · Patraix · 46018 València · Desde 1982</p>
+  <div class="agencia">
+    <p>Demo creada por <strong>Eleven AI</strong> — esta web puede ser tuya.</p>
+    <p><a href="https://elevenprime.es" target="_blank" rel="noopener">elevenprime.es</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== Script de rescate anti-página-vacía =====
+     Garantía de visibilidad: a los 1,2 segundos, cualquier elemento que siga
+     con opacity 0 (por fallo del observer o visor de email) se fuerza visible. */
+  setTimeout(function(){
+    var todos = document.querySelectorAll('.reveal');
+    for (var i = 0; i < todos.length; i++) {
+      var el = todos[i];
+      var op = window.getComputedStyle ? window.getComputedStyle(el).opacity : '1';
+      if (op === '0' || !el.classList.contains('visible')) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight) el.classList.add('visible');
+      }
+    }
+  }, 1200);
+  /* Rescate total a los 3s: nada puede quedar invisible pase lo que pase. */
+  setTimeout(function(){
+    var restantes = document.querySelectorAll('.reveal:not(.visible)');
+    for (var j = 0; j < restantes.length; j++) restantes[j].classList.add('visible');
+  }, 3000);
+
+  /* ===== IntersectionObserver: fade + slide en cascada ===== */
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(en){
+        if (en.isIntersecting) {
+          var el = en.target;
+          var hermanos = el.parentElement ? el.parentElement.querySelectorAll('.reveal') : [el];
+          var idx = Array.prototype.indexOf.call(hermanos, el);
+          el.style.transitionDelay = (Math.max(idx, 0) * 90) + 'ms';
+          el.classList.add('visible');
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===== Contadores animados (4,7★ / ~200 / 40+) ===== */
+  function animarContador(el){
+    var objetivo = parseFloat(el.getAttribute('data-target'));
+    var decimales = parseInt(el.getAttribute('data-decimales') || '0', 10);
+    if (reduceMotion) { el.textContent = objetivo.toFixed(decimales).replace('.', ','); return; }
+    var dur = 1600, t0 = null;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suav = 1 - Math.pow(1 - p, 3); /* ease-out cúbico */
+      el.textContent = (objetivo * suav).toFixed(decimales).replace('.', ',');
+      if (p < 1) requestAnimationFrame(paso);
+      else el.textContent = objetivo.toFixed(decimales).replace('.', ',');
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadoresHechos = false;
+  function lanzarContadores(){
+    if (contadoresHechos) return;
+    contadoresHechos = true;
+    document.querySelectorAll('.cnt').forEach(animarContador);
+  }
+  if ('IntersectionObserver' in window) {
+    var seccionResenas = document.getElementById('resenas');
+    if (seccionResenas) {
+      var obsCnt = new IntersectionObserver(function(ents){
+        ents.forEach(function(en){ if (en.isIntersecting) { lanzarContadores(); obsCnt.disconnect(); } });
+      }, { threshold: 0.25 });
+      obsCnt.observe(seccionResenas);
+    }
+  }
+  /* Rescate de contadores: si a los 2,5s no se han lanzado, mostrar valores finales. */
+  setTimeout(function(){
+    if (!contadoresHechos) {
+      contadoresHechos = true;
+      document.querySelectorAll('.cnt').forEach(function(el){
+        var d = parseInt(el.getAttribute('data-decimales') || '0', 10);
+        el.textContent = parseFloat(el.getAttribute('data-target')).toFixed(d).replace('.', ',');
+      });
+    }
+  }, 2500);
+
+  /* ===== Parallax suave del hero ===== */
+  var heroInner = document.getElementById('heroParallax');
+  if (heroInner && !reduceMotion) {
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY || window.pageYOffset || 0;
+        if (y < window.innerHeight) {
+          heroInner.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+          heroInner.style.opacity = String(Math.max(1 - y / (window.innerHeight * 0.9), 0));
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+})();
+</script>
+</body>
+</html>

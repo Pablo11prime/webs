@@ -53,6 +53,65 @@
     backdrop-filter:blur(4px);
   }
 
+  /* ====== INTRO "EL PEINE" ======
+     Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+     animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+     JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+     nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 75% 55% at 78% 18%, rgba(201,154,91,.22), transparent 62%),
+      radial-gradient(ellipse 60% 45% at 12% 82%, rgba(201,154,91,.09), transparent 60%),
+      linear-gradient(160deg,#1c1a18 0%, #141414 55%, #0e0d0c 100%);
+    animation:intro-fuera .75s var(--ease) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:92vw;text-align:center}
+  .intro-linea{position:relative;padding:30px 8px}
+  .intro-hebras{position:absolute;left:-8%;right:-8%;top:4px;bottom:4px;pointer-events:none}
+  .intro-hebras svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  /* Hebras onduladas (aún sin peinar): desaparecen al paso del peine */
+  .intro-hebras .onduladas{clip-path:inset(-6% 0 -6% 0);animation:hebra-fuera 1.5s var(--ease) .3s both}
+  /* Hebras lisas (ya peinadas): aparecen tras el peine */
+  .intro-hebras .lisas{clip-path:inset(-6% 100% -6% 0);animation:hebra-dentro 1.5s var(--ease) .3s both}
+  @keyframes hebra-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+  @keyframes hebra-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+  /* El nombre se revela con una máscara que sigue al peine */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--serif);font-weight:400;color:var(--marfil);
+    font-size:clamp(2.5rem,10vw,5.4rem);line-height:1.08;letter-spacing:.01em;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:peinado 1.5s var(--ease) .3s both;
+  }
+  .intro-nombre em{font-style:italic;color:var(--oro)}
+  @keyframes peinado{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* El peine: se desliza de izquierda a derecha "peinando" el nombre */
+  .intro-peine{
+    position:absolute;left:-2%;top:50%;width:44px;height:150px;
+    transform:translate(-50%,-50%) rotate(-6deg);
+    filter:drop-shadow(0 0 14px rgba(201,154,91,.35));
+    animation:peine-pasa 1.5s var(--ease) .3s both;
+  }
+  @keyframes peine-pasa{
+    from{left:-2%;transform:translate(-50%,-50%) rotate(-6deg)}
+    to{left:103%;transform:translate(-50%,-50%) rotate(8deg)}
+  }
+  .intro-sub{
+    margin:16px 0 0;
+    font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--oro);font-weight:500;
+    opacity:0;animation:intro-sub .6s var(--ease) 1.7s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
   /* ====== NAV ====== */
   nav{
     position:fixed;top:0;left:0;right:0;z-index:900;
@@ -315,6 +374,7 @@
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
     html{scroll-behavior:auto}
+    #intro{display:none !important}
     .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
   }
 </style>
@@ -322,10 +382,56 @@
 <style>
   /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
   .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
 </style>
 </noscript>
 </head>
 <body>
+
+<!-- INTRO "EL PEINE": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-hebras" aria-hidden="true">
+        <!-- Hebras onduladas: cabello aún sin peinar -->
+        <svg class="onduladas" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#C99A5B" stroke-opacity=".32" stroke-width="1" stroke-linecap="round" vector-effect="non-scaling-stroke">
+            <path vector-effect="non-scaling-stroke" d="M0 28 q40 -12 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 72 q40 10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 104 q36 -9 72 0 t72 0 t72 0 t72 0 t72 0 t72 0 t72 0 t72 0 t72 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 136 q44 11 88 0 t88 0 t88 0 t88 0 t88 0 t88 0 t88 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 176 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+          </g>
+        </svg>
+        <!-- Hebras lisas: el peine las alisa a su paso -->
+        <svg class="lisas" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#C99A5B" stroke-opacity=".5" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 28 H600 M0 72 H600 M0 104 H600 M0 136 H600 M0 176 H600"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Alex <em>Jordán</em></p>
+      <!-- El peine: trazo fino dorado -->
+      <svg class="intro-peine" viewBox="0 0 44 150" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#C99A5B" stroke-width="1.5" stroke-linecap="round">
+          <rect x="31.5" y="6" width="8" height="138" rx="4"/>
+          <path d="M31.5 18 H10"/>
+          <path d="M31.5 29 H8"/>
+          <path d="M31.5 40 H10"/>
+          <path d="M31.5 51 H8"/>
+          <path d="M31.5 62 H10"/>
+          <path d="M31.5 73 H8"/>
+          <path d="M31.5 84 H10"/>
+          <path d="M31.5 95 H8"/>
+          <path d="M31.5 106 H10"/>
+          <path d="M31.5 117 H8"/>
+          <path d="M31.5 128 H10"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Peluquería de Autor</p>
+  </div>
+</div>
 
 <div id="barra-scroll" aria-hidden="true"></div>
 <div class="marca-demo" aria-hidden="true">DEMO</div>
@@ -524,6 +630,19 @@
   doc.classList.add('js-on');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --- Intro del peine: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
   /* --- Título del hero: aparición palabra a palabra --- */
   try{
     var h1 = document.getElementById('titulo-hero');
@@ -616,6 +735,15 @@
      Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
   setTimeout(function rescate(){
     try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
       var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
       ocultos.forEach(function(el){
         var est = window.getComputedStyle(el);

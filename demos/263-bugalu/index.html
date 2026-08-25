@@ -37,6 +37,68 @@
   /* ====== GARANTÍA DE VISIBILIDAD ====== */
   noscript .reveal, noscript .w{opacity:1 !important; transform:none !important}
 
+  /* ====== INTRO PERCHERO (temática moda) ======
+     Se autodestruye por CSS puro (introOut + forwards): aunque el JS falle,
+     el overlay desaparece solo y nunca tapa la página. pointer-events:none
+     desde el inicio: no bloquea ningún clic ni el scroll. */
+  .intro{
+    position:fixed;inset:0;z-index:2000;
+    background:var(--paper);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    pointer-events:none;
+    animation:introOut .55s var(--ease) 2.1s forwards;
+  }
+  @keyframes introOut{to{opacity:0;visibility:hidden}}
+  .intro-stage{position:relative;width:min(560px,86vw)}
+  .intro-rail{
+    position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--ink);border-radius:2px;
+    transform:scaleX(0);transform-origin:left center;
+    animation:introRail .5s var(--ease) .05s forwards;
+  }
+  .intro-rail::before,.intro-rail::after{
+    content:'';position:absolute;top:-3px;width:8px;height:8px;border-radius:50%;
+    background:var(--ink);opacity:0;
+    animation:introDot .3s var(--ease) .5s forwards;
+  }
+  .intro-rail::before{left:-2px}
+  .intro-rail::after{right:-2px;background:var(--clay)}
+  @keyframes introRail{to{transform:scaleX(1)}}
+  @keyframes introDot{to{opacity:1}}
+  .intro-hanger{
+    position:absolute;top:-4px;left:50%;width:66px;height:44px;margin-left:-33px;
+    color:var(--ink);display:block;
+    transform:translateX(-70vw) rotate(0deg);
+    transform-origin:33px 4px;
+    animation:introHanger 1.3s var(--ease) .4s forwards;
+  }
+  @keyframes introHanger{
+    0%{transform:translateX(-70vw) rotate(0deg)}
+    62%{transform:translateX(14px) rotate(5deg)}
+    82%{transform:translateX(-6px) rotate(-3deg)}
+    100%{transform:translateX(0) rotate(0deg)}
+  }
+  .intro-name{
+    padding-top:60px;text-align:center;
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(44px,13vw,92px);line-height:1.05;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+    clip-path:inset(0 100% 0 0);
+    animation:introName 1.3s var(--ease) .45s forwards;
+  }
+  .intro-name i{font-style:normal;color:var(--clay)}
+  @keyframes introName{to{clip-path:inset(0 0 0 0)}}
+  .intro-tag{
+    margin-top:14px;text-align:center;
+    font-size:12px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;
+    color:rgba(28,28,28,.55);
+    opacity:0;transform:translateY(8px);
+    animation:introTag .45s var(--ease) 1.55s forwards;
+  }
+  .intro-tag i{font-style:normal;color:var(--clay)}
+  @keyframes introTag{to{opacity:1;transform:none}}
+
   /* ====== Barra de progreso de scroll ====== */
   .progress{
     position:fixed;top:0;left:0;height:3px;width:0%;
@@ -364,6 +426,7 @@
     *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
     html{scroll-behavior:auto}
     .reveal,.w{opacity:1 !important;transform:none !important}
+    .intro{display:none !important}
   }
 
   /* ====== Desktop ====== */
@@ -392,8 +455,22 @@
   <style>
     .reveal,.w{opacity:1 !important;transform:none !important}
     .progress,.scroll-hint{display:none}
+    .intro{display:none !important}
   </style>
 </noscript>
+
+<!-- ===== INTRO PERCHERO (se autodestruye por CSS puro; el JS solo la retira del DOM) ===== -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-stage">
+    <div class="intro-rail"></div>
+    <svg class="intro-hanger" viewBox="0 0 66 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M33 13v-2.6a4.6 4.6 0 1 1 4.6-4.6" stroke="#C96F4A"/>
+      <path d="M33 13 L6.8 29.4a3.2 3.2 0 0 0 1.7 5.9h49a3.2 3.2 0 0 0 1.7-5.9Z"/>
+    </svg>
+    <p class="intro-name">Bugal<i>ú</i></p>
+    <p class="intro-tag">Boutique de moda <i>·</i> València</p>
+  </div>
+</div>
 
 <div class="progress" id="progress"></div>
 <div class="demo-tag" aria-hidden="true"><i>●</i>&nbsp;Demo</div>
@@ -641,6 +718,19 @@
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---- Intro perchero: el CSS ya la desvanece sola (introOut + forwards);
+     aquí solo la retiramos del DOM al terminar para no dejar restos. ---- */
+  var intro = document.getElementById('intro');
+  if (intro){
+    if (reduce){
+      if (intro.parentNode) intro.parentNode.removeChild(intro);
+    } else {
+      setTimeout(function(){
+        if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+      }, 2800);
+    }
+  }
+
   /* ---- Hero: título palabra a palabra ---- */
   var title = document.getElementById('heroTitle');
   if (title && !reduce){
@@ -783,6 +873,14 @@
         w.style.transform = 'none';
       }
     });
+    /* Overlay de intro: red de seguridad extra — si a los 3,1 s aún existiera
+       (CSS fallido o animaciones bloqueadas), se elimina a la fuerza. */
+    var introEl = document.getElementById('intro');
+    if (introEl){
+      setTimeout(function(){
+        if (introEl.parentNode) introEl.parentNode.removeChild(introEl);
+      }, 1900);
+    }
   }, 1200);
 })();
 </script>

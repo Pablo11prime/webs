@@ -58,7 +58,67 @@ img{max-width:100%}
   .reveal,.hero-word{opacity:1!important;transform:none!important;transition:none!important}
   .card:hover{transform:none!important}
   .hero-bg{transform:none!important}
+  #intro{display:none!important}
 }
+
+/* ——— INTRO "LA LLAVE" ———
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   El JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(60% 50% at 78% 24%, rgba(185,138,110,.32), transparent 65%),
+    radial-gradient(45% 40% at 15% 80%, rgba(185,138,110,.16), transparent 60%),
+    linear-gradient(160deg,#20262c 0%, #23282E 55%, #1a1f24 100%);
+  animation:intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:34px 10px}
+/* Tuercas de banco: quedan "apretadas" (aparecen) al paso de la llave */
+.intro-tuercas{position:absolute;left:-7%;right:-7%;top:2px;bottom:2px;pointer-events:none}
+.intro-tuercas svg{
+  position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;
+  clip-path:inset(-8% 100% -8% 0);
+  animation:tuercas-dentro 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+}
+@keyframes tuercas-dentro{from{clip-path:inset(-8% 100% -8% 0)}to{clip-path:inset(-8% 0 -8% 0)}}
+/* El nombre se revela con una máscara que sigue a la llave */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:var(--serif);font-weight:500;color:var(--cream);
+  font-size:clamp(2.4rem,9vw,5.2rem);line-height:1.1;letter-spacing:.01em;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:llave-revela 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+}
+.intro-nombre em{font-style:italic;color:var(--bronze)}
+@keyframes llave-revela{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* La llave fija de dos bocas: se desliza de izquierda a derecha destapando el nombre */
+.intro-llave{
+  position:absolute;left:-2%;top:50%;width:54px;height:156px;
+  transform:translate(-50%,-50%) rotate(-10deg);
+  filter:drop-shadow(0 0 14px rgba(185,138,110,.4));
+  animation:llave-pasa 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+}
+@keyframes llave-pasa{
+  from{left:-2%;transform:translate(-50%,-50%) rotate(-10deg)}
+  to{left:103%;transform:translate(-50%,-50%) rotate(7deg)}
+}
+.intro-sub{
+  margin:18px 0 0;
+  font-family:var(--sans);font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--bronze);font-weight:500;
+  opacity:0;animation:intro-sub .6s cubic-bezier(.22,.61,.36,1) 1.7s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
 
 /* ——— Header ——— */
 header{
@@ -250,9 +310,67 @@ footer a:hover{text-decoration:underline}
   font-size:.8rem;color:rgba(246,241,236,.55);
 }
 </style>
-<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>*{opacity:1!important;transform:none!important}#intro{display:none!important}</style></noscript>
 </head>
 <body>
+
+<!-- INTRO "LA LLAVE": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-tuercas" aria-hidden="true">
+        <!-- Tuercas y líneas de banco: quedan apretadas tras el paso de la llave -->
+        <svg viewBox="0 0 600 170" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#B98A6E" stroke-opacity=".34" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M0 16 H600 M0 154 H600" stroke-opacity=".22"/>
+            <g transform="translate(90 16)">
+              <path vector-effect="non-scaling-stroke" d="M9 0 L4.5 7.8 L-4.5 7.8 L-9 0 L-4.5 -7.8 L4.5 -7.8 Z"/>
+              <circle vector-effect="non-scaling-stroke" r="3.4"/>
+            </g>
+            <g transform="translate(300 16) rotate(14)">
+              <path vector-effect="non-scaling-stroke" d="M9 0 L4.5 7.8 L-4.5 7.8 L-9 0 L-4.5 -7.8 L4.5 -7.8 Z"/>
+              <circle vector-effect="non-scaling-stroke" r="3.4"/>
+            </g>
+            <g transform="translate(510 16) rotate(-9)">
+              <path vector-effect="non-scaling-stroke" d="M9 0 L4.5 7.8 L-4.5 7.8 L-9 0 L-4.5 -7.8 L4.5 -7.8 Z"/>
+              <circle vector-effect="non-scaling-stroke" r="3.4"/>
+            </g>
+            <g transform="translate(195 154) rotate(22)">
+              <path vector-effect="non-scaling-stroke" d="M9 0 L4.5 7.8 L-4.5 7.8 L-9 0 L-4.5 -7.8 L4.5 -7.8 Z"/>
+              <circle vector-effect="non-scaling-stroke" r="3.4"/>
+            </g>
+            <g transform="translate(405 154) rotate(-16)">
+              <path vector-effect="non-scaling-stroke" d="M9 0 L4.5 7.8 L-4.5 7.8 L-9 0 L-4.5 -7.8 L4.5 -7.8 Z"/>
+              <circle vector-effect="non-scaling-stroke" r="3.4"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Talleres <em>Fersiu</em></p>
+      <!-- La llave fija de dos bocas: trazo fino bronce, aire vintage (taller desde 1982) -->
+      <svg class="intro-llave" viewBox="0 0 60 170" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#B98A6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- boca superior -->
+          <g transform="rotate(-14 30 30)">
+            <path d="M24 15 v13 a6 6 0 0 0 12 0 v-13"/>
+            <path d="M24 15 a16 16 0 1 0 12 0"/>
+          </g>
+          <!-- cuerpo -->
+          <path d="M26 45 V125 M34 45 V125"/>
+          <circle cx="30" cy="85" r="2.5"/>
+          <!-- marcas grabadas, guiño artesano -->
+          <path d="M27.5 98 h5 M27.5 103 h5" stroke-opacity=".7" stroke-width="1"/>
+          <!-- boca inferior -->
+          <g transform="rotate(-14 30 140)">
+            <path d="M24 155 v-13 a6 6 0 0 1 12 0 v13"/>
+            <path d="M24 155 a16 16 0 1 1 12 0"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Artesanos de la mecánica · desde 1982</p>
+  </div>
+</div>
 
 <div class="demo-badge" aria-hidden="true">DEMO</div>
 
@@ -419,6 +537,19 @@ footer a:hover{text-decoration:underline}
 (function(){
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Intro de la llave: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM */
+  try {
+    var intro = document.getElementById('intro');
+    if (intro) {
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduced) { quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  } catch (e) {}
+
   /* Hero palabra a palabra */
   var title = document.getElementById('heroTitle');
   if (title && !reduced) {
@@ -530,6 +661,17 @@ footer a:hover{text-decoration:underline}
   /* Script de rescate anti-página-vacía: a los 1,2 s fuerza visible
      todo elemento que siga con opacity 0 (lección demos en blanco 03/08/2026). */
   setTimeout(function(){
+    /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+       se elimina de inmediato para que jamás tape la página. */
+    try {
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro) {
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')) {
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    } catch (e) {}
     document.querySelectorAll('.reveal, .hero-word').forEach(function(el){
       var op = window.getComputedStyle(el).opacity;
       if (op === '0' || parseFloat(op) < 1) {

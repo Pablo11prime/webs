@@ -50,6 +50,60 @@ a{color:inherit;text-decoration:none}
   padding:7px 14px;border-radius:999px;pointer-events:none;
   box-shadow:0 4px 18px rgba(20,28,43,.25)}
 
+/* ===== INTRO "LA LLAVE INGLESA" =====
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 15%, rgba(245,166,35,.22), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 10% 85%, rgba(47,111,196,.28), transparent 60%),
+    linear-gradient(155deg,#1F2937 0%, #0B3C7C 55%, #082747 100%);
+  animation:intro-fuera .75s var(--transicion) 2.35s forwards}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:30px 8px}
+.intro-deco{position:absolute;left:-8%;right:-8%;top:4px;bottom:4px;pointer-events:none}
+.intro-deco svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+/* Tuercas sueltas (trazo discontinuo): desaparecen al paso de la llave */
+.intro-deco .sueltas{clip-path:inset(-6% 0 -6% 0);animation:deco-fuera 1.5s var(--transicion) .3s both}
+/* Línea de par apretada con tuercas: aparece tras la llave */
+.intro-deco .apretadas{clip-path:inset(-6% 100% -6% 0);animation:deco-dentro 1.5s var(--transicion) .3s both}
+@keyframes deco-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+@keyframes deco-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+/* El nombre se revela con una máscara que sigue a la llave */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:'Fraunces',Georgia,serif;font-weight:600;color:#fff;
+  font-size:clamp(2.3rem,9vw,4.9rem);line-height:1.08;letter-spacing:-.01em;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:apriete 1.5s var(--transicion) .3s both}
+.intro-nombre em{font-style:normal;color:var(--acento)}
+@keyframes apriete{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* La llave inglesa: se desliza de izquierda a derecha revelando el nombre */
+.intro-llave{
+  position:absolute;left:-2%;top:50%;width:56px;height:170px;
+  transform:translate(-50%,-50%) rotate(-8deg);
+  filter:drop-shadow(0 0 14px rgba(245,166,35,.35));
+  animation:llave-pasa 1.5s var(--transicion) .3s both}
+@keyframes llave-pasa{
+  from{left:-2%;transform:translate(-50%,-50%) rotate(-8deg)}
+  to{left:103%;transform:translate(-50%,-50%) rotate(10deg)}}
+.intro-sub{
+  margin:16px 0 0;
+  font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--transicion) 1.7s forwards}
+@keyframes intro-sub{to{opacity:1}}
+
 /* ===== Navegación ===== */
 nav{position:fixed;top:0;left:0;right:0;z-index:900;
   display:flex;align-items:center;justify-content:space-between;
@@ -266,6 +320,7 @@ footer a:hover{color:var(--acento)}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  #intro{display:none !important}
   html{scroll-behavior:auto}
 }
 </style>
@@ -273,11 +328,57 @@ footer a:hover{color:var(--acento)}
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
 .revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+#intro{display:none !important}
 #progreso{display:none}
 </style>
 </noscript>
 </head>
 <body>
+
+<!-- INTRO "LA LLAVE INGLESA": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-deco" aria-hidden="true">
+        <!-- Tuercas sueltas (trazo discontinuo): desaparecen al paso de la llave -->
+        <svg class="sueltas" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#F5A623" stroke-opacity=".3" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="6 12" d="M0 30 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="6 12" d="M0 170 q40 10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+          </g>
+        </svg>
+        <!-- Línea de par apretada + tuercas fijas: la llave las deja a su paso -->
+        <svg class="apretadas" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#F5A623" stroke-opacity=".55" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 H600 M0 170 H600"/>
+            <path vector-effect="non-scaling-stroke" d="M83 30 l3.5 -6 h7 l3.5 6 l-3.5 6 h-7 Z"/>
+            <path vector-effect="non-scaling-stroke" d="M293 30 l3.5 -6 h7 l3.5 6 l-3.5 6 h-7 Z"/>
+            <path vector-effect="non-scaling-stroke" d="M503 30 l3.5 -6 h7 l3.5 6 l-3.5 6 h-7 Z"/>
+            <path vector-effect="non-scaling-stroke" d="M188 170 l3.5 -6 h7 l3.5 6 l-3.5 6 h-7 Z"/>
+            <path vector-effect="non-scaling-stroke" d="M398 170 l3.5 -6 h7 l3.5 6 l-3.5 6 h-7 Z"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Alsina <em>Motors</em></p>
+      <!-- La llave inglesa: trazo fino en el ámbar de la marca -->
+      <svg class="intro-llave" viewBox="0 0 70 180" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#F5A623" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- mordaza fija (inferior) y cuello de la cabeza -->
+          <path d="M28 86 C28 76 19 74 19 64 L19 50 L9 40 L16 32 L28 42 L28 34"/>
+          <!-- mordaza móvil (superior) y lateral derecho de la cabeza -->
+          <path d="M28 34 L14 22 L22 12 L40 12 L46 20 L46 64 C46 74 38 76 38 86"/>
+          <!-- ranura de la mordaza móvil -->
+          <path d="M28 34 L46 30"/>
+          <!-- moleteado del tornillo sinfín -->
+          <path d="M48 40 l9 2.5 M48 47 l9 2.5 M48 54 l9 2.5"/>
+          <!-- mango -->
+          <rect x="28" y="84" width="10" height="86" rx="5"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Red EuroTaller · Horta-Guinardó</p>
+  </div>
+</div>
 
 <div id="progreso"></div>
 <div class="marca-demo" aria-hidden="true">DEMO</div>
@@ -583,6 +684,19 @@ footer a:hover{color:var(--acento)}
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --- Intro de la llave inglesa: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
   /* Palabras del titular: cascada */
   var palabras = document.querySelectorAll('h1 .palabra');
   palabras.forEach(function(p,i){ p.style.animationDelay = (0.15 + i*0.12) + 's'; });
@@ -660,6 +774,17 @@ footer a:hover{color:var(--acento)}
      a los 1200 ms, cualquier elemento que siga oculto se fuerza visible.
      Lección del 03/08/2026: visores de email y WebViews sin IntersectionObserver. */
   setTimeout(function(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    }catch(e){}
     document.querySelectorAll('.revelar:not(.visible)').forEach(function(el){
       el.style.transition = 'none';
       el.classList.add('visible');

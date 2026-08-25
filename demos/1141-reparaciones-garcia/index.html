@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>*{opacity:1!important;transform:none!important}#intro{display:none!important}</style></noscript>
 <style>
   :root{
     --ink:#2B2B2B;
@@ -61,7 +61,67 @@
     *,*::before,*::after{animation:none!important;transition:none!important}
     .reveal,.reveal-left,.hero-word{opacity:1!important;transform:none!important}
     html{scroll-behavior:auto}
+    #intro{display:none!important}
   }
+
+  /* ====== INTRO "EL DESTORNILLADOR" ======
+     Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+     animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+     El JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+     nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 15%,rgba(176,113,79,.26),transparent 60%),
+      radial-gradient(ellipse 50% 60% at 10% 90%,rgba(200,155,90,.20),transparent 60%),
+      linear-gradient(160deg,#f8f2eb 0%, #F5EFE8 55%, #efe5d8 100%);
+    animation:intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:92vw;text-align:center}
+  .intro-linea{position:relative;padding:34px 10px}
+  /* Cabezas de tornillo: quedan "atornilladas" (aparecen) al paso del destornillador */
+  .intro-tornillos{position:absolute;left:-7%;right:-7%;top:2px;bottom:2px;pointer-events:none}
+  .intro-tornillos svg{
+    position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;
+    clip-path:inset(-8% 100% -8% 0);
+    animation:tornillos-dentro 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  @keyframes tornillos-dentro{from{clip-path:inset(-8% 100% -8% 0)}to{clip-path:inset(-8% 0 -8% 0)}}
+  /* El nombre se revela con una máscara que sigue al destornillador */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--serif);font-weight:600;color:var(--ink);
+    font-size:clamp(2.2rem,8.6vw,4.8rem);line-height:1.1;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:desto-revela 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  .intro-nombre em{font-style:italic;color:var(--oro)}
+  @keyframes desto-revela{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* El destornillador: se desliza de izquierda a derecha destapando el nombre */
+  .intro-desto{
+    position:absolute;left:-2%;top:50%;width:46px;height:166px;
+    transform:translate(-50%,-50%) rotate(-9deg);
+    filter:drop-shadow(0 10px 18px rgba(176,113,79,.3));
+    animation:desto-pasa 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  @keyframes desto-pasa{
+    from{left:-2%;transform:translate(-50%,-50%) rotate(-9deg)}
+    to{left:103%;transform:translate(-50%,-50%) rotate(8deg)}
+  }
+  .intro-sub{
+    margin:18px 0 0;
+    font-family:var(--sans);font-size:12px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--oro);font-weight:600;
+    opacity:0;animation:intro-sub .6s cubic-bezier(.22,.61,.36,1) 1.7s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
 
   /* ====== botones ====== */
   .btn{
@@ -302,6 +362,59 @@
 </head>
 <body>
 
+<!-- INTRO "EL DESTORNILLADOR": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-tornillos" aria-hidden="true">
+        <!-- Cabezas de tornillo: quedan atornilladas tras el paso del destornillador -->
+        <svg viewBox="0 0 600 170" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#B0714F" stroke-opacity=".34" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 16 H600 M0 154 H600" stroke-opacity=".2"/>
+            <g transform="translate(90 16) rotate(-30)">
+              <circle vector-effect="non-scaling-stroke" r="9"/>
+              <path vector-effect="non-scaling-stroke" d="M-4.6 0 H4.6"/>
+            </g>
+            <g transform="translate(300 16) rotate(15)">
+              <circle vector-effect="non-scaling-stroke" r="9"/>
+              <path vector-effect="non-scaling-stroke" d="M-4.6 0 H4.6"/>
+            </g>
+            <g transform="translate(510 16) rotate(-10)">
+              <circle vector-effect="non-scaling-stroke" r="9"/>
+              <path vector-effect="non-scaling-stroke" d="M-4.6 0 H4.6"/>
+            </g>
+            <g transform="translate(195 154) rotate(28)">
+              <circle vector-effect="non-scaling-stroke" r="9"/>
+              <path vector-effect="non-scaling-stroke" d="M-4.6 0 H4.6"/>
+            </g>
+            <g transform="translate(405 154) rotate(-20)">
+              <circle vector-effect="non-scaling-stroke" r="9"/>
+              <path vector-effect="non-scaling-stroke" d="M-4.6 0 H4.6"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Reparaciones <em>García</em></p>
+      <!-- El destornillador: trazo fino en oro -->
+      <svg class="intro-desto" viewBox="0 0 44 170" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#C89B5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- mango -->
+          <rect x="13" y="5" width="18" height="58" rx="8"/>
+          <!-- estrías del mango -->
+          <path d="M18 11 V57 M22 8.5 V60 M26 11 V57" stroke-width="1" stroke-opacity=".8"/>
+          <!-- cuello -->
+          <path d="M17.5 63 L20.2 76 M26.5 63 L23.8 76"/>
+          <!-- vástago -->
+          <path d="M20.2 76 V146 M23.8 76 V146"/>
+          <!-- punta plana -->
+          <path d="M20.2 146 L17.6 160 H26.4 L23.8 146"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Taller mecánico · Sants-Montjuïc, Barcelona</p>
+  </div>
+</div>
+
 <div class="demo-badge" aria-hidden="true">DEMO</div>
 
 <!-- ============ 1 · HERO ============ -->
@@ -503,6 +616,19 @@
   "use strict";
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---- Intro del destornillador: el CSS ya la autodestruye solo; el JS solo retira el nodo ---- */
+  try {
+    var intro = document.getElementById("intro");
+    if (intro) {
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduceMotion) { quitarIntro(); }
+      else {
+        intro.addEventListener("animationend", function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  } catch (err) {}
+
   /* ---- Hero: título palabra a palabra ---- */
   var titulo = document.getElementById("heroTitulo");
   if (titulo && !reduceMotion) {
@@ -590,8 +716,20 @@
 
   /* ---- Script de rescate: a los 1,2s fuerza visible todo elemento con opacity 0 ---- */
   setTimeout(function(){
+    /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+       se elimina de inmediato para que jamás tape la página. */
+    try {
+      var restoIntro = document.getElementById("intro");
+      if (restoIntro) {
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== "none" && (estIntro.animationName === "none" || estIntro.animationName === "")) {
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    } catch (err) { /* rescate silencioso */ }
     document.querySelectorAll("*").forEach(function(el){
       try {
+        if (el.closest && el.closest("#intro")) return; /* la intro se gestiona sola (CSS puro) */
         var st = window.getComputedStyle(el);
         if (st && parseFloat(st.opacity) === 0) {
           el.style.opacity = "1";

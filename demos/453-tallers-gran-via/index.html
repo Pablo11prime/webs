@@ -51,6 +51,60 @@ a{color:inherit;text-decoration:none}
   padding:7px 14px;border-radius:999px;pointer-events:none;
   box-shadow:0 4px 18px rgba(22,34,47,.25)}
 
+/* ===== INTRO "LA CARRACA" =====
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 15%, rgba(214,69,40,.24), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 10% 85%, rgba(214,69,40,.10), transparent 60%),
+    linear-gradient(160deg,#1F3A5F 0%, #152A47 60%, #0E1F36 100%);
+  animation:intro-fuera .75s var(--transicion) 2.35s forwards}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:30px 8px}
+.intro-deco{position:absolute;left:-8%;right:-8%;top:4px;bottom:4px;pointer-events:none}
+.intro-deco svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+/* Marcas de trinquete sueltas (trazo discontinuo): desaparecen al paso de la carraca */
+.intro-deco .sueltas{clip-path:inset(-6% 0 -6% 0);animation:deco-fuera 1.5s var(--transicion) .3s both}
+/* Línea apretada con chispas de trazo: la carraca las deja a su paso */
+.intro-deco .apretadas{clip-path:inset(-6% 100% -6% 0);animation:deco-dentro 1.5s var(--transicion) .3s both}
+@keyframes deco-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+@keyframes deco-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+/* El nombre se revela con una máscara que sigue a la carraca */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:'Fraunces',Georgia,serif;font-weight:600;color:#fff;
+  font-size:clamp(2.1rem,8.4vw,4.6rem);line-height:1.08;letter-spacing:-.01em;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:apriete 1.5s var(--transicion) .3s both}
+.intro-nombre em{font-style:normal;color:#F0876B}
+@keyframes apriete{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* La llave de carraca: se desliza de izquierda a derecha revelando el nombre */
+.intro-carraca{
+  position:absolute;left:-2%;top:50%;width:52px;height:170px;
+  transform:translate(-50%,-50%) rotate(-8deg);
+  filter:drop-shadow(0 0 14px rgba(214,69,40,.4));
+  animation:carraca-pasa 1.5s var(--transicion) .3s both}
+@keyframes carraca-pasa{
+  from{left:-2%;transform:translate(-50%,-50%) rotate(-8deg)}
+  to{left:103%;transform:translate(-50%,-50%) rotate(10deg)}}
+.intro-sub{
+  margin:16px 0 0;
+  font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;
+  color:#F0876B;font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--transicion) 1.7s forwards}
+@keyframes intro-sub{to{opacity:1}}
+
 /* ===== Navegación ===== */
 nav{position:fixed;top:0;left:0;right:0;z-index:900;
   display:flex;align-items:center;justify-content:space-between;
@@ -256,6 +310,7 @@ footer a:hover{color:#F0876B}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  #intro{display:none !important}
   html{scroll-behavior:auto}
 }
 </style>
@@ -263,11 +318,59 @@ footer a:hover{color:#F0876B}
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
 .revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+#intro{display:none !important}
 #progreso{display:none}
 </style>
 </noscript>
 </head>
 <body>
+
+<!-- INTRO "LA CARRACA": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-deco" aria-hidden="true">
+        <!-- Marcas de trinquete sueltas: desaparecen al paso de la carraca -->
+        <svg class="sueltas" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#F0876B" stroke-opacity=".3" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="5 13" d="M0 30 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="5 13" d="M0 170 q40 10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+          </g>
+        </svg>
+        <!-- Línea apretada + chispas de trazo: la carraca las deja a su paso -->
+        <svg class="apretadas" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#F0876B" stroke-opacity=".55" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 H600 M0 170 H600"/>
+            <path vector-effect="non-scaling-stroke" d="M96 24 l8 -8 M104 30 l11 0 M96 36 l8 8"/>
+            <path vector-effect="non-scaling-stroke" d="M306 24 l8 -8 M314 30 l11 0 M306 36 l8 8"/>
+            <path vector-effect="non-scaling-stroke" d="M516 24 l8 -8 M524 30 l11 0 M516 36 l8 8"/>
+            <path vector-effect="non-scaling-stroke" d="M201 164 l8 -8 M209 170 l11 0 M201 176 l8 8"/>
+            <path vector-effect="non-scaling-stroke" d="M411 164 l8 -8 M419 170 l11 0 M411 176 l8 8"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Tallers <em>Gran Via</em></p>
+      <!-- La llave de carraca: trazo fino en el acento de la marca -->
+      <svg class="intro-carraca" viewBox="0 0 64 180" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#F0876B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- cabeza redonda del trinquete -->
+          <circle cx="32" cy="26" r="16"/>
+          <!-- cuadradillo de acople (girado 45°) -->
+          <path d="M32 19 l7 7 -7 7 -7 -7 Z"/>
+          <!-- dientes del trinquete -->
+          <path d="M32 6.5 v4 M45.8 12.2 l-2.9 2.9 M51.5 26 h-4 M45.8 39.8 l-2.9 -2.9 M18.2 12.2 l2.9 2.9 M12.5 26 h4 M18.2 39.8 l2.9 -2.9"/>
+          <!-- palanca inversora -->
+          <path d="M20 13 l-6 -6"/>
+          <!-- cuello -->
+          <path d="M27 41.5 c0 4 0 5 0 8 M37 41.5 c0 4 0 5 0 8"/>
+          <!-- mango -->
+          <rect x="27" y="49" width="10" height="118" rx="5"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Mecánica y electricidad · Eixample</p>
+  </div>
+</div>
 
 <div id="progreso"></div>
 <div class="marca-demo" aria-hidden="true">DEMO</div>
@@ -533,6 +636,19 @@ footer a:hover{color:#F0876B}
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --- Intro de la carraca: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
   /* Palabras del titular: cascada */
   var palabras = document.querySelectorAll('h1 .palabra');
   palabras.forEach(function(p,i){ p.style.animationDelay = (0.15 + i*0.12) + 's'; });
@@ -610,6 +726,17 @@ footer a:hover{color:#F0876B}
      a los 1200 ms, cualquier elemento que siga oculto se fuerza visible.
      Lección del 03/08/2026: visores de email y WebViews sin IntersectionObserver. */
   setTimeout(function(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    }catch(e){}
     document.querySelectorAll('.revelar:not(.visible)').forEach(function(el){
       el.style.transition = 'none';
       el.classList.add('visible');

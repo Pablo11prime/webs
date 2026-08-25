@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>*{opacity:1!important;transform:none!important}#intro{display:none!important}</style></noscript>
 <style>
   :root{
     --ink:#2B2B2B;
@@ -47,6 +47,63 @@
     pointer-events:none;
   }
 
+  /* ====== INTRO "LAS TIJERAS" ======
+     Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+     animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+     JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+     nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 50% at 84% 14%, rgba(216,167,177,.30), transparent 60%),
+      radial-gradient(ellipse 50% 60% at 10% 88%, rgba(200,155,90,.18), transparent 60%),
+      linear-gradient(160deg,#FAF1EC 0%, var(--crema) 55%, var(--blanco) 100%);
+    animation:intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:92vw;text-align:center}
+  .intro-linea{position:relative;padding:36px 12px}
+  /* El nombre se revela con una máscara que sigue a las tijeras */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--serif);font-weight:600;color:var(--ink);
+    font-size:clamp(2.6rem,11vw,5.4rem);line-height:1.08;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:corte 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  .intro-nombre em{font-style:italic;color:var(--oro)}
+  @keyframes corte{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* Las tijeras: se deslizan de izquierda a derecha "cortando" el nombre */
+  .intro-tijeras{
+    position:absolute;left:-4%;top:50%;width:150px;height:60px;
+    transform:translate(-50%,-50%) rotate(-4deg);
+    filter:drop-shadow(0 10px 22px rgba(200,155,90,.35));
+    animation:tijeras-pasan 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  @keyframes tijeras-pasan{
+    from{left:-4%;transform:translate(-50%,-50%) rotate(-4deg)}
+    to{left:106%;transform:translate(-50%,-50%) rotate(3deg)}
+  }
+  /* Las hojas abren y cierran levemente al avanzar, como cortando */
+  .intro-tijeras .hoja{transform-box:view-box;transform-origin:55px 30px}
+  .intro-tijeras .hoja-a{animation:tijera-a .37s ease-in-out .3s 4 alternate}
+  .intro-tijeras .hoja-b{animation:tijera-b .37s ease-in-out .3s 4 alternate}
+  @keyframes tijera-a{from{transform:rotate(0deg)}to{transform:rotate(-7deg)}}
+  @keyframes tijera-b{from{transform:rotate(0deg)}to{transform:rotate(7deg)}}
+  .intro-sub{
+    margin:18px 0 0;
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--oro);font-weight:600;
+    opacity:0;animation:intro-sub .6s ease 1.7s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
   /* ====== animaciones de entrada ====== */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
   .reveal.visible{opacity:1;transform:none}
@@ -60,6 +117,7 @@
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     .reveal,.reveal-left,.hero-word{opacity:1!important;transform:none!important}
+    #intro{display:none!important}
     html{scroll-behavior:auto}
   }
 
@@ -294,6 +352,32 @@
 </head>
 <body>
 
+<!-- INTRO "LAS TIJERAS": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <p class="intro-nombre">My <em>Look</em></p>
+      <!-- Las tijeras de peluquería: trazo fino dorado -->
+      <svg class="intro-tijeras" viewBox="0 0 150 60" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#C89B5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <g class="hoja hoja-a">
+            <circle cx="15" cy="14" r="8.5"/>
+            <path d="M22.5 18.5 55 30"/>
+            <path d="M55 30 145 20.5 145 23.5 57.5 33.5 Z"/>
+          </g>
+          <g class="hoja hoja-b">
+            <circle cx="15" cy="46" r="8.5"/>
+            <path d="M22.5 41.5 55 30"/>
+            <path d="M55 30 145 39.5 145 36.5 57.5 26.5 Z"/>
+          </g>
+          <circle cx="55" cy="30" r="2" fill="#C89B5A" stroke="none"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Peluquería · Milena Estilista</p>
+  </div>
+</div>
+
 <div class="demo-badge" aria-hidden="true">DEMO</div>
 
 <!-- ============ 1 · HERO ============ -->
@@ -489,6 +573,19 @@
   "use strict";
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---- Intro de las tijeras: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM ---- */
+  try{
+    var intro = document.getElementById("intro");
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduceMotion){ quitarIntro(); }
+      else {
+        intro.addEventListener("animationend", function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
   /* ---- Hero: título palabra a palabra ---- */
   var titulo = document.getElementById("heroTitulo");
   if (titulo && !reduceMotion) {
@@ -576,8 +673,20 @@
 
   /* ---- Script de rescate: a los 1,2s fuerza visible todo elemento con opacity 0 ---- */
   setTimeout(function(){
+    /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+       se elimina de inmediato para que jamás tape la página. */
+    try {
+      var restoIntro = document.getElementById("intro");
+      if (restoIntro) {
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== "none" && (estIntro.animationName === "none" || estIntro.animationName === "")) {
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    } catch (err) {}
     document.querySelectorAll("*").forEach(function(el){
       try {
+        if (el.closest && el.closest("#intro")) return; /* la intro se gestiona sola: no forzarla visible */
         var st = window.getComputedStyle(el);
         if (st && parseFloat(st.opacity) === 0) {
           el.style.opacity = "1";

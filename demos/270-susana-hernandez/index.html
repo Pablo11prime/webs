@@ -58,7 +58,68 @@ img{max-width:100%}
   .reveal,.hero-word{opacity:1!important;transform:none!important;transition:none!important}
   .card:hover{transform:none!important}
   .hero-bg{transform:none!important}
+  #intro{display:none!important}
 }
+
+/* ——— INTRO "LA AGUJA" ———
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(60% 50% at 78% 24%, rgba(185,138,110,.32), transparent 65%),
+    radial-gradient(45% 40% at 15% 80%, rgba(185,138,110,.18), transparent 60%),
+    linear-gradient(160deg,#332a2e 0%, #3B2F33 45%, #2c2427 100%);
+  animation:intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:10px 8px 0}
+/* El nombre se revela con una máscara que sigue a la aguja */
+.intro-nombre{
+  margin:0;white-space:nowrap;
+  font-family:var(--serif);font-weight:500;color:var(--cream);
+  font-size:clamp(2.3rem,9vw,5rem);line-height:1.1;letter-spacing:.01em;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:cosido 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+}
+.intro-nombre em{font-style:italic;color:var(--tan)}
+@keyframes cosido{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* La costura: el hilo en puntadas queda como línea fina bajo el nombre */
+.intro-costura{position:relative;height:36px;margin-top:8px}
+.intro-costura .puntadas{
+  position:absolute;left:0;right:0;top:50%;height:6px;width:100%;
+  transform:translateY(-50%);display:block;overflow:visible;
+  clip-path:inset(-40px 100% -40px 0);
+  animation:hilo-dentro 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+}
+@keyframes hilo-dentro{from{clip-path:inset(-40px 100% -40px 0)}to{clip-path:inset(-40px -2% -40px 0)}}
+/* La aguja con su hilo: trazo fino bronce que "cose" de izquierda a derecha */
+.intro-aguja{
+  position:absolute;left:-4%;top:50%;width:150px;height:56px;
+  transform:translate(-50%,-50%) rotate(-4deg);
+  filter:drop-shadow(0 0 10px rgba(185,138,110,.4));
+  animation:aguja-pasa 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+}
+@keyframes aguja-pasa{
+  from{left:-4%;transform:translate(-50%,-50%) rotate(-4deg)}
+  to{left:104%;transform:translate(-50%,-50%) rotate(2deg)}
+}
+.intro-sub{
+  margin:16px 0 0;
+  font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--tan);font-weight:500;
+  opacity:0;animation:intro-sub .6s cubic-bezier(.22,.61,.36,1) 1.7s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
 
 /* ——— Header ——— */
 header{
@@ -234,9 +295,37 @@ footer a:hover{text-decoration:underline}
   font-size:.8rem;color:rgba(246,241,236,.55);
 }
 </style>
-<noscript><style>*{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>*{opacity:1!important;transform:none!important}#intro{display:none!important}</style></noscript>
 </head>
 <body>
+
+<!-- INTRO "LA AGUJA": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <p class="intro-nombre">Susana <em>Hernández</em></p>
+      <div class="intro-costura" aria-hidden="true">
+        <!-- El hilo cosido: puntadas que quedan como línea fina bajo el nombre -->
+        <svg class="puntadas" viewBox="0 0 600 6" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M0 3 H600" fill="none" stroke="#B98A6E" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="16 10" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <!-- La aguja con el hilo: trazo fino bronce -->
+        <svg class="intro-aguja" viewBox="0 0 150 56" fill="none" aria-hidden="true" focusable="false">
+          <g stroke="#B98A6E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <!-- cuerpo de la aguja, punta a la derecha -->
+            <path d="M34 34 C70 30 112 24 144 18"/>
+            <path d="M34 34 C33 31 33.5 29.5 36 29 C70 26 112 21 144 18"/>
+            <!-- ojo de la aguja -->
+            <ellipse cx="40" cy="31.5" rx="3.4" ry="1.8" transform="rotate(-8 40 31.5)"/>
+            <!-- hilo que arrastra la aguja -->
+            <path d="M37 32.5 C22 40 14 28 4 40 C-2 47 -8 42 -14 48" stroke-width="1.2"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="intro-sub">Boutique de moda · Ciutat Vella, València</p>
+  </div>
+</div>
 
 <div class="demo-badge" aria-hidden="true">DEMO</div>
 
@@ -387,6 +476,19 @@ footer a:hover{text-decoration:underline}
 (function(){
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Intro de la aguja: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduced){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
   /* Hero palabra a palabra */
   var title = document.getElementById('heroTitle');
   if (title && !reduced) {
@@ -458,6 +560,17 @@ footer a:hover{text-decoration:underline}
   /* Script de rescate anti-página-vacía: a los 1,2 s fuerza visible
      todo elemento que siga con opacity 0 (lección demos en blanco 03/08/2026). */
   setTimeout(function(){
+    /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+       se elimina de inmediato para que jamás tape la página. */
+    try{
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    }catch(e){}
     document.querySelectorAll('.reveal, .hero-word').forEach(function(el){
       var op = window.getComputedStyle(el).opacity;
       if (op === '0' || parseFloat(op) < 1) {

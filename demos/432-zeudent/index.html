@@ -50,6 +50,74 @@ a{color:inherit;text-decoration:none}
   padding:7px 14px;border-radius:999px;pointer-events:none;
   box-shadow:0 4px 18px rgba(11,37,48,.25)}
 
+/* ====== INTRO "EL CEPILLO" ======
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 15%, rgba(34,211,238,.16), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 12% 85%, rgba(14,116,144,.10), transparent 60%),
+    linear-gradient(180deg,var(--niebla) 0%, var(--blanco) 100%);
+  animation:intro-fuera .75s var(--transicion) 2.35s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:34px 10px}
+/* El nombre se revela con una máscara que sigue al cepillo */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:'Fraunces',Georgia,serif;font-weight:600;color:var(--secundario);
+  font-size:clamp(2.6rem,11vw,5.6rem);line-height:1.08;letter-spacing:-.01em;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:cepillado 1.5s var(--transicion) .3s both;
+}
+@keyframes cepillado{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* Brillo "sonrisa limpia" bajo el nombre, revelado al mismo paso */
+.intro-brillo{
+  height:3px;margin:14px auto 0;max-width:78%;border-radius:999px;
+  background:linear-gradient(90deg,var(--acento),rgba(34,211,238,.12));
+  clip-path:inset(-2px 100% -2px 0);
+  animation:brillo-pasa 1.5s var(--transicion) .3s both;
+}
+@keyframes brillo-pasa{from{clip-path:inset(-2px 100% -2px 0)}to{clip-path:inset(-2px 0 -2px 0)}}
+/* El cepillo: se desliza de izquierda a derecha "limpiando" el nombre */
+.intro-cepillo{
+  position:absolute;left:-2%;top:50%;width:42px;height:150px;
+  transform:translate(-50%,-50%) rotate(8deg);
+  filter:drop-shadow(0 8px 18px rgba(14,116,144,.25));
+  animation:cepillo-pasa 1.5s var(--transicion) .3s both;
+}
+@keyframes cepillo-pasa{
+  from{left:-2%;transform:translate(-50%,-50%) rotate(8deg)}
+  to{left:103%;transform:translate(-50%,-50%) rotate(-6deg)}
+}
+/* Destellos de 4 puntas tras el paso del cepillo */
+.intro-chispa{position:absolute;width:22px;height:22px;opacity:0;transform:scale(.3)}
+.intro-chispa.ch1{top:6%;left:22%;animation:chispa .8s var(--transicion) .85s both}
+.intro-chispa.ch2{top:64%;left:52%;width:15px;height:15px;animation:chispa .8s var(--transicion) 1.15s both}
+.intro-chispa.ch3{top:12%;left:80%;width:18px;height:18px;animation:chispa .8s var(--transicion) 1.5s both}
+@keyframes chispa{
+  0%{opacity:0;transform:scale(.3) rotate(-25deg)}
+  45%{opacity:1;transform:scale(1) rotate(0deg)}
+  100%{opacity:0;transform:scale(.55) rotate(20deg)}
+}
+.intro-sub{
+  margin:18px 0 0;
+  font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--primario);font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--transicion) 1.7s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
+
 /* ===== Navegación ===== */
 nav{position:fixed;top:0;left:0;right:0;z-index:900;
   display:flex;align-items:center;justify-content:space-between;
@@ -267,6 +335,7 @@ footer a:hover{color:var(--acento)}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  #intro{display:none!important}
   html{scroll-behavior:auto}
 }
 </style>
@@ -274,11 +343,40 @@ footer a:hover{color:var(--acento)}
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
 .revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+#intro{display:none!important}
 #progreso{display:none}
 </style>
 </noscript>
 </head>
 <body>
+
+<!-- INTRO "EL CEPILLO": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <p class="intro-nombre">Zeudent</p>
+      <!-- Destellos "sonrisa limpia": sparkles de 4 puntas -->
+      <svg class="intro-chispa ch1" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.6 C13.2 7.4 16.6 10.8 22.4 12 C16.6 13.2 13.2 16.6 12 22.4 C10.8 16.6 7.4 13.2 1.6 12 C7.4 10.8 10.8 7.4 12 1.6 Z" fill="#22D3EE"/></svg>
+      <svg class="intro-chispa ch2" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.6 C13.2 7.4 16.6 10.8 22.4 12 C16.6 13.2 13.2 16.6 12 22.4 C10.8 16.6 7.4 13.2 1.6 12 C7.4 10.8 10.8 7.4 12 1.6 Z" fill="#0E7490"/></svg>
+      <svg class="intro-chispa ch3" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.6 C13.2 7.4 16.6 10.8 22.4 12 C16.6 13.2 13.2 16.6 12 22.4 C10.8 16.6 7.4 13.2 1.6 12 C7.4 10.8 10.8 7.4 12 1.6 Z" fill="#22D3EE"/></svg>
+      <!-- El cepillo de dientes: trazo fino -->
+      <svg class="intro-cepillo" viewBox="0 0 42 150" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#0E7490" stroke-width="1.5" stroke-linecap="round">
+          <rect x="20" y="5" width="10" height="46" rx="5"/>
+          <path d="M20 13 H10"/>
+          <path d="M20 20 H9"/>
+          <path d="M20 27 H10"/>
+          <path d="M20 34 H9"/>
+          <path d="M20 41 H10"/>
+          <rect x="21.5" y="51" width="7" height="93" rx="3.5"/>
+          <path d="M25 60 V88" stroke="#22D3EE" stroke-width="1"/>
+        </g>
+      </svg>
+    </div>
+    <div class="intro-brillo" aria-hidden="true"></div>
+    <p class="intro-sub">Clínica Dental · Eixample, Barcelona</p>
+  </div>
+</div>
 
 <div id="progreso"></div>
 <div class="marca-demo" aria-hidden="true">DEMO</div>
@@ -572,6 +670,19 @@ footer a:hover{color:var(--acento)}
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --- Intro del cepillo: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
   /* Palabras del titular: cascada */
   var palabras = document.querySelectorAll('h1 .palabra');
   palabras.forEach(function(p,i){ p.style.animationDelay = (0.15 + i*0.12) + 's'; });
@@ -649,6 +760,17 @@ footer a:hover{color:var(--acento)}
      a los 1200 ms, cualquier elemento que siga oculto se fuerza visible.
      Lección del 03/08/2026: visores de email y WebViews sin IntersectionObserver. */
   setTimeout(function(){
+    /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+       se elimina de inmediato para que jamás tape la página. */
+    try{
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    }catch(e){}
     document.querySelectorAll('.revelar:not(.visible)').forEach(function(el){
       el.style.transition = 'none';
       el.classList.add('visible');

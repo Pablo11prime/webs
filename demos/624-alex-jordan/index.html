@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Alex Jordán Peluquería de Autor — alta peluquería en València. Cortes, coloración, mechas y tratamientos. Planta 3 de El Corte Inglés Pintor Sorolla-Colón.">
+<title>Alex Jordán Peluquería de Autor — València</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#141414;
+    --marfil:#F7F2EE;
+    --oro:#C99A5B;
+    --oro-suave:rgba(201,154,91,.14);
+    --gris:#5c5650;
+    --serif:'Fraunces', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--marfil);
+    color:var(--negro);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--oro);color:var(--negro)}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.08s}
+  .js-on .rv-d2{transition-delay:.18s}
+  .js-on .rv-d3{transition-delay:.28s}
+  .js-on .rv-d4{transition-delay:.38s}
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--oro),#e0b87e);z-index:1000;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    font-family:var(--sans);font-size:11px;letter-spacing:.22em;font-weight:600;
+    color:var(--marfil);background:rgba(20,20,20,.82);
+    border:1px solid rgba(201,154,91,.55);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    background:rgba(247,242,238,.88);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(20,20,20,.07);
+    transition:box-shadow .3s var(--ease);
+  }
+  nav .logo{font-family:var(--serif);font-weight:600;font-size:1.05rem;letter-spacing:.02em;text-decoration:none;color:var(--negro);line-height:1.2}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:400;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);margin-top:2px}
+  nav .cta-nav{
+    font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--marfil);background:var(--negro);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--oro);color:var(--negro);transform:translateY(-1px)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--negro);color:var(--marfil);
+    padding:120px 20px 44px;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;
+    background:
+      radial-gradient(ellipse 75% 55% at 78% 18%, rgba(201,154,91,.24), transparent 62%),
+      radial-gradient(ellipse 60% 45% at 12% 82%, rgba(201,154,91,.10), transparent 60%),
+      linear-gradient(160deg,#1c1a18 0%, #141414 55%, #0e0d0c 100%);
+    will-change:transform;
+  }
+  .hero-linea{
+    position:absolute;top:0;bottom:0;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(201,154,91,.35),transparent);
+    pointer-events:none;
+  }
+  .hero-linea.l1{left:12%}
+  .hero-linea.l2{right:16%}
+  .hero-aro{
+    position:absolute;border:1px solid rgba(201,154,91,.28);border-radius:50%;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-aro.a1{width:340px;height:340px;top:-90px;right:-110px;animation:flotar 11s ease-in-out infinite alternate}
+  .hero-aro.a2{width:180px;height:180px;top:120px;right:60px;border-color:rgba(247,242,238,.10);animation:flotar 14s ease-in-out infinite alternate-reverse}
+  @keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(26px) rotate(8deg)}}
+
+  .hero-kicker{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:22px;font-weight:500;
+  }
+  .hero-kicker::before{content:"";width:34px;height:1px;background:var(--oro)}
+  .hero h1{
+    position:relative;
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(2.6rem, 11vw, 6rem);
+    line-height:1.04;letter-spacing:-.01em;
+    max-width:12ch;margin-bottom:26px;
+  }
+  .hero h1 em{font-style:italic;color:var(--oro)}
+  .hero h1 .pal{display:inline-block}
+  .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    position:relative;max-width:34ch;color:rgba(247,242,238,.72);
+    font-size:1rem;font-weight:300;margin-bottom:34px;
+  }
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  @keyframes aparece{to{opacity:1}}
+
+  .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
+  .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;padding:16px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease);
+  }
+  .btn svg{width:15px;height:15px;flex:none}
+  .btn-oro{background:var(--oro);color:var(--negro)}
+  .btn-oro:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,154,91,.35)}
+  .btn-linea{border:1px solid rgba(247,242,238,.4);color:var(--marfil)}
+  .btn-linea:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+
+  .hero-datos{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    border-top:1px solid rgba(247,242,238,.14);padding-top:22px;
+  }
+  .js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.35s forwards}
+  .hero-datos .dato b{
+    display:block;font-family:var(--serif);font-weight:500;
+    font-size:clamp(1.5rem,6vw,2.3rem);color:var(--marfil);line-height:1.1;
+  }
+  .hero-datos .dato span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(247,242,238,.55)}
+
+  /* ====== SECCIONES base ====== */
+  section{padding:88px 20px}
+  .marco{max-width:1080px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);
+    font-weight:600;margin-bottom:18px;
+  }
+  .etiqueta::before{content:"";width:28px;height:1px;background:var(--oro)}
+  h2{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(2rem,7.5vw,3.4rem);line-height:1.1;letter-spacing:-.01em;
+    margin-bottom:20px;
+  }
+  h2 em{font-style:italic;color:var(--oro)}
+
+  /* ====== SOBRE ====== */
+  .sobre p{color:var(--gris);max-width:56ch;font-size:1.02rem;margin-bottom:16px}
+  .sobre p strong{color:var(--negro);font-weight:600}
+  .sobre-firma{
+    display:flex;align-items:center;gap:14px;margin-top:30px;
+  }
+  .sobre-firma .sello{
+    width:52px;height:52px;border-radius:50%;flex:none;
+    border:1px solid var(--oro);color:var(--oro);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:1.25rem;font-style:italic;
+  }
+  .sobre-firma div b{display:block;font-family:var(--serif);font-size:1.05rem;font-weight:500}
+  .sobre-firma div span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+
+  /* ====== SERVICIOS ====== */
+  .servicios{background:var(--negro);color:var(--marfil)}
+  .servicios h2{color:var(--marfil)}
+  .servicios .intro{color:rgba(247,242,238,.65);max-width:52ch;font-weight:300;margin-bottom:44px}
+  .grid-serv{display:grid;grid-template-columns:1fr;gap:14px}
+  .tarjeta{
+    position:relative;border:1px solid rgba(247,242,238,.12);border-radius:20px;
+    padding:30px 26px;background:rgba(247,242,238,.03);overflow:hidden;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .tarjeta:hover{
+    transform:translateY(-6px) rotate(-.4deg);
+    border-color:rgba(201,154,91,.55);background:rgba(201,154,91,.07);
+    box-shadow:0 24px 50px rgba(0,0,0,.4);
+  }
+  .tarjeta .num{
+    font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--oro);
+    display:block;margin-bottom:16px;
+  }
+  .tarjeta h3{font-family:var(--serif);font-weight:500;font-size:1.45rem;margin-bottom:10px;letter-spacing:.01em}
+  .tarjeta p{color:rgba(247,242,238,.62);font-size:.92rem;font-weight:300}
+  .tarjeta::after{
+    content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+    background:radial-gradient(circle at top right, rgba(201,154,91,.22), transparent 70%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .tarjeta:hover::after{opacity:1}
+  .serv-nota{margin-top:34px;color:rgba(247,242,238,.5);font-size:.85rem;font-weight:300}
+  .serv-nota a{color:var(--oro);text-decoration:none;border-bottom:1px solid rgba(201,154,91,.4)}
+
+  /* ====== PRUEBA SOCIAL ====== */
+  .prueba{background:var(--marfil)}
+  .prueba-cifra{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:26px 0 8px;
+  }
+  .prueba-cifra .num-grande{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(4.4rem,20vw,8rem);line-height:1;color:var(--negro);
+    font-variant-numeric:tabular-nums;
+  }
+  .prueba-cifra .estrellas{color:var(--oro);font-size:1.15rem;letter-spacing:.18em}
+  .prueba-lema{color:var(--gris);max-width:46ch;font-size:1rem;margin-bottom:40px}
+  .prueba-lema strong{color:var(--negro)}
+  .grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+  .hito{
+    border:1px solid rgba(20,20,20,.1);border-radius:18px;padding:24px 22px;
+    background:#fff;
+    display:flex;gap:16px;align-items:flex-start;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .hito:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(20,20,20,.08);border-color:var(--oro)}
+  .hito .icono{
+    width:42px;height:42px;flex:none;border-radius:12px;
+    background:var(--oro-suave);color:var(--oro);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hito .icono svg{width:20px;height:20px}
+  .hito h3{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin-bottom:4px}
+  .hito p{color:var(--gris);font-size:.88rem}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:#efe7df;border-radius:34px 34px 0 0}
+  .grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+  .ficha{
+    background:#fff;border-radius:18px;padding:26px 22px;
+    border:1px solid rgba(20,20,20,.06);
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .ficha:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,20,20,.08)}
+  .ficha h3{
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--oro);font-weight:600;margin-bottom:12px;
+  }
+  .ficha p{color:var(--negro);font-size:.98rem}
+  .ficha p.suave{color:var(--gris);font-size:.85rem;margin-top:4px}
+  .ficha a.enlace{color:var(--negro);text-decoration:none;border-bottom:1px solid var(--oro);transition:color .3s var(--ease)}
+  .ficha a.enlace:hover{color:var(--oro)}
+  .horario-fila{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed rgba(20,20,20,.12);font-size:.93rem}
+  .horario-fila:last-child{border-bottom:none}
+  .horario-fila .cerrado{color:var(--oro);font-weight:600}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn-negro{background:var(--negro);color:var(--marfil)}
+  .btn-negro:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(20,20,20,.25)}
+  .btn-borde{border:1px solid var(--negro);color:var(--negro)}
+  .btn-borde:hover{background:var(--negro);color:var(--marfil);transform:translateY(-2px)}
+
+  .redes{display:flex;gap:12px;margin-top:8px}
+  .redes a{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.8rem;font-weight:600;letter-spacing:.05em;
+    color:var(--negro);text-decoration:none;
+    border:1px solid rgba(20,20,20,.18);border-radius:999px;padding:10px 16px;
+    transition:border-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  }
+  .redes a:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+  .redes svg{width:15px;height:15px}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:var(--negro);color:rgba(247,242,238,.7);
+    padding:54px 20px 96px;text-align:center;
+  }
+  footer .logo-pie{font-family:var(--serif);font-size:1.3rem;color:var(--marfil);margin-bottom:6px}
+  footer .sub-pie{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);margin-bottom:26px}
+  footer .aviso{
+    display:inline-block;max-width:52ch;
+    font-size:.85rem;line-height:1.7;
+    border:1px solid rgba(201,154,91,.35);border-radius:16px;
+    padding:16px 22px;background:rgba(201,154,91,.06);
+  }
+  footer .aviso strong{color:var(--oro);font-weight:600}
+  footer .legal{margin-top:22px;font-size:.72rem;color:rgba(247,242,238,.38)}
+
+  /* ====== Desktop ====== */
+  @media (min-width:760px){
+    nav{padding:20px 44px}
+    section{padding:120px 44px}
+    .hero{padding:140px 44px 60px}
+    .grid-serv{grid-template-columns:repeat(2,1fr);gap:18px}
+    .grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}
+    .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+    .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  }
+  @media (min-width:1080px){
+    .grid-serv{grid-template-columns:repeat(4,1fr)}
+    .grid-prueba{grid-template-columns:repeat(4,1fr)}
+  }
+
+  /* ====== Movimiento reducido ====== */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    html{scroll-behavior:auto}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav>
+  <a class="logo" href="#inicio">Alex Jordán<small>Peluquería de Autor</small></a>
+  <a class="cta-nav" href="tel:+34963106197">Pedir cita</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-linea l1" aria-hidden="true"></div>
+  <div class="hero-linea l2" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+
+  <p class="hero-kicker">Alta peluquería · València</p>
+  <h1 id="titulo-hero">Tu cabello, firmado por un <em>autor</em></h1>
+  <p class="hero-sub">Cortes, coloración, mechas y tratamientos: del clásico a la vanguardia, en el salón del peluquero valenciano Alex Jordán.</p>
+  <div class="hero-botones">
+    <a class="btn btn-oro" href="tel:+34963106197">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Pedir cita
+    </a>
+    <a class="btn btn-linea" href="tel:+34963106197">Llamar · 963 10 61 97</a>
+  </div>
+  <div class="hero-datos">
+    <div class="dato"><b><span class="contador" data-fin="20">20</span>+</b><span>Profesionales</span></div>
+    <div class="dato"><b><span class="contador" data-fin="287">287</span></b><span>Reseñas en Google</span></div>
+    <div class="dato"><b>L–S</b><span>10:00 – 21:00</span></div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">El salón</p>
+      <h2>Un equipo de más de veinte manos <em>expertas</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p>Dirigido por el peluquero valenciano <strong>Alex Jordán</strong>, el salón reúne a un equipo de más de veinte profesionales en un espacio pensado para el cuidado del cabello femenino: del corte clásico a la propuesta más vanguardista.</p>
+      <p>Nos encontrarás en la <strong>planta 3 de El Corte Inglés Pintor Sorolla-Colón</strong>, en pleno centro de València — un enclave premium a la altura del servicio.</p>
+      <div class="sobre-firma">
+        <span class="sello">AJ</span>
+        <div>
+          <b>Alex Jordán</b>
+          <span>Peluquería de autor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Servicios</p>
+      <h2>Del clásico a la <em>vanguardia</em></h2>
+      <p class="intro">Cada servicio se trabaja a medida: tu rostro, tu estilo de vida y tu cabello marcan la propuesta.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta rv rv-d1">
+        <span class="num">01</span>
+        <h3>Cortes</h3>
+        <p>Cortes de autor pensados para ti: desde la línea más clásica hasta la más atrevida.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="num">02</span>
+        <h3>Coloración</h3>
+        <p>Color a medida que respeta la fibra capilar y realza tu tono natural.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="num">03</span>
+        <h3>Mechas</h3>
+        <p>Técnicas de mechas para dar luz, dimensión y movimiento al cabello.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="num">04</span>
+        <h3>Tratamientos</h3>
+        <p>Cuidados profesionales para devolver fuerza, brillo y salud a tu melena.</p>
+      </article>
+    </div>
+    <p class="serv-nota rv">¿Dudas sobre qué servicio necesitas? <a href="tel:+34963106197">Llámanos al 963 10 61 97</a> y te asesoramos.</p>
+  </div>
+</section>
+
+<section class="prueba" id="prueba">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La confianza de València</p>
+      <h2>Cientos de clientas ya lo <em>avalan</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande contador" data-fin="287">287</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong>reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un salón de autor no se explica: se comprueba. <strong>287 personas</strong> ya han dejado su opinión en Google sobre la experiencia Alex Jordán.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>Salón de autor</h3>
+          <p>Con la firma y la dirección del peluquero valenciano Alex Jordán.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div>
+          <h3>Equipo 20+</h3>
+          <p>Más de veinte profesionales especializados a tu servicio.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div>
+          <h3>Ubicación premium</h3>
+          <p>Planta 3 de El Corte Inglés Pintor Sorolla-Colón, centro de València.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <div>
+          <h3>Horario amplio</h3>
+          <p>De lunes a sábado, de 10:00 a 21:00, sin cortar a mediodía.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>Te esperamos en el <em>centro</em> de València</h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Planta 3 · El Corte Inglés Pintor Sorolla-Colón</p>
+        <p class="suave">Carrer de Colón, 27 · 46004 València</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Alex+Jord%C3%A1n+Peluquer%C3%ADa+de+Autor%2C+Carrer+de+Col%C3%B3n+27%2C+46004+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Horario</h3>
+        <div class="horario-fila"><span>Lunes – Sábado</span><span>10:00 – 21:00</span></div>
+        <div class="horario-fila"><span>Domingo</span><span class="cerrado">Cerrado</span></div>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Teléfono</h3>
+        <p><a class="enlace" href="tel:+34963106197">963 10 61 97</a></p>
+        <p class="suave">Llámanos para pedir tu cita.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Síguenos</h3>
+        <div class="redes">
+          <a href="https://www.instagram.com/alexjordanpeluqueriadeautor" target="_blank" rel="noopener" aria-label="Instagram de Alex Jordán Peluquería de Autor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/alexjordanpeluquero" target="_blank" rel="noopener" aria-label="Facebook de Alex Jordán Peluquero">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-negro" href="tel:+34963106197">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita ahora
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Alex+Jord%C3%A1n+Peluquer%C3%ADa+de+Autor%2C+Carrer+de+Col%C3%B3n+27%2C+46004+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Alex Jordán</p>
+  <p class="sub-pie">Peluquería de Autor · València</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer de Colón, 27 · 46004 València · Tel. <a href="tel:+34963106197" style="color:inherit">963 10 61 97</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados --- */
+  try{
+    var animarContador = function(el){
+      var fin = parseInt(el.getAttribute('data-fin'), 10) || 0;
+      if (reduce){ el.textContent = fin; return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(fin * suave);
+        if (p < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

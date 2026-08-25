@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tallers Gran Via S.C.P. — Taller de mecánica y electricidad del automóvil en el Eixample de Barcelona. 37 años de oficio. Carrer de la Diputació 132, Local 2. Tel. 931 46 36 26.">
+<meta name="robots" content="noindex">
+<title>Tallers Gran Via S.C.P. — Mecánica y electricidad del automóvil · Eixample, Barcelona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#1F3A5F;
+    --azul-oscuro:#152A47;
+    --azul-noche:#0E1E33;
+    --gris:#F2F4F7;
+    --rojo:#D64528;
+    --rojo-oscuro:#B23319;
+    --tinta:#1B2430;
+    --texto:#445060;
+    --texto-suave:#5A6678;
+    --blanco:#FFFFFF;
+    --borde:#E3E8EF;
+    --sombra:0 10px 30px rgba(21,42,71,.10);
+    --sombra-alta:0 24px 60px rgba(21,42,71,.18);
+    --radio:18px;
+    --ease:cubic-bezier(.22,.61,.24,1);
+    --display:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;
+    --cuerpo:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    .rvl{opacity:1!important;transform:none!important}
+  }
+  body{
+    font-family:var(--cuerpo);
+    color:var(--tinta);
+    background:var(--gris);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+
+  /* ====== Garantía de visibilidad: los .rvl empiezan visibles por CSS;
+     el JS solo los oculta si (y solo si) va a poder revelarlos ====== */
+  .rvl{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .js-anim .rvl{opacity:0;transform:translateY(26px)}
+  .js-anim .rvl.in{opacity:1;transform:none}
+  .js-anim .rvl[data-d="1"]{transition-delay:.08s}
+  .js-anim .rvl[data-d="2"]{transition-delay:.16s}
+  .js-anim .rvl[data-d="3"]{transition-delay:.24s}
+  .js-anim .rvl[data-d="4"]{transition-delay:.32s}
+
+  /* ====== Barra de progreso de scroll ====== */
+  #progreso{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--rojo),#F07A4B);z-index:1200;transition:width .1s linear}
+
+  /* ====== Marca de agua DEMO ====== */
+  .marca-demo{
+    position:fixed;right:14px;bottom:14px;z-index:1100;pointer-events:none;
+    font-family:var(--display);font-weight:800;letter-spacing:.24em;font-size:.78rem;
+    color:var(--blanco);background:rgba(214,69,40,.92);
+    padding:.5rem 1rem .45rem 1.15rem;border-radius:999px;
+    box-shadow:0 8px 24px rgba(214,69,40,.35);
+    text-transform:uppercase;
+  }
+  .agua{
+    position:fixed;inset:0;z-index:1090;pointer-events:none;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .agua span{
+    font-family:var(--display);font-weight:800;font-size:clamp(7rem,26vw,18rem);
+    color:rgba(31,58,95,.045);transform:rotate(-22deg);letter-spacing:.1em;user-select:none;
+  }
+
+  /* ====== Nav ====== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:.8rem clamp(1rem,4vw,2.5rem);
+    background:rgba(14,30,51,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    transition:background .3s var(--ease),box-shadow .3s var(--ease);
+  }
+  .nav.solida{background:rgba(14,30,51,.95);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .logo{display:flex;align-items:center;gap:.65rem;color:var(--blanco)}
+  .logo-sello{
+    width:42px;height:42px;border-radius:12px;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--rojo),var(--rojo-oscuro));
+    display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:.02em;
+    color:#fff;box-shadow:0 6px 16px rgba(214,69,40,.4);
+  }
+  .logo-nombre{font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.05}
+  .logo-nombre small{display:block;font-family:var(--cuerpo);font-weight:500;font-size:.62rem;letter-spacing:.22em;color:rgba(255,255,255,.55);text-transform:uppercase}
+  .nav-enlaces{display:none;gap:1.6rem;font-weight:600;font-size:.92rem;color:rgba(255,255,255,.85)}
+  .nav-enlaces a{position:relative;padding:.25rem 0;transition:color .25s var(--ease)}
+  .nav-enlaces a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--rojo);transition:width .3s var(--ease)}
+  .nav-enlaces a:hover{color:#fff}
+  .nav-enlaces a:hover::after{width:100%}
+  .btn-nav{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:var(--rojo);color:#fff;font-weight:700;font-size:.9rem;
+    padding:.6rem 1.1rem;border-radius:999px;white-space:nowrap;
+    box-shadow:0 8px 20px rgba(214,69,40,.35);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease);
+  }
+  .btn-nav:hover{transform:translateY(-2px);background:var(--rojo-oscuro);box-shadow:0 12px 26px rgba(214,69,40,.45)}
+  @media(min-width:860px){.nav-enlaces{display:flex}}
+
+  /* ====== Hero ====== */
+  .hero{
+    position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    padding:7.5rem clamp(1.1rem,5vw,3rem) 4.5rem;
+    background:linear-gradient(160deg,var(--azul-noche) 0%,var(--azul-oscuro) 45%,var(--azul) 100%);
+    color:var(--blanco);overflow:hidden;
+  }
+  .hero-fondo{position:absolute;inset:-12% -5%;pointer-events:none;will-change:transform}
+  .hero-fondo::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 45% at 82% 18%,rgba(214,69,40,.22),transparent 60%),
+      radial-gradient(ellipse 55% 50% at 12% 85%,rgba(90,140,210,.16),transparent 65%);
+    animation:respira 9s ease-in-out infinite alternate;
+  }
+  .hero-fondo::after{
+    content:"";position:absolute;inset:0;opacity:.5;
+    background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,255,255,.028) 46px 48px);
+  }
+  @keyframes respira{from{opacity:.75;transform:scale(1)}to{opacity:1;transform:scale(1.05)}}
+  .hero-int{position:relative;max-width:1080px;margin:0 auto;width:100%}
+  .hero-etiqueta{
+    display:inline-flex;align-items:center;gap:.55rem;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+    padding:.45rem 1rem;border-radius:999px;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:rgba(255,255,255,.9);margin-bottom:1.4rem;
+  }
+  .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:var(--rojo);box-shadow:0 0 0 0 rgba(214,69,40,.6);animation:pulso 2.2s infinite}
+  @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(214,69,40,.55)}70%{box-shadow:0 0 0 10px rgba(214,69,40,0)}100%{box-shadow:0 0 0 0 rgba(214,69,40,0)}}
+  h1{
+    font-family:var(--display);font-weight:800;text-transform:uppercase;
+    font-size:clamp(2.7rem,9.5vw,5.6rem);line-height:.98;letter-spacing:.015em;
+    max-width:16ch;
+  }
+  h1 .acento{color:#FF7A5C;-webkit-text-stroke:0}
+  h1 .palabra{display:inline-block}
+  .js-anim h1 .palabra{opacity:0;transform:translateY(.5em) rotate(2deg);animation:palabra .65s var(--ease) forwards;animation-delay:calc(.18s + var(--i)*.09s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    margin-top:1.3rem;font-size:clamp(1.02rem,2.6vw,1.25rem);color:rgba(255,255,255,.78);
+    max-width:52ch;font-weight:400;
+  }
+  .hero-sub strong{color:#fff;font-weight:600}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.1rem}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+    font-weight:700;font-size:1rem;padding:1rem 1.7rem;border-radius:14px;
+    transition:transform .28s var(--ease),box-shadow .28s var(--ease),background .28s var(--ease);
+    min-height:54px;
+  }
+  .btn svg{width:20px;height:20px;flex:0 0 auto}
+  .btn-rojo{background:var(--rojo);color:#fff;box-shadow:0 14px 30px rgba(214,69,40,.4)}
+  .btn-rojo:hover{transform:translateY(-3px) scale(1.02);background:var(--rojo-oscuro);box-shadow:0 18px 38px rgba(214,69,40,.5)}
+  .btn-fantasma{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22)}
+  .btn-fantasma:hover{transform:translateY(-3px);background:rgba(255,255,255,.15)}
+  .hero-datos{
+    display:flex;flex-wrap:wrap;gap:1rem 2.2rem;margin-top:2.8rem;
+    color:rgba(255,255,255,.72);font-size:.92rem;font-weight:500;
+  }
+  .hero-datos span{display:inline-flex;align-items:center;gap:.5rem}
+  .hero-datos svg{width:17px;height:17px;color:#FF9C82}
+  .hero-flecha{
+    position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);
+    color:rgba(255,255,255,.5);animation:baja 2.4s ease-in-out infinite;
+  }
+  @keyframes baja{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(9px)}}
+
+  /* ====== Cinta de cifras ====== */
+  .cifras{
+    position:relative;z-index:5;max-width:1080px;
+    margin:-3.2rem auto 0;padding:0 clamp(1.1rem,5vw,3rem);
+  }
+  .cifras-caja{
+    background:var(--blanco);border-radius:var(--radio);box-shadow:var(--sombra-alta);
+    display:grid;grid-template-columns:repeat(3,1fr);overflow:hidden;border:1px solid var(--borde);
+  }
+  .cifra{padding:1.5rem .6rem;text-align:center;position:relative}
+  .cifra + .cifra::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--borde)}
+  .cifra b{
+    display:block;font-family:var(--display);font-weight:800;color:var(--azul);
+    font-size:clamp(1.9rem,6.5vw,3rem);line-height:1;
+  }
+  .cifra b .uni{color:var(--rojo);font-size:.6em;vertical-align:.28em;margin-left:.06em}
+  .cifra small{display:block;margin-top:.35rem;color:var(--texto-suave);font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+  /* ====== Secciones genéricas ====== */
+  section{padding:clamp(4rem,9vw,6.5rem) clamp(1.1rem,5vw,3rem)}
+  .int{max-width:1080px;margin:0 auto}
+  .kicker{
+    display:inline-flex;align-items:center;gap:.6rem;color:var(--rojo);font-weight:700;
+    font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:1rem;
+  }
+  .kicker::before{content:"";width:26px;height:3px;background:var(--rojo);border-radius:2px}
+  h2{
+    font-family:var(--display);font-weight:800;text-transform:uppercase;color:var(--azul);
+    font-size:clamp(2rem,6.5vw,3.3rem);line-height:1.02;letter-spacing:.01em;max-width:22ch;
+  }
+  .lead{margin-top:1.1rem;color:var(--texto-suave);font-size:1.06rem;max-width:60ch}
+  .lead strong{color:var(--tinta)}
+
+  /* ====== Sobre nosotros ====== */
+  .sobre{background:var(--blanco)}
+  .sobre-grid{display:grid;gap:2.5rem;align-items:center}
+  @media(min-width:900px){.sobre-grid{grid-template-columns:1.1fr .9fr;gap:4rem}}
+  .sobre-panel{
+    position:relative;border-radius:22px;overflow:hidden;min-height:320px;
+    background:linear-gradient(150deg,var(--azul) 0%,var(--azul-noche) 100%);
+    color:#fff;padding:2.2rem;display:flex;flex-direction:column;justify-content:flex-end;gap:1rem;
+    box-shadow:var(--sombra-alta);
+  }
+  .sobre-panel::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(115deg,transparent 0 34px,rgba(255,255,255,.035) 34px 36px);
+  }
+  .sobre-panel .engranaje{
+    position:absolute;top:-46px;right:-46px;width:190px;height:190px;opacity:.14;color:#fff;
+    animation:gira 26s linear infinite;
+  }
+  @keyframes gira{to{transform:rotate(360deg)}}
+  .sobre-panel-num{font-family:var(--display);font-weight:800;font-size:clamp(2.8rem,10vw,4.2rem);line-height:1;color:#FF7A5C;position:relative;text-transform:uppercase}
+  .sobre-panel p{position:relative;color:rgba(255,255,255,.85);font-size:1rem;max-width:34ch}
+  .sobre-lista{margin-top:1.8rem;display:grid;gap:1rem}
+  .sobre-item{display:flex;gap:1rem;align-items:flex-start}
+  .sobre-item .ic{
+    flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:var(--gris);
+    display:grid;place-items:center;color:var(--azul);border:1px solid var(--borde);
+  }
+  .sobre-item .ic svg{width:22px;height:22px}
+  .sobre-item h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.15rem;color:var(--azul);letter-spacing:.03em}
+  .sobre-item p{color:var(--texto-suave);font-size:.95rem;margin-top:.15rem}
+
+  /* ====== Servicios ====== */
+  .servicios{background:var(--gris)}
+  .serv-grid{display:grid;gap:1.2rem;margin-top:2.6rem}
+  @media(min-width:640px){.serv-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1000px){.serv-grid{grid-template-columns:repeat(4,1fr)}}
+  .serv{
+    background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);
+    padding:1.8rem 1.5rem 1.6rem;position:relative;overflow:hidden;
+    box-shadow:var(--sombra);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease);
+  }
+  .serv::after{
+    content:"";position:absolute;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,var(--rojo),#F07A4B);
+    transition:width .45s var(--ease);
+  }
+  .serv:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:var(--sombra-alta);border-color:transparent}
+  .serv:hover::after{width:100%}
+  .serv-ic{
+    width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+    background:linear-gradient(140deg,var(--azul),var(--azul-noche));color:#fff;margin-bottom:1.2rem;
+    box-shadow:0 10px 22px rgba(31,58,95,.28);
+    transition:transform .35s var(--ease);
+  }
+  .serv:hover .serv-ic{transform:scale(1.08) rotate(-6deg)}
+  .serv-ic svg{width:27px;height:27px}
+  .serv h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.3rem;color:var(--azul);letter-spacing:.03em;line-height:1.1}
+  .serv p{margin-top:.55rem;color:var(--texto-suave);font-size:.93rem}
+  .serv-nota{margin-top:2rem;text-align:center;color:var(--texto-suave);font-size:.95rem}
+  .serv-nota a{color:var(--rojo);font-weight:700;border-bottom:2px solid rgba(214,69,40,.3);transition:border-color .25s var(--ease)}
+  .serv-nota a:hover{border-color:var(--rojo)}
+
+  /* ====== Valoración Google ====== */
+  .valoracion{background:var(--blanco)}
+  .val-caja{
+    margin-top:2.4rem;border-radius:22px;overflow:hidden;box-shadow:var(--sombra-alta);
+    background:linear-gradient(150deg,var(--azul) 0%,var(--azul-noche) 100%);color:#fff;
+    display:grid;gap:0;
+  }
+  @media(min-width:820px){.val-caja{grid-template-columns:1fr 1fr}}
+  .val-nota{
+    padding:2.6rem 2rem;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;
+    background:rgba(255,255,255,.04);
+  }
+  .val-nota .num{font-family:var(--display);font-weight:800;font-size:clamp(4rem,14vw,6.2rem);line-height:1}
+  .estrellas{display:flex;gap:.3rem;color:#FFC24B}
+  .estrellas svg{width:26px;height:26px}
+  .estrellas .media{position:relative}
+  .estrellas .media .rel{position:absolute;inset:0;overflow:hidden;width:60%}
+  .estrellas .fondo{color:rgba(255,255,255,.22)}
+  .val-nota small{color:rgba(255,255,255,.72);font-size:.95rem;font-weight:500}
+  .val-texto{padding:2.6rem 2rem;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+  .val-texto h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.5rem;letter-spacing:.03em}
+  .val-texto p{color:rgba(255,255,255,.8);font-size:.98rem;max-width:44ch}
+  .val-google{
+    display:inline-flex;align-items:center;gap:.55rem;align-self:flex-start;
+    background:#fff;color:var(--azul);font-weight:700;font-size:.92rem;
+    padding:.7rem 1.2rem;border-radius:999px;margin-top:.4rem;
+    transition:transform .28s var(--ease),box-shadow .28s var(--ease);
+  }
+  .val-google:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.3)}
+  .val-google svg{width:18px;height:18px}
+
+  /* ====== Contacto ====== */
+  .contacto{background:var(--gris)}
+  .cont-grid{display:grid;gap:1.2rem;margin-top:2.6rem}
+  @media(min-width:900px){.cont-grid{grid-template-columns:1fr 1fr}}
+  .cont-tarjeta{
+    background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);
+    padding:1.9rem 1.6rem;box-shadow:var(--sombra);display:flex;flex-direction:column;gap:.9rem;
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+  }
+  .cont-tarjeta:hover{transform:translateY(-6px);box-shadow:var(--sombra-alta)}
+  .cont-tarjeta .ic{
+    width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
+    background:linear-gradient(140deg,var(--rojo),var(--rojo-oscuro));color:#fff;
+    box-shadow:0 10px 22px rgba(214,69,40,.3);
+  }
+  .cont-tarjeta .ic svg{width:24px;height:24px}
+  .cont-tarjeta h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.35rem;color:var(--azul);letter-spacing:.03em}
+  .cont-tarjeta p{color:var(--texto-suave);font-size:.98rem}
+  .cont-tarjeta p b{color:var(--tinta);font-size:1.15rem;font-weight:700}
+  .cont-tarjeta .accion{
+    margin-top:auto;display:inline-flex;align-items:center;gap:.5rem;color:var(--rojo);font-weight:700;font-size:.95rem;
+  }
+  .cont-tarjeta .accion svg{width:17px;height:17px;transition:transform .3s var(--ease)}
+  .cont-tarjeta:hover .accion svg{transform:translateX(5px)}
+  .mapa{
+    grid-column:1/-1;position:relative;border-radius:22px;overflow:hidden;min-height:260px;
+    background:
+      radial-gradient(circle at 62% 40%,rgba(214,69,40,.15),transparent 34%),
+      linear-gradient(150deg,#25456E,var(--azul-noche));
+    box-shadow:var(--sombra-alta);display:flex;align-items:center;justify-content:center;text-align:center;
+    color:#fff;padding:2.5rem 1.5rem;
+  }
+  .mapa::before{
+    content:"";position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(0deg,transparent 0 54px,rgba(255,255,255,.05) 54px 55px),
+      repeating-linear-gradient(90deg,transparent 0 54px,rgba(255,255,255,.05) 54px 55px);
+  }
+  .mapa-int{position:relative;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+  .mapa-pin{width:52px;height:52px;color:#FF7A5C;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4));animation:bota 2.6s ease-in-out infinite}
+  @keyframes bota{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .mapa h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.5rem;letter-spacing:.04em}
+  .mapa p{color:rgba(255,255,255,.78);max-width:40ch;font-size:.96rem}
+
+  /* ====== CTA final ====== */
+  .cierre{
+    background:linear-gradient(150deg,var(--azul-noche),var(--azul));color:#fff;text-align:center;position:relative;overflow:hidden;
+  }
+  .cierre::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 55% 60% at 50% 120%,rgba(214,69,40,.28),transparent 70%);
+  }
+  .cierre .int{position:relative}
+  .cierre h2{color:#fff;margin:0 auto}
+  .cierre .lead{color:rgba(255,255,255,.75);margin-left:auto;margin-right:auto}
+  .cierre .hero-ctas{justify-content:center}
+
+  /* ====== Footer ====== */
+  footer{background:var(--azul-noche);color:rgba(255,255,255,.7);padding:2.6rem clamp(1.1rem,5vw,3rem) 5.5rem}
+  .foot-int{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.6rem}
+  .foot-fila{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:space-between;align-items:center}
+  .foot-fila .logo-nombre{font-size:1.05rem}
+  .foot-datos{font-size:.9rem;line-height:1.9}
+  .foot-datos a{color:#fff;font-weight:600;border-bottom:1px solid rgba(255,255,255,.25)}
+  .aviso-demo{
+    border-top:1px solid rgba(255,255,255,.12);padding-top:1.4rem;
+    display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;justify-content:space-between;
+    font-size:.88rem;color:rgba(255,255,255,.55);
+  }
+  .aviso-demo b{color:#FF9C82;font-weight:700}
+
+  /* ====== Barra móvil fija de acciones ====== */
+  .barra-movil{
+    position:fixed;left:0;right:0;bottom:0;z-index:1000;display:grid;grid-template-columns:1fr 1fr;
+    background:rgba(14,30,51,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.1);
+  }
+  .barra-movil a{
+    display:flex;align-items:center;justify-content:center;gap:.55rem;
+    padding:1rem .5rem;color:#fff;font-weight:700;font-size:.95rem;
+  }
+  .barra-movil a svg{width:19px;height:19px}
+  .barra-movil .llamar{background:var(--rojo)}
+  @media(min-width:860px){.barra-movil{display:none}footer{padding-bottom:2.6rem}}
+</style>
+<noscript>
+  <style>
+    /* GARANTÍA DE VISIBILIDAD: sin JavaScript, absolutamente todo visible */
+    .rvl,.js-anim .rvl,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+  </style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"></div>
+
+<div class="agua" aria-hidden="true"><span>DEMO</span></div>
+<div class="marca-demo" aria-hidden="true">Demo</div>
+
+<nav class="nav" id="nav" aria-label="Navegación principal">
+  <a class="logo" href="#inicio" aria-label="Tallers Gran Via, ir al inicio">
+    <span class="logo-sello">TG</span>
+    <span class="logo-nombre">Tallers Gran Via<small>Mecánica · Electricidad</small></span>
+  </a>
+  <div class="nav-enlaces">
+    <a href="#sobre">El taller</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#opiniones">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a class="btn-nav" href="tel:+34931463626">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    931 46 36 26
+  </a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="parallax" aria-hidden="true"></div>
+  <div class="hero-int">
+    <p class="hero-etiqueta rvl"><span class="punto"></span>Taller mecánico y eléctrico · Eixample, Barcelona</p>
+    <h1 id="titulo" aria-label="37 años cuidando tu coche en el Eixample">
+      <span class="palabra" style="--i:0">37</span>
+      <span class="palabra" style="--i:1">años</span>
+      <span class="palabra" style="--i:2">cuidando</span>
+      <span class="palabra" style="--i:3">tu</span>
+      <span class="palabra acento" style="--i:4">coche</span>
+      <span class="palabra" style="--i:5">en</span>
+      <span class="palabra" style="--i:6">el</span>
+      <span class="palabra" style="--i:7">Eixample</span>
+    </h1>
+    <p class="hero-sub rvl" data-d="1">Mecánica general y electricidad del automóvil en <strong>Tallers Gran Via S.C.P.</strong> Diagnóstico honesto, trabajo de oficio y trato de taller de barrio de toda la vida.</p>
+    <div class="hero-ctas rvl" data-d="2">
+      <a class="btn btn-rojo" href="tel:+34931463626">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar al taller
+      </a>
+      <a class="btn btn-fantasma" href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Cómo llegar
+      </a>
+    </div>
+    <div class="hero-datos rvl" data-d="3">
+      <span>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.44L17.8 20.5 12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+        4,6 en Google · 23 reseñas
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Carrer de la Diputació 132, Local 2
+      </span>
+    </div>
+  </div>
+  <div class="hero-flecha" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</header>
+
+<div class="cifras">
+  <div class="cifras-caja rvl">
+    <div class="cifra"><b><span class="contador" data-fin="37">0</span><span class="uni">años</span></b><small>De oficio</small></div>
+    <div class="cifra"><b><span class="contador" data-fin="4.6" data-dec="1">0</span><span class="uni">★</span></b><small>En Google</small></div>
+    <div class="cifra"><b><span class="contador" data-fin="23">0</span></b><small>Reseñas</small></div>
+  </div>
+</div>
+
+<section class="sobre" id="sobre">
+  <div class="int">
+    <div class="sobre-grid">
+      <div>
+        <p class="kicker rvl">El taller</p>
+        <h2 class="rvl" data-d="1">Mecánica de siempre, con manos que conocen tu coche</h2>
+        <p class="lead rvl" data-d="2">Tallers Gran Via S.C.P. lleva <strong>37 años</strong> reparando coches en el corazón del Eixample. Un taller de barrio especializado en <strong>mecánica y electricidad del automóvil</strong>, donde el diagnóstico se explica claro y el trabajo se hace bien a la primera.</p>
+        <ul class="sobre-lista">
+          <li class="sobre-item rvl" data-d="1">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6.1 5.9L2 18.8V22h3.2l6.6-6.6a4.5 4.5 0 0 0 5.9-6.1l-3 3-2.8-.7-.7-2.8 3-3z"/></svg></span>
+            <div><h3>Oficio de verdad</h3><p>Casi cuatro décadas resolviendo averías mecánicas y eléctricas de todo tipo de vehículos.</p></div>
+          </li>
+          <li class="sobre-item rvl" data-d="2">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div><h3>En pleno Eixample</h3><p>Carrer de la Diputació 132, Local 2 — a pie de calle, en el barrio de toda la vida.</p></div>
+          </li>
+          <li class="sobre-item rvl" data-d="3">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg></span>
+            <div><h3>Clientes que vuelven</h3><p>4,6 sobre 5 en Google con 23 reseñas: la mejor garantía es la confianza del barrio.</p></div>
+          </li>
+        </ul>
+      </div>
+      <div class="sobre-panel rvl" data-d="2">
+        <svg class="engranaje" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="sobre-panel-num">37 años</span>
+        <p>El mismo compromiso desde el primer día: coches que salen del taller como tienen que salir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="int">
+    <p class="kicker rvl">Servicios</p>
+    <h2 class="rvl" data-d="1">Todo lo que tu coche necesita, en un solo taller</h2>
+    <div class="serv-grid">
+      <article class="serv rvl" data-d="1">
+        <div class="serv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6.1 5.9L2 18.8V22h3.2l6.6-6.6a4.5 4.5 0 0 0 5.9-6.1l-3 3-2.8-.7-.7-2.8 3-3z"/></svg></div>
+        <h3>Mecánica general</h3>
+        <p>Mantenimiento y reparación integral: motor, frenos, embrague, distribución y averías de todo tipo.</p>
+      </article>
+      <article class="serv rvl" data-d="2">
+        <div class="serv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <h3>Electricidad del automóvil</h3>
+        <p>Diagnosis electrónica, baterías, alternadores, motores de arranque e instalación eléctrica.</p>
+      </article>
+      <article class="serv rvl" data-d="3">
+        <div class="serv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M6.2 6.2l1.8 1.8M16 16l1.8 1.8M17.8 6.2L16 8M8 16l-1.8 1.8"/></svg></div>
+        <h3>Neumáticos</h3>
+        <p>Montaje, equilibrado y sustitución de neumáticos para que pises la calzada con seguridad.</p>
+      </article>
+      <article class="serv rvl" data-d="4">
+        <div class="serv-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3>Revisión pre-ITV</h3>
+        <p>Repaso completo del vehículo antes de la inspección para que pases la ITV a la primera.</p>
+      </article>
+    </div>
+    <p class="serv-nota rvl" data-d="2">¿No sabes qué le pasa a tu coche? <a href="tel:+34931463626">Llámanos al 931 46 36 26</a> y te orientamos sin compromiso.</p>
+  </div>
+</section>
+
+<section class="valoracion" id="opiniones">
+  <div class="int">
+    <p class="kicker rvl">Opiniones</p>
+    <h2 class="rvl" data-d="1">El barrio nos avala</h2>
+    <div class="val-caja rvl" data-d="2">
+      <div class="val-nota">
+        <span class="num"><span class="contador" data-fin="4.6" data-dec="1">0</span></span>
+        <div class="estrellas" role="img" aria-label="4,6 de 5 estrellas">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+          <span class="media">
+            <svg class="fondo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+            <span class="rel"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg></span>
+          </span>
+        </div>
+        <small>23 reseñas verificadas en Google</small>
+      </div>
+      <div class="val-texto">
+        <h3>Confianza que se gana coche a coche</h3>
+        <p>Una valoración de 4,6 sobre 5 no se improvisa: son 37 años de reparaciones bien hechas y clientes del Eixample que repiten y nos recomiendan.</p>
+        <a class="val-google" href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.6 1.04-4.75 4.44 1.05 6.76L12 17.27 6.2 20.5l1.05-6.76L2.5 9.3l6.6-1.04z"/></svg>
+          Ver la ficha en Google
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="int">
+    <p class="kicker rvl">Contacto</p>
+    <h2 class="rvl" data-d="1">Ven a vernos o llámanos</h2>
+    <p class="lead rvl" data-d="2">Estamos en pleno Eixample, a pie de calle. Llámanos y te decimos cuándo traer el coche.</p>
+    <div class="cont-grid">
+      <a class="cont-tarjeta rvl" data-d="1" href="tel:+34931463626">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <h3>Teléfono</h3>
+        <p><b>931 46 36 26</b><br>Te atendemos directamente en el taller.</p>
+        <span class="accion">Llamar ahora
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="cont-tarjeta rvl" data-d="2" href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <h3>Dirección</h3>
+        <p><b>Carrer de la Diputació 132, Local 2</b><br>Eixample · 08015 Barcelona</p>
+        <span class="accion">Abrir en Google Maps
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="mapa rvl" data-d="3" href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener" aria-label="Ver Tallers Gran Via en Google Maps">
+        <span class="mapa-int">
+          <svg class="mapa-pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+          <h3>Estamos aquí</h3>
+          <p>Carrer de la Diputació 132, Local 2 · Eixample, 08015 Barcelona. Toca para ver la ruta en Google Maps.</p>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cierre">
+  <div class="int">
+    <p class="kicker rvl" style="justify-content:center;color:#FF9C82">¿Hablamos?</p>
+    <h2 class="rvl" data-d="1">Tu coche, en manos con 37 años de oficio</h2>
+    <p class="lead rvl" data-d="2">Una llamada y te decimos cómo lo vemos. Sin rodeos, como siempre.</p>
+    <div class="hero-ctas rvl" data-d="3">
+      <a class="btn btn-rojo" href="tel:+34931463626">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        931 46 36 26
+      </a>
+      <a class="btn btn-fantasma" href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Cómo llegar
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-int">
+    <div class="foot-fila">
+      <a class="logo" href="#inicio">
+        <span class="logo-sello">TG</span>
+        <span class="logo-nombre">Tallers Gran Via S.C.P.<small>Mecánica · Electricidad</small></span>
+      </a>
+      <p class="foot-datos">
+        Carrer de la Diputació 132, Local 2 · Eixample, 08015 Barcelona<br>
+        <a href="tel:+34931463626">931 46 36 26</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </p>
+    </div>
+    <div class="aviso-demo">
+      <span><b>Demo creada por Eleven AI</b> — esta web puede ser tuya.</span>
+      <span>Maqueta de demostración · Los datos mostrados proceden de fuentes públicas.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="barra-movil" aria-label="Acciones rápidas">
+  <a class="llamar" href="tel:+34931463626">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Llamar
+  </a>
+  <a href="https://www.google.com/maps/search/?api=1&amp;query=Tallers%20Gran%20Via%20Carrer%20de%20la%20Diputaci%C3%B3%20132%20Barcelona" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Cómo llegar
+  </a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var docEl = document.documentElement;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Activar animaciones SOLO si hay IntersectionObserver y no se pide movimiento reducido.
+     Si no, todo queda visible por defecto (garantía de visibilidad). */
+  var animar = ('IntersectionObserver' in window) && !reduceMotion;
+  if (animar) { docEl.classList.add('js-anim'); }
+
+  /* Revelado escalonado por sección */
+  if (animar) {
+    try {
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(e){
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll('.rvl').forEach(function(el){ io.observe(el); });
+    } catch (err) {
+      docEl.classList.remove('js-anim');
+    }
+  }
+
+  /* ===== SCRIPT DE RESCATE anti-página-vacía (obligatorio) =====
+     A los 1200 ms, cualquier elemento que siga oculto (opacity 0) sin
+     animación activa se fuerza a visible. Y a los 3000 ms, red final:
+     se retira la clase de animación de todo lo que no se haya revelado. */
+  function rescate(){
+    try {
+      document.querySelectorAll('.rvl').forEach(function(el){
+        var op = 1;
+        try { op = parseFloat(getComputedStyle(el).opacity); } catch(e){}
+        if (op < 0.9 && !el.classList.contains('in')) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.classList.add('in');
+        }
+      });
+      document.querySelectorAll('h1 .palabra').forEach(function(el){
+        var op = 1;
+        try { op = parseFloat(getComputedStyle(el).opacity); } catch(e){}
+        if (op < 0.9) { el.style.opacity = '1'; el.style.transform = 'none'; el.style.animation = 'none'; }
+      });
+    } catch (e) {
+      /* Último recurso: desactivar todo el sistema de animación */
+      docEl.classList.remove('js-anim');
+    }
+  }
+  setTimeout(rescate, 1200);
+  setTimeout(function(){
+    rescate();
+    var alguna = document.querySelector('.js-anim .rvl:not(.in)');
+    if (alguna) { docEl.classList.remove('js-anim'); }
+  }, 3000);
+
+  /* Barra de progreso de scroll + nav sólida */
+  var barra = document.getElementById('progreso');
+  var nav = document.getElementById('nav');
+  function alScroll(){
+    var h = docEl.scrollHeight - window.innerHeight;
+    if (barra && h > 0) { barra.style.width = (window.scrollY / h * 100) + '%'; }
+    if (nav) { nav.classList.toggle('solida', window.scrollY > 40); }
+  }
+  window.addEventListener('scroll', alScroll, { passive: true });
+  alScroll();
+
+  /* Parallax suave del fondo del hero */
+  var fondo = document.getElementById('parallax');
+  if (fondo && !reduceMotion) {
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < window.innerHeight * 1.2) {
+        fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      }
+    }, { passive: true });
+  }
+
+  /* Contadores animados (años, estrellas, reseñas) */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+    var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+    if (reduceMotion || !('requestAnimationFrame' in window)) {
+      el.textContent = fin.toFixed(dec).replace('.', ',');
+      return;
+    }
+    var dur = 1400, t0 = null;
+    function paso(t){
+      if (!t0) { t0 = t; }
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.', ',');
+      if (p < 1) { requestAnimationFrame(paso); }
+      else { el.textContent = fin.toFixed(dec).replace('.', ','); }
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window) {
+    try {
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(e){
+          if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      contadores.forEach(function(el){ ioC.observe(el); });
+    } catch (e) {
+      contadores.forEach(animarContador);
+    }
+  } else {
+    contadores.forEach(animarContador);
+  }
+  /* Rescate específico de contadores: si a los 2,5 s alguno sigue a 0, se fija su valor final */
+  setTimeout(function(){
+    contadores.forEach(function(el){
+      if (el.textContent === '0' || el.textContent === '0,0') {
+        var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+        var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+        el.textContent = fin.toFixed(dec).replace('.', ',');
+      }
+    });
+  }, 2500);
+})();
+</script>
+</body>
+</html>

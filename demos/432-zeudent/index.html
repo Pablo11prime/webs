@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clínica Dental Zeudent — Tu dentista en el Eixample, Barcelona</title>
+<meta name="description" content="Clínica Dental Zeudent, Carrer de Roger de Llúria 2, Barcelona. Odontología general, ortodoncia, implantología, estética dental y urgencias. 4,9★ en Google.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#0E7490;
+  --secundario:#155E75;
+  --acento:#22D3EE;
+  --tinta:#0B2530;
+  --tinta-suave:#4A6572;
+  --niebla:#F2F8FA;
+  --hielo:#E6F3F7;
+  --blanco:#FFFFFF;
+  --radio:20px;
+  --sombra:0 10px 40px rgba(14,116,144,.10);
+  --sombra-alta:0 24px 60px rgba(14,116,144,.16);
+  --transicion:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color:var(--tinta);
+  background:var(--blanco);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;letter-spacing:-.01em}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acento);color:var(--secundario)}
+
+/* ===== Barra de progreso de scroll ===== */
+#progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:1000;
+  background:linear-gradient(90deg,var(--primario),var(--acento));
+  transition:width .1s linear}
+
+/* ===== Marca de agua DEMO ===== */
+.marca-demo{position:fixed;bottom:14px;right:14px;z-index:999;
+  background:rgba(21,94,117,.88);color:#fff;backdrop-filter:blur(6px);
+  font-size:11px;font-weight:700;letter-spacing:.18em;
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  box-shadow:0 4px 18px rgba(11,37,48,.25)}
+
+/* ===== Navegación ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+  background:rgba(255,255,255,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(14,116,144,.08);
+  transition:box-shadow .3s var(--transicion)}
+nav.con-sombra{box-shadow:0 6px 24px rgba(14,116,144,.08)}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;color:var(--secundario)}
+.logo svg{width:30px;height:30px;flex-shrink:0}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.nav-tel{display:inline-flex;align-items:center;gap:8px;
+  background:var(--primario);color:#fff;font-weight:600;font-size:.9rem;
+  padding:10px 18px;border-radius:999px;
+  transition:transform .25s var(--transicion),background .25s,box-shadow .25s}
+.nav-tel:hover{background:var(--secundario);transform:translateY(-2px);box-shadow:0 8px 20px rgba(14,116,144,.3)}
+.nav-links{display:none;gap:26px;font-size:.92rem;font-weight:500;color:var(--tinta-suave)}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--primario)}
+@media(min-width:820px){.nav-links{display:flex}}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:120px 20px 70px;overflow:hidden;
+  background:linear-gradient(180deg,var(--niebla) 0%,var(--blanco) 100%)}
+.hero-fondo{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.burbuja{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;
+  animation:flotar 14s ease-in-out infinite alternate}
+.b1{width:420px;height:420px;top:-120px;right:-140px;background:radial-gradient(circle,var(--acento),transparent 65%)}
+.b2{width:360px;height:360px;bottom:-100px;left:-120px;background:radial-gradient(circle,rgba(14,116,144,.5),transparent 65%);animation-delay:-6s}
+.b3{width:220px;height:220px;top:38%;left:58%;background:radial-gradient(circle,rgba(34,211,238,.35),transparent 65%);animation-delay:-3s}
+@keyframes flotar{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(24px,-30px,0) scale(1.08)}}
+.hero-int{position:relative;max-width:1100px;margin:0 auto;width:100%}
+.hero-etiqueta{display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid rgba(14,116,144,.15);
+  color:var(--secundario);font-size:.82rem;font-weight:600;
+  padding:8px 16px;border-radius:999px;box-shadow:var(--sombra);margin-bottom:26px}
+.hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);
+  animation:latido 2s ease-in-out infinite}
+@keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
+h1{font-size:clamp(2.5rem,8vw,4.6rem);color:var(--tinta);max-width:16ch}
+h1 .palabra{display:inline-block;opacity:0;transform:translateY(26px);
+  animation:subePalabra .7s var(--transicion) forwards}
+h1 em{font-style:normal;color:var(--primario);position:relative}
+h1 em::after{content:"";position:absolute;left:0;bottom:6px;height:.28em;width:100%;
+  background:linear-gradient(90deg,rgba(34,211,238,.45),rgba(34,211,238,.15));
+  z-index:-1;border-radius:4px}
+@keyframes subePalabra{to{opacity:1;transform:translateY(0)}}
+.hero-sub{font-size:clamp(1.02rem,2.5vw,1.2rem);color:var(--tinta-suave);
+  max-width:52ch;margin:22px 0 34px}
+.hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-weight:600;font-size:1rem;padding:16px 30px;border-radius:999px;
+  transition:transform .25s var(--transicion),box-shadow .25s,background .25s}
+.btn-primario{background:var(--primario);color:#fff;box-shadow:0 10px 26px rgba(14,116,144,.32)}
+.btn-primario:hover{background:var(--secundario);transform:translateY(-3px);box-shadow:0 16px 34px rgba(14,116,144,.4)}
+.btn-secundario{background:#fff;color:var(--secundario);border:1.5px solid rgba(14,116,144,.25)}
+.btn-secundario:hover{border-color:var(--primario);transform:translateY(-3px);box-shadow:var(--sombra)}
+.hero-valoracion{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.estrellas{color:#F5B301;font-size:1.15rem;letter-spacing:2px}
+.hero-valoracion strong{font-size:1.05rem}
+.hero-valoracion span{color:var(--tinta-suave);font-size:.92rem}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:54px;max-width:640px}
+.stat{background:rgba(255,255,255,.8);backdrop-filter:blur(8px);
+  border:1px solid rgba(14,116,144,.1);border-radius:var(--radio);
+  padding:18px 14px;text-align:center;box-shadow:var(--sombra)}
+.stat b{display:block;font-family:'Fraunces',serif;font-size:clamp(1.5rem,4.5vw,2.1rem);color:var(--primario);font-weight:600}
+.stat small{color:var(--tinta-suave);font-size:.78rem;font-weight:500}
+
+/* ===== Secciones genéricas ===== */
+section{padding:84px 20px}
+.contenedor{max-width:1100px;margin:0 auto}
+.sobretitulo{display:inline-block;color:var(--primario);font-weight:700;font-size:.8rem;
+  letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+h2{font-size:clamp(1.9rem,5.5vw,3rem);margin-bottom:18px;max-width:22ch}
+.intro{color:var(--tinta-suave);font-size:1.05rem;max-width:58ch;margin-bottom:44px}
+
+/* ===== Reveal por scroll ===== */
+.revelar{opacity:0;transform:translateY(34px);
+  transition:opacity .8s var(--transicion),transform .8s var(--transicion)}
+.revelar.visible{opacity:1;transform:none}
+
+/* ===== Sobre nosotros ===== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:34px;align-items:center}
+@media(min-width:880px){.sobre-grid{grid-template-columns:1.05fr .95fr;gap:60px}}
+.sobre-visual{position:relative;border-radius:28px;overflow:hidden;
+  background:linear-gradient(145deg,var(--secundario),var(--primario) 55%,var(--acento));
+  min-height:340px;display:flex;align-items:flex-end;box-shadow:var(--sombra-alta)}
+.sobre-visual::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 78% 18%,rgba(255,255,255,.28),transparent 45%)}
+.sobre-visual .diente{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);
+  width:150px;height:150px;opacity:.95;filter:drop-shadow(0 14px 30px rgba(11,37,48,.35))}
+.sobre-tarjeta{position:relative;margin:22px;background:rgba(255,255,255,.94);
+  border-radius:18px;padding:18px 20px;box-shadow:var(--sombra)}
+.sobre-tarjeta b{color:var(--secundario)}
+.sobre-tarjeta small{color:var(--tinta-suave)}
+.puntos{display:grid;gap:18px;margin-top:30px}
+.punto-item{display:flex;gap:16px;align-items:flex-start}
+.punto-icono{flex-shrink:0;width:46px;height:46px;border-radius:14px;
+  background:var(--hielo);color:var(--primario);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s var(--transicion),background .3s}
+.punto-item:hover .punto-icono{transform:scale(1.1) rotate(-4deg);background:var(--acento);color:var(--secundario)}
+.punto-item h3{font-size:1.08rem;margin-bottom:4px}
+.punto-item p{color:var(--tinta-suave);font-size:.95rem}
+
+/* ===== Servicios ===== */
+.servicios{background:linear-gradient(180deg,var(--niebla),var(--blanco))}
+.serv-grid{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:640px){.serv-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.serv-grid{grid-template-columns:repeat(3,1fr)}}
+.serv-card{background:#fff;border:1px solid rgba(14,116,144,.08);
+  border-radius:var(--radio);padding:28px 24px;box-shadow:var(--sombra);
+  transition:transform .35s var(--transicion),box-shadow .35s,border-color .35s;
+  will-change:transform}
+.serv-card:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:var(--sombra-alta);border-color:rgba(34,211,238,.5)}
+.serv-icono{width:52px;height:52px;border-radius:16px;margin-bottom:18px;
+  background:linear-gradient(135deg,var(--hielo),#fff);
+  border:1px solid rgba(14,116,144,.12);
+  display:flex;align-items:center;justify-content:center;color:var(--primario);
+  transition:transform .35s var(--transicion)}
+.serv-card:hover .serv-icono{transform:scale(1.12)}
+.serv-card h3{font-size:1.15rem;margin-bottom:8px}
+.serv-card p{color:var(--tinta-suave);font-size:.93rem}
+.serv-extra{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:#fff;border:1px solid rgba(14,116,144,.16);color:var(--secundario);
+  font-size:.85rem;font-weight:600;padding:9px 16px;border-radius:999px;
+  transition:background .25s,transform .25s var(--transicion)}
+.chip:hover{background:var(--hielo);transform:translateY(-2px)}
+
+/* ===== Reseñas ===== */
+.resenas{background:var(--secundario);color:#fff;position:relative;overflow:hidden}
+.resenas::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 15% 10%,rgba(34,211,238,.18),transparent 45%),
+             radial-gradient(circle at 90% 90%,rgba(34,211,238,.12),transparent 40%)}
+.resenas .contenedor{position:relative}
+.resenas h2,.resenas .sobretitulo{color:#fff}
+.resenas .sobretitulo{color:var(--acento)}
+.resenas .intro{color:rgba(255,255,255,.75)}
+.res-cabecera{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-bottom:40px}
+.res-nota{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:600;line-height:1}
+.res-detalle .estrellas{font-size:1.05rem}
+.res-detalle span{display:block;color:rgba(255,255,255,.75);font-size:.9rem}
+.res-grid{display:grid;gap:18px}
+@media(min-width:880px){.res-grid{grid-template-columns:repeat(3,1fr)}}
+.res-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(6px);border-radius:var(--radio);padding:26px 24px;
+  transition:transform .35s var(--transicion),background .35s}
+.res-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.12)}
+.res-card .estrellas{margin-bottom:14px;font-size:1rem}
+.res-card blockquote{font-size:.98rem;line-height:1.6;color:rgba(255,255,255,.92);margin-bottom:18px}
+.res-card figcaption{display:flex;align-items:center;gap:12px;font-size:.88rem}
+.avatar{width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--acento),var(--primario));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;font-size:.85rem}
+.res-card figcaption span{color:rgba(255,255,255,.65);display:block;font-size:.78rem}
+
+/* ===== Contacto ===== */
+.contacto-grid{display:grid;gap:22px}
+@media(min-width:880px){.contacto-grid{grid-template-columns:1.1fr .9fr;gap:40px}}
+.info-card{background:#fff;border:1px solid rgba(14,116,144,.1);
+  border-radius:var(--radio);padding:30px 26px;box-shadow:var(--sombra)}
+.info-fila{display:flex;gap:16px;align-items:flex-start;padding:16px 0;
+  border-bottom:1px solid rgba(14,116,144,.08)}
+.info-fila:last-child{border-bottom:none}
+.info-fila .punto-icono{width:42px;height:42px}
+.info-fila h3{font-size:1rem;margin-bottom:3px}
+.info-fila p,.info-fila a{color:var(--tinta-suave);font-size:.94rem}
+.info-fila a{font-weight:600;color:var(--primario)}
+.info-fila a:hover{text-decoration:underline}
+.horario-tabla{width:100%;border-collapse:collapse;font-size:.94rem}
+.horario-tabla td{padding:11px 0;border-bottom:1px solid rgba(14,116,144,.08);color:var(--tinta-suave)}
+.horario-tabla tr:last-child td{border-bottom:none}
+.horario-tabla td:first-child{font-weight:600;color:var(--tinta)}
+.horario-tabla td:last-child{text-align:right}
+.cerrado{color:#B4535A;font-weight:600}
+.mapa-btn{margin-top:20px;width:100%}
+.redes{display:flex;gap:12px;margin-top:20px}
+.red{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600;
+  color:var(--secundario);background:var(--hielo);padding:10px 16px;border-radius:999px;
+  transition:transform .25s var(--transicion),background .25s}
+.red:hover{transform:translateY(-2px);background:var(--acento);color:var(--secundario)}
+
+/* ===== CTA final ===== */
+.cta-final{background:linear-gradient(135deg,var(--primario),var(--secundario));
+  color:#fff;text-align:center;border-radius:32px;max-width:1060px;
+  margin:0 auto;padding:70px 24px;position:relative;overflow:hidden;
+  box-shadow:var(--sombra-alta)}
+.cta-final::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 15%,rgba(34,211,238,.35),transparent 50%)}
+.cta-final h2{color:#fff;margin:0 auto 14px;position:relative}
+.cta-final p{color:rgba(255,255,255,.85);max-width:46ch;margin:0 auto 30px;position:relative}
+.cta-final .btn-primario{background:#fff;color:var(--secundario);position:relative}
+.cta-final .btn-primario:hover{background:var(--hielo);color:var(--secundario)}
+.seccion-cta{padding:40px 20px 90px}
+
+/* ===== Pie ===== */
+footer{background:var(--tinta);color:rgba(255,255,255,.8);padding:56px 20px 110px}
+.pie-int{max-width:1100px;margin:0 auto;display:grid;gap:30px}
+@media(min-width:760px){.pie-int{grid-template-columns:1.2fr 1fr 1fr}}
+footer .logo{color:#fff;margin-bottom:12px}
+footer p{font-size:.9rem;line-height:1.7}
+footer h3{color:#fff;font-size:1rem;margin-bottom:14px;font-family:'Inter',sans-serif;font-weight:700}
+footer ul{list-style:none}
+footer li{margin-bottom:10px;font-size:.9rem}
+footer a:hover{color:var(--acento)}
+.pie-aviso{max-width:1100px;margin:44px auto 0;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.14);
+  font-size:.85rem;color:rgba(255,255,255,.65);text-align:center}
+.pie-aviso strong{color:var(--acento)}
+
+/* ===== Movimiento reducido ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
+.revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav id="nav" aria-label="Navegación principal">
+  <a class="logo" href="#inicio" aria-label="Clínica Dental Zeudent — inicio">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d="M16 3C11 3 7 6.6 7 11.4c0 3.2 1.1 5 2 7.4 1 2.6 1.4 6.4 3.2 9.4.6 1 2 .8 2.3-.3.5-2 .6-4.5 1.5-4.5s1 2.5 1.5 4.5c.3 1.1 1.7 1.3 2.3.3 1.8-3 2.2-6.8 3.2-9.4.9-2.4 2-4.2 2-7.4C25 6.6 21 3 16 3Z" fill="#0E7490"/>
+      <path d="M11 9.5c1.2-1.8 3-2.6 5-2.6" stroke="#22D3EE" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Zeudent
+  </a>
+  <div class="nav-links">
+    <a href="#sobre">La clínica</a>
+    <a href="#servicios">Tratamientos</a>
+    <a href="#resenas">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <div class="nav-cta">
+    <a class="nav-tel" href="tel:+34931138903">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      931 13 89 03
+    </a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="inicio">
+  <div class="hero-fondo" id="parallax" aria-hidden="true">
+    <div class="burbuja b1"></div>
+    <div class="burbuja b2"></div>
+    <div class="burbuja b3"></div>
+  </div>
+  <div class="hero-int">
+    <span class="hero-etiqueta"><span class="punto"></span> Clínica dental en el Eixample · Barcelona</span>
+    <h1 id="titular">
+      <span class="palabra">Tu</span>
+      <span class="palabra">sonrisa,</span>
+      <span class="palabra">en</span>
+      <span class="palabra">las</span>
+      <span class="palabra"><em>mejores</em></span>
+      <span class="palabra"><em>manos</em></span>
+    </h1>
+    <p class="hero-sub">Odontología general y especializada en pleno centro de Barcelona: prevención, ortodoncia, implantes, estética dental y atención de urgencias con un trato cercano que convierte cada visita en una experiencia tranquila.</p>
+    <div class="hero-botones">
+      <a class="btn btn-primario" href="tel:+34931138903">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Llamar ahora
+      </a>
+      <a class="btn btn-secundario" href="#contacto">Pedir cita</a>
+    </div>
+    <div class="hero-valoracion">
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <strong>4,9 sobre 5</strong>
+      <span>· 282 reseñas en Google</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><b><span class="contador" data-fin="4.9" data-decimales="1">0</span>★</b><small>Valoración media</small></div>
+      <div class="stat"><b><span class="contador" data-fin="282">0</span></b><small>Reseñas en Google</small></div>
+      <div class="stat"><b><span class="contador" data-fin="10">0</span>+</b><small>Tratamientos</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOBRE NOSOTROS ===== -->
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <div class="sobre-grid">
+      <div class="revelar">
+        <span class="sobretitulo">La clínica</span>
+        <h2>Una clínica pensada para que vengas tranquilo</h2>
+        <p class="intro" style="margin-bottom:0">Nuestros pacientes lo repiten en sus reseñas: un equipo extremadamente profesional y amable, capaz de atender urgencias sin esperas y de conseguir que quien llegaba con miedo al dentista hoy venga con serenidad. En Zeudent unimos odontología completa, tecnología de diagnóstico propia y un trato humano de verdad.</p>
+        <div class="puntos">
+          <div class="punto-item revelar">
+            <div class="punto-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2 4.1 12.5c-.3.4 0 1 .5 1H11l-1 8.4c-.1.6.7.9 1 .4L20 11.5c.3-.4 0-1-.5-1H13l1-8c.1-.6-.6-.9-1-.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <div><h3>Urgencias atendidas al momento</h3><p>Cuando algo no puede esperar, te recibimos: agilidad real ante imprevistos, sin colas eternas.</p></div>
+          </div>
+          <div class="punto-item revelar">
+            <div class="punto-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <div><h3>Adiós al miedo al dentista</h3><p>Acompañamos a cada paciente con calma y explicaciones claras, hasta que la consulta deja de imponer.</p></div>
+          </div>
+          <div class="punto-item revelar">
+            <div class="punto-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8.5 12.5 11 15l4.5-5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><h3>Diagnóstico completo en la clínica</h3><p>TAC y radiología dental propios para planificar cada tratamiento con precisión desde la primera visita.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="sobre-visual revelar" aria-hidden="true">
+        <svg class="diente" viewBox="0 0 32 32" fill="none"><path d="M16 3C11 3 7 6.6 7 11.4c0 3.2 1.1 5 2 7.4 1 2.6 1.4 6.4 3.2 9.4.6 1 2 .8 2.3-.3.5-2 .6-4.5 1.5-4.5s1 2.5 1.5 4.5c.3 1.1 1.7 1.3 2.3.3 1.8-3 2.2-6.8 3.2-9.4.9-2.4 2-4.2 2-7.4C25 6.6 21 3 16 3Z" fill="#ffffff"/><path d="M11 9.5c1.2-1.8 3-2.6 5-2.6" stroke="#22D3EE" stroke-width="2" stroke-linecap="round"/></svg>
+        <div class="sobre-tarjeta">
+          <b>★ 4,9 en Google</b><br>
+          <small>«He pasado de tener miedo de ir al dentista a ir con tranquilidad.»</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICIOS ===== -->
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">Tratamientos</span>
+      <h2>Odontología completa bajo un mismo techo</h2>
+      <p class="intro">De la revisión rutinaria al implante: todas las especialidades, coordinadas por un mismo equipo y con diagnóstico por imagen en la propia clínica.</p>
+    </div>
+    <div class="serv-grid">
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C8.5 2 6 4.4 6 7.6c0 2.2.8 3.4 1.4 5 .7 1.8 1 4.5 2.3 6.6.4.7 1.4.6 1.6-.2.3-1.4.4-3.1 1-3.1s.7 1.7 1 3.1c.2.8 1.2.9 1.6.2 1.3-2.1 1.6-4.8 2.3-6.6.6-1.6 1.4-2.8 1.4-5C18.6 4.4 15.5 2 12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Odontología general y prevención</h3>
+        <p>Revisiones, empastes e higiene profesional para mantener tu boca sana todo el año.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12c0-3 2-5 4.5-5S12 9 12 12s2-5 4.5-5S21 9 21 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 12v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Ortodoncia</h3>
+        <p>Alineamos tu sonrisa con planes de tratamiento a medida para adultos y jóvenes.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8V5m0 0c0-1.7 1.3-3 3-3m-3 3c0-1.7-1.3-3-3-3M12 8c-3.3 0-5 2.2-5 5.4 0 2 .6 3.2 1.2 4.6.6 1.5 1 3.4 2 5 .4.7 1.5.5 1.6-.3l.2-2.7h0l.2 2.7c.1.8 1.2 1 1.6.3 1-1.6 1.4-3.5 2-5 .6-1.4 1.2-2.6 1.2-4.6C17 10.2 15.3 8 12 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Odontopediatría</h3>
+        <p>Cuidado dental infantil con paciencia y cariño: primeras visitas sin miedo.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21c-4 0-7-3-7-7 0-3 1.5-4.5 3-6l4-4 4 4c1.5 1.5 3 3 3 6 0 4-3 7-7 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 14c0 1.4 1.1 2.5 2.5 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Periodoncia</h3>
+        <p>Tratamiento y mantenimiento de encías para frenar la enfermedad periodontal a tiempo.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 3.5 6 6L9 21H3v-6L14.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m12 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Endodoncia</h3>
+        <p>Salvamos piezas dañadas tratando el interior del diente y eliminando el dolor de raíz.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v6m0 0c-2.8 0-4.2 1.8-4.2 4.5 0 1.7.5 2.7 1 3.9.5 1.2.8 2.9 1.7 4.2.3.6 1.2.4 1.3-.2l.2-2.3.2 2.3c.1.6 1 .8 1.3.2.9-1.3 1.2-3 1.7-4.2.5-1.2 1-2.2 1-3.9 0-2.7-1.4-4.5-4.2-4.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 5.5 12 3l3 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Implantología</h3>
+        <p>Recupera piezas perdidas con implantes planificados con TAC dental de la propia clínica.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 1.9 4.6L19 8l-3.5 3.2.9 4.8L12 13.7 7.6 16l.9-4.8L5 8l5.1-.4L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m19 16 .8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2Z" fill="currentColor"/></svg></div>
+        <h3>Estética dental</h3>
+        <p>Tratamientos estéticos para lucir una sonrisa cuidada, natural y luminosa.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 10h4m-2-2v4m6-3h2m-2 4h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 22h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>TAC y radiología dental</h3>
+        <p>Diagnóstico por imagen avanzado sin salir de la clínica: precisión desde el primer día.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg></div>
+        <h3>Urgencias dentales</h3>
+        <p>¿Dolor repentino o accidente? Llámanos: nuestros pacientes destacan la rapidez de respuesta.</p>
+      </div>
+    </div>
+    <div class="serv-extra revelar">
+      <span class="chip">Higiene dental</span>
+      <span class="chip">Prevención</span>
+      <a class="chip" href="tel:+34931138903">Urgencias · 931 13 89 03</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESEÑAS ===== -->
+<section class="resenas" id="resenas">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">Opiniones reales</span>
+      <h2>Lo que dicen nuestros pacientes</h2>
+    </div>
+    <div class="res-cabecera revelar">
+      <span class="res-nota">4,9</span>
+      <div class="res-detalle">
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <span>282 reseñas verificadas en Google</span>
+      </div>
+    </div>
+    <div class="res-grid">
+      <figure class="res-card revelar">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <blockquote>«Muy buena atención. Entré sin cola con una situación urgente. Personal muy amable :)»</blockquote>
+        <figcaption><span class="avatar" aria-hidden="true">MB</span><div><b>Michał Buras</b><span>Reseña de Google</span></div></figcaption>
+      </figure>
+      <figure class="res-card revelar">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <blockquote>«Personal extremadamente profesional y amable. Disponibles para gestionar las urgencias.»</blockquote>
+        <figcaption><span class="avatar" aria-hidden="true">SC</span><div><b>Sara Capelli</b><span>Reseña de Google</span></div></figcaption>
+      </figure>
+      <figure class="res-card revelar">
+        <div class="estrellas" aria-hidden="true">★★★★★</div>
+        <blockquote>«100% recomendado. He pasado de tener miedo de ir al dentista a ir con tranquilidad y serenidad.»</blockquote>
+        <figcaption><span class="avatar" aria-hidden="true">DS</span><div><b>Davide Sironi</b><span>Reseña de Google</span></div></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">Contacto y cita</span>
+      <h2>Estamos en el corazón del Eixample</h2>
+      <p class="intro">A un paso de la Plaça Urquinaona: llámanos o ven a vernos, y resolvemos tus dudas sin compromiso.</p>
+    </div>
+    <div class="contacto-grid">
+      <div class="info-card revelar">
+        <div class="info-fila">
+          <div class="punto-icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
+          <div>
+            <h3>Dirección</h3>
+            <p>Carrer de Roger de Llúria 2, Eixample<br>08010 Barcelona</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica+Dental+Zeudent%2C+Carrer+de+Roger+de+Ll%C3%BAria+2%2C+08010+Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a>
+          </div>
+        </div>
+        <div class="info-fila">
+          <div class="punto-icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div>
+            <h3>Teléfono</h3>
+            <p>Cita previa y urgencias</p>
+            <a href="tel:+34931138903">931 13 89 03</a>
+          </div>
+        </div>
+        <div class="info-fila">
+          <div class="punto-icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg></div>
+          <div>
+            <h3>Síguenos</h3>
+            <div class="redes" style="margin-top:8px">
+              <a class="red" href="https://www.instagram.com/zeudentbarcelona" target="_blank" rel="noopener">Instagram</a>
+              <a class="red" href="https://www.tiktok.com/@clinicaszeudent" target="_blank" rel="noopener">TikTok</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card revelar">
+        <h3 style="margin-bottom:16px">Horario de la clínica</h3>
+        <table class="horario-tabla">
+          <tr><td>Lunes – Jueves</td><td>9:00–14:00 · 16:00–20:00</td></tr>
+          <tr><td>Viernes</td><td>9:00–14:00 · 15:00–19:00</td></tr>
+          <tr><td>Sábado y domingo</td><td class="cerrado">Cerrado</td></tr>
+        </table>
+        <a class="btn btn-primario mapa-btn" href="tel:+34931138903">Llamar para pedir cita</a>
+        <a class="btn btn-secundario mapa-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica+Dental+Zeudent%2C+Carrer+de+Roger+de+Ll%C3%BAria+2%2C+08010+Barcelona" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section class="seccion-cta">
+  <div class="cta-final revelar">
+    <h2>Tu primera visita empieza con una llamada</h2>
+    <p>Cuéntanos qué necesitas y te damos cita en Carrer de Roger de Llúria 2, Barcelona.</p>
+    <a class="btn btn-primario" href="tel:+34931138903">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      931 13 89 03
+    </a>
+  </div>
+</section>
+
+<!-- ===== PIE ===== -->
+<footer>
+  <div class="pie-int">
+    <div>
+      <span class="logo">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3C11 3 7 6.6 7 11.4c0 3.2 1.1 5 2 7.4 1 2.6 1.4 6.4 3.2 9.4.6 1 2 .8 2.3-.3.5-2 .6-4.5 1.5-4.5s1 2.5 1.5 4.5c.3 1.1 1.7 1.3 2.3.3 1.8-3 2.2-6.8 3.2-9.4.9-2.4 2-4.2 2-7.4C25 6.6 21 3 16 3Z" fill="#22D3EE"/></svg>
+        Zeudent
+      </span>
+      <p>Clínica Dental Zeudent · Odontología general y especializada en el Eixample de Barcelona. Valorada con 4,9★ por 282 pacientes en Google.</p>
+    </div>
+    <div>
+      <h3>Contacto</h3>
+      <ul>
+        <li>Carrer de Roger de Llúria 2<br>08010 Barcelona</li>
+        <li><a href="tel:+34931138903">931 13 89 03</a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica+Dental+Zeudent%2C+Carrer+de+Roger+de+Ll%C3%BAria+2%2C+08010+Barcelona" target="_blank" rel="noopener">Google Maps</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Redes</h3>
+      <ul>
+        <li><a href="https://www.instagram.com/zeudentbarcelona" target="_blank" rel="noopener">Instagram · @zeudentbarcelona</a></li>
+        <li><a href="https://www.tiktok.com/@clinicaszeudent" target="_blank" rel="noopener">TikTok · @clinicaszeudent</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="pie-aviso">
+    <strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra no oficial elaborado con información pública de Clínica Dental Zeudent.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Palabras del titular: cascada */
+  var palabras = document.querySelectorAll('h1 .palabra');
+  palabras.forEach(function(p,i){ p.style.animationDelay = (0.15 + i*0.12) + 's'; });
+
+  /* Barra de progreso de scroll */
+  var barra = document.getElementById('progreso');
+  var nav = document.getElementById('nav');
+  function alScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    if (barra && max > 0) barra.style.width = (h.scrollTop / max * 100) + '%';
+    if (nav) nav.classList.toggle('con-sombra', h.scrollTop > 10);
+    /* Parallax suave del hero */
+    if (!reduce) {
+      var fondo = document.getElementById('parallax');
+      if (fondo && h.scrollTop < window.innerHeight) {
+        fondo.style.transform = 'translate3d(0,' + (h.scrollTop * 0.3) + 'px,0)';
+      }
+    }
+  }
+  window.addEventListener('scroll', alScroll, {passive:true});
+  alScroll();
+
+  /* Revelado escalonado con IntersectionObserver */
+  var revelables = document.querySelectorAll('.revelar');
+  if ('IntersectionObserver' in window && !reduce) {
+    var retardos = {};
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var padre = e.target.parentElement ? e.target.parentElement : document.body;
+          var key = padre.tagName + (padre.className||'');
+          retardos[key] = (retardos[key]||0);
+          e.target.style.transitionDelay = Math.min(retardos[key]*90, 450) + 'ms';
+          retardos[key]++;
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+          setTimeout(function(){ retardos[key] = 0; }, 800);
+        }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    revelables.forEach(function(el){ io.observe(el); });
+  } else {
+    revelables.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* Contadores animados */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin'));
+    var dec = parseInt(el.getAttribute('data-decimales')||'0',10);
+    if (reduce) { el.textContent = fin.toFixed(dec).replace('.',','); return; }
+    var t0 = null, dur = 1600;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0)/dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.',',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    contadores.forEach(function(c){ ioC.observe(c); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* Script de rescate anti-página-vacía (garantía de visibilidad):
+     a los 1200 ms, cualquier elemento que siga oculto se fuerza visible.
+     Lección del 03/08/2026: visores de email y WebViews sin IntersectionObserver. */
+  setTimeout(function(){
+    document.querySelectorAll('.revelar:not(.visible)').forEach(function(el){
+      el.style.transition = 'none';
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    document.querySelectorAll('h1 .palabra').forEach(function(p){
+      var op = window.getComputedStyle(p).opacity;
+      if (parseFloat(op) < 1) { p.style.animation = 'none'; p.style.opacity = '1'; p.style.transform = 'none'; }
+    });
+    contadores.forEach(function(c){
+      if (c.textContent === '0') {
+        var fin = parseFloat(c.getAttribute('data-fin'));
+        var dec = parseInt(c.getAttribute('data-decimales')||'0',10);
+        c.textContent = fin.toFixed(dec).replace('.',',');
+      }
+    });
+  }, 1200);
+})();
+</script>
+</body>
+</html>

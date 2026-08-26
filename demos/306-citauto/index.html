@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CitAuto — taller mecánico multimarca en Horta-Guinardó, Barcelona. 30 años de experiencia. Especialistas en inyección electrónica gasolina, diésel y coches americanos. Frenos, electricidad, aire acondicionado y pre-ITV.">
+<title>CitAuto — Taller mecánico en Horta-Guinardó, Barcelona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo:#C62828;
+    --rojo-vivo:#E53935;
+    --carbon:#2B2F33;
+    --carbon-osc:#1E2225;
+    --humo:#F5F5F5;
+    --gris:#5B6167;
+    --rojo-suave:rgba(198,40,40,.12);
+    --titulo:'Archivo', 'Segoe UI', Helvetica, Arial, sans-serif;
+    --texto:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--texto);
+    background:var(--humo);
+    color:var(--carbon);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--rojo);color:var(--humo)}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.08s}
+  .js-on .rv-d2{transition-delay:.18s}
+  .js-on .rv-d3{transition-delay:.28s}
+  .js-on .rv-d4{transition-delay:.38s}
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--rojo),#e57373);z-index:1000;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    font-family:var(--titulo);font-size:11px;letter-spacing:.24em;font-weight:700;
+    color:var(--humo);background:rgba(30,34,37,.85);
+    border:1px solid rgba(198,40,40,.6);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "LA BUJÍA" ======
+     Una bujía de encendido cruza la pantalla: a su paso, la señal errática del
+     motor (fallos de encendido) se convierte en pulsos de chispa limpios y
+     regulares, y el nombre CITAUTO queda revelado. Overlay que se AUTODESTRUYE
+     POR CSS PURO (opacity+visibility con animation-fill-mode:forwards): aunque
+     el JS falle, la página queda visible. El JS solo retira el nodo del DOM.
+     pointer-events:none SIEMPRE: nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 80% 15%, rgba(198,40,40,.28), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 10% 85%, rgba(198,40,40,.12), transparent 60%),
+      linear-gradient(155deg,#33383d 0%, #2B2F33 50%, #16191b 100%);
+    animation:intro-fuera .75s var(--ease) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:92vw;text-align:center}
+  .intro-linea{position:relative;padding:34px 8px}
+  .intro-senal{position:absolute;left:-8%;right:-8%;top:2px;bottom:2px;pointer-events:none}
+  .intro-senal svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  /* Señal errática (motor con fallos de encendido): desaparece al paso de la bujía */
+  .intro-senal .erratica{clip-path:inset(-6% 0 -6% 0);animation:senal-fuera 1.5s var(--ease) .3s both}
+  /* Pulsos limpios (encendido perfecto): aparecen tras la bujía */
+  .intro-senal .limpia{clip-path:inset(-6% 100% -6% 0);animation:senal-dentro 1.5s var(--ease) .3s both}
+  @keyframes senal-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+  @keyframes senal-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+  /* El nombre se revela con una máscara sincronizada con el paso de la bujía */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--titulo);font-weight:900;color:var(--humo);
+    font-size:clamp(2.6rem,11vw,5.6rem);line-height:1.05;letter-spacing:.02em;
+    text-transform:uppercase;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:encendido 1.5s var(--ease) .3s both;
+  }
+  .intro-nombre em{font-style:normal;color:var(--rojo-vivo)}
+  @keyframes encendido{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* La bujía: trazo fino en color de acento, cruza de izquierda a derecha */
+  .intro-bujia{
+    position:absolute;left:-2%;top:50%;width:56px;height:168px;
+    transform:translate(-50%,-50%) rotate(-7deg);
+    filter:drop-shadow(0 0 16px rgba(229,57,53,.4));
+    animation:bujia-pasa 1.5s var(--ease) .3s both;
+  }
+  @keyframes bujia-pasa{
+    from{left:-2%;transform:translate(-50%,-50%) rotate(-7deg)}
+    to{left:103%;transform:translate(-50%,-50%) rotate(7deg)}
+  }
+  /* La chispa del electrodo parpadea mientras la bujía cruza */
+  .intro-bujia .chispa{opacity:0;animation:chispea .22s linear .35s 7 alternate}
+  @keyframes chispea{from{opacity:0}to{opacity:1}}
+  .intro-sub{
+    margin:18px 0 0;
+    font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--rojo-vivo);font-weight:600;font-family:var(--titulo);
+    opacity:0;animation:intro-sub .6s var(--ease) 1.7s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(43,47,51,.9);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(245,245,245,.08);
+  }
+  nav .logo{font-family:var(--titulo);font-weight:900;font-size:1.15rem;letter-spacing:.04em;text-decoration:none;color:var(--humo);line-height:1.2;text-transform:uppercase}
+  nav .logo em{font-style:normal;color:var(--rojo-vivo)}
+  nav .logo small{display:block;font-family:var(--texto);font-weight:500;font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,245,245,.55);margin-top:2px}
+  nav .cta-nav{
+    font-family:var(--titulo);font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--humo);background:var(--rojo);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--rojo-vivo);transform:translateY(-1px);box-shadow:0 10px 24px rgba(198,40,40,.35)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--carbon);color:var(--humo);
+    padding:120px 20px 44px;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 80% 15%, rgba(198,40,40,.3), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 10% 85%, rgba(198,40,40,.12), transparent 60%),
+      linear-gradient(155deg,#33383d 0%, #2B2F33 50%, #16191b 100%);
+    will-change:transform;
+  }
+  /* Franja diagonal tipo señalética de taller */
+  .hero-franja{
+    position:absolute;top:0;bottom:0;width:120px;right:8%;pointer-events:none;
+    background:repeating-linear-gradient(135deg, rgba(198,40,40,.12) 0 18px, transparent 18px 44px);
+    transform:skewX(-8deg);
+  }
+  .hero-aro{
+    position:absolute;border:1px solid rgba(198,40,40,.35);border-radius:50%;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-aro.a1{width:360px;height:360px;top:-110px;right:-120px;animation:flotar 12s ease-in-out infinite alternate}
+  .hero-aro.a2{width:190px;height:190px;top:130px;right:50px;border-color:rgba(245,245,245,.1);border-style:dashed;animation:flotar 15s ease-in-out infinite alternate-reverse}
+  @keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(28px) rotate(14deg)}}
+
+  .hero-kicker{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--titulo);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rojo-vivo);
+    margin-bottom:22px;font-weight:600;
+  }
+  .hero-kicker::before{content:"";width:34px;height:2px;background:var(--rojo)}
+  .hero h1{
+    position:relative;
+    font-family:var(--titulo);font-weight:900;text-transform:uppercase;
+    font-size:clamp(2.4rem, 10vw, 5.4rem);
+    line-height:1.02;letter-spacing:.01em;
+    max-width:14ch;margin-bottom:26px;
+  }
+  .hero h1 em{font-style:normal;color:var(--rojo-vivo)}
+  .hero h1 .pal{display:inline-block}
+  .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.2deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    position:relative;max-width:44ch;color:rgba(245,245,245,.72);
+    font-size:1rem;font-weight:300;margin-bottom:34px;
+  }
+  .hero-sub strong{color:var(--humo);font-weight:600}
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  @keyframes aparece{to{opacity:1}}
+
+  .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
+  .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:var(--titulo);font-size:.8rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    text-decoration:none;padding:16px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn svg{width:15px;height:15px;flex:none}
+  .btn-rojo{background:var(--rojo);color:var(--humo)}
+  .btn-rojo:hover{background:var(--rojo-vivo);transform:translateY(-2px);box-shadow:0 12px 30px rgba(198,40,40,.4)}
+  .btn-linea{border:1px solid rgba(245,245,245,.4);color:var(--humo)}
+  .btn-linea:hover{border-color:var(--rojo-vivo);color:var(--rojo-vivo);transform:translateY(-2px)}
+
+  .hero-datos{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    border-top:1px solid rgba(245,245,245,.14);padding-top:22px;
+  }
+  .js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.35s forwards}
+  .hero-datos .dato b{
+    display:block;font-family:var(--titulo);font-weight:800;
+    font-size:clamp(1.5rem,6vw,2.3rem);color:var(--humo);line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .hero-datos .dato b .mas{color:var(--rojo-vivo)}
+  .hero-datos .dato span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,245,245,.55)}
+
+  /* ====== SECCIONES base ====== */
+  section{padding:88px 20px}
+  .marco{max-width:1080px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--titulo);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rojo);
+    font-weight:700;margin-bottom:18px;
+  }
+  .etiqueta::before{content:"";width:28px;height:2px;background:var(--rojo)}
+  h2{
+    font-family:var(--titulo);font-weight:800;text-transform:uppercase;
+    font-size:clamp(1.9rem,7vw,3.2rem);line-height:1.08;letter-spacing:.01em;
+    margin-bottom:20px;
+  }
+  h2 em{font-style:normal;color:var(--rojo)}
+
+  /* ====== SOBRE ====== */
+  .sobre p{color:var(--gris);max-width:56ch;font-size:1.02rem;margin-bottom:16px}
+  .sobre p strong{color:var(--carbon);font-weight:600}
+  .sobre-firma{display:flex;align-items:center;gap:14px;margin-top:30px}
+  .sobre-firma .sello{
+    width:54px;height:54px;border-radius:50%;flex:none;
+    border:2px solid var(--rojo);color:var(--rojo);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--titulo);font-size:1.1rem;font-weight:800;
+  }
+  .sobre-firma div b{display:block;font-family:var(--titulo);font-size:1.02rem;font-weight:700}
+  .sobre-firma div span{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo)}
+
+  /* ====== SERVICIOS ====== */
+  .servicios{background:var(--carbon);color:var(--humo);position:relative;overflow:hidden}
+  .servicios::before{
+    content:"";position:absolute;top:0;bottom:0;left:-40px;width:110px;pointer-events:none;
+    background:repeating-linear-gradient(135deg, rgba(198,40,40,.1) 0 16px, transparent 16px 40px);
+  }
+  .servicios h2{color:var(--humo)}
+  .servicios .intro-serv{color:rgba(245,245,245,.65);max-width:54ch;font-weight:300;margin-bottom:44px}
+  .grid-serv{display:grid;grid-template-columns:1fr;gap:14px}
+  .tarjeta{
+    position:relative;border:1px solid rgba(245,245,245,.12);border-radius:20px;
+    padding:30px 26px;background:rgba(245,245,245,.03);overflow:hidden;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .tarjeta:hover{
+    transform:translateY(-6px) rotate(-.4deg);
+    border-color:rgba(198,40,40,.65);background:rgba(198,40,40,.08);
+    box-shadow:0 24px 50px rgba(0,0,0,.45);
+  }
+  .tarjeta .ico{
+    width:44px;height:44px;border-radius:12px;margin-bottom:16px;
+    background:rgba(198,40,40,.16);color:var(--rojo-vivo);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .tarjeta .ico svg{width:22px;height:22px}
+  .tarjeta h3{font-family:var(--titulo);font-weight:700;font-size:1.2rem;margin-bottom:10px;letter-spacing:.02em;text-transform:uppercase}
+  .tarjeta p{color:rgba(245,245,245,.62);font-size:.92rem;font-weight:300}
+  .tarjeta.destacada{border-color:rgba(198,40,40,.55);background:rgba(198,40,40,.09)}
+  .tarjeta .sello-esp{
+    position:absolute;top:18px;right:18px;
+    font-family:var(--titulo);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--rojo-vivo);border:1px solid rgba(229,57,53,.5);border-radius:999px;padding:5px 10px;
+  }
+  .tarjeta::after{
+    content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+    background:radial-gradient(circle at top right, rgba(198,40,40,.28), transparent 70%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .tarjeta:hover::after{opacity:1}
+  .serv-nota{margin-top:34px;color:rgba(245,245,245,.5);font-size:.85rem;font-weight:300;position:relative}
+  .serv-nota a{color:var(--rojo-vivo);text-decoration:none;border-bottom:1px solid rgba(229,57,53,.45)}
+
+  /* ====== RESEÑAS ====== */
+  .prueba{background:var(--humo)}
+  .prueba-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px}
+  .prueba-cifra .num-grande{
+    font-family:var(--titulo);font-weight:900;
+    font-size:clamp(4.4rem,20vw,8rem);line-height:1;color:var(--carbon);
+    font-variant-numeric:tabular-nums;
+  }
+  .prueba-cifra .estrellas{color:var(--rojo);font-size:1.15rem;letter-spacing:.18em}
+  .prueba-lema{color:var(--gris);max-width:48ch;font-size:1rem;margin-bottom:40px}
+  .prueba-lema strong{color:var(--carbon)}
+  .grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+  .opinion{
+    border:1px solid rgba(43,47,51,.1);border-radius:18px;padding:26px 24px;
+    background:#fff;display:flex;flex-direction:column;gap:14px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .opinion:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(43,47,51,.1);border-color:var(--rojo)}
+  .opinion .estrellitas{color:var(--rojo);font-size:.9rem;letter-spacing:.14em}
+  .opinion blockquote{border:none;font-size:.95rem;color:var(--carbon);line-height:1.6}
+  .opinion blockquote::before{content:"“";color:var(--rojo);font-family:var(--titulo);font-weight:900;font-size:1.4rem;line-height:0;margin-right:2px}
+  .opinion blockquote::after{content:"”";color:var(--rojo);font-family:var(--titulo);font-weight:900;font-size:1.4rem;line-height:0;margin-left:2px}
+  .opinion .autor{display:flex;align-items:center;gap:10px;margin-top:auto}
+  .opinion .autor .inicial{
+    width:36px;height:36px;border-radius:50%;flex:none;
+    background:var(--rojo-suave);color:var(--rojo);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--titulo);font-weight:800;font-size:.85rem;
+  }
+  .opinion .autor b{font-size:.85rem;font-weight:600;display:block;line-height:1.2}
+  .opinion .autor span{font-size:.68rem;color:var(--gris)}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:#e8e6e3;border-radius:34px 34px 0 0}
+  .grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+  .ficha{
+    background:#fff;border-radius:18px;padding:26px 22px;
+    border:1px solid rgba(43,47,51,.06);
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .ficha:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(43,47,51,.1)}
+  .ficha h3{
+    font-family:var(--titulo);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--rojo);font-weight:700;margin-bottom:12px;
+  }
+  .ficha p{color:var(--carbon);font-size:.98rem}
+  .ficha p.suave{color:var(--gris);font-size:.85rem;margin-top:4px}
+  .ficha a.enlace{color:var(--carbon);text-decoration:none;border-bottom:1px solid var(--rojo);transition:color .3s var(--ease)}
+  .ficha a.enlace:hover{color:var(--rojo)}
+  .horario-fila{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed rgba(43,47,51,.14);font-size:.93rem}
+  .horario-fila:last-child{border-bottom:none}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn-carbon{background:var(--carbon);color:var(--humo)}
+  .btn-carbon:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(43,47,51,.3)}
+  .btn-borde{border:1px solid var(--carbon);color:var(--carbon)}
+  .btn-borde:hover{background:var(--carbon);color:var(--humo);transform:translateY(-2px)}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:var(--carbon-osc);color:rgba(245,245,245,.7);
+    padding:54px 20px 96px;text-align:center;
+  }
+  footer .logo-pie{font-family:var(--titulo);font-weight:900;font-size:1.4rem;color:var(--humo);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+  footer .logo-pie em{font-style:normal;color:var(--rojo-vivo)}
+  footer .sub-pie{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rojo-vivo);margin-bottom:26px;font-family:var(--titulo);font-weight:600}
+  footer .aviso{
+    display:inline-block;max-width:52ch;
+    font-size:.85rem;line-height:1.7;
+    border:1px solid rgba(198,40,40,.4);border-radius:16px;
+    padding:16px 22px;background:rgba(198,40,40,.07);
+  }
+  footer .aviso strong{color:var(--rojo-vivo);font-weight:600}
+  footer .legal{margin-top:22px;font-size:.72rem;color:rgba(245,245,245,.38)}
+  footer .legal a{color:inherit}
+
+  /* ====== Desktop ====== */
+  @media (min-width:760px){
+    nav{padding:18px 44px}
+    section{padding:120px 44px}
+    .hero{padding:140px 44px 60px}
+    .grid-serv{grid-template-columns:repeat(2,1fr);gap:18px}
+    .grid-prueba{grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+    .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  }
+  @media (min-width:1080px){
+    .grid-serv{grid-template-columns:repeat(3,1fr)}
+  }
+
+  /* ====== Movimiento reducido ====== */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    html{scroll-behavior:auto}
+    #intro{display:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "LA BUJÍA": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-senal" aria-hidden="true">
+        <!-- Señal errática: motor con fallos de encendido, antes de pasar por CitAuto -->
+        <svg class="erratica" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#F5F5F5" stroke-opacity=".3" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M0 40 L30 40 38 18 46 58 54 30 70 44 110 40 120 12 128 62 140 40 190 40 200 24 210 52 224 34 250 42 300 40 312 10 320 64 332 40 380 38 392 20 404 56 420 40 470 42 482 16 492 60 504 40 560 40 600 40"/>
+            <path vector-effect="non-scaling-stroke" d="M0 100 L44 100 54 78 64 118 76 92 96 104 150 100 162 74 172 122 184 100 240 98 252 82 262 114 276 96 330 100 342 72 352 124 366 100 420 102 432 80 444 116 458 98 512 100 524 76 534 120 548 100 600 100"/>
+            <path vector-effect="non-scaling-stroke" d="M0 160 L36 160 46 140 56 178 68 152 88 164 134 160 146 134 156 182 168 160 226 158 238 144 248 172 262 156 316 160 328 132 338 184 352 160 408 162 420 140 432 176 446 158 500 160 512 136 522 180 536 160 600 160"/>
+          </g>
+        </svg>
+        <!-- Pulsos limpios: encendido perfecto y regular, tras el paso de la bujía -->
+        <svg class="limpia" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#F5F5F5" stroke-opacity=".5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M0 40 H70 L78 22 86 40 H190 L198 22 206 40 H310 L318 22 326 40 H430 L438 22 446 40 H550 L558 22 566 40 H600"/>
+            <path vector-effect="non-scaling-stroke" d="M0 100 H100 L108 82 116 100 H220 L228 82 236 100 H340 L348 82 356 100 H460 L468 82 476 100 H580 H600"/>
+            <path vector-effect="non-scaling-stroke" d="M0 160 H40 L48 142 56 160 H160 L168 142 176 160 H280 L288 142 296 160 H400 L408 142 416 160 H520 L528 142 536 160 H600"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Cit<em>Auto</em></p>
+      <!-- La bujía: trazo fino en el acento de la paleta, con chispa roja en el electrodo -->
+      <svg class="intro-bujia" viewBox="0 0 56 168" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#F5F5F5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Terminal superior -->
+          <path d="M24 4 H32 V12 H24 Z"/>
+          <path d="M22 12 H34"/>
+          <!-- Aislante cerámico con costillas -->
+          <path d="M20 12 V52 M36 12 V52"/>
+          <path d="M18 20 Q28 26 38 20"/>
+          <path d="M18 32 Q28 38 38 32"/>
+          <path d="M18 44 Q28 50 38 44"/>
+          <!-- Tuerca hexagonal -->
+          <path d="M14 52 H42 L46 60 V72 L42 80 H14 L10 72 V60 Z"/>
+          <path d="M10 66 H46"/>
+          <!-- Cuerpo metálico roscado -->
+          <path d="M17 80 V116 M39 80 V116"/>
+          <path d="M17 88 H39 M17 96 H39 M17 104 H39 M17 112 H39"/>
+          <!-- Electrodo central -->
+          <path d="M25 116 H31 V134 H25 Z"/>
+          <path d="M28 134 V144"/>
+          <!-- Electrodo de masa (gancho) -->
+          <path d="M39 116 V150 Q39 156 33 156 H30"/>
+        </g>
+        <!-- Chispa (parpadea al pasar) -->
+        <g class="chispa" stroke="#E53935" stroke-width="1.5" stroke-linecap="round">
+          <path d="M28 148 L24 160 M28 148 L33 162 M28 148 L20 152 M28 148 L36 146"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Taller de reparación del automóvil · Barcelona</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav>
+  <a class="logo" href="#inicio">Cit<em>Auto</em><small>Taller mecánico · Horta-Guinardó</small></a>
+  <a class="cta-nav" href="tel:+34626378425">Pedir cita</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-franja" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+
+  <p class="hero-kicker">Taller multimarca · Barcelona</p>
+  <h1 id="titulo-hero">La avería que otros no ven, aquí tiene <em>solución</em></h1>
+  <p class="hero-sub"><strong>30 años</strong> diagnosticando y reparando motores en el Guinardó. Especialistas en <strong>inyección electrónica</strong>: gasolina, diésel y coches americanos.</p>
+  <div class="hero-botones">
+    <a class="btn btn-rojo" href="tel:+34626378425">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Pedir cita
+    </a>
+    <a class="btn btn-linea" href="tel:+34626378425">Llamar · 626 37 84 25</a>
+  </div>
+  <div class="hero-datos">
+    <div class="dato"><b><span class="contador" data-fin="30">30</span><span class="mas">+</span></b><span>Años de experiencia</span></div>
+    <div class="dato"><b><span class="contador" data-fin="4.9" data-dec="1">4,9</span><span class="mas">★</span></b><span>Valoración en Google</span></div>
+    <div class="dato"><b><span class="contador" data-fin="164">164</span></b><span>Reseñas reales</span></div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">El taller</p>
+      <h2>Treinta años escuchando <em>motores</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p>Al frente de CitAuto está <strong>Fco. José Gómez, «Jose»</strong>: un mecánico con <strong>30 años de experiencia</strong> que sus clientes describen con dos palabras que no abundan: <strong>cercanía y honestidad</strong>.</p>
+      <p>Taller <strong>multimarca</strong> en pleno Guinardó, con una especialidad poco común en el barrio: la <strong>inyección electrónica</strong> — gasolina, diésel/HDI e incluso <strong>coches americanos</strong>. Diagnóstico serio, explicación clara y solo la reparación que tu coche necesita.</p>
+      <div class="sobre-firma">
+        <span class="sello">JG</span>
+        <div>
+          <b>Fco. José Gómez «Jose»</b>
+          <span>Propietario · CitAuto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Servicios</p>
+      <h2>Del diagnóstico a la <em>carretera</em></h2>
+      <p class="intro-serv">Mecánica completa multimarca, con el nivel de detalle de quien lleva tres décadas dentro de un motor.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta destacada rv rv-d1">
+        <span class="sello-esp">Especialidad</span>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 2 5 13 11 13 9 22 19 10 13 10 13 2"/></svg></span>
+        <h3>Inyección electrónica</h3>
+        <p>Gasolina, diésel/HDI y coches americanos. La avería eléctrica que otros talleres no encuentran es nuestro terreno.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="7" width="12" height="10" rx="2"/><path d="M9 7 V4 M15 7 V4 M9 17 v3 M15 17 v3 M6 10 H3 M6 14 H3 M21 10 h-3 M21 14 h-3"/></svg></span>
+        <h3>Electricidad</h3>
+        <p>Diagnosis y reparación del sistema eléctrico del automóvil: sensores, centralitas, cableado.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3 v3 M12 18 v3 M3 12 h3 M18 12 h3"/></svg></span>
+        <h3>Frenos</h3>
+        <p>Discos, pastillas y sistema de frenado a punto: tu seguridad, sin medias tintas.</p>
+      </article>
+      <article class="tarjeta rv rv-d1">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 C4 12 8 12 8 8 M12 20 C12 12 16 12 16 8"/><circle cx="8" cy="5" r="2"/><circle cx="16" cy="20" r="2"/><path d="M20 4 v6"/></svg></span>
+        <h3>Suspensión y dirección</h3>
+        <p>Amortiguadores, rótulas y dirección: confort y estabilidad como el primer día.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 q-3 4 0 8 t0 8 M14 3 q-3 4 0 8 t0 8 M20 3 q-3 4 0 8 t0 8"/></svg></span>
+        <h3>Aire acondicionado</h3>
+        <p>Carga, revisión y reparación del climatizador para que el verano no te pille dentro del coche.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12 l2 2 4-5"/><path d="M12 2 l8 3 v6 c0 5-3.5 8.5-8 11 -4.5-2.5-8-6-8-11 V5 Z"/></svg></span>
+        <h3>Mantenimiento y pre-ITV</h3>
+        <p>Aceite, filtros, revisiones y puesta a punto pre-ITV. También accesorios para tu vehículo.</p>
+      </article>
+    </div>
+    <p class="serv-nota rv">¿No sabes qué le pasa a tu coche? <a href="tel:+34626378425">Llama al 626 37 84 25</a> y Jose te orienta sin compromiso.</p>
+  </div>
+</section>
+
+<section class="prueba" id="resenas">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La confianza del barrio</p>
+      <h2>El taller mejor valorado del <em>Guinardó</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande contador" data-fin="4.9" data-dec="1">4,9</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="164">164</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un 4,9 sobre 5 con <strong>164 opiniones</strong> no se consigue con publicidad: se consigue devolviendo cada coche como hay que devolverlo. Esto dicen sus clientes en Google:</p>
+    <div class="grid-prueba">
+      <article class="opinion rv rv-d1">
+        <span class="estrellitas" aria-hidden="true">★★★★★</span>
+        <blockquote>Muy profesional, de confianza, rapidez y buena comunicación con buen asesoramiento.</blockquote>
+        <div class="autor">
+          <span class="inicial">L</span>
+          <div><b>Lluisa García</b><span>Reseña de Google</span></div>
+        </div>
+      </article>
+      <article class="opinion rv rv-d2">
+        <span class="estrellitas" aria-hidden="true">★★★★★</span>
+        <blockquote>Frecuento este taller desde hace tiempo y nunca defrauda. Jose se toma su trabajo con profesionalidad y sobre todo demuestra mucha cercanía y honestidad.</blockquote>
+        <div class="autor">
+          <span class="inicial">S</span>
+          <div><b>Sergio Huerta</b><span>Reseña de Google</span></div>
+        </div>
+      </article>
+      <article class="opinion rv rv-d3">
+        <span class="estrellitas" aria-hidden="true">★★★★★</span>
+        <blockquote>Jose es un mecánico top que transmite desde el primer día pasión por su trabajo.</blockquote>
+        <div class="autor">
+          <span class="inicial">J</span>
+          <div><b>Juan Patiño</b><span>Reseña de Google</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>Te esperamos en el <em>Guinardó</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer de Santa Carolina, 70</p>
+        <p class="suave">Horta-Guinardó · 08025 Barcelona</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=CitAuto%2C+Carrer+de+Santa+Carolina+70%2C+08025+Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Horario</h3>
+        <div class="horario-fila"><span>Lunes – Viernes</span><span>8:00 – 13:00</span></div>
+        <div class="horario-fila"><span>&nbsp;</span><span>15:00 – 19:00</span></div>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Teléfonos</h3>
+        <p><a class="enlace" href="tel:+34626378425">626 37 84 25</a></p>
+        <p style="margin-top:8px"><a class="enlace" href="tel:+34934636781">934 63 67 81</a></p>
+        <p class="suave">Llámanos y te damos cita.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Email</h3>
+        <p><a class="enlace" href="mailto:taller@citauto.es">taller@citauto.es</a></p>
+        <p class="suave">Cuéntanos qué le pasa a tu coche y te respondemos.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-carbon" href="tel:+34626378425">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita ahora
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=CitAuto%2C+Carrer+de+Santa+Carolina+70%2C+08025+Barcelona" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Cit<em>Auto</em></p>
+  <p class="sub-pie">Taller de reparación del automóvil · Barcelona</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer de Santa Carolina, 70 · 08025 Barcelona · Tel. <a href="tel:+34626378425">626 37 84 25</a> · <a href="mailto:taller@citauto.es">taller@citauto.es</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro de la bujía: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admite decimales con data-dec) --- */
+  try{
+    var formatear = function(v, dec){
+      return dec > 0 ? v.toFixed(dec).replace('.', ',') : String(Math.round(v));
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ el.textContent = formatear(fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        el.textContent = formatear(fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Barberia Hair Saloon — barbería clásica en el Barri Gòtic de Barcelona. Corte de cabello y arreglo de barba. Carrer Ample 42, 08002 Barcelona.">
+<title>Barberia Hair Saloon — Barri Gòtic, Barcelona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#1C1C1C;
+    --crema:#F5EFE6;
+    --oro:#B08D57;
+    --burdeos:#7A1F1F;
+    --oro-suave:rgba(176,141,87,.14);
+    --gris:#5d574e;
+    --serif:'Marcellus', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--crema);
+    color:var(--negro);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--oro);color:var(--negro)}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.08s}
+  .js-on .rv-d2{transition-delay:.18s}
+  .js-on .rv-d3{transition-delay:.28s}
+  .js-on .rv-d4{transition-delay:.38s}
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--burdeos),var(--oro));z-index:1000;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    font-family:var(--sans);font-size:11px;letter-spacing:.22em;font-weight:600;
+    color:var(--crema);background:rgba(28,28,28,.84);
+    border:1px solid rgba(176,141,87,.55);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "LA NAVAJA" ======
+     Una navaja de afeitar clásica cruza la pantalla: a su paso retira la espuma
+     y "afeita" el nombre del negocio, que queda revelado.
+     El overlay se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+     animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+     El JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 20% 15%, rgba(176,141,87,.20), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 85% 85%, rgba(122,31,31,.22), transparent 60%),
+      linear-gradient(155deg,#242220 0%, #1C1C1C 55%, #121110 100%);
+    animation:intro-fuera .75s var(--ease) 2.45s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:94vw;text-align:center}
+  .intro-linea{position:relative;padding:34px 10px}
+  .intro-espuma{position:absolute;left:-7%;right:-7%;top:0;bottom:0;pointer-events:none}
+  .intro-espuma svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  /* Nubes de espuma de afeitar: desaparecen al paso de la navaja */
+  .intro-espuma .espuma{clip-path:inset(-8% 0 -8% 0);animation:espuma-fuera 1.55s var(--ease) .3s both}
+  /* Piel al ras: una línea limpia que la navaja deja tras de sí */
+  .intro-espuma .alras{clip-path:inset(-8% 100% -8% 0);animation:alras-dentro 1.55s var(--ease) .3s both}
+  @keyframes espuma-fuera{from{clip-path:inset(-8% 0 -8% 0)}to{clip-path:inset(-8% 0 -8% 100%)}}
+  @keyframes alras-dentro{from{clip-path:inset(-8% 100% -8% 0)}to{clip-path:inset(-8% 0 -8% 0)}}
+  /* El nombre se revela con una máscara sincronizada con la navaja */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--serif);font-weight:400;color:var(--crema);
+    font-size:clamp(2rem,8.5vw,4.9rem);line-height:1.1;letter-spacing:.03em;
+    clip-path:inset(-16% 100% -16% -2%);
+    animation:afeitado 1.55s var(--ease) .3s both;
+  }
+  .intro-nombre em{font-style:normal;color:var(--oro)}
+  @keyframes afeitado{from{clip-path:inset(-16% 100% -16% -2%)}to{clip-path:inset(-16% -4% -16% -2%)}}
+  /* La navaja abierta: se desliza de izquierda a derecha "afeitando" el nombre */
+  .intro-navaja{
+    position:absolute;left:-2%;top:50%;width:64px;height:170px;
+    transform:translate(-50%,-52%) rotate(-8deg);
+    filter:drop-shadow(0 0 16px rgba(176,141,87,.35));
+    animation:navaja-pasa 1.55s var(--ease) .3s both;
+  }
+  @keyframes navaja-pasa{
+    from{left:-2%;transform:translate(-50%,-52%) rotate(-8deg)}
+    to{left:103%;transform:translate(-50%,-52%) rotate(7deg)}
+  }
+  .intro-sub{
+    margin:18px 0 0;
+    font-size:.66rem;letter-spacing:.36em;text-transform:uppercase;
+    color:var(--oro);font-weight:500;
+    opacity:0;animation:intro-sub .6s var(--ease) 1.8s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== POSTE DE BARBERO (guiño clásico, franjas giratorias) ====== */
+  .poste{
+    position:absolute;top:16%;bottom:16%;right:26px;width:12px;
+    border-radius:999px;overflow:hidden;pointer-events:none;
+    border:1px solid rgba(176,141,87,.55);
+    box-shadow:0 0 24px rgba(0,0,0,.35);
+    opacity:.9;
+  }
+  .poste::before{
+    content:"";position:absolute;left:0;right:0;top:-80px;bottom:-80px;
+    background:repeating-linear-gradient(-45deg,
+      var(--burdeos) 0 10px,
+      var(--crema) 10px 22px,
+      var(--oro) 22px 28px,
+      var(--crema) 28px 40px);
+    animation:poste-gira 3.2s linear infinite;
+    will-change:transform;
+  }
+  @keyframes poste-gira{from{transform:translateY(0)}to{transform:translateY(56.57px)}}
+  .poste::after{
+    content:"";position:absolute;inset:0;border-radius:999px;
+    background:linear-gradient(90deg,rgba(0,0,0,.35),transparent 40%,transparent 60%,rgba(0,0,0,.35));
+  }
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    background:rgba(245,239,230,.9);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(28,28,28,.08);
+  }
+  nav .logo{font-family:var(--serif);font-size:1.02rem;letter-spacing:.04em;text-decoration:none;color:var(--negro);line-height:1.2}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:500;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--burdeos);margin-top:2px}
+  nav .cta-nav{
+    font-size:.76rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--crema);background:var(--negro);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease), color .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--oro);color:var(--negro);transform:translateY(-1px)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--negro);color:var(--crema);
+    padding:120px 20px 46px;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 18% 16%, rgba(176,141,87,.20), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 88% 80%, rgba(122,31,31,.24), transparent 60%),
+      linear-gradient(155deg,#242220 0%, #1C1C1C 55%, #121110 100%);
+    will-change:transform;
+  }
+  .hero-trama{
+    position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:repeating-linear-gradient(90deg, rgba(245,239,230,.035) 0 1px, transparent 1px 90px);
+  }
+  .hero-aro{
+    position:absolute;border:1px solid rgba(176,141,87,.28);border-radius:50%;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-aro.a1{width:360px;height:360px;top:-110px;left:-130px;animation:flotar 12s ease-in-out infinite alternate}
+  .hero-aro.a2{width:170px;height:170px;top:130px;left:70px;border-color:rgba(245,239,230,.10);animation:flotar 15s ease-in-out infinite alternate-reverse}
+  @keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(24px) rotate(7deg)}}
+
+  .hero-kicker{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:22px;font-weight:500;
+  }
+  .hero-kicker::before{content:"";width:34px;height:1px;background:var(--oro)}
+  .hero h1{
+    position:relative;
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(2.5rem, 10.5vw, 5.6rem);
+    line-height:1.06;letter-spacing:.005em;
+    max-width:14ch;margin-bottom:26px;
+  }
+  .hero h1 em{font-style:normal;color:var(--oro)}
+  .hero h1 .pal{display:inline-block}
+  .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    position:relative;max-width:36ch;color:rgba(245,239,230,.72);
+    font-size:1rem;font-weight:300;margin-bottom:34px;
+  }
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  @keyframes aparece{to{opacity:1}}
+
+  .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
+  .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;padding:16px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn svg{width:15px;height:15px;flex:none}
+  .btn-oro{background:var(--oro);color:var(--negro)}
+  .btn-oro:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(176,141,87,.35)}
+  .btn-linea{border:1px solid rgba(245,239,230,.4);color:var(--crema)}
+  .btn-linea:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+
+  .hero-datos{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    border-top:1px solid rgba(245,239,230,.14);padding-top:22px;max-width:640px;
+  }
+  .js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.35s forwards}
+  .hero-datos .dato b{
+    display:block;font-family:var(--serif);font-weight:400;
+    font-size:clamp(1.5rem,6vw,2.3rem);color:var(--crema);line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .hero-datos .dato b .estrella-mini{color:var(--oro);font-size:.7em}
+  .hero-datos .dato span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,239,230,.55)}
+
+  /* ====== SECCIONES base ====== */
+  section{padding:88px 20px}
+  .marco{max-width:1080px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--burdeos);
+    font-weight:600;margin-bottom:18px;
+  }
+  .etiqueta::before{content:"";width:28px;height:1px;background:var(--oro)}
+  h2{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(1.9rem,7vw,3.3rem);line-height:1.12;letter-spacing:.005em;
+    margin-bottom:20px;
+  }
+  h2 em{font-style:normal;color:var(--oro)}
+
+  /* ====== SOBRE ====== */
+  .sobre p{color:var(--gris);max-width:56ch;font-size:1.02rem;margin-bottom:16px}
+  .sobre p strong{color:var(--negro);font-weight:600}
+  .sobre-sello{
+    display:flex;align-items:center;gap:14px;margin-top:30px;
+  }
+  .sobre-sello .aro{
+    width:54px;height:54px;border-radius:50%;flex:none;
+    border:1px solid var(--oro);color:var(--burdeos);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .sobre-sello .aro svg{width:26px;height:26px}
+  .sobre-sello div b{display:block;font-family:var(--serif);font-size:1.05rem;font-weight:400}
+  .sobre-sello div span{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--burdeos)}
+
+  /* ====== SERVICIOS ====== */
+  .servicios{background:var(--negro);color:var(--crema);position:relative;overflow:hidden}
+  .servicios h2{color:var(--crema)}
+  .servicios .etiqueta{color:var(--oro)}
+  .servicios .intro{color:rgba(245,239,230,.65);max-width:52ch;font-weight:300;margin-bottom:44px}
+  .grid-serv{display:grid;grid-template-columns:1fr;gap:16px}
+  .tarjeta{
+    position:relative;border:1px solid rgba(245,239,230,.12);border-radius:22px;
+    padding:36px 28px;background:rgba(245,239,230,.03);overflow:hidden;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .tarjeta:hover{
+    transform:translateY(-6px) rotate(-.4deg);
+    border-color:rgba(176,141,87,.55);background:rgba(176,141,87,.07);
+    box-shadow:0 24px 50px rgba(0,0,0,.45);
+  }
+  .tarjeta .icono-serv{
+    width:54px;height:54px;border-radius:16px;margin-bottom:20px;
+    background:var(--oro-suave);color:var(--oro);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .tarjeta .icono-serv svg{width:28px;height:28px}
+  .tarjeta .num{
+    position:absolute;top:26px;right:26px;
+    font-family:var(--serif);font-size:.95rem;color:rgba(176,141,87,.75);
+  }
+  .tarjeta h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin-bottom:10px;letter-spacing:.02em}
+  .tarjeta p{color:rgba(245,239,230,.62);font-size:.94rem;font-weight:300;max-width:44ch}
+  .tarjeta::after{
+    content:"";position:absolute;top:0;right:0;width:110px;height:110px;
+    background:radial-gradient(circle at top right, rgba(176,141,87,.22), transparent 70%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .tarjeta:hover::after{opacity:1}
+  .serv-nota{margin-top:34px;color:rgba(245,239,230,.5);font-size:.85rem;font-weight:300}
+  .serv-nota a{color:var(--oro);text-decoration:none;border-bottom:1px solid rgba(176,141,87,.4)}
+
+  /* ====== RESEÑAS / PRUEBA SOCIAL (burdeos) ====== */
+  .prueba{background:linear-gradient(160deg,#84302c 0%, var(--burdeos) 45%, #571414 100%);color:var(--crema)}
+  .prueba .etiqueta{color:var(--oro)}
+  .prueba h2{color:var(--crema)}
+  .prueba-cifra{
+    display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px;
+  }
+  .prueba-cifra .num-grande{
+    font-family:var(--serif);
+    font-size:clamp(4.4rem,20vw,8rem);line-height:1;color:var(--crema);
+    font-variant-numeric:tabular-nums;
+  }
+  .prueba-cifra .estrellas{color:var(--oro);font-size:1.15rem;letter-spacing:.18em}
+  .prueba-lema{color:rgba(245,239,230,.78);max-width:48ch;font-size:1rem;font-weight:300;margin-bottom:40px}
+  .prueba-lema strong{color:var(--crema);font-weight:600}
+  .grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+  .hito{
+    border:1px solid rgba(245,239,230,.16);border-radius:18px;padding:24px 22px;
+    background:rgba(28,28,28,.22);
+    display:flex;gap:16px;align-items:flex-start;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+  }
+  .hito:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3);border-color:var(--oro);background:rgba(28,28,28,.34)}
+  .hito .icono{
+    width:42px;height:42px;flex:none;border-radius:12px;
+    background:rgba(176,141,87,.2);color:var(--oro);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hito .icono svg{width:20px;height:20px}
+  .hito h3{font-family:var(--serif);font-weight:400;font-size:1.12rem;margin-bottom:4px}
+  .hito p{color:rgba(245,239,230,.66);font-size:.88rem;font-weight:300}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:#ece3d5;border-radius:34px 34px 0 0}
+  .grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+  .ficha{
+    background:#fff;border-radius:18px;padding:26px 22px;
+    border:1px solid rgba(28,28,28,.06);
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .ficha:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(28,28,28,.08)}
+  .ficha h3{
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--burdeos);font-weight:600;margin-bottom:12px;
+  }
+  .ficha p{color:var(--negro);font-size:.98rem}
+  .ficha p.suave{color:var(--gris);font-size:.85rem;margin-top:4px}
+  .ficha a.enlace{color:var(--negro);text-decoration:none;border-bottom:1px solid var(--oro);transition:color .3s var(--ease)}
+  .ficha a.enlace:hover{color:var(--burdeos)}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn-negro{background:var(--negro);color:var(--crema)}
+  .btn-negro:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(28,28,28,.25)}
+  .btn-borde{border:1px solid var(--negro);color:var(--negro)}
+  .btn-borde:hover{background:var(--negro);color:var(--crema);transform:translateY(-2px)}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:var(--negro);color:rgba(245,239,230,.7);
+    padding:0 20px 96px;text-align:center;
+  }
+  footer .franja{
+    height:8px;margin:0 -20px 54px;
+    background:repeating-linear-gradient(-45deg,
+      var(--burdeos) 0 14px, var(--crema) 14px 28px, var(--oro) 28px 36px, var(--crema) 36px 50px);
+    opacity:.85;
+  }
+  footer .logo-pie{font-family:var(--serif);font-size:1.35rem;color:var(--crema);margin-bottom:6px}
+  footer .sub-pie{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);margin-bottom:26px}
+  footer .aviso{
+    display:inline-block;max-width:52ch;
+    font-size:.85rem;line-height:1.7;
+    border:1px solid rgba(176,141,87,.35);border-radius:16px;
+    padding:16px 22px;background:rgba(176,141,87,.06);
+  }
+  footer .aviso strong{color:var(--oro);font-weight:600}
+  footer .legal{margin-top:22px;font-size:.72rem;color:rgba(245,239,230,.38)}
+
+  /* ====== Desktop ====== */
+  @media (min-width:760px){
+    nav{padding:20px 44px}
+    section{padding:120px 44px}
+    .hero{padding:140px 44px 60px}
+    .poste{right:56px;width:16px}
+    .grid-serv{grid-template-columns:repeat(2,1fr);gap:20px}
+    .tarjeta{padding:44px 36px}
+    .grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}
+    .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+    .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  }
+  @media (min-width:1080px){
+    .grid-prueba{grid-template-columns:repeat(4,1fr)}
+  }
+  @media (max-width:420px){
+    .poste{right:12px;width:9px;opacity:.7}
+  }
+
+  /* ====== Movimiento reducido ====== */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    html{scroll-behavior:auto}
+    #intro{display:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "LA NAVAJA": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-espuma" aria-hidden="true">
+        <!-- Espuma de afeitar: desaparece al paso de la navaja -->
+        <svg class="espuma" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#B08D57" stroke-opacity=".34" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 q14 -14 28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 74 q16 -16 32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0 t32 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 106 q13 -13 26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 140 q15 -15 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 176 q14 -12 28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0"/>
+          </g>
+        </svg>
+        <!-- Al ras: la piel limpia que la navaja deja tras de sí -->
+        <svg class="alras" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#B08D57" stroke-opacity=".5" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 H600 M0 74 H600 M0 106 H600 M0 140 H600 M0 176 H600"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Barberia <em>Hair Saloon</em></p>
+      <!-- La navaja de afeitar clásica, abierta: trazo fino dorado -->
+      <svg class="intro-navaja" viewBox="0 0 64 170" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#B08D57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Hoja -->
+          <path d="M24 8 h16 a5 5 0 0 1 5 5 v76 l-5 9 h-16 z"/>
+          <!-- Filo (doble línea interior) -->
+          <path d="M24 16 V92" stroke-opacity=".7"/>
+          <!-- Lomo de la hoja -->
+          <path d="M45 20 V84" stroke-opacity=".45"/>
+          <!-- Espiga y pivote -->
+          <path d="M32 98 v8"/>
+          <circle cx="32" cy="112" r="4"/>
+          <!-- Cachas (mango), abiertas en ángulo -->
+          <g transform="rotate(16 32 112)">
+            <rect x="25.5" y="116" width="13" height="48" rx="6.5"/>
+            <path d="M32 122 v36" stroke-opacity=".4"/>
+          </g>
+          <!-- Remaches decorativos del mango -->
+          <circle cx="35" cy="128" r="1.2" transform="rotate(16 32 112)"/>
+          <circle cx="35" cy="152" r="1.2" transform="rotate(16 32 112)"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Barbería · Barri Gòtic</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav>
+  <a class="logo" href="#inicio">Barberia Hair Saloon<small>Barri Gòtic · Barcelona</small></a>
+  <a class="cta-nav" href="tel:+34627151970">Pedir cita</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-trama" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+  <div class="poste" aria-hidden="true"></div>
+
+  <p class="hero-kicker">Barbería clásica · Carrer Ample 42</p>
+  <h1 id="titulo-hero">El oficio clásico de la <em>barbería</em></h1>
+  <p class="hero-sub">Corte de cabello y arreglo de barba en pleno Barri Gòtic. Una de las barberías mejor valoradas del barrio, con un 4,8 en Google.</p>
+  <div class="hero-botones">
+    <a class="btn btn-oro" href="tel:+34627151970">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Pedir cita
+    </a>
+    <a class="btn btn-linea" href="tel:+34627151970">Llamar · 627 15 19 70</a>
+  </div>
+  <div class="hero-datos">
+    <div class="dato"><b><span class="contador" data-fin="4.8" data-dec="1">4,8</span><span class="estrella-mini"> ★</span></b><span>En Google</span></div>
+    <div class="dato"><b><span class="contador" data-fin="617">617</span></b><span>Reseñas</span></div>
+    <div class="dato"><b>Gòtic</b><span>Barcelona</span></div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La barbería</p>
+      <h2>Una casa de <em>corte y navaja</em> en el corazón del Gòtic</h2>
+    </div>
+    <div class="rv rv-d1">
+      <p>En <strong>Carrer Ample 42</strong>, en pleno Barri Gòtic de Barcelona, Barberia Hair Saloon mantiene vivo el oficio de siempre: el corte a medida y la barba trabajada con calma y con mano experta.</p>
+      <p>El barrio la conoce bien: los <strong>directorios locales la sitúan entre las barberías mejor valoradas del Gòtic</strong>, y más de 600 clientes la avalan en Google con un <strong>4,8 sobre 5</strong>.</p>
+      <div class="sobre-sello">
+        <span class="aro" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="8.5" y1="8.1" x2="20" y2="20"/><line x1="8.5" y1="15.9" x2="20" y2="4"/></svg>
+        </span>
+        <div>
+          <b>Barberia Hair Saloon</b>
+          <span>Carrer Ample 42 · Barri Gòtic</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Servicios</p>
+      <h2>Dos oficios, hechos <em>a conciencia</em></h2>
+      <p class="intro">Sin prisas y sin atajos: cada servicio se trabaja como manda la tradición de barbería.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta rv rv-d1">
+        <span class="num">01</span>
+        <span class="icono-serv" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="8.5" y1="8.1" x2="20" y2="20"/><line x1="8.5" y1="15.9" x2="20" y2="4"/></svg>
+        </span>
+        <h3>Corte de cabello</h3>
+        <p>Corte a medida, del clásico al actual, adaptado a tu estilo y a tu tipo de cabello.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="num">02</span>
+        <span class="icono-serv" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 h6 a2 2 0 0 1 2 2 v8 l-2 3 H9 z"/><path d="M12 16 v2"/><circle cx="12" cy="20" r="1.4"/></svg>
+        </span>
+        <h3>Arreglo de barba</h3>
+        <p>Perfilado y arreglo de barba con el detalle y el pulso de una barbería clásica.</p>
+      </article>
+    </div>
+    <p class="serv-nota rv">¿Corte, barba o las dos cosas? <a href="tel:+34627151970">Llámanos al 627 15 19 70</a> y reserva tu hueco.</p>
+  </div>
+</section>
+
+<section class="prueba" id="resenas">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Reseñas</p>
+      <h2>El Gòtic ya ha dado su <em>veredicto</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande contador" data-fin="4.8" data-dec="1">4,8</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="617">617</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Una silla de barbero no se recomienda sola: <strong>617 clientes</strong> han puntuado la experiencia con un <strong>4,8 sobre 5</strong> en Google.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>4,8 de 5</h3>
+          <p>Valoración media de sus clientes en Google.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div>
+          <h3>617 reseñas</h3>
+          <p>Opiniones reales dejadas en su ficha de Google.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+        <div>
+          <h3>Entre las mejores del Gòtic</h3>
+          <p>Así la sitúan los directorios locales del barrio.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div>
+          <h3>Carrer Ample, 42</h3>
+          <p>En pleno casco antiguo, junto al puerto de Barcelona.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>Te esperamos en el <em>Gòtic</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer Ample, 42</p>
+        <p class="suave">Ciutat Vella · 08002 Barcelona</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Barberia+Hair+Saloon%2C+Carrer+Ample+42%2C+08002+Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Teléfono</h3>
+        <p><a class="enlace" href="tel:+34627151970">627 15 19 70</a></p>
+        <p class="suave">Llámanos para pedir tu cita.</p>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Cita previa</h3>
+        <p>Reserva tu silla por teléfono</p>
+        <p class="suave">Una llamada y te guardamos el hueco para corte, barba o ambos.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>El barrio</h3>
+        <p>Barri Gòtic, Barcelona</p>
+        <p class="suave">A un paso de la Plaça de la Mercè y del paseo de Colom.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-negro" href="tel:+34627151970">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita ahora
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Barberia+Hair+Saloon%2C+Carrer+Ample+42%2C+08002+Barcelona" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="franja" aria-hidden="true"></div>
+  <p class="logo-pie">Barberia Hair Saloon</p>
+  <p class="sub-pie">Barbería · Barri Gòtic · Barcelona</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer Ample, 42 · 08002 Barcelona · Tel. <a href="tel:+34627151970" style="color:inherit">627 15 19 70</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro de la navaja: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admiten decimales con coma: data-dec) --- */
+  try{
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      var pinta = function(v){ el.textContent = v.toFixed(dec).replace('.', ','); };
+      if (reduce){ pinta(fin); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pinta(fin * suave);
+        if (p < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

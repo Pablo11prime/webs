@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Gordon 10 — Asador argentino y cervecería artesanal en Carrer del Comte d'Altea 49, L'Eixample (València). Carnes de novillos certificados a pasto: solomillo, lomo alto, lomo bajo y entraña.">
+<title>Gordon 10 — Asador Argentino · València</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon:#2B1D16;
+    --crema:#F4EDE4;
+    --brasa:#C0392B;
+    --oro:#D9A441;
+    --oro-suave:rgba(217,164,65,.14);
+    --humo:#6b5a4e;
+    --display:'Bebas Neue', 'Arial Narrow', Impact, sans-serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--crema);
+    color:var(--carbon);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--oro);color:var(--carbon)}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.08s}
+  .js-on .rv-d2{transition-delay:.18s}
+  .js-on .rv-d3{transition-delay:.28s}
+  .js-on .rv-d4{transition-delay:.38s}
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--brasa),var(--oro));z-index:1000;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    font-family:var(--sans);font-size:11px;letter-spacing:.22em;font-weight:600;
+    color:var(--crema);background:rgba(43,29,22,.85);
+    border:1px solid rgba(217,164,65,.55);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "EL CUCHILLO DEL ASADOR" ======
+     Un facón criollo cruza la pantalla y, a su paso, "corta" la oscuridad
+     revelando el nombre del restaurante; tras el filo queda una línea de brasa.
+     El overlay se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+     animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+     El JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 76% 20%, rgba(192,57,43,.28), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 14% 84%, rgba(217,164,65,.12), transparent 60%),
+      linear-gradient(160deg,#3a2820 0%, #2B1D16 55%, #1c110b 100%);
+    animation:intro-fuera .75s var(--ease) 2.45s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:94vw;text-align:center}
+  .intro-linea{position:relative;padding:34px 10px}
+  /* Rejilla de parrilla al fondo: barras finas que arden suavemente */
+  .intro-parrilla{position:absolute;left:-10%;right:-10%;top:0;bottom:0;pointer-events:none}
+  .intro-parrilla svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  .intro-parrilla svg{opacity:0;animation:parrilla-luz 1.1s var(--ease) .15s forwards}
+  @keyframes parrilla-luz{to{opacity:1}}
+  /* El nombre se revela con una máscara sincronizada con el paso del cuchillo */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--display);font-weight:400;color:var(--crema);
+    font-size:clamp(3.2rem,15vw,7.5rem);line-height:1;letter-spacing:.05em;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:corte-nombre 1.5s var(--ease) .35s both;
+  }
+  .intro-nombre em{font-style:normal;color:var(--oro)}
+  @keyframes corte-nombre{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* Línea de brasa que deja el filo bajo el nombre: misma duración/curva que el cuchillo */
+  .intro-brasa{position:absolute;left:2%;right:2%;bottom:22px;height:3px;pointer-events:none;
+    background:linear-gradient(90deg,var(--brasa),var(--oro) 55%,var(--brasa));
+    border-radius:2px;box-shadow:0 0 14px rgba(217,164,65,.55);
+    clip-path:inset(0 100% 0 0);
+    animation:brasa-traza 1.5s var(--ease) .35s both;
+  }
+  @keyframes brasa-traza{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  /* El cuchillo: se desliza de izquierda a derecha "cortando" el nombre */
+  .intro-cuchillo{
+    position:absolute;left:-4%;top:50%;width:190px;height:56px;
+    transform:translate(-50%,-50%) rotate(-4deg);
+    filter:drop-shadow(0 0 14px rgba(192,57,43,.45));
+    animation:cuchillo-pasa 1.5s var(--ease) .35s both;
+  }
+  @keyframes cuchillo-pasa{
+    from{left:-4%;transform:translate(-50%,-50%) rotate(-4deg)}
+    to{left:105%;transform:translate(-50%,-50%) rotate(3deg)}
+  }
+  .intro-sub{
+    margin:18px 0 0;
+    font-size:.66rem;letter-spacing:.36em;text-transform:uppercase;
+    color:var(--oro);font-weight:500;
+    opacity:0;animation:intro-sub .6s var(--ease) 1.8s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    background:rgba(244,237,228,.88);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(43,29,22,.08);
+  }
+  nav .logo{font-family:var(--display);font-size:1.5rem;letter-spacing:.06em;text-decoration:none;color:var(--carbon);line-height:1}
+  nav .logo span{color:var(--brasa)}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:500;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--humo);margin-top:3px}
+  nav .cta-nav{
+    font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--crema);background:var(--brasa);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--carbon);transform:translateY(-1px)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--carbon);color:var(--crema);
+    padding:120px 20px 44px;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 76% 20%, rgba(192,57,43,.30), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 14% 84%, rgba(217,164,65,.12), transparent 60%),
+      linear-gradient(160deg,#3a2820 0%, #2B1D16 55%, #1c110b 100%);
+    will-change:transform;
+  }
+  /* Barras de parrilla verticales decorativas */
+  .hero-vara{
+    position:absolute;top:0;bottom:0;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(217,164,65,.35),transparent);
+    pointer-events:none;
+  }
+  .hero-vara.v1{left:12%}
+  .hero-vara.v2{right:16%}
+  .hero-chispa{
+    position:absolute;border-radius:50%;pointer-events:none;will-change:transform;
+    background:radial-gradient(circle, rgba(217,164,65,.5), transparent 70%);
+  }
+  .hero-chispa.c1{width:10px;height:10px;top:34%;right:20%;animation:ascua 9s ease-in-out infinite alternate}
+  .hero-chispa.c2{width:7px;height:7px;top:52%;right:9%;animation:ascua 12s ease-in-out infinite alternate-reverse}
+  .hero-chispa.c3{width:6px;height:6px;top:24%;left:18%;animation:ascua 11s ease-in-out infinite alternate}
+  @keyframes ascua{from{transform:translateY(0);opacity:.5}to{transform:translateY(-46px);opacity:1}}
+  .hero-aro{
+    position:absolute;border:1px solid rgba(192,57,43,.35);border-radius:50%;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-aro.a1{width:340px;height:340px;top:-90px;right:-110px;animation:flotar 11s ease-in-out infinite alternate}
+  .hero-aro.a2{width:180px;height:180px;top:120px;right:60px;border-color:rgba(244,237,228,.10);animation:flotar 14s ease-in-out infinite alternate-reverse}
+  @keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(26px) rotate(8deg)}}
+
+  .hero-kicker{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:22px;font-weight:500;
+  }
+  .hero-kicker::before{content:"";width:34px;height:1px;background:var(--oro)}
+  .hero h1{
+    position:relative;
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(3.4rem, 14vw, 7.6rem);
+    line-height:.98;letter-spacing:.03em;
+    max-width:12ch;margin-bottom:26px;text-transform:uppercase;
+  }
+  .hero h1 em{font-style:normal;color:var(--oro)}
+  .hero h1 .pal{display:inline-block}
+  .js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1.2deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    position:relative;max-width:40ch;color:rgba(244,237,228,.75);
+    font-size:1rem;font-weight:300;margin-bottom:34px;
+  }
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  @keyframes aparece{to{opacity:1}}
+
+  .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
+  .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;padding:16px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn svg{width:15px;height:15px;flex:none}
+  .btn-brasa{background:var(--brasa);color:var(--crema)}
+  .btn-brasa:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(192,57,43,.4)}
+  .btn-linea{border:1px solid rgba(244,237,228,.4);color:var(--crema)}
+  .btn-linea:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+
+  .hero-datos{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    border-top:1px solid rgba(244,237,228,.14);padding-top:22px;
+  }
+  .js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.35s forwards}
+  .hero-datos .dato b{
+    display:block;font-family:var(--display);font-weight:400;
+    font-size:clamp(1.7rem,6.5vw,2.6rem);color:var(--crema);line-height:1.05;letter-spacing:.03em;
+  }
+  .hero-datos .dato b .oro{color:var(--oro)}
+  .hero-datos .dato span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,237,228,.55)}
+
+  /* ====== SECCIONES base ====== */
+  section{padding:88px 20px}
+  .marco{max-width:1080px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--brasa);
+    font-weight:600;margin-bottom:18px;
+  }
+  .etiqueta::before{content:"";width:28px;height:1px;background:var(--brasa)}
+  h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(2.4rem,9vw,4.2rem);line-height:1;letter-spacing:.03em;
+    margin-bottom:20px;text-transform:uppercase;
+  }
+  h2 em{font-style:normal;color:var(--brasa)}
+
+  /* ====== SOBRE ====== */
+  .sobre p{color:var(--humo);max-width:56ch;font-size:1.02rem;margin-bottom:16px}
+  .sobre p strong{color:var(--carbon);font-weight:600}
+  .sobre-firma{display:flex;align-items:center;gap:14px;margin-top:30px}
+  .sobre-firma .sello{
+    width:52px;height:52px;border-radius:50%;flex:none;
+    border:1px solid var(--brasa);color:var(--brasa);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:1.3rem;letter-spacing:.04em;
+  }
+  .sobre-firma div b{display:block;font-family:var(--display);font-size:1.2rem;font-weight:400;letter-spacing:.05em}
+  .sobre-firma div span{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brasa)}
+
+  /* ====== CARTA / PARRILLA ====== */
+  .carta{background:var(--carbon);color:var(--crema)}
+  .carta h2{color:var(--crema)}
+  .carta h2 em{color:var(--oro)}
+  .carta .intro{color:rgba(244,237,228,.65);max-width:54ch;font-weight:300;margin-bottom:44px}
+  .grid-carta{display:grid;grid-template-columns:1fr;gap:14px}
+  .tarjeta{
+    position:relative;border:1px solid rgba(244,237,228,.12);border-radius:20px;
+    padding:30px 26px;background:rgba(244,237,228,.03);overflow:hidden;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .tarjeta:hover{
+    transform:translateY(-6px) rotate(-.4deg);
+    border-color:rgba(217,164,65,.55);background:rgba(217,164,65,.07);
+    box-shadow:0 24px 50px rgba(0,0,0,.4);
+  }
+  .tarjeta .num{
+    font-family:var(--display);font-size:.95rem;color:var(--oro);letter-spacing:.12em;
+    display:block;margin-bottom:16px;
+  }
+  .tarjeta h3{font-family:var(--display);font-weight:400;font-size:1.7rem;margin-bottom:10px;letter-spacing:.04em}
+  .tarjeta p{color:rgba(244,237,228,.62);font-size:.92rem;font-weight:300}
+  .tarjeta::after{
+    content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+    background:radial-gradient(circle at top right, rgba(192,57,43,.3), transparent 70%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .tarjeta:hover::after{opacity:1}
+  .carta-nota{margin-top:34px;color:rgba(244,237,228,.5);font-size:.85rem;font-weight:300}
+  .carta-nota a{color:var(--oro);text-decoration:none;border-bottom:1px solid rgba(217,164,65,.4)}
+
+  /* ====== PRUEBA SOCIAL ====== */
+  .prueba{background:var(--crema)}
+  .prueba-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px}
+  .prueba-cifra .num-grande{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(5rem,22vw,9rem);line-height:1;color:var(--carbon);
+    font-variant-numeric:tabular-nums;letter-spacing:.02em;
+  }
+  .prueba-cifra .estrellas{color:var(--oro);font-size:1.2rem;letter-spacing:.18em}
+  .prueba-lema{color:var(--humo);max-width:48ch;font-size:1rem;margin-bottom:40px}
+  .prueba-lema strong{color:var(--carbon)}
+  .grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+  .hito{
+    border:1px solid rgba(43,29,22,.1);border-radius:18px;padding:24px 22px;
+    background:#fff;
+    display:flex;gap:16px;align-items:flex-start;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .hito:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(43,29,22,.1);border-color:var(--oro)}
+  .hito .icono{
+    width:42px;height:42px;flex:none;border-radius:12px;
+    background:var(--oro-suave);color:var(--brasa);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hito .icono svg{width:20px;height:20px}
+  .hito h3{font-family:var(--display);font-weight:400;font-size:1.25rem;margin-bottom:4px;letter-spacing:.05em}
+  .hito p{color:var(--humo);font-size:.88rem}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:#ece2d4;border-radius:34px 34px 0 0}
+  .grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+  .ficha{
+    background:#fff;border-radius:18px;padding:26px 22px;
+    border:1px solid rgba(43,29,22,.06);
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .ficha:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(43,29,22,.1)}
+  .ficha h3{
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--brasa);font-weight:600;margin-bottom:12px;
+  }
+  .ficha p{color:var(--carbon);font-size:.98rem}
+  .ficha p.suave{color:var(--humo);font-size:.85rem;margin-top:4px}
+  .ficha a.enlace{color:var(--carbon);text-decoration:none;border-bottom:1px solid var(--oro);transition:color .3s var(--ease)}
+  .ficha a.enlace:hover{color:var(--brasa)}
+  .horario-fila{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed rgba(43,29,22,.12);font-size:.93rem}
+  .horario-fila:last-child{border-bottom:none}
+  .horario-fila .cerrado{color:var(--brasa);font-weight:600}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn-carbon{background:var(--carbon);color:var(--crema)}
+  .btn-carbon:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(43,29,22,.3)}
+  .btn-borde{border:1px solid var(--carbon);color:var(--carbon)}
+  .btn-borde:hover{background:var(--carbon);color:var(--crema);transform:translateY(-2px)}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:var(--carbon);color:rgba(244,237,228,.7);
+    padding:54px 20px 96px;text-align:center;
+  }
+  footer .logo-pie{font-family:var(--display);font-size:1.7rem;color:var(--crema);margin-bottom:6px;letter-spacing:.06em}
+  footer .logo-pie span{color:var(--brasa)}
+  footer .sub-pie{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);margin-bottom:26px}
+  footer .aviso{
+    display:inline-block;max-width:52ch;
+    font-size:.85rem;line-height:1.7;
+    border:1px solid rgba(217,164,65,.35);border-radius:16px;
+    padding:16px 22px;background:rgba(217,164,65,.06);
+  }
+  footer .aviso strong{color:var(--oro);font-weight:600}
+  footer .legal{margin-top:22px;font-size:.72rem;color:rgba(244,237,228,.38)}
+  footer .legal a{color:inherit}
+
+  /* ====== Desktop ====== */
+  @media (min-width:760px){
+    nav{padding:20px 44px}
+    section{padding:120px 44px}
+    .hero{padding:140px 44px 60px}
+    .grid-carta{grid-template-columns:repeat(2,1fr);gap:18px}
+    .grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}
+    .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+    .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  }
+  @media (min-width:1080px){
+    .grid-carta{grid-template-columns:repeat(3,1fr)}
+    .grid-prueba{grid-template-columns:repeat(4,1fr)}
+  }
+
+  /* ====== Movimiento reducido ====== */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    html{scroll-behavior:auto}
+    #intro{display:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "EL CUCHILLO DEL ASADOR": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-parrilla" aria-hidden="true">
+        <!-- Rejilla de parrilla al fondo, trazo fino -->
+        <svg viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#D9A441" stroke-opacity=".18" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 24 H600 M0 60 H600 M0 140 H600 M0 176 H600"/>
+            <path vector-effect="non-scaling-stroke" d="M60 8 V192 M180 8 V192 M300 8 V192 M420 8 V192 M540 8 V192" stroke-opacity=".08"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Gordon <em>10</em></p>
+      <span class="intro-brasa" aria-hidden="true"></span>
+      <!-- El facón criollo: trazo fino en el color de acento -->
+      <svg class="intro-cuchillo" viewBox="0 0 220 60" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#C0392B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Hoja con punta hacia la derecha -->
+          <path d="M74 21 L188 21 Q206 24 215 30 Q204 36 186 39 L74 39 Z"/>
+          <!-- Vaceo de la hoja -->
+          <path d="M80 30 H198" stroke-opacity=".45"/>
+          <!-- Guarda -->
+          <path d="M74 14 V46"/>
+          <!-- Mango con remaches -->
+          <rect x="8" y="21" width="62" height="18" rx="9"/>
+          <circle cx="24" cy="30" r="2"/>
+          <circle cx="39" cy="30" r="2"/>
+          <circle cx="54" cy="30" r="2"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Asador Argentino · València</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav>
+  <a class="logo" href="#inicio">Gordon <span>10</span><small>Asador Argentino</small></a>
+  <a class="cta-nav" href="tel:+34963740787">Reservar</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-vara v1" aria-hidden="true"></div>
+  <div class="hero-vara v2" aria-hidden="true"></div>
+  <div class="hero-chispa c1" aria-hidden="true"></div>
+  <div class="hero-chispa c2" aria-hidden="true"></div>
+  <div class="hero-chispa c3" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+
+  <p class="hero-kicker">Asador argentino · Cervecería artesanal</p>
+  <h1 id="titulo-hero">El fuego argentino de <em>L'Eixample</em></h1>
+  <p class="hero-sub">Carnes de novillos certificados alimentados a pasto, gran selección de cerveza internacional y vinos. En Carrer del Comte d'Altea 49, València.</p>
+  <div class="hero-botones">
+    <a class="btn btn-brasa" href="tel:+34963740787">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Reservar mesa
+    </a>
+    <a class="btn btn-linea" href="#contacto">Cómo llegar</a>
+  </div>
+  <div class="hero-datos">
+    <div class="dato"><b>4,8<span class="oro">★</span></b><span>En Google</span></div>
+    <div class="dato"><b><span class="contador" data-fin="3498">3.498</span></b><span>Reseñas</span></div>
+    <div class="dato"><b>18:30</b><span>a 00:30 · Dom. cerrado</span></div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La casa</p>
+      <h2>Novillos a pasto, fuego y <em>paciencia</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p><strong>Gordon 10</strong> es un asador argentino y cervecería artesanal en pleno <strong>L'Eixample de València</strong>: carnes de <strong>novillos certificados alimentados a pasto</strong>, trabajadas a la parrilla como manda la tradición argentina.</p>
+      <p>La parrilla se acompaña de una <strong>gran selección de cerveza internacional y de vinos</strong>, para que cada corte encuentre su copa.</p>
+      <div class="sobre-firma">
+        <span class="sello">G10</span>
+        <div>
+          <b>Gordon 10</b>
+          <span>Asador argentino · València</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="carta" id="carta">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La parrilla</p>
+      <h2>Cortes al fuego, como en <em>Argentina</em></h2>
+      <p class="intro">Carnes de novillos certificados alimentados a pasto. Estos son los cortes de la casa.</p>
+    </div>
+    <div class="grid-carta">
+      <article class="tarjeta rv rv-d1">
+        <span class="num">01</span>
+        <h3>Solomillo</h3>
+        <p>El corte más tierno del novillo, hecho a la parrilla en su punto.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="num">02</span>
+        <h3>Lomo alto</h3>
+        <p>Jugoso y con la infiltración justa: sabor a brasa en cada bocado.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="num">03</span>
+        <h3>Lomo bajo</h3>
+        <p>Equilibrio entre ternura y sabor, al estilo del asador argentino.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="num">04</span>
+        <h3>Entraña</h3>
+        <p>El corte parrillero por excelencia de Argentina, fino y sabroso.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="num">05</span>
+        <h3>Cervecería</h3>
+        <p>Gran selección de cerveza internacional para acompañar la parrilla.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="num">06</span>
+        <h3>Vinos</h3>
+        <p>Una bodega escogida para poner copa a cada corte de la carta.</p>
+      </article>
+    </div>
+    <p class="carta-nota rv">¿Mesa para esta noche? <a href="tel:+34963740787">Llámanos al 963 74 07 87</a> — grupos de 6 o más, con menú de grupo.</p>
+  </div>
+</section>
+
+<section class="prueba" id="prueba">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La confianza de València</p>
+      <h2>Miles de comensales ya lo <em>avalan</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande contador" data-fin="3498">3.498</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong>reseñas en Google · 4,8 de media</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un asador no se explica: se prueba. <strong>Casi 3.500 personas</strong> han valorado Gordon 10 en Google con un <strong>4,8 sobre 5</strong>.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>4,8 en Google</h3>
+          <p>Entre los asadores argentinos mejor valorados de València.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+        <div>
+          <h3>Novillos a pasto</h3>
+          <p>Carnes de novillos certificados alimentados a pasto.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 11h1a3 3 0 0 1 0 6h-1"/><path d="M9 12v6"/><path d="M13 12v6"/><path d="M14 7.5c0-1 .5-2.5-1-3.5.5 1.5-1 2-1 3.5"/><path d="M5 11h12v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/></svg></span>
+        <div>
+          <h3>Cervecería artesanal</h3>
+          <p>Gran selección de cerveza internacional y vinos.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <div>
+          <h3>Cenas hasta tarde</h3>
+          <p>Abierto de 18:30 a 00:30. Domingos cerrado.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>Te esperamos en <em>L'Eixample</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer del Comte d'Altea, 49</p>
+        <p class="suave">L'Eixample · 46005 València</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Restaurante+Asador+Argentino+Gordon+10%2C+Carrer+del+Comte+d%27Altea+49%2C+46005+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Horario</h3>
+        <div class="horario-fila"><span>Lunes – Sábado</span><span>18:30 – 00:30</span></div>
+        <div class="horario-fila"><span>Domingo</span><span class="cerrado">Cerrado</span></div>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Teléfono y email</h3>
+        <p><a class="enlace" href="tel:+34963740787">963 74 07 87</a></p>
+        <p class="suave" style="margin-top:10px"><a class="enlace" href="mailto:info@gordon10.com">info@gordon10.com</a></p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Reservas</h3>
+        <p>Las reservas se confirman personalmente con el restaurante.</p>
+        <p class="suave">Grupos de 6 o más personas: con menú de grupo.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-carbon" href="tel:+34963740787">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar · 963 74 07 87
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Restaurante+Asador+Argentino+Gordon+10%2C+Carrer+del+Comte+d%27Altea+49%2C+46005+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Gordon <span>10</span></p>
+  <p class="sub-pie">Asador Argentino · València</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer del Comte d'Altea, 49 · 46005 València · Tel. <a href="tel:+34963740787">963 74 07 87</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del cuchillo: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (formato es-ES: 3.498) --- */
+  try{
+    var formatear = function(n){
+      try{ return n.toLocaleString('es-ES'); }
+      catch(e){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+    };
+    var animarContador = function(el){
+      var fin = parseInt(el.getAttribute('data-fin'), 10) || 0;
+      if (reduce){ el.textContent = formatear(fin); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        el.textContent = formatear(Math.round(fin * suave));
+        if (p < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

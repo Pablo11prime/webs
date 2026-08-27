@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Taller Eugenio — taller mecánico en La Saïdia, València. Mantenimiento, cambio de aceite, frenos, neumáticos y diagnóstico. 4,8★ en Google. C/ de Ruaya, 35.">
+<title>Taller Eugenio — Taller mecánico en València</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon:#1F2933;      /* primario */
+    --niebla:#F4F6F8;      /* secundario */
+    --rojo:#E63B2E;        /* acento */
+    --ambar:#FFB400;       /* detalle */
+    --rojo-suave:rgba(230,59,46,.10);
+    --gris:#55606b;
+    --titular:'Archivo', 'Segoe UI', Helvetica, Arial, sans-serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--niebla);
+    color:var(--carbon);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--rojo);color:#fff}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.08s}
+  .js-on .rv-d2{transition-delay:.18s}
+  .js-on .rv-d3{transition-delay:.28s}
+  .js-on .rv-d4{transition-delay:.38s}
+  .js-on .rv-d5{transition-delay:.48s}
+  .js-on .rv-d6{transition-delay:.58s}
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--rojo),var(--ambar));z-index:1000;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    font-family:var(--sans);font-size:11px;letter-spacing:.22em;font-weight:600;
+    color:var(--niebla);background:rgba(31,41,51,.85);
+    border:1px solid rgba(230,59,46,.6);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "EL NEUMÁTICO" ======
+     Un neumático de trazo fino rueda de izquierda a derecha, deja su huella en el
+     asfalto y a su paso va revelando el nombre del taller.
+     El overlay se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+     animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+     El JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 80% 15%, rgba(230,59,46,.20), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 10% 85%, rgba(255,180,0,.08), transparent 60%),
+      linear-gradient(160deg,#26313c 0%, #1F2933 55%, #151d24 100%);
+    animation:intro-fuera .7s var(--ease) 2.5s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:92vw;text-align:center}
+  .intro-linea{position:relative;padding:26px 10px 64px}
+  /* El nombre se revela con una máscara sincronizada con el paso del neumático */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--titular);font-weight:800;color:var(--niebla);
+    font-size:clamp(2.2rem,9vw,4.8rem);line-height:1.08;
+    letter-spacing:.015em;text-transform:uppercase;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:rodada 1.6s var(--ease) .3s both;
+  }
+  .intro-nombre em{font-style:normal;color:var(--rojo)}
+  @keyframes rodada{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* La huella: marcas de rodadura que van quedando sobre el asfalto tras la rueda */
+  .intro-huella{position:absolute;left:-4%;right:-4%;bottom:14px;height:26px;pointer-events:none}
+  .intro-huella svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  .intro-huella .marcas{clip-path:inset(-20% 100% -20% 0);animation:huella-queda 1.6s var(--ease) .3s both}
+  @keyframes huella-queda{from{clip-path:inset(-20% 100% -20% 0)}to{clip-path:inset(-20% -2% -20% 0)}}
+  /* El neumático: rueda de izquierda a derecha sobre la línea de asfalto */
+  .intro-rueda{
+    position:absolute;left:-4%;bottom:2px;width:86px;height:86px;
+    transform:translate(-50%,0);
+    filter:drop-shadow(0 0 16px rgba(230,59,46,.4));
+    animation:rueda-avanza 1.6s var(--ease) .3s both;
+  }
+  .intro-rueda svg{width:100%;height:100%;display:block;animation:rueda-gira 1.6s var(--ease) .3s both}
+  @keyframes rueda-avanza{from{left:-4%}to{left:104%}}
+  @keyframes rueda-gira{from{transform:rotate(0deg)}to{transform:rotate(810deg)}}
+  .intro-sub{
+    margin:14px 0 0;
+    font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ambar);font-weight:500;
+    opacity:0;animation:intro-sub .6s var(--ease) 1.8s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:rgba(244,246,248,.9);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(31,41,51,.08);
+  }
+  nav .logo{font-family:var(--titular);font-weight:800;font-size:1rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--carbon);line-height:1.2}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:500;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rojo);margin-top:2px}
+  nav .cta-nav{
+    font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:#fff;background:var(--rojo);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--carbon);transform:translateY(-1px);box-shadow:0 10px 24px rgba(31,41,51,.28)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--carbon);color:var(--niebla);
+    padding:120px 20px 44px;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 80% 15%, rgba(230,59,46,.22), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 8% 85%, rgba(255,180,0,.09), transparent 60%),
+      linear-gradient(160deg,#26313c 0%, #1F2933 55%, #151d24 100%);
+    will-change:transform;
+  }
+  /* Franjas de circuito */
+  .hero-franja{
+    position:absolute;top:-20%;bottom:-20%;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(230,59,46,.4),transparent);
+    transform:rotate(14deg);pointer-events:none;
+  }
+  .hero-franja.f1{right:20%}
+  .hero-franja.f2{right:16%;background:linear-gradient(180deg,transparent,rgba(255,180,0,.3),transparent)}
+  .hero-aro{
+    position:absolute;border:1px solid rgba(230,59,46,.3);border-radius:50%;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-aro.a1{width:360px;height:360px;top:-110px;right:-120px;animation:flotar 12s ease-in-out infinite alternate}
+  .hero-aro.a2{width:190px;height:190px;top:110px;right:50px;border-color:rgba(244,246,248,.10);animation:flotar 15s ease-in-out infinite alternate-reverse}
+  @keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(26px) rotate(10deg)}}
+
+  .hero-kicker{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ambar);
+    margin-bottom:22px;font-weight:500;
+  }
+  .hero-kicker::before{content:"";width:34px;height:1px;background:var(--rojo)}
+  .hero h1{
+    position:relative;
+    font-family:var(--titular);font-weight:800;
+    font-size:clamp(2.4rem, 10.5vw, 5.6rem);
+    line-height:1.02;letter-spacing:-.01em;text-transform:uppercase;
+    max-width:14ch;margin-bottom:26px;
+  }
+  .hero h1 em{font-style:normal;color:var(--rojo)}
+  .hero h1 .pal{display:inline-block}
+  .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    position:relative;max-width:38ch;color:rgba(244,246,248,.72);
+    font-size:1rem;font-weight:300;margin-bottom:34px;
+  }
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  @keyframes aparece{to{opacity:1}}
+
+  .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
+  .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;padding:16px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn svg{width:15px;height:15px;flex:none}
+  .btn-rojo{background:var(--rojo);color:#fff}
+  .btn-rojo:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(230,59,46,.4)}
+  .btn-linea{border:1px solid rgba(244,246,248,.4);color:var(--niebla)}
+  .btn-linea:hover{border-color:var(--ambar);color:var(--ambar);transform:translateY(-2px)}
+
+  .hero-datos{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    border-top:1px solid rgba(244,246,248,.14);padding-top:22px;
+  }
+  .js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.35s forwards}
+  .hero-datos .dato b{
+    display:block;font-family:var(--titular);font-weight:800;
+    font-size:clamp(1.5rem,6vw,2.3rem);color:var(--niebla);line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .hero-datos .dato b .estrella{color:var(--ambar)}
+  .hero-datos .dato span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,246,248,.55)}
+
+  /* ====== SECCIONES base ====== */
+  section{padding:88px 20px}
+  .marco{max-width:1080px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rojo);
+    font-weight:600;margin-bottom:18px;
+  }
+  .etiqueta::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--rojo),var(--ambar))}
+  h2{
+    font-family:var(--titular);font-weight:800;
+    font-size:clamp(1.9rem,7vw,3.2rem);line-height:1.08;letter-spacing:-.01em;
+    text-transform:uppercase;margin-bottom:20px;
+  }
+  h2 em{font-style:normal;color:var(--rojo)}
+
+  /* ====== SOBRE ====== */
+  .sobre p{color:var(--gris);max-width:58ch;font-size:1.02rem;margin-bottom:16px}
+  .sobre p strong{color:var(--carbon);font-weight:600}
+  .sobre-firma{display:flex;align-items:center;gap:14px;margin-top:30px}
+  .sobre-firma .sello{
+    width:52px;height:52px;border-radius:50%;flex:none;
+    border:1px solid var(--rojo);color:var(--rojo);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--titular);font-weight:800;font-size:1.05rem;
+  }
+  .sobre-firma div b{display:block;font-family:var(--titular);font-size:1.02rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .sobre-firma div span{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo)}
+
+  /* ====== SERVICIOS ====== */
+  .servicios{background:var(--carbon);color:var(--niebla)}
+  .servicios h2{color:var(--niebla)}
+  .servicios .intro{color:rgba(244,246,248,.65);max-width:54ch;font-weight:300;margin-bottom:44px}
+  .grid-serv{display:grid;grid-template-columns:1fr;gap:14px}
+  .tarjeta{
+    position:relative;border:1px solid rgba(244,246,248,.12);border-radius:20px;
+    padding:30px 26px;background:rgba(244,246,248,.03);overflow:hidden;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .tarjeta:hover{
+    transform:translateY(-6px) rotate(-.4deg);
+    border-color:rgba(230,59,46,.6);background:rgba(230,59,46,.07);
+    box-shadow:0 24px 50px rgba(0,0,0,.4);
+  }
+  .tarjeta .num{
+    font-family:var(--titular);font-weight:700;font-size:.85rem;color:var(--ambar);
+    letter-spacing:.12em;display:block;margin-bottom:16px;
+  }
+  .tarjeta h3{font-family:var(--titular);font-weight:700;font-size:1.28rem;margin-bottom:10px;letter-spacing:.02em;text-transform:uppercase}
+  .tarjeta p{color:rgba(244,246,248,.62);font-size:.92rem;font-weight:300}
+  .tarjeta::after{
+    content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+    background:radial-gradient(circle at top right, rgba(230,59,46,.25), transparent 70%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .tarjeta:hover::after{opacity:1}
+  .serv-nota{margin-top:34px;color:rgba(244,246,248,.5);font-size:.85rem;font-weight:300}
+  .serv-nota a{color:var(--ambar);text-decoration:none;border-bottom:1px solid rgba(255,180,0,.4)}
+
+  /* ====== RESEÑAS / PRUEBA SOCIAL ====== */
+  .prueba{background:var(--niebla)}
+  .prueba-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px}
+  .prueba-cifra .num-grande{
+    font-family:var(--titular);font-weight:800;
+    font-size:clamp(4.4rem,20vw,8rem);line-height:1;color:var(--carbon);
+    font-variant-numeric:tabular-nums;
+  }
+  .prueba-cifra .estrellas{color:var(--ambar);font-size:1.2rem;letter-spacing:.18em}
+  .prueba-cifra .de-cinco{font-family:var(--titular);font-weight:700;font-size:1.4rem;color:var(--gris)}
+  .prueba-lema{color:var(--gris);max-width:48ch;font-size:1rem;margin-bottom:40px}
+  .prueba-lema strong{color:var(--carbon)}
+  .grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+  .hito{
+    border:1px solid rgba(31,41,51,.1);border-radius:18px;padding:24px 22px;
+    background:#fff;display:flex;gap:16px;align-items:flex-start;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .hito:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(31,41,51,.1);border-color:var(--rojo)}
+  .hito .icono{
+    width:42px;height:42px;flex:none;border-radius:12px;
+    background:var(--rojo-suave);color:var(--rojo);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hito .icono svg{width:20px;height:20px}
+  .hito h3{font-family:var(--titular);font-weight:700;font-size:1.02rem;margin-bottom:4px;text-transform:uppercase;letter-spacing:.02em}
+  .hito p{color:var(--gris);font-size:.88rem}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:#e8ecef;border-radius:34px 34px 0 0}
+  .grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+  .ficha{
+    background:#fff;border-radius:18px;padding:26px 22px;
+    border:1px solid rgba(31,41,51,.06);
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .ficha:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(31,41,51,.1)}
+  .ficha h3{
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--rojo);font-weight:600;margin-bottom:12px;
+  }
+  .ficha p{color:var(--carbon);font-size:.98rem}
+  .ficha p.suave{color:var(--gris);font-size:.85rem;margin-top:4px}
+  .ficha a.enlace{color:var(--carbon);text-decoration:none;border-bottom:1px solid var(--rojo);transition:color .3s var(--ease)}
+  .ficha a.enlace:hover{color:var(--rojo)}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn-carbon{background:var(--carbon);color:var(--niebla)}
+  .btn-carbon:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(31,41,51,.3)}
+  .btn-borde{border:1px solid var(--carbon);color:var(--carbon)}
+  .btn-borde:hover{background:var(--carbon);color:var(--niebla);transform:translateY(-2px)}
+
+  .redes{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
+  .redes a{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.8rem;font-weight:600;letter-spacing:.05em;
+    color:var(--carbon);text-decoration:none;
+    border:1px solid rgba(31,41,51,.18);border-radius:999px;padding:10px 16px;
+    transition:border-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  }
+  .redes a:hover{border-color:var(--rojo);color:var(--rojo);transform:translateY(-2px)}
+  .redes svg{width:15px;height:15px}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:var(--carbon);color:rgba(244,246,248,.7);
+    padding:54px 20px 96px;text-align:center;
+  }
+  footer .logo-pie{font-family:var(--titular);font-weight:800;font-size:1.25rem;color:var(--niebla);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  footer .sub-pie{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ambar);margin-bottom:26px}
+  footer .aviso{
+    display:inline-block;max-width:52ch;
+    font-size:.85rem;line-height:1.7;
+    border:1px solid rgba(230,59,46,.4);border-radius:16px;
+    padding:16px 22px;background:rgba(230,59,46,.07);
+  }
+  footer .aviso strong{color:var(--ambar);font-weight:600}
+  footer .legal{margin-top:22px;font-size:.72rem;color:rgba(244,246,248,.38)}
+  footer .legal a{color:inherit}
+
+  /* ====== Desktop ====== */
+  @media (min-width:760px){
+    nav{padding:18px 44px}
+    section{padding:120px 44px}
+    .hero{padding:140px 44px 60px}
+    .grid-serv{grid-template-columns:repeat(2,1fr);gap:18px}
+    .grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}
+    .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+    .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  }
+  @media (min-width:1080px){
+    .grid-serv{grid-template-columns:repeat(3,1fr)}
+    .grid-prueba{grid-template-columns:repeat(4,1fr)}
+  }
+
+  /* ====== Movimiento reducido ====== */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    html{scroll-behavior:auto}
+    #intro{display:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "EL NEUMÁTICO": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <p class="intro-nombre">Taller <em>Eugenio</em></p>
+      <!-- La huella que deja el neumático sobre el asfalto -->
+      <div class="intro-huella" aria-hidden="true">
+        <svg class="marcas" viewBox="0 0 600 26" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g stroke="#E63B2E" stroke-width="1.4" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" stroke-opacity=".55" stroke-dasharray="9 13" d="M0 8 H600"/>
+            <path vector-effect="non-scaling-stroke" stroke-opacity=".35" stroke-dasharray="9 13" stroke-dashoffset="11" d="M0 16 H600"/>
+          </g>
+          <path vector-effect="non-scaling-stroke" stroke="#FFB400" stroke-opacity=".28" stroke-width="1" d="M0 24 H600"/>
+        </svg>
+      </div>
+      <!-- El neumático: trazo fino en el color de acento, gira mientras avanza -->
+      <div class="intro-rueda" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false">
+          <g stroke="#E63B2E" stroke-width="1.6" stroke-linecap="round">
+            <circle cx="50" cy="50" r="45"/>
+            <circle cx="50" cy="50" r="36"/>
+            <!-- Tacos del dibujo del neumático -->
+            <path d="M50 5 V12"/><path d="M72.5 11 L69 17"/><path d="M89 27.5 L83 31"/>
+            <path d="M95 50 H88"/><path d="M89 72.5 L83 69"/><path d="M72.5 89 L69 83"/>
+            <path d="M50 95 V88"/><path d="M27.5 89 L31 83"/><path d="M11 72.5 L17 69"/>
+            <path d="M5 50 H12"/><path d="M11 27.5 L17 31"/><path d="M27.5 11 L31 17"/>
+          </g>
+          <!-- Llanta y radios, con el buje en el color detalle -->
+          <g stroke="#E63B2E" stroke-width="1.3" stroke-linecap="round">
+            <circle cx="50" cy="50" r="26"/>
+            <path d="M50 24 V42"/><path d="M74.7 42 L57.6 47.5"/><path d="M65.3 71 L54.7 57"/>
+            <path d="M34.7 71 L45.3 57"/><path d="M25.3 42 L42.4 47.5"/>
+          </g>
+          <circle cx="50" cy="50" r="8" stroke="#FFB400" stroke-width="1.6"/>
+          <circle cx="50" cy="50" r="2.5" fill="#FFB400"/>
+        </svg>
+      </div>
+    </div>
+    <p class="intro-sub">Taller mecánico · La Saïdia · València</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav>
+  <a class="logo" href="#inicio">Taller Eugenio<small>Taller mecánico · València</small></a>
+  <a class="cta-nav" href="https://anothertool.es/reservas/taller-eugenio-valencia" target="_blank" rel="noopener">Reservar cita</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-franja f1" aria-hidden="true"></div>
+  <div class="hero-franja f2" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+
+  <p class="hero-kicker">Taller mecánico · La Saïdia, València</p>
+  <h1 id="titulo-hero">Tu coche, en manos que cuidan cada <em>detalle</em></h1>
+  <p class="hero-sub">Mantenimiento, frenos, neumáticos y diagnóstico en la calle Ruaya. El taller de barrio con la valoración de una gran marca: 4,8★ en Google.</p>
+  <div class="hero-botones">
+    <a class="btn btn-rojo" href="https://anothertool.es/reservas/taller-eugenio-valencia" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Reservar cita online
+    </a>
+    <a class="btn btn-linea" href="tel:+34644249573">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Llamar · 644 24 95 73
+    </a>
+  </div>
+  <div class="hero-datos">
+    <div class="dato"><b><span class="contador" data-fin="4.8" data-dec="1">4,8</span><span class="estrella">★</span></b><span>Valoración Google</span></div>
+    <div class="dato"><b><span class="contador" data-fin="394">394</span></b><span>Reseñas en Google</span></div>
+    <div class="dato"><b>Ruaya 35</b><span>La Saïdia · 46009</span></div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">El taller</p>
+      <h2>Mecánica de barrio, resultado de <em>primera</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p><strong>Taller Eugenio</strong> es el taller mecánico de referencia de La Saïdia, en la calle Ruaya 35 de València. Sus clientes lo avalan en Google con un <strong>4,8 sobre 5</strong> tras casi 400 reseñas.</p>
+      <p>Las opiniones destacan una y otra vez lo mismo: <strong>calidad del trabajo, profesionalidad y atención al detalle</strong>. Coches que entran con un problema y salen resueltos, explicados y sin sorpresas.</p>
+      <p>Y con la comodidad de una gran cadena: puedes <strong>reservar tu cita online</strong> en un minuto, sin llamadas ni esperas.</p>
+      <div class="sobre-firma">
+        <span class="sello">TE</span>
+        <div>
+          <b>Taller Eugenio</b>
+          <span>C/ de Ruaya, 35 · València</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Servicios</p>
+      <h2>Todo lo que tu coche <em>necesita</em></h2>
+      <p class="intro">Del mantenimiento rutinario a la reparación: un solo taller para que tu coche siempre esté a punto.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta rv rv-d1">
+        <span class="num">01</span>
+        <h3>Mantenimiento del vehículo</h3>
+        <p>Revisiones y mantenimiento periódico para alargar la vida de tu coche y evitar averías.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="num">02</span>
+        <h3>Cambio de aceite</h3>
+        <p>Cambio de aceite y filtros con productos adecuados a tu motor, rápido y sin complicaciones.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="num">03</span>
+        <h3>Revisión mecánica</h3>
+        <p>Puesta a punto completa: revisamos los puntos clave antes de que se conviertan en un problema.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="num">04</span>
+        <h3>Frenos</h3>
+        <p>Pastillas, discos y líquido de frenos: tu seguridad es lo primero que sale ganando.</p>
+      </article>
+      <article class="tarjeta rv rv-d5">
+        <span class="num">05</span>
+        <h3>Neumáticos</h3>
+        <p>Montaje, equilibrado y sustitución de neumáticos para un agarre perfecto en cada trayecto.</p>
+      </article>
+      <article class="tarjeta rv rv-d6">
+        <span class="num">06</span>
+        <h3>Diagnóstico y reparación</h3>
+        <p>Localizamos la avería con diagnóstico preciso y la reparamos explicándote qué le pasaba a tu coche.</p>
+      </article>
+    </div>
+    <p class="serv-nota rv">¿No sabes qué le pasa a tu coche? <a href="tel:+34644249573">Llámanos al 644 24 95 73</a> y te orientamos.</p>
+  </div>
+</section>
+
+<section class="prueba" id="resenas">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Reseñas</p>
+      <h2>La Saïdia ya ha dado su <em>veredicto</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande contador" data-fin="4.8" data-dec="1">4,8</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="394">394</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un taller se mide por lo que dicen sus clientes: <strong>394 reseñas</strong> con una media de <strong>4,8 sobre 5</strong> que destacan la calidad del trabajo, la profesionalidad y la atención al detalle.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>Calidad del trabajo</h3>
+          <p>Lo más repetido en sus reseñas: el trabajo, bien hecho a la primera.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <div>
+          <h3>Profesionalidad</h3>
+          <p>Trato serio y honesto: te explican qué tiene tu coche y qué necesita.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
+        <div>
+          <h3>Atención al detalle</h3>
+          <p>Nada se deja a medias: cada coche sale revisado al milímetro.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        <div>
+          <h3>Cita online</h3>
+          <p>Reserva tu hueco por internet en un minuto, cuando te venga bien.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Contacto</p>
+      <h2>Te esperamos en la calle <em>Ruaya</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>C/ de Ruaya, 35</p>
+        <p class="suave">La Saïdia · 46009 València</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Taller+Eugenio%2C+C%2F+de+Ruaya+35%2C+46009+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Teléfono</h3>
+        <p><a class="enlace" href="tel:+34644249573">644 24 95 73</a></p>
+        <p class="suave">Llámanos y te decimos cuándo traer el coche.</p>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Cita online</h3>
+        <p><a class="enlace" href="https://anothertool.es/reservas/taller-eugenio-valencia" target="_blank" rel="noopener">Reservar en anothertool.es →</a></p>
+        <p class="suave">Elige día y hora desde el móvil, sin llamar.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Síguenos</h3>
+        <div class="redes">
+          <a href="https://www.instagram.com/tallereugenio_valencia" target="_blank" rel="noopener" aria-label="Instagram de Taller Eugenio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-rojo" href="https://anothertool.es/reservas/taller-eugenio-valencia" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Reservar cita ahora
+      </a>
+      <a class="btn btn-carbon" href="tel:+34644249573">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar al taller
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Taller+Eugenio%2C+C%2F+de+Ruaya+35%2C+46009+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Taller Eugenio</p>
+  <p class="sub-pie">Taller mecánico · La Saïdia · València</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">C/ de Ruaya, 35 · 46009 València · Tel. <a href="tel:+34644249573">644 24 95 73</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del neumático: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3800); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admiten un decimal, p. ej. 4,8) --- */
+  try{
+    var pintaNum = function(el, v, dec){
+      el.textContent = dec ? v.toFixed(dec).replace('.', ',') : String(Math.round(v));
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ pintaNum(el, fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pintaNum(el, fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso); else pintaNum(el, fin, dec);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

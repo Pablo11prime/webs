@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Azcárraga — Taller de automóviles en Extramurs, València</title>
+<meta name="description" content="Talleres Azcárraga, Carrer d'Azcárraga 9, Extramurs, 46008 València. Taller de automóviles con 4,8★ y 38 reseñas en Google. Tel. 963 84 99 70. L-V 9:00-14:00 y 16:00-20:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#2B2D42;
+  --secundario:#EDF2F4;
+  --acento:#EF233C;
+  --acento-oscuro:#C71F33;
+  --tinta:#22243a;
+  --tinta-suave:#5b5e78;
+  --blanco:#FFFFFF;
+  --linea:rgba(43,45,66,.1);
+  --radio:20px;
+  --sombra:0 12px 40px rgba(43,45,66,.10);
+  --sombra-alta:0 26px 60px rgba(43,45,66,.18);
+  --titular:'Archivo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --texto:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --curva:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--tinta);
+  background:var(--secundario);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--titular);font-weight:700;line-height:1.12;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acento);color:#fff}
+
+/* ===== Garantía de visibilidad: los reveals solo se activan si JS añade .js-on ===== */
+.js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+.js-on .rv.vis{opacity:1;transform:none}
+.js-on .rv-d1{transition-delay:.08s}
+.js-on .rv-d2{transition-delay:.18s}
+.js-on .rv-d3{transition-delay:.28s}
+.js-on .rv-d4{transition-delay:.38s}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+  background:linear-gradient(90deg,var(--acento),#ff7484);transition:width .1s linear}
+
+/* ===== Marca de agua DEMO ===== */
+.marca-demo{position:fixed;bottom:14px;right:14px;z-index:999;
+  background:rgba(43,45,66,.88);color:#fff;backdrop-filter:blur(6px);
+  font-size:11px;font-weight:700;letter-spacing:.2em;
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  border:1px solid rgba(239,35,60,.55);
+  box-shadow:0 4px 18px rgba(34,36,58,.3)}
+
+/* ===== INTRO "EL GATO ELEVADOR" =====
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   Un gato de tijera se despliega y ELEVA el nombre del taller: el nombre se
+   revela de abajo arriba con un clip-path sincronizado con la subida del gato.
+   JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 78% 16%, rgba(239,35,60,.20), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 12% 86%, rgba(237,242,244,.07), transparent 60%),
+    linear-gradient(160deg,#343652 0%, #2B2D42 55%, #1d1f30 100%);
+  animation:intro-fuera .75s var(--curva) 2.45s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:14px 10px 96px}
+/* Guías laterales de elevación: flechas que suben, reveladas de abajo arriba
+   con la misma animación que el nombre */
+.intro-guias{position:absolute;left:-9%;right:-9%;top:0;bottom:74px;pointer-events:none}
+.intro-guias svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.intro-guias svg{clip-path:inset(100% -6% -6% -6%);animation:subida 1.6s var(--curva) .3s both}
+/* El nombre se revela DE ABAJO ARRIBA, empujado por la plataforma del gato */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:var(--titular);font-weight:800;color:var(--secundario);
+  font-size:clamp(2rem,8.6vw,4.6rem);line-height:1.1;letter-spacing:-.02em;
+  clip-path:inset(100% -4% -14% -2%);
+  animation:subida 1.6s var(--curva) .3s both;
+}
+.intro-nombre em{font-style:normal;color:var(--acento)}
+@keyframes subida{from{clip-path:inset(100% -4% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* El gato de tijera: se despliega (scaleY con origen abajo) y su plataforma
+   acompaña al borde de revelado del nombre */
+.intro-gato{
+  position:absolute;left:50%;bottom:0;width:min(340px,74vw);height:150px;
+  transform:translateX(-50%);
+  filter:drop-shadow(0 0 16px rgba(239,35,60,.35));
+}
+.intro-gato svg{
+  display:block;width:100%;height:100%;overflow:visible;
+  transform-origin:50% 100%;transform:scaleY(.22);
+  animation:gato-sube 1.6s var(--curva) .3s both;
+}
+@keyframes gato-sube{from{transform:scaleY(.22)}to{transform:scaleY(1)}}
+.intro-sub{
+  margin:14px 0 0;
+  font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--curva) 1.8s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
+
+/* ===== Navegación ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 20px;
+  background:rgba(237,242,244,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--linea);
+  transition:box-shadow .3s var(--curva)}
+nav.con-sombra{box-shadow:0 6px 24px rgba(43,45,66,.10)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--titular);font-weight:800;font-size:1.02rem;color:var(--primario);line-height:1.15;letter-spacing:-.01em}
+.logo .sello{width:34px;height:34px;flex:none;border-radius:10px;background:var(--primario);color:var(--acento);display:flex;align-items:center;justify-content:center}
+.logo .sello svg{width:19px;height:19px}
+.logo small{display:block;font-family:var(--texto);font-weight:700;font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--acento)}
+.nav-tel{display:inline-flex;align-items:center;gap:8px;
+  background:var(--acento);color:#fff;font-weight:700;font-size:.86rem;
+  padding:11px 18px;border-radius:999px;white-space:nowrap;
+  transition:transform .25s var(--curva),background .25s var(--curva),box-shadow .25s var(--curva)}
+.nav-tel:hover{background:var(--acento-oscuro);transform:translateY(-2px);box-shadow:0 10px 24px rgba(239,35,60,.35)}
+.nav-tel svg{width:15px;height:15px;flex:none}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--primario);color:var(--secundario);
+  padding:120px 20px 46px;overflow:hidden}
+.hero-fondo{position:absolute;inset:-12% -5%;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(ellipse 72% 55% at 80% 14%, rgba(239,35,60,.24), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 8% 88%, rgba(237,242,244,.06), transparent 60%),
+    linear-gradient(160deg,#353751 0%, #2B2D42 55%, #1e2032 100%)}
+/* Franjas diagonales de taller, muy sutiles */
+.hero-franjas{position:absolute;top:-10%;right:-16%;width:60%;height:120%;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(115deg,transparent 0 26px,rgba(239,35,60,.07) 26px 30px)}
+.hero-aro{position:absolute;border:1px solid rgba(239,35,60,.3);border-radius:50%;pointer-events:none;will-change:transform}
+.hero-aro.a1{width:340px;height:340px;top:-100px;right:-110px;animation:flotar 12s ease-in-out infinite alternate}
+.hero-aro.a2{width:170px;height:170px;top:150px;right:70px;border-color:rgba(237,242,244,.10);animation:flotar 15s ease-in-out infinite alternate-reverse}
+@keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(26px) rotate(8deg)}}
+.hero-int{position:relative;max-width:1080px;margin:0 auto;width:100%}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);
+  font-weight:700;margin-bottom:22px}
+.hero-kicker::before{content:"";width:34px;height:2px;background:var(--acento)}
+.hero h1{font-size:clamp(2.5rem,10vw,5.4rem);color:var(--secundario);max-width:14ch;margin-bottom:24px}
+.hero h1 em{font-style:normal;color:var(--acento)}
+.hero h1 .pal{display:inline-block}
+.js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1.2deg);animation:palabra .8s var(--curva) forwards;animation-delay:calc(.15s + var(--i)*.1s)}
+@keyframes palabra{to{opacity:1;transform:none}}
+.hero-sub{max-width:44ch;color:rgba(237,242,244,.75);font-size:1.02rem;margin-bottom:32px}
+.js-on .hero-sub{opacity:0;animation:aparece 1s var(--curva) .95s forwards}
+@keyframes aparece{to{opacity:1}}
+.hero-botones{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
+.js-on .hero-botones{opacity:0;animation:aparece 1s var(--curva) 1.15s forwards}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-size:.84rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:16px 26px;border-radius:999px;
+  transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s var(--curva),color .3s var(--curva),border-color .3s var(--curva)}
+.btn svg{width:15px;height:15px;flex:none}
+.btn-rojo{background:var(--acento);color:#fff}
+.btn-rojo:hover{background:var(--acento-oscuro);transform:translateY(-2px);box-shadow:0 14px 32px rgba(239,35,60,.4)}
+.btn-linea{border:1px solid rgba(237,242,244,.4);color:var(--secundario)}
+.btn-linea:hover{border-color:var(--acento);color:var(--acento);transform:translateY(-2px)}
+.hero-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  border-top:1px solid rgba(237,242,244,.15);padding-top:22px}
+.js-on .hero-datos{opacity:0;animation:aparece 1s var(--curva) 1.35s forwards}
+.hero-datos .dato b{display:block;font-family:var(--titular);font-weight:800;
+  font-size:clamp(1.5rem,6vw,2.3rem);color:var(--secundario);line-height:1.1;font-variant-numeric:tabular-nums}
+.hero-datos .dato b .estrella{color:var(--acento)}
+.hero-datos .dato span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(237,242,244,.55);font-weight:600}
+
+/* ===== Secciones base ===== */
+section{padding:88px 20px}
+.marco{max-width:1080px;margin:0 auto}
+.etiqueta{display:inline-flex;align-items:center;gap:10px;
+  font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);
+  font-weight:700;margin-bottom:18px}
+.etiqueta::before{content:"";width:28px;height:2px;background:var(--acento)}
+h2{font-size:clamp(2rem,7.5vw,3.3rem);color:var(--primario);margin-bottom:20px}
+h2 em{font-style:normal;color:var(--acento)}
+
+/* ===== Sobre ===== */
+.sobre{background:var(--secundario)}
+.sobre p{color:var(--tinta-suave);max-width:58ch;font-size:1.02rem;margin-bottom:16px}
+.sobre p strong{color:var(--primario);font-weight:700}
+.sobre-datos{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.chip{display:inline-flex;align-items:center;gap:9px;
+  background:#fff;border:1px solid var(--linea);border-radius:999px;
+  padding:11px 18px;font-size:.85rem;font-weight:600;color:var(--primario);
+  box-shadow:var(--sombra);
+  transition:transform .3s var(--curva),border-color .3s var(--curva)}
+.chip:hover{transform:translateY(-3px);border-color:var(--acento)}
+.chip svg{width:16px;height:16px;color:var(--acento);flex:none}
+
+/* ===== Servicios ===== */
+.servicios{background:var(--primario);color:var(--secundario);border-radius:34px;margin:0 10px}
+.servicios h2{color:var(--secundario)}
+.servicios .intro-serv{color:rgba(237,242,244,.68);max-width:54ch;margin-bottom:44px}
+.grid-serv{display:grid;grid-template-columns:1fr;gap:14px}
+.tarjeta{position:relative;border:1px solid rgba(237,242,244,.14);border-radius:var(--radio);
+  padding:30px 26px;background:rgba(237,242,244,.04);overflow:hidden;
+  transition:transform .4s var(--curva),border-color .4s var(--curva),background .4s var(--curva),box-shadow .4s var(--curva)}
+.tarjeta:hover{transform:translateY(-6px) rotate(-.4deg);
+  border-color:rgba(239,35,60,.6);background:rgba(239,35,60,.08);
+  box-shadow:0 24px 50px rgba(20,22,38,.45)}
+.tarjeta .icono-serv{width:46px;height:46px;border-radius:13px;margin-bottom:18px;
+  background:rgba(239,35,60,.14);color:var(--acento);
+  display:flex;align-items:center;justify-content:center}
+.tarjeta .icono-serv svg{width:23px;height:23px}
+.tarjeta h3{font-size:1.3rem;margin-bottom:10px;color:var(--secundario)}
+.tarjeta p{color:rgba(237,242,244,.64);font-size:.92rem}
+.tarjeta::after{content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+  background:radial-gradient(circle at top right, rgba(239,35,60,.25), transparent 70%);
+  opacity:0;transition:opacity .4s var(--curva)}
+.tarjeta:hover::after{opacity:1}
+.serv-nota{margin-top:34px;color:rgba(237,242,244,.55);font-size:.9rem}
+.serv-nota a{color:var(--acento);font-weight:700;border-bottom:1px solid rgba(239,35,60,.45);transition:color .3s var(--curva)}
+.serv-nota a:hover{color:#ff7484}
+
+/* ===== Prueba social ===== */
+.prueba{background:var(--secundario)}
+.prueba-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px}
+.prueba-cifra .num-grande{font-family:var(--titular);font-weight:800;
+  font-size:clamp(4.2rem,19vw,7.6rem);line-height:1;color:var(--primario);
+  font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.prueba-cifra .detalle .estrellas{color:var(--acento);font-size:1.2rem;letter-spacing:.16em}
+.prueba-cifra .detalle strong{color:var(--primario)}
+.prueba-lema{color:var(--tinta-suave);max-width:50ch;font-size:1rem;margin-bottom:40px}
+.prueba-lema strong{color:var(--primario)}
+.grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+.hito{border:1px solid var(--linea);border-radius:18px;padding:24px 22px;background:#fff;
+  display:flex;gap:16px;align-items:flex-start;
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva),border-color .35s var(--curva)}
+.hito:hover{transform:translateY(-4px);box-shadow:var(--sombra-alta);border-color:var(--acento)}
+.hito .icono{width:42px;height:42px;flex:none;border-radius:12px;
+  background:rgba(239,35,60,.1);color:var(--acento);
+  display:flex;align-items:center;justify-content:center}
+.hito .icono svg{width:20px;height:20px}
+.hito h3{font-size:1.05rem;margin-bottom:4px;color:var(--primario)}
+.hito p{color:var(--tinta-suave);font-size:.88rem}
+
+/* ===== Contacto ===== */
+.contacto{background:#e2e9ee;border-radius:34px 34px 0 0}
+.grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+.ficha{background:#fff;border-radius:18px;padding:26px 22px;border:1px solid var(--linea);
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva)}
+.ficha:hover{transform:translateY(-3px);box-shadow:var(--sombra-alta)}
+.ficha h3{font-family:var(--texto);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;margin-bottom:12px}
+.ficha p{color:var(--tinta);font-size:.98rem}
+.ficha p.suave{color:var(--tinta-suave);font-size:.85rem;margin-top:4px}
+.ficha a.enlace{color:var(--primario);font-weight:600;border-bottom:1px solid var(--acento);transition:color .3s var(--curva)}
+.ficha a.enlace:hover{color:var(--acento)}
+.horario-fila{display:flex;justify-content:space-between;gap:12px;padding:7px 0;
+  border-bottom:1px dashed rgba(43,45,66,.14);font-size:.93rem}
+.horario-fila:last-child{border-bottom:none}
+.horario-fila .cerrado{color:var(--acento);font-weight:700}
+.contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn-oscuro{background:var(--primario);color:#fff}
+.btn-oscuro:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(43,45,66,.3)}
+.btn-borde{border:1px solid var(--primario);color:var(--primario)}
+.btn-borde:hover{background:var(--primario);color:#fff;transform:translateY(-2px)}
+
+/* ===== Footer ===== */
+footer{background:var(--primario);color:rgba(237,242,244,.72);padding:54px 20px 96px;text-align:center}
+footer .logo-pie{font-family:var(--titular);font-weight:800;font-size:1.35rem;color:var(--secundario);margin-bottom:6px}
+footer .sub-pie{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);font-weight:700;margin-bottom:26px}
+footer .aviso{display:inline-block;max-width:52ch;font-size:.85rem;line-height:1.7;
+  border:1px solid rgba(239,35,60,.4);border-radius:16px;
+  padding:16px 22px;background:rgba(239,35,60,.07)}
+footer .aviso strong{color:var(--acento);font-weight:700}
+footer .legal{margin-top:22px;font-size:.72rem;color:rgba(237,242,244,.4)}
+footer .legal a{color:inherit}
+
+/* ===== Desktop ===== */
+@media (min-width:760px){
+  nav{padding:18px 44px}
+  section{padding:120px 44px}
+  .hero{padding:140px 44px 60px}
+  .grid-serv{grid-template-columns:repeat(2,1fr);gap:18px}
+  .grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+  .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  .servicios{margin:0 24px}
+}
+@media (min-width:1080px){
+  .grid-serv{grid-template-columns:repeat(4,1fr)}
+  .grid-prueba{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ===== Movimiento reducido ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  #intro{display:none !important}
+  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+}
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "EL GATO ELEVADOR": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-guias" aria-hidden="true">
+        <!-- Guías de elevación: flechas hacia arriba que aparecen con la subida -->
+        <svg viewBox="0 0 600 130" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#EF233C" stroke-opacity=".4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M28 122 V26 M18 40 L28 26 L38 40"/>
+            <path vector-effect="non-scaling-stroke" d="M572 122 V26 M562 40 L572 26 L582 40"/>
+          </g>
+          <g fill="none" stroke="#EDF2F4" stroke-opacity=".18" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 7">
+            <path vector-effect="non-scaling-stroke" d="M64 122 V34 M536 122 V34"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Talleres <em>Azcárraga</em></p>
+      <!-- El gato de tijera: se despliega y eleva el nombre -->
+      <div class="intro-gato" aria-hidden="true">
+        <svg viewBox="0 0 340 150" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#EF233C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Plataforma superior -->
+            <path vector-effect="non-scaling-stroke" d="M14 8 H326"/>
+            <path vector-effect="non-scaling-stroke" d="M140 8 V16 H200 V8"/>
+            <!-- Tijera (rombo del gato) -->
+            <path vector-effect="non-scaling-stroke" d="M170 16 L110 76 L170 136 L230 76 Z"/>
+            <!-- Husillo central con tuercas -->
+            <path vector-effect="non-scaling-stroke" d="M96 76 H244" stroke-dasharray="7 5"/>
+            <circle vector-effect="non-scaling-stroke" cx="110" cy="76" r="7"/>
+            <circle vector-effect="non-scaling-stroke" cx="230" cy="76" r="7"/>
+            <!-- Manivela -->
+            <path vector-effect="non-scaling-stroke" d="M244 76 H282 L302 60"/>
+            <!-- Base -->
+            <path vector-effect="non-scaling-stroke" d="M140 136 H200"/>
+            <path vector-effect="non-scaling-stroke" d="M118 146 H222"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="intro-sub">Taller de automóviles · Extramurs</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav id="nav">
+  <a class="logo" href="#inicio">
+    <span class="sello" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    </span>
+    <span>Talleres Azcárraga<small>Extramurs · València</small></span>
+  </a>
+  <a class="nav-tel" href="tel:+34963849970">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    963 84 99 70
+  </a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-franjas" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+  <div class="hero-int">
+    <p class="hero-kicker">Taller de automóviles · Extramurs, València</p>
+    <h1 id="titulo-hero">Tu coche, en un taller de <em>confianza</em></h1>
+    <p class="hero-sub">Talleres Azcárraga, en el Carrer d'Azcárraga 9, es el taller de automóviles del barrio de Extramurs: cerca de casa y con una valoración de 4,8 sobre 5 en Google.</p>
+    <div class="hero-botones">
+      <a class="btn btn-rojo" href="tel:+34963849970">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita
+      </a>
+      <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Azc%C3%A1rraga%2C+Carrer+d%27Azc%C3%A1rraga+9%2C+46008+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="hero-datos">
+      <div class="dato"><b><span class="contador" data-fin="4.8" data-dec="1">4,8</span><span class="estrella">★</span></b><span>En Google</span></div>
+      <div class="dato"><b><span class="contador" data-fin="38">38</span></b><span>Reseñas</span></div>
+      <div class="dato"><b>L–V</b><span>9–14 · 16–20</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">El taller</p>
+      <h2>El taller de toda la vida del barrio de <em>Extramurs</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p>En pleno <strong>barrio de Extramurs</strong>, a un paso del centro de València, Talleres Azcárraga es el taller de automóviles al que acuden los vecinos cuando su coche necesita atención.</p>
+      <p>El resultado está a la vista: una valoración de <strong>4,8 sobre 5</strong> con 38 reseñas en Google. Un taller de barrio donde tratas directamente con quien repara tu coche.</p>
+      <div class="sobre-datos">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg>4,8★ en Google</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Carrer d'Azcárraga, 9</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>L–V · 9–14 y 16–20</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Qué hacemos</p>
+      <h2>Lo que tu coche necesita, <em>cerca de casa</em></h2>
+      <p class="intro-serv">Un taller de automóviles para el día a día de tu vehículo. Llámanos, cuéntanos qué le pasa y te decimos cómo lo vemos.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta rv rv-d1">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+        <h3>Mecánica del automóvil</h3>
+        <p>Reparación de automóviles en el propio barrio, con trato directo de taller de toda la vida.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <h3>Atención en horario partido</h3>
+        <p>Abierto de lunes a viernes, mañana y tarde: de 9:00 a 14:00 y de 16:00 a 20:00.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <h3>Cita por teléfono</h3>
+        <p>Una llamada al 963 84 99 70 y reservas tu hueco. Sin esperas ni vueltas.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <h3>En pleno Extramurs</h3>
+        <p>Carrer d'Azcárraga 9: dejas el coche y sigues con tu día por el centro de València.</p>
+      </article>
+    </div>
+    <p class="serv-nota rv">¿No sabes qué le pasa a tu coche? <a href="tel:+34963849970">Llámanos al 963 84 99 70</a> y lo vemos.</p>
+  </div>
+</section>
+
+<section class="prueba" id="opiniones">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La opinión del barrio</p>
+      <h2>Los vecinos ya han dado su <em>veredicto</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande"><span class="contador" data-fin="4.8" data-dec="1">4,8</span></span>
+      <span class="detalle">
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="38">38</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un taller no se explica: se comprueba. <strong>4,8 sobre 5</strong> es la nota que le ponen en Google las personas que ya han dejado su coche en Talleres Azcárraga.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>4,8 de 5 estrellas</h3>
+          <p>Valoración media de sus clientes en la ficha de Google del taller.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></span>
+        <div>
+          <h3>38 opiniones reales</h3>
+          <p>Reseñas públicas de clientes, consultables en Google Maps.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-6 9 6v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <div>
+          <h3>Taller de barrio</h3>
+          <p>En Extramurs, junto al centro: el taller que tienes al lado de casa.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <div>
+          <h3>Mañana y tarde</h3>
+          <p>De lunes a viernes: 9:00–14:00 y 16:00–20:00.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>Te esperamos en el Carrer <em>d'Azcárraga</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer d'Azcárraga, 9</p>
+        <p class="suave">Extramurs · 46008 València</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Azc%C3%A1rraga%2C+Carrer+d%27Azc%C3%A1rraga+9%2C+46008+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Horario</h3>
+        <div class="horario-fila"><span>Lunes – Viernes</span><span>9:00 – 14:00</span></div>
+        <div class="horario-fila"><span>&nbsp;</span><span>16:00 – 20:00</span></div>
+        <div class="horario-fila"><span>Sábado y domingo</span><span class="cerrado">Cerrado</span></div>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Teléfono</h3>
+        <p><a class="enlace" href="tel:+34963849970">963 84 99 70</a></p>
+        <p class="suave">Llámanos y pide tu cita.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Tu opinión</h3>
+        <p>4,8★ · 38 reseñas</p>
+        <p class="suave">Consulta las opiniones del taller en su ficha de Google Maps.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-rojo" href="tel:+34963849970">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar ahora
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Azc%C3%A1rraga%2C+Carrer+d%27Azc%C3%A1rraga+9%2C+46008+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Talleres Azcárraga</p>
+  <p class="sub-pie">Taller de automóviles · Extramurs, València</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer d'Azcárraga, 9 · 46008 València · Tel. <a href="tel:+34963849970">963 84 99 70</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del gato elevador: el CSS ya la autodestruye solo; el JS solo retira el nodo --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admite decimales con coma: data-dec) --- */
+  try{
+    var pintarNum = function(el, valor, dec){
+      el.textContent = dec > 0 ? valor.toFixed(dec).replace('.', ',') : String(Math.round(valor));
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ pintarNum(el, fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pintarNum(el, fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso);
+        else pintarNum(el, fin, dec);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso + sombra del nav --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var nav = document.getElementById('nav');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+      if (nav){
+        if (y > 10) nav.classList.add('con-sombra'); else nav.classList.remove('con-sombra');
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

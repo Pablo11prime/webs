@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVIC TALLERES — Taller mecánico multimarca en el Eixample, Barcelona</title>
+<meta name="description" content="MAVIC TALLERES, Carrer de Casp 110, Eixample (Barcelona). Taller multimarca con más de 40 años de oficio: mecánica, autodiagnosis, electricidad, neumáticos, aire acondicionado y car multimedia. 4,8★ en Google. Tel. 932 50 68 97.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#1F2937;
+  --secundario:#F3F4F6;
+  --acento:#D62828;
+  --acento-osc:#B31F1F;
+  --tinta:#161D29;
+  --tinta-suave:#55606F;
+  --carbon:#141A24;
+  --linea:rgba(31,41,55,.1);
+  --blanco:#FFFFFF;
+  --radio:20px;
+  --sombra:0 10px 36px rgba(22,29,41,.10);
+  --sombra-alta:0 26px 60px rgba(22,29,41,.18);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --tit:'Archivo',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  --txt:'Inter',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--txt);
+  color:var(--tinta);
+  background:var(--blanco);
+  line-height:1.65;
+  font-size:16px;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--tit);line-height:1.12;letter-spacing:-.015em}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acento);color:#fff}
+
+/* ===== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ===== */
+.js-on .rv{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.js-on .rv.vis{opacity:1;transform:none}
+.js-on .rv-d1{transition-delay:.09s}
+.js-on .rv-d2{transition-delay:.18s}
+.js-on .rv-d3{transition-delay:.27s}
+.js-on .rv-d4{transition-delay:.36s}
+.js-on .rv-d5{transition-delay:.45s}
+.js-on .rv-d6{transition-delay:.54s}
+
+/* ===== Barra de progreso de scroll ===== */
+#progreso{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+  background:linear-gradient(90deg,var(--acento),#f07a3a);transition:width .1s linear}
+
+/* ===== Marca de agua DEMO ===== */
+.marca-demo{position:fixed;bottom:14px;right:14px;z-index:999;
+  font-size:11px;font-weight:700;letter-spacing:.2em;
+  color:#fff;background:rgba(22,29,41,.86);
+  border:1px solid rgba(214,40,40,.6);
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  backdrop-filter:blur(5px)}
+
+/* ===== INTRO "LA BUJÍA" =====
+   Una bujía cruza la pantalla soltando su chispa y "enciende" el nombre del taller.
+   El overlay se AUTODESTRUYE POR CSS PURO (opacity+visibility con animation-fill-mode:forwards):
+   aunque el JS falle, la página queda visible. El JS solo retira el nodo del DOM al terminar.
+   pointer-events:none SIEMPRE: jamás bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 16%, rgba(214,40,40,.26), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 12% 84%, rgba(214,40,40,.10), transparent 58%),
+    linear-gradient(155deg,#252F3F 0%, #1F2937 55%, #10161f 100%);
+  animation:intro-fuera .75s var(--ease) 2.45s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+.intro-linea{position:relative;padding:34px 8px}
+.intro-deco{position:absolute;left:-8%;right:-8%;top:6px;bottom:6px;pointer-events:none}
+.intro-deco svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+/* Circuito apagado (línea discontinua): desaparece al paso de la bujía */
+.intro-deco .apagado{clip-path:inset(-8% 0 -8% 0);animation:deco-fuera 1.55s var(--ease) .3s both}
+/* Corriente encendida (onda eléctrica): aparece tras la bujía */
+.intro-deco .encendido{clip-path:inset(-8% 100% -8% 0);animation:deco-dentro 1.55s var(--ease) .3s both}
+@keyframes deco-fuera{from{clip-path:inset(-8% 0 -8% 0)}to{clip-path:inset(-8% 0 -8% 100%)}}
+@keyframes deco-dentro{from{clip-path:inset(-8% 100% -8% 0)}to{clip-path:inset(-8% 0 -8% 0)}}
+/* El nombre se "enciende" con una máscara sincronizada con la bujía */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:var(--tit);font-weight:800;color:#fff;
+  font-size:clamp(2.1rem,9vw,4.8rem);line-height:1.08;letter-spacing:-.01em;
+  text-transform:uppercase;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:encendido 1.55s var(--ease) .3s both;
+}
+.intro-nombre em{font-style:normal;color:var(--acento)}
+@keyframes encendido{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* La bujía: cruza de izquierda a derecha chispeando */
+.intro-bujia{
+  position:absolute;left:-2%;top:50%;width:52px;height:168px;
+  transform:translate(-50%,-50%) rotate(-7deg);
+  filter:drop-shadow(0 0 16px rgba(214,40,40,.45));
+  animation:bujia-pasa 1.55s var(--ease) .3s both;
+}
+@keyframes bujia-pasa{
+  from{left:-2%;transform:translate(-50%,-50%) rotate(-7deg)}
+  to{left:103%;transform:translate(-50%,-50%) rotate(9deg)}
+}
+/* La chispa del electrodo parpadea mientras pasa */
+.intro-bujia .chispa{opacity:0;animation:chispea .22s linear .45s 6 alternate}
+@keyframes chispea{from{opacity:.15}to{opacity:1}}
+.intro-sub{
+  margin:18px 0 0;
+  font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--ease) 1.8s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 20px;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--linea);
+  transition:box-shadow .3s var(--ease);
+}
+nav.con-sombra{box-shadow:0 8px 26px rgba(22,29,41,.09)}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--tit);font-weight:800;font-size:1.02rem;letter-spacing:.02em;color:var(--primario);line-height:1.15;text-transform:uppercase}
+.logo svg{width:30px;height:30px;flex:none}
+.logo small{display:block;font-family:var(--txt);font-weight:600;font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--acento)}
+.nav-links{display:none;gap:26px;font-size:.9rem;font-weight:500;color:var(--tinta-suave)}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--acento)}
+@media(min-width:860px){.nav-links{display:flex}}
+.nav-tel{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+  background:var(--primario);color:#fff;font-weight:600;font-size:.86rem;
+  padding:11px 18px;border-radius:999px;
+  transition:background .25s,transform .25s var(--ease),box-shadow .25s}
+.nav-tel:hover{background:var(--acento);transform:translateY(-2px);box-shadow:0 10px 24px rgba(214,40,40,.32)}
+.nav-tel svg{width:14px;height:14px}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--primario);color:#fff;
+  padding:130px 20px 46px;overflow:hidden;
+}
+.hero-fondo{
+  position:absolute;inset:-12% -5%;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(ellipse 70% 55% at 82% 14%, rgba(214,40,40,.30), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 8% 86%, rgba(214,40,40,.10), transparent 58%),
+    linear-gradient(155deg,#283343 0%, #1F2937 52%, #131a24 100%);
+}
+/* Franjas técnicas diagonales, guiño a taller sin caer en lo chillón */
+.hero-franjas{
+  position:absolute;top:-40px;right:-70px;width:340px;height:340px;opacity:.16;pointer-events:none;
+  background:repeating-linear-gradient(-45deg,var(--acento) 0 10px,transparent 10px 34px);
+  border-radius:50%;
+  animation:girar 60s linear infinite;
+}
+@keyframes girar{to{transform:rotate(360deg)}}
+.hero-linea{position:absolute;top:0;bottom:0;width:1px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(214,40,40,.4),transparent)}
+.hero-linea.l1{left:11%}
+.hero-linea.l2{right:15%}
+.hero-int{position:relative;max-width:1100px;margin:0 auto;width:100%}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#fff;
+  font-weight:600;margin-bottom:22px;
+  border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:9px 18px;
+  background:rgba(255,255,255,.05);
+}
+.hero-kicker .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);animation:latido 2s ease-in-out infinite}
+@keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.45);opacity:.55}}
+.hero h1{
+  font-weight:800;font-size:clamp(2.5rem,9.4vw,5.2rem);
+  max-width:15ch;margin-bottom:24px;text-transform:uppercase;
+}
+.hero h1 em{font-style:normal;color:var(--acento)}
+.hero h1 .pal{display:inline-block}
+.js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1deg);animation:palabra .75s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.1s)}
+@keyframes palabra{to{opacity:1;transform:none}}
+.hero-sub{max-width:52ch;color:rgba(255,255,255,.74);font-size:clamp(1rem,2.4vw,1.14rem);margin-bottom:34px}
+.js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+@keyframes aparece{to{opacity:1}}
+.hero-botones{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:48px}
+.js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--tit);font-size:.86rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:16px 28px;border-radius:999px;
+  transition:transform .28s var(--ease),box-shadow .28s,background .28s,color .28s,border-color .28s;
+}
+.btn svg{width:15px;height:15px;flex:none}
+.btn-rojo{background:var(--acento);color:#fff;box-shadow:0 12px 30px rgba(214,40,40,.35)}
+.btn-rojo:hover{background:var(--acento-osc);transform:translateY(-3px);box-shadow:0 18px 40px rgba(214,40,40,.45)}
+.btn-linea{border:1px solid rgba(255,255,255,.38);color:#fff}
+.btn-linea:hover{border-color:var(--acento);color:var(--acento);transform:translateY(-3px)}
+.hero-datos{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  border-top:1px solid rgba(255,255,255,.14);padding-top:24px;max-width:680px;
+}
+.js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.35s forwards}
+.hero-datos .dato b{display:block;font-family:var(--tit);font-weight:800;font-size:clamp(1.6rem,6vw,2.5rem);line-height:1.1;color:#fff}
+.hero-datos .dato b sup{font-size:.55em;color:var(--acento)}
+.hero-datos .dato span{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600}
+
+/* ===== Secciones base ===== */
+section{padding:88px 20px}
+.marco{max-width:1100px;margin:0 auto}
+.etiqueta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);
+  font-weight:700;margin-bottom:16px;
+}
+.etiqueta::before{content:"";width:30px;height:2px;background:var(--acento)}
+h2{font-weight:800;font-size:clamp(1.9rem,6.5vw,3.1rem);margin-bottom:18px;max-width:24ch;text-transform:uppercase}
+h2 em{font-style:normal;color:var(--acento)}
+.intro-sec{color:var(--tinta-suave);font-size:1.04rem;max-width:60ch;margin-bottom:44px}
+
+/* ===== SOBRE ===== */
+.sobre{background:var(--blanco)}
+.sobre-grid{display:grid;gap:36px;align-items:center}
+@media(min-width:900px){.sobre-grid{grid-template-columns:1fr 1.1fr;gap:64px}}
+.sobre-visual{
+  position:relative;border-radius:28px;overflow:hidden;min-height:340px;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(214,40,40,.35), transparent 50%),
+    linear-gradient(150deg,#283343,#1F2937 60%,#131a24);
+  display:flex;align-items:flex-end;box-shadow:var(--sombra-alta);
+}
+.sobre-visual::before{content:"";position:absolute;inset:0;opacity:.12;
+  background:repeating-linear-gradient(-45deg,#fff 0 2px,transparent 2px 26px)}
+.sobre-visual .emblema{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);width:140px;height:140px;filter:drop-shadow(0 16px 32px rgba(0,0,0,.4))}
+.sobre-tarjeta{position:relative;margin:20px;background:rgba(255,255,255,.95);border-radius:16px;padding:16px 20px;box-shadow:var(--sombra);font-size:.94rem}
+.sobre-tarjeta b{color:var(--acento)}
+.sobre-txt p{color:var(--tinta-suave);margin-bottom:16px;font-size:1.02rem}
+.sobre-txt p strong{color:var(--tinta);font-weight:600}
+.puntos{display:grid;gap:16px;margin-top:28px}
+.punto-item{display:flex;gap:15px;align-items:flex-start}
+.punto-icono{flex:none;width:46px;height:46px;border-radius:14px;
+  background:var(--secundario);color:var(--acento);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s var(--ease),background .3s,color .3s}
+.punto-icono svg{width:21px;height:21px}
+.punto-item:hover .punto-icono{transform:scale(1.1) rotate(-5deg);background:var(--acento);color:#fff}
+.punto-item h3{font-size:1.05rem;margin-bottom:3px;font-weight:700}
+.punto-item p{color:var(--tinta-suave);font-size:.93rem}
+
+/* ===== SERVICIOS ===== */
+.servicios{background:var(--carbon);color:#fff;position:relative;overflow:hidden}
+.servicios::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 88% 8%, rgba(214,40,40,.16), transparent 45%)}
+.servicios .marco{position:relative}
+.servicios h2{color:#fff}
+.servicios .intro-sec{color:rgba(255,255,255,.66)}
+.serv-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.serv-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.serv-grid{grid-template-columns:repeat(3,1fr)}}
+.serv-card{
+  position:relative;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.11);border-radius:var(--radio);
+  padding:28px 24px;overflow:hidden;
+  transition:transform .38s var(--ease),border-color .38s,background .38s,box-shadow .38s;
+}
+.serv-card:hover{
+  transform:translateY(-7px) rotate(-.4deg);
+  border-color:rgba(214,40,40,.65);background:rgba(214,40,40,.08);
+  box-shadow:0 24px 50px rgba(0,0,0,.45);
+}
+.serv-card::after{content:"";position:absolute;top:0;right:0;width:100px;height:100px;
+  background:radial-gradient(circle at top right, rgba(214,40,40,.28), transparent 70%);
+  opacity:0;transition:opacity .38s var(--ease)}
+.serv-card:hover::after{opacity:1}
+.serv-icono{width:50px;height:50px;border-radius:15px;margin-bottom:18px;
+  background:rgba(214,40,40,.14);border:1px solid rgba(214,40,40,.35);color:#ff6b57;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .38s var(--ease)}
+.serv-icono svg{width:23px;height:23px}
+.serv-card:hover .serv-icono{transform:scale(1.12) rotate(4deg)}
+.serv-card h3{font-size:1.14rem;font-weight:700;margin-bottom:8px}
+.serv-card p{color:rgba(255,255,255,.62);font-size:.92rem}
+.serv-extra{margin-top:32px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.serv-extra .titulo-chips{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--acento);margin-right:4px}
+.chip{border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);
+  font-size:.84rem;font-weight:600;padding:9px 16px;border-radius:999px;
+  transition:border-color .25s,transform .25s var(--ease),background .25s}
+.chip:hover{border-color:var(--acento);background:rgba(214,40,40,.1);transform:translateY(-2px)}
+
+/* ===== PRUEBA SOCIAL ===== */
+.prueba{background:var(--secundario)}
+.prueba-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:22px 0 8px}
+.prueba-cifra .num-grande{
+  font-family:var(--tit);font-weight:800;
+  font-size:clamp(4.2rem,19vw,7.6rem);line-height:1;color:var(--primario);
+  font-variant-numeric:tabular-nums;
+}
+.prueba-cifra .num-grande em{font-style:normal;color:var(--acento)}
+.estrellas{color:var(--acento);font-size:1.15rem;letter-spacing:.16em}
+.prueba-lema{color:var(--tinta-suave);max-width:50ch;font-size:1rem;margin-bottom:40px}
+.prueba-lema strong{color:var(--tinta)}
+.grid-prueba{display:grid;grid-template-columns:1fr;gap:13px}
+@media(min-width:720px){.grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}}
+@media(min-width:1024px){.grid-prueba{grid-template-columns:repeat(4,1fr)}}
+.hito{
+  border:1px solid var(--linea);border-radius:18px;padding:24px 22px;background:#fff;
+  display:flex;flex-direction:column;gap:12px;
+  transition:transform .35s var(--ease),box-shadow .35s,border-color .35s;
+}
+.hito:hover{transform:translateY(-5px);box-shadow:var(--sombra-alta);border-color:var(--acento)}
+.hito .icono{width:44px;height:44px;flex:none;border-radius:13px;
+  background:rgba(214,40,40,.1);color:var(--acento);
+  display:flex;align-items:center;justify-content:center}
+.hito .icono svg{width:21px;height:21px}
+.hito h3{font-size:1.06rem;font-weight:700}
+.hito p{color:var(--tinta-suave);font-size:.9rem}
+
+/* ===== CONTACTO ===== */
+.contacto{background:var(--blanco)}
+.grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+@media(min-width:760px){.grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}}
+.ficha{
+  background:var(--secundario);border-radius:18px;padding:26px 24px;
+  border:1px solid var(--linea);
+  transition:transform .35s var(--ease),box-shadow .35s;
+}
+.ficha:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
+.ficha h3{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--acento);font-weight:700;margin-bottom:12px;font-family:var(--txt)}
+.ficha p{color:var(--tinta);font-size:.98rem}
+.ficha p.suave{color:var(--tinta-suave);font-size:.86rem;margin-top:4px}
+.ficha a.enlace{color:var(--tinta);border-bottom:2px solid var(--acento);transition:color .3s var(--ease);font-weight:600}
+.ficha a.enlace:hover{color:var(--acento)}
+.contacto-cta{display:flex;flex-wrap:wrap;gap:13px;margin-top:32px}
+.btn-oscuro{background:var(--primario);color:#fff}
+.btn-oscuro:hover{background:var(--acento);transform:translateY(-3px);box-shadow:0 14px 30px rgba(214,40,40,.3)}
+.btn-borde{border:1.5px solid var(--primario);color:var(--primario)}
+.btn-borde:hover{background:var(--primario);color:#fff;transform:translateY(-3px)}
+
+/* ===== FOOTER ===== */
+footer{background:var(--carbon);color:rgba(255,255,255,.7);padding:56px 20px 100px;text-align:center}
+footer .logo-pie{font-family:var(--tit);font-weight:800;font-size:1.35rem;color:#fff;text-transform:uppercase;margin-bottom:4px}
+footer .logo-pie em{font-style:normal;color:var(--acento)}
+footer .sub-pie{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);margin-bottom:26px;font-weight:600}
+footer .aviso{
+  display:inline-block;max-width:54ch;font-size:.86rem;line-height:1.7;
+  border:1px solid rgba(214,40,40,.4);border-radius:16px;
+  padding:16px 22px;background:rgba(214,40,40,.07);
+}
+footer .aviso strong{color:#ff6b57;font-weight:700}
+footer .legal{margin-top:22px;font-size:.74rem;color:rgba(255,255,255,.4)}
+footer .legal a{color:inherit}
+
+/* ===== Desktop ===== */
+@media(min-width:760px){
+  nav{padding:16px 44px}
+  section{padding:118px 44px}
+  .hero{padding:150px 44px 62px}
+}
+
+/* ===== Movimiento reducido ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  #intro{display:none !important}
+  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+}
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "LA BUJÍA": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-deco" aria-hidden="true">
+        <!-- Circuito apagado: línea discontinua, sin corriente -->
+        <svg class="apagado" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#D62828" stroke-opacity=".3" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="4 14" d="M0 30 H600"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="3 18" d="M0 100 H600"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="4 14" d="M0 170 H600"/>
+          </g>
+        </svg>
+        <!-- Corriente encendida: la chispa deja la onda eléctrica a su paso -->
+        <svg class="encendido" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#D62828" stroke-opacity=".55" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 h60 l10 -10 l14 20 l14 -20 l14 20 l10 -10 h96 l10 -10 l14 20 l14 -20 l14 20 l10 -10 h96 l10 -10 l14 20 l14 -20 l14 20 l10 -10 h152"/>
+            <path vector-effect="non-scaling-stroke" d="M0 170 h100 l10 -10 l14 20 l14 -20 l14 20 l10 -10 h130 l10 -10 l14 20 l14 -20 l14 20 l10 -10 h222"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">MAVIC <em>TALLERES</em></p>
+      <!-- La bujía: trazo fino rojo, con su chispa en el electrodo -->
+      <svg class="intro-bujia" viewBox="0 0 52 168" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#D62828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- terminal superior -->
+          <path d="M22 4 h8 v8 h-8 z"/>
+          <path d="M20 12 h12"/>
+          <!-- aislante cerámico con costillas -->
+          <path d="M21 12 v34 M31 12 v34"/>
+          <path d="M19 20 h14 M19 27 h14 M19 34 h14 M19 41 h14"/>
+          <!-- cuerpo hexagonal -->
+          <path d="M14 46 h24 v18 h-24 z"/>
+          <path d="M14 52 h24 M14 58 h24"/>
+          <!-- asiento y rosca -->
+          <path d="M17 64 h18 v6 h-18 z"/>
+          <path d="M17 74 h18 M17 81 h18 M17 88 h18 M17 95 h18"/>
+          <path d="M17 70 v28 M35 70 v28"/>
+          <!-- electrodo central y electrodo de masa -->
+          <path d="M26 98 v16"/>
+          <path d="M35 98 v10 h-6"/>
+        </g>
+        <!-- chispa saltando en el electrodo -->
+        <g class="chispa" stroke="#FF6B57" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path d="M26 114 l3 5 l-4 3 l3 6"/>
+          <path d="M20 118 l-5 4 M32 120 l6 3 M24 128 l-4 6 M30 130 l3 7"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Taller multimarca · Eixample</p>
+  </div>
+</div>
+
+<div id="progreso" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav id="nav">
+  <a class="logo" href="#inicio" aria-label="MAVIC TALLERES — inicio">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+      <circle cx="16" cy="16" r="13.5" stroke="#D62828" stroke-width="2"/>
+      <path d="M16 6.5 L18.6 13 L25 13.7 L20 18 L21.6 24.5 L16 21 L10.4 24.5 L12 18 L7 13.7 L13.4 13 Z" fill="#1F2937" transform="scale(.72) translate(6.2 6.2)"/>
+      <circle cx="16" cy="16" r="3.4" fill="#D62828"/>
+    </svg>
+    <span>Mavic<small>Talleres · Barcelona</small></span>
+  </a>
+  <div class="nav-links" aria-label="Secciones">
+    <a href="#sobre">El taller</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#opiniones">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a class="nav-tel" href="tel:+34932506897">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    932 50 68 97
+  </a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-franjas" aria-hidden="true"></div>
+  <div class="hero-linea l1" aria-hidden="true"></div>
+  <div class="hero-linea l2" aria-hidden="true"></div>
+  <div class="hero-int">
+    <p class="hero-kicker"><span class="punto" aria-hidden="true"></span>Taller mecánico multimarca · Eixample, Barcelona</p>
+    <h1 id="titulo-hero">Tu coche, en manos con <em>40 años</em> de oficio</h1>
+    <p class="hero-sub">Mecánica, autodiagnosis, electricidad, neumáticos y aire acondicionado. Taller multimarca en Carrer de Casp 110, con la tecnología de diagnosis más avanzada y el trato de siempre.</p>
+    <div class="hero-botones">
+      <a class="btn btn-rojo" href="tel:+34932506897">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita
+      </a>
+      <a class="btn btn-linea" href="tel:+34608295772">Móvil · 608 29 57 72</a>
+    </div>
+    <div class="hero-datos">
+      <div class="dato"><b><span class="contador" data-fin="40">40</span><sup>+</sup></b><span>Años de oficio</span></div>
+      <div class="dato"><b>4,8<sup>★</sup></b><span>Valoración Google</span></div>
+      <div class="dato"><b><span class="contador" data-fin="56">56</span></b><span>Reseñas reales</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="sobre-grid">
+      <div class="sobre-visual rv" aria-hidden="true">
+        <svg class="emblema" viewBox="0 0 120 120" fill="none" focusable="false">
+          <circle cx="60" cy="60" r="52" stroke="#D62828" stroke-width="2.5"/>
+          <circle cx="60" cy="60" r="42" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+          <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+            <path d="M60 24 v10 M60 86 v10 M24 60 h10 M86 60 h10"/>
+            <path d="M35 35 l7 7 M78 78 l7 7 M85 35 l-7 7 M42 78 l-7 7"/>
+          </g>
+          <circle cx="60" cy="60" r="16" stroke="#D62828" stroke-width="2.5"/>
+          <circle cx="60" cy="60" r="5" fill="#D62828"/>
+        </svg>
+        <div class="sobre-tarjeta"><b>Multimarca</b> · diagnosis electrónica de todos los sistemas, sea cual sea tu coche.</div>
+      </div>
+      <div class="sobre-txt">
+        <p class="etiqueta rv">El taller</p>
+        <h2 class="rv">Oficio de toda la vida, <em>tecnología</em> de hoy</h2>
+        <p class="rv rv-d1"><strong>Mavic Tallers</strong> nació en 2014, pero detrás hay <strong>más de 40 años dedicados a la reparación del automóvil</strong>. Somos un taller multimarca del Eixample: neumáticos, cargas de aire acondicionado, diagnosis de todos los sistemas electrónicos, revisiones pre-ITV, control de emisiones y un largo etcétera.</p>
+        <p class="rv rv-d2">Ponemos a tu disposición los <strong>medios técnicos y electrónicos más avanzados</strong>, porque para nosotros la calidad de un trabajo bien hecho es la mejor garantía. Nuestra meta: un cliente satisfecho — y premiamos tu fidelidad con descuentos y promociones especiales.</p>
+        <div class="puntos">
+          <div class="punto-item rv rv-d2">
+            <span class="punto-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+            <div><h3>Trabajo bien hecho, garantizado</h3><p>La calidad como mejor señal de garantía para cada cliente.</p></div>
+          </div>
+          <div class="punto-item rv rv-d3">
+            <span class="punto-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span>
+            <div><h3>Revisiones pre-ITV</h3><p>Tu coche a punto antes de pasar la inspección, con control de emisiones.</p></div>
+          </div>
+          <div class="punto-item rv rv-d4">
+            <span class="punto-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.5a8 8 0 1 0-8 8"/><path d="M12 7v5.5l3.5 2"/><path d="M16.5 19.5l2 2 4-4" transform="translate(-2 -2)"/></svg></span>
+            <div><h3>Fidelidad premiada</h3><p>Descuentos y promociones especiales para nuestros clientes de siempre.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <p class="etiqueta rv">Servicios</p>
+    <h2 class="rv">Todo lo que tu coche <em>necesita</em></h2>
+    <p class="intro-sec rv rv-d1">Los seis servicios de siempre de Mavic Tallers, con los medios técnicos y de diagnosis más avanzados.</p>
+    <div class="serv-grid">
+      <article class="serv-card rv rv-d1">
+        <span class="serv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3 3.7-3.7z"/></svg></span>
+        <h3>Mecánica</h3>
+        <p>Todo tipo de reparaciones para tu automóvil, sea cual sea la marca.</p>
+      </article>
+      <article class="serv-card rv rv-d2">
+        <span class="serv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 13l2-4 2 6 2-4 1 2h3"/><path d="M9 21h6"/></svg></span>
+        <h3>Autodiagnosis</h3>
+        <p>Detectamos y reparamos todas las averías de tu vehículo, sistema a sistema.</p>
+      </article>
+      <article class="serv-card rv rv-d3">
+        <span class="serv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5L18.5 10.5H12l1-8.5z"/></svg></span>
+        <h3>Electricidad</h3>
+        <p>Mantenimiento y reparación del sistema eléctrico de tu automóvil.</p>
+      </article>
+      <article class="serv-card rv rv-d4">
+        <span class="serv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6.3 6.3l2.1 2.1M15.6 15.6l2.1 2.1M17.7 6.3l-2.1 2.1M8.4 15.6l-2.1 2.1"/></svg></span>
+        <h3>Neumáticos</h3>
+        <p>Reparación y cambio de los neumáticos de tu vehículo.</p>
+      </article>
+      <article class="serv-card rv rv-d5">
+        <span class="serv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 3h8"/></svg></span>
+        <h3>Car Multimedia</h3>
+        <p>Puesta a punto del sistema de navegación, altavoces, radio y más.</p>
+      </article>
+      <article class="serv-card rv rv-d6">
+        <span class="serv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7q4 -3 8 0t8 0M4 12q4 -3 8 0t8 0M4 17q4 -3 8 0t8 0"/></svg></span>
+        <h3>Aire acondicionado</h3>
+        <p>Cargas, puesta a punto y reparaciones del sistema de climatización.</p>
+      </article>
+    </div>
+    <div class="serv-extra rv">
+      <span class="titulo-chips">Además</span>
+      <span class="chip">Revisiones pre-ITV</span>
+      <span class="chip">Control de emisiones</span>
+      <span class="chip">Taller multimarca</span>
+      <span class="chip">Diagnosis electrónica</span>
+    </div>
+  </div>
+</section>
+
+<section class="prueba" id="opiniones">
+  <div class="marco">
+    <p class="etiqueta rv">La confianza del Eixample</p>
+    <h2 class="rv">Nuestros clientes nos <em>avalan</em></h2>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande">4<em>,</em>8</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="56">56</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un taller de barrio no se explica: se comprueba. <strong>4,8 estrellas sobre 5</strong> es la nota media que dejan en Google quienes ya confían su coche a Mavic Tallers.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <h3>4,8 de nota media</h3>
+        <p>La valoración que dejan en Google quienes ya han pasado por el taller.</p>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <h3>Más de 40 años</h3>
+        <p>Cuatro décadas de oficio dedicadas a la reparación del automóvil.</p>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="15" height="12" rx="2"/><path d="M16 10h3l4 4v4h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
+        <h3>Multimarca de verdad</h3>
+        <p>Da igual la marca de tu coche: diagnosis y reparación de todos los sistemas.</p>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <h3>En pleno Eixample</h3>
+        <p>Carrer de Casp 110: tu taller de confianza en el centro de Barcelona.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <p class="etiqueta rv">Visítanos</p>
+    <h2 class="rv">Te esperamos en <em>Casp 110</em></h2>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer de Casp, 110</p>
+        <p class="suave">Eixample · 08010 Barcelona</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=MAVIC+TALLERES%2C+Carrer+de+Casp+110%2C+08010+Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Teléfonos</h3>
+        <p><a class="enlace" href="tel:+34932506897">932 50 68 97</a></p>
+        <p style="margin-top:10px"><a class="enlace" href="tel:+34608295772">608 29 57 72</a> <span class="suave">(móvil)</span></p>
+        <p class="suave" style="margin-top:10px">Llámanos para pedir tu cita.</p>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Email</h3>
+        <p><a class="enlace" href="mailto:mavictallers@gmail.com">mavictallers@gmail.com</a></p>
+        <p class="suave" style="margin-top:10px">Escríbenos y te respondemos con presupuesto sin compromiso.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Tu visita</h3>
+        <p>Taller multimarca en el corazón del Eixample.</p>
+        <p class="suave" style="margin-top:10px">Consulta disponibilidad y horario por teléfono antes de acercarte.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-oscuro" href="tel:+34932506897">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita ahora
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=MAVIC+TALLERES%2C+Carrer+de+Casp+110%2C+08010+Barcelona" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Mavic <em>Talleres</em></p>
+  <p class="sub-pie">Taller multimarca · Eixample · Barcelona</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer de Casp, 110 · 08010 Barcelona · Tel. <a href="tel:+34932506897">932 50 68 97</a> · Móvil <a href="tel:+34608295772">608 29 57 72</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro de la bujía: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados --- */
+  try{
+    var animarContador = function(el){
+      var fin = parseInt(el.getAttribute('data-fin'), 10) || 0;
+      if (reduce){ el.textContent = fin; return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(fin * suave);
+        if (p < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso + sombra del nav --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('progreso');
+    var nav = document.getElementById('nav');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.26) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+      if (nav){ nav.classList.toggle('con-sombra', y > 8); }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

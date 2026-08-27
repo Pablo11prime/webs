@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Domani Valencia — boutique multimarca de moda junto al Mercado de Colón. Empresa familiar textil desde 1969. Joseph Ribkoff, Alba Conde, Naulover, Matilde Cano y Frank Lyman. Vestidos y conjuntos para eventos.">
+<title>Domani Valencia — Boutique Multimarca · Mercado de Colón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#1C1C1C;
+    --marfil:#F8F5F0;
+    --oro:#B08D57;
+    --oro-suave:rgba(176,141,87,.13);
+    --gris:#5d574f;
+    --blanco:#FFFEFB;
+    --display:'Italiana', 'Cormorant Garamond', Georgia, serif;
+    --serif:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--marfil);
+    color:var(--tinta);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--oro);color:var(--tinta)}
+  a{color:inherit}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo se activan si JS añade .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .75s var(--ease), transform .75s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.08s}
+  .js-on .rv-d2{transition-delay:.18s}
+  .js-on .rv-d3{transition-delay:.28s}
+  .js-on .rv-d4{transition-delay:.38s}
+  .js-on .rv-d5{transition-delay:.48s}
+
+  /* Barra de progreso de scroll */
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--oro),#d8b98a);z-index:1000;transition:width .1s linear}
+
+  /* Marca de agua DEMO */
+  .marca-demo{
+    position:fixed;bottom:14px;right:14px;z-index:999;
+    font-family:var(--sans);font-size:11px;letter-spacing:.22em;font-weight:600;
+    color:var(--marfil);background:rgba(28,28,28,.84);
+    border:1px solid rgba(176,141,87,.55);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "EL MANIQUÍ" ======
+     Un maniquí de costura de trazo fino se desliza por el atelier y, a su paso,
+     va revelando el nombre de la boutique. El overlay se AUTODESTRUYE POR CSS PURO
+     (opacity+visibility con animation-fill-mode:forwards): aunque el JS falle,
+     la página queda visible. JS solo retira el nodo del DOM al terminar.
+     pointer-events:none SIEMPRE: nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 76% 20%, rgba(176,141,87,.24), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 14% 84%, rgba(176,141,87,.10), transparent 60%),
+      linear-gradient(160deg,#242220 0%, #1C1C1C 55%, #131211 100%);
+    animation:intro-fuera .8s var(--ease) 2.55s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:92vw;text-align:center}
+  .intro-linea{position:relative;padding:26px 10px 12px}
+  /* Suelo del atelier: una línea fina que se extiende bajo los pies del maniquí */
+  .intro-suelo{
+    position:absolute;left:-6%;right:-6%;bottom:6px;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(176,141,87,.55),transparent);
+    clip-path:inset(0 100% 0 0);
+    animation:suelo-dentro 1.6s var(--ease) .35s both;
+  }
+  @keyframes suelo-dentro{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  /* El nombre se revela con una máscara sincronizada con el paso del maniquí */
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--display);font-weight:400;color:var(--marfil);
+    font-size:clamp(2.7rem,12vw,6rem);line-height:1.05;letter-spacing:.06em;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:desfile 1.6s var(--ease) .35s both;
+  }
+  .intro-nombre em{font-style:normal;color:var(--oro)}
+  @keyframes desfile{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  /* El maniquí de costura: trazo fino dorado que se desliza de izquierda a derecha */
+  .intro-maniqui{
+    position:absolute;left:-3%;top:50%;width:64px;height:170px;
+    transform:translate(-50%,-54%) rotate(-2deg);
+    filter:drop-shadow(0 0 14px rgba(176,141,87,.4));
+    animation:maniqui-pasa 1.6s var(--ease) .35s both;
+  }
+  @keyframes maniqui-pasa{
+    from{left:-3%;transform:translate(-50%,-54%) rotate(-2deg)}
+    to{left:104%;transform:translate(-50%,-54%) rotate(3deg)}
+  }
+  .intro-sub{
+    margin:18px 0 0;
+    font-size:.66rem;letter-spacing:.36em;text-transform:uppercase;
+    color:var(--oro);font-weight:500;
+    opacity:0;animation:intro-sub .6s var(--ease) 1.85s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    background:rgba(248,245,240,.9);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(28,28,28,.07);
+  }
+  nav .logo{font-family:var(--display);font-weight:400;font-size:1.35rem;letter-spacing:.08em;text-decoration:none;color:var(--tinta);line-height:1.1}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:500;font-size:.55rem;letter-spacing:.32em;text-transform:uppercase;color:var(--oro);margin-top:2px}
+  nav .cta-nav{
+    font-size:.76rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--marfil);background:var(--tinta);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--oro);color:var(--tinta);transform:translateY(-1px)}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--tinta);color:var(--marfil);
+    padding:130px 20px 46px;overflow:hidden;
+  }
+  .hero-fondo{
+    position:absolute;inset:-12% -5%;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 76% 20%, rgba(176,141,87,.26), transparent 62%),
+      radial-gradient(ellipse 55% 45% at 12% 84%, rgba(176,141,87,.10), transparent 60%),
+      linear-gradient(160deg,#242220 0%, #1C1C1C 55%, #131211 100%);
+    will-change:transform;
+  }
+  .hero-linea{
+    position:absolute;top:0;bottom:0;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(176,141,87,.35),transparent);
+    pointer-events:none;
+  }
+  .hero-linea.l1{left:11%}
+  .hero-linea.l2{right:15%}
+  .hero-aro{
+    position:absolute;border:1px solid rgba(176,141,87,.28);border-radius:50%;
+    pointer-events:none;will-change:transform;
+  }
+  .hero-aro.a1{width:360px;height:360px;top:-100px;right:-120px;animation:flotar 12s ease-in-out infinite alternate}
+  .hero-aro.a2{width:190px;height:190px;top:130px;right:56px;border-color:rgba(248,245,240,.10);animation:flotar 15s ease-in-out infinite alternate-reverse}
+  @keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(26px) rotate(8deg)}}
+
+  .hero-kicker{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    font-size:.66rem;letter-spacing:.32em;text-transform:uppercase;color:var(--oro);
+    margin-bottom:22px;font-weight:500;
+  }
+  .hero-kicker::before{content:"";width:34px;height:1px;background:var(--oro)}
+  .hero h1{
+    position:relative;
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(2.7rem, 11.5vw, 6.4rem);
+    line-height:1.04;letter-spacing:.01em;
+    max-width:13ch;margin-bottom:24px;
+  }
+  .hero h1 em{font-style:italic;font-family:var(--serif);color:var(--oro)}
+  .hero h1 .pal{display:inline-block}
+  .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.2s + var(--i)*.11s)}
+  @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-sub{
+    position:relative;max-width:38ch;color:rgba(248,245,240,.72);
+    font-size:1rem;font-weight:300;margin-bottom:32px;
+  }
+  .hero-sub strong{color:var(--oro);font-weight:500}
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) 1s forwards}
+  @keyframes aparece{to{opacity:1}}
+
+  .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
+  .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.2s forwards}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;padding:16px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn svg{width:15px;height:15px;flex:none}
+  .btn-oro{background:var(--oro);color:var(--tinta)}
+  .btn-oro:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(176,141,87,.35)}
+  .btn-linea{border:1px solid rgba(248,245,240,.4);color:var(--marfil)}
+  .btn-linea:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+
+  .hero-datos{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    border-top:1px solid rgba(248,245,240,.14);padding-top:22px;
+  }
+  .js-on .hero-datos{opacity:0;animation:aparece 1s var(--ease) 1.4s forwards}
+  .hero-datos .dato b{
+    display:block;font-family:var(--display);font-weight:400;
+    font-size:clamp(1.5rem,6vw,2.4rem);color:var(--marfil);line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .hero-datos .dato b .est{color:var(--oro);font-size:.6em;vertical-align:.18em}
+  .hero-datos .dato span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,245,240,.55)}
+
+  /* ====== CINTA DE FIRMAS (marquee) ====== */
+  .cinta{
+    background:var(--tinta);color:var(--marfil);
+    border-top:1px solid rgba(176,141,87,.25);
+    overflow:hidden;padding:18px 0;position:relative;
+  }
+  .cinta-pista{display:flex;width:max-content;animation:cinta-corre 30s linear infinite}
+  .cinta:hover .cinta-pista{animation-play-state:paused}
+  @keyframes cinta-corre{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .cinta-grupo{display:flex;align-items:center;white-space:nowrap}
+  .cinta-grupo span{
+    font-family:var(--serif);font-style:italic;font-size:1.15rem;letter-spacing:.06em;
+    color:rgba(248,245,240,.8);padding:0 26px;
+  }
+  .cinta-grupo i{font-style:normal;color:var(--oro);font-size:.7rem}
+
+  /* ====== SECCIONES base ====== */
+  section{padding:88px 20px}
+  .marco{max-width:1080px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);
+    font-weight:600;margin-bottom:18px;
+  }
+  .etiqueta::before{content:"";width:28px;height:1px;background:var(--oro)}
+  h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(2.1rem,7.5vw,3.6rem);line-height:1.08;letter-spacing:.01em;
+    margin-bottom:20px;
+  }
+  h2 em{font-style:italic;font-family:var(--serif);color:var(--oro)}
+
+  /* ====== SOBRE ====== */
+  .sobre p{color:var(--gris);max-width:56ch;font-size:1.02rem;margin-bottom:16px}
+  .sobre p strong{color:var(--tinta);font-weight:600}
+  .sobre-firma{display:flex;align-items:center;gap:14px;margin-top:30px}
+  .sobre-firma .sello{
+    width:54px;height:54px;border-radius:50%;flex:none;
+    border:1px solid var(--oro);color:var(--oro);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:1.35rem;
+  }
+  .sobre-firma div b{display:block;font-family:var(--serif);font-size:1.1rem;font-weight:500}
+  .sobre-firma div span{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+  .sobre-anyo{
+    margin-top:34px;display:inline-flex;align-items:baseline;gap:14px;
+    border-top:1px solid rgba(28,28,28,.12);padding-top:18px;
+  }
+  .sobre-anyo b{font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,9vw,3.8rem);line-height:1;color:var(--tinta);font-variant-numeric:tabular-nums}
+  .sobre-anyo span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gris)}
+
+  /* ====== FIRMAS / MARCAS ====== */
+  .firmas{background:var(--tinta);color:var(--marfil)}
+  .firmas h2{color:var(--marfil)}
+  .firmas .intro{color:rgba(248,245,240,.65);max-width:54ch;font-weight:300;margin-bottom:44px}
+  .grid-firmas{display:grid;grid-template-columns:1fr;gap:14px}
+  .tarjeta{
+    position:relative;border:1px solid rgba(248,245,240,.12);border-radius:20px;
+    padding:30px 26px;background:rgba(248,245,240,.03);overflow:hidden;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .tarjeta:hover{
+    transform:translateY(-6px) rotate(-.4deg);
+    border-color:rgba(176,141,87,.55);background:rgba(176,141,87,.07);
+    box-shadow:0 24px 50px rgba(0,0,0,.4);
+  }
+  .tarjeta .num{
+    font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--oro);
+    display:block;margin-bottom:16px;
+  }
+  .tarjeta h3{font-family:var(--serif);font-weight:500;font-size:1.5rem;margin-bottom:10px;letter-spacing:.01em}
+  .tarjeta p{color:rgba(248,245,240,.62);font-size:.92rem;font-weight:300}
+  .tarjeta::after{
+    content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+    background:radial-gradient(circle at top right, rgba(176,141,87,.22), transparent 70%);
+    opacity:0;transition:opacity .4s var(--ease);
+  }
+  .tarjeta:hover::after{opacity:1}
+  .firmas-nota{margin-top:34px;color:rgba(248,245,240,.5);font-size:.85rem;font-weight:300}
+  .firmas-nota a{color:var(--oro);text-decoration:none;border-bottom:1px solid rgba(176,141,87,.4)}
+
+  /* ====== ATELIER / SERVICIOS ====== */
+  .atelier{background:var(--marfil)}
+  .grid-atelier{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px}
+  .pieza{
+    border:1px solid rgba(28,28,28,.1);border-radius:18px;padding:26px 22px;
+    background:var(--blanco);
+    display:flex;gap:16px;align-items:flex-start;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .pieza:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(28,28,28,.08);border-color:var(--oro)}
+  .pieza .icono{
+    width:44px;height:44px;flex:none;border-radius:12px;
+    background:var(--oro-suave);color:var(--oro);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pieza .icono svg{width:20px;height:20px}
+  .pieza h3{font-family:var(--serif);font-weight:500;font-size:1.15rem;margin-bottom:4px}
+  .pieza p{color:var(--gris);font-size:.9rem}
+
+  /* ====== RESEÑAS ====== */
+  .resenas{background:#efe9e0}
+  .resenas-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 10px}
+  .resenas-cifra .num-grande{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(4.4rem,20vw,8rem);line-height:1;color:var(--tinta);
+    font-variant-numeric:tabular-nums;
+  }
+  .resenas-cifra .estrellas{color:var(--oro);font-size:1.15rem;letter-spacing:.18em}
+  .resenas-lema{color:var(--gris);max-width:46ch;font-size:1rem;margin-bottom:40px}
+  .resenas-lema strong{color:var(--tinta)}
+  .grid-resenas{display:grid;grid-template-columns:1fr;gap:14px}
+  .opinion{
+    background:var(--blanco);border:1px solid rgba(28,28,28,.08);border-radius:20px;
+    padding:28px 24px;display:flex;flex-direction:column;gap:14px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  }
+  .opinion:hover{transform:translateY(-5px) rotate(.3deg);box-shadow:0 18px 44px rgba(28,28,28,.1);border-color:var(--oro)}
+  .opinion .est{color:var(--oro);font-size:.95rem;letter-spacing:.2em}
+  .opinion blockquote{
+    font-family:var(--serif);font-size:1.18rem;font-weight:500;line-height:1.45;
+    color:var(--tinta);border:none;
+  }
+  .opinion cite{font-style:normal;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris)}
+  .opinion cite b{color:var(--tinta);font-weight:600}
+  .resenas-fuente{margin-top:26px;font-size:.8rem;color:var(--gris)}
+
+  /* ====== CONTACTO ====== */
+  .contacto{background:var(--tinta);color:var(--marfil);border-radius:34px 34px 0 0}
+  .contacto h2{color:var(--marfil)}
+  .grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+  .ficha{
+    background:rgba(248,245,240,.04);border-radius:18px;padding:26px 22px;
+    border:1px solid rgba(248,245,240,.12);
+    transition:transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+  }
+  .ficha:hover{transform:translateY(-3px);border-color:rgba(176,141,87,.55);background:rgba(176,141,87,.06)}
+  .ficha h3{
+    font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--oro);font-weight:600;margin-bottom:12px;font-family:var(--sans);
+  }
+  .ficha p{color:var(--marfil);font-size:.98rem}
+  .ficha p.suave{color:rgba(248,245,240,.6);font-size:.85rem;margin-top:4px}
+  .ficha a.enlace{color:var(--marfil);text-decoration:none;border-bottom:1px solid var(--oro);transition:color .3s var(--ease)}
+  .ficha a.enlace:hover{color:var(--oro)}
+  .horario-fila{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed rgba(248,245,240,.16);font-size:.93rem}
+  .horario-fila:last-child{border-bottom:none}
+  .horario-fila .cerrado{color:var(--oro);font-weight:600}
+  .contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn-marfil{background:var(--marfil);color:var(--tinta)}
+  .btn-marfil:hover{background:var(--oro);transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.3)}
+  .redes{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
+  .redes a{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.8rem;font-weight:600;letter-spacing:.05em;
+    color:var(--marfil);text-decoration:none;
+    border:1px solid rgba(248,245,240,.25);border-radius:999px;padding:10px 16px;
+    transition:border-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  }
+  .redes a:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+  .redes svg{width:15px;height:15px}
+
+  /* ====== FOOTER ====== */
+  footer{
+    background:#131211;color:rgba(248,245,240,.7);
+    padding:54px 20px 96px;text-align:center;
+  }
+  footer .logo-pie{font-family:var(--display);font-size:1.6rem;letter-spacing:.1em;color:var(--marfil);margin-bottom:6px}
+  footer .sub-pie{font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);margin-bottom:26px}
+  footer .aviso{
+    display:inline-block;max-width:54ch;
+    font-size:.85rem;line-height:1.7;
+    border:1px solid rgba(176,141,87,.35);border-radius:16px;
+    padding:16px 22px;background:rgba(176,141,87,.06);
+  }
+  footer .aviso strong{color:var(--oro);font-weight:600}
+  footer .legal{margin-top:22px;font-size:.72rem;color:rgba(248,245,240,.38)}
+
+  /* ====== Desktop ====== */
+  @media (min-width:760px){
+    nav{padding:20px 44px}
+    section{padding:120px 44px}
+    .hero{padding:150px 44px 60px}
+    .grid-firmas{grid-template-columns:repeat(2,1fr);gap:18px}
+    .grid-atelier{grid-template-columns:repeat(2,1fr);gap:16px}
+    .grid-resenas{grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+    .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  }
+  @media (min-width:1080px){
+    .grid-firmas{grid-template-columns:repeat(3,1fr)}
+    .grid-atelier{grid-template-columns:repeat(4,1fr)}
+  }
+
+  /* ====== Movimiento reducido ====== */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    html{scroll-behavior:auto}
+    #intro{display:none !important}
+    .cinta-pista{animation:none !important;transform:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "EL MANIQUÍ": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-suelo" aria-hidden="true"></div>
+      <p class="intro-nombre">Doma<em>ni</em></p>
+      <!-- El maniquí de costura: trazo fino dorado que desfila revelando el nombre -->
+      <svg class="intro-maniqui" viewBox="0 0 64 170" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#B08D57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- remate superior -->
+          <circle cx="32" cy="8" r="4"/>
+          <path d="M32 12 V22"/>
+          <!-- cuello -->
+          <path d="M27 22 h10"/>
+          <!-- busto -->
+          <path d="M27 22 C16 32 13 46 15 58 C17 72 22 80 24 90 C25.5 98 24 106 22 112 C29 117 35 117 42 112 C40 106 38.5 98 40 90 C42 80 47 72 49 58 C51 46 48 32 37 22"/>
+          <!-- costura central -->
+          <path d="M32 26 V112" stroke-dasharray="2 5" stroke-width="1"/>
+          <!-- cintura -->
+          <path d="M24 88 h16" stroke-width="1"/>
+          <!-- pie: mástil y trípode -->
+          <path d="M32 116 V146"/>
+          <path d="M32 146 L16 162 M32 146 L48 162 M32 146 V164"/>
+          <path d="M12 164 h40" stroke-width="1"/>
+        </g>
+      </svg>
+    </div>
+    <p class="intro-sub">Boutique Multimarca · València · Desde 1969</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav>
+  <a class="logo" href="#inicio">Domani<small>Boutique · València</small></a>
+  <a class="cta-nav" href="tel:+34963512252">Llamar</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-linea l1" aria-hidden="true"></div>
+  <div class="hero-linea l2" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+
+  <p class="hero-kicker">Boutique multimarca · Junto al Mercado de Colón</p>
+  <h1 id="titulo-hero">El vestido de tu gran día se elige <em>hoy</em></h1>
+  <p class="hero-sub"><strong>Domani</strong> — «mañana» en italiano — viste tus mañanas más importantes: vestidos y conjuntos de evento de firmas como Joseph Ribkoff, Matilde Cano o Frank Lyman, con el trato de una casa familiar textil desde 1969.</p>
+  <div class="hero-botones">
+    <a class="btn btn-oro" href="tel:+34963512252">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Llamar · 963 51 22 52
+    </a>
+    <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Domani+Valencia%2C+Carrer+d%27Isabel+la+Cat%C3%B2lica+16%2C+46004+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+  </div>
+  <div class="hero-datos">
+    <div class="dato"><b><span class="contador-dec" data-fin="4.8">4,8</span><span class="est">★</span></b><span>En Google</span></div>
+    <div class="dato"><b><span class="contador" data-fin="31">31</span></b><span>Reseñas</span></div>
+    <div class="dato"><b><span class="contador" data-fin="1969">1969</span></b><span>Casa familiar desde</span></div>
+  </div>
+</header>
+
+<div class="cinta" aria-hidden="true">
+  <div class="cinta-pista">
+    <div class="cinta-grupo">
+      <span>Joseph Ribkoff</span><i>◆</i>
+      <span>Alba Conde</span><i>◆</i>
+      <span>Naulover</span><i>◆</i>
+      <span>Matilde Cano</span><i>◆</i>
+      <span>Frank Lyman</span><i>◆</i>
+    </div>
+    <div class="cinta-grupo">
+      <span>Joseph Ribkoff</span><i>◆</i>
+      <span>Alba Conde</span><i>◆</i>
+      <span>Naulover</span><i>◆</i>
+      <span>Matilde Cano</span><i>◆</i>
+      <span>Frank Lyman</span><i>◆</i>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La casa</p>
+      <h2>Una familia textil, desde <em>1969</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p><strong>Domani Valencia</strong> es una boutique multimarca de moda —principalmente de mujer— nacida de una empresa familiar textil con más de medio siglo de oficio. Cada temporada seleccionamos pieza a pieza las colecciones de firmas nacionales e internacionales.</p>
+      <p>Nos encontrarás en <strong>Carrer d'Isabel la Catòlica, 16</strong>, en pleno Eixample de València, <strong>junto al Mercado de Colón</strong>: la milla de oro del comercio con nombre propio.</p>
+      <p>Nuestra especialidad: <strong>vestidos y conjuntos para eventos</strong> — bodas, ceremonias y esas citas que se recuerdan.</p>
+      <div class="sobre-firma">
+        <span class="sello">D</span>
+        <div>
+          <b>Domani Valencia</b>
+          <span>Boutique multimarca</span>
+        </div>
+      </div>
+      <div class="sobre-anyo">
+        <b><span class="contador" data-fin="1969">1969</span></b>
+        <span>El año en que empezó todo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="firmas" id="firmas">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Las firmas</p>
+      <h2>Marcas con <em>nombre propio</em></h2>
+      <p class="intro">Trabajamos con casas de moda reconocidas, elegidas por su calidad de tejido, patronaje y caída. Estas son algunas de las firmas que encontrarás en la boutique.</p>
+    </div>
+    <div class="grid-firmas">
+      <article class="tarjeta rv rv-d1">
+        <span class="num">01</span>
+        <h3>Joseph Ribkoff</h3>
+        <p>La firma canadiense de referencia en moda de ocasión: cortes impecables y tejidos que estilizan.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="num">02</span>
+        <h3>Matilde Cano</h3>
+        <p>Vestidos de fiesta y ceremonia de diseño español, para madrinas e invitadas con carácter.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="num">03</span>
+        <h3>Frank Lyman</h3>
+        <p>Moda de evento con espíritu contemporáneo: piezas llamativas que no pasan desapercibidas.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="num">04</span>
+        <h3>Naulover</h3>
+        <p>Punto y prêt-à-porter de casa barcelonesa: elegancia serena para el día a día.</p>
+      </article>
+      <article class="tarjeta rv rv-d5">
+        <span class="num">05</span>
+        <h3>Alba Conde</h3>
+        <p>Colecciones femeninas de diseño propio, con tejidos nobles y estampados con personalidad.</p>
+      </article>
+    </div>
+    <p class="firmas-nota rv">¿Buscas una firma o una talla concreta? <a href="tel:+34963512252">Llámanos al 963 51 22 52</a> y te lo confirmamos al momento.</p>
+  </div>
+</section>
+
+<section class="atelier" id="atelier">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Lo que nos hace distintos</p>
+      <h2>Compra con <em>asesoramiento</em>, no autoservicio</h2>
+    </div>
+    <div class="grid-atelier">
+      <article class="pieza rv rv-d1">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.5 16 10 4 20"/><path d="m14 6 6 6"/><path d="M12 8 8.5 4.5a2.1 2.1 0 0 0-3 3L9 11"/></svg></span>
+        <div>
+          <h3>Vestidos de evento</h3>
+          <p>Nuestra especialidad: el vestido o conjunto exacto para bodas, ceremonias y celebraciones.</p>
+        </div>
+      </article>
+      <article class="pieza rv rv-d2">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div>
+          <h3>Atención personalizada</h3>
+          <p>Te asesoramos con honestidad: silueta, color y ocasión. Sales con lo que de verdad te favorece.</p>
+        </div>
+      </article>
+      <article class="pieza rv rv-d3">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88"/><path d="M14.47 14.48 20 20"/><path d="M8.12 8.12 12 12"/></svg></span>
+        <div>
+          <h3>Ajuste de prenda</h3>
+          <p>Arreglos y ajustes para que cada pieza siente como hecha a medida (servicio de la casa).</p>
+        </div>
+      </article>
+      <article class="pieza rv rv-d4">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div>
+          <h3>Junto al Mercado de Colón</h3>
+          <p>En el corazón del Eixample: la visita a la boutique es un paseo por lo mejor de València.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="resenas" id="resenas">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Ellas lo cuentan mejor</p>
+      <h2>La boutique que se <em>recomienda</em></h2>
+    </div>
+    <div class="resenas-cifra rv rv-d1">
+      <span class="num-grande contador-dec" data-fin="4.8">4,8</span>
+      <span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong>con <span class="contador" data-fin="31">31</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="resenas-lema rv rv-d2">Una boutique de barrio no se sostiene 50 años sin clientas que vuelven. Esto es lo que dicen de nosotros en Google:</p>
+    <div class="grid-resenas">
+      <article class="opinion rv rv-d1">
+        <span class="est" aria-hidden="true">★★★★★</span>
+        <blockquote>«Ropa de muy buena calidad, con mucha clase, diferente. Atención personalizada.»</blockquote>
+        <cite><b>Cristina S.</b> · Reseña de Google</cite>
+      </article>
+      <article class="opinion rv rv-d2">
+        <span class="est" aria-hidden="true">★★★★★</span>
+        <blockquote>«Ropa de buena calidad y atención inmejorable, además siempre tienen la última moda.»</blockquote>
+        <cite><b>Miriam G.</b> · Reseña de Google</cite>
+      </article>
+      <article class="opinion rv rv-d3">
+        <span class="est" aria-hidden="true">★★★★★</span>
+        <blockquote>«Ropa y complementos preciosos y exclusivos que no he visto en otros sitios.»</blockquote>
+        <cite><b>Gemma M.</b> · Reseña de Google</cite>
+      </article>
+    </div>
+    <p class="resenas-fuente rv">Reseñas públicas de la ficha de Google de Domani Valencia.</p>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>A un paso del <em>Mercado de Colón</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer d'Isabel la Catòlica, 16</p>
+        <p class="suave">L'Eixample · 46004 València · junto al Mercado de Colón</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Domani+Valencia%2C+Carrer+d%27Isabel+la+Cat%C3%B2lica+16%2C+46004+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Horario</h3>
+        <div class="horario-fila"><span>Lunes – Viernes</span><span>10:00 – 20:30</span></div>
+        <div class="horario-fila"><span>Sábado</span><span>10:30 – 20:30</span></div>
+        <div class="horario-fila"><span>Domingo</span><span class="cerrado">Cerrado</span></div>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Teléfono</h3>
+        <p><a class="enlace" href="tel:+34963512252">963 51 22 52</a></p>
+        <p class="suave">También en el <a class="enlace" href="tel:+34669717320">669 71 73 20</a>. Llámanos y te reservamos la prenda.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Síguenos</h3>
+        <div class="redes">
+          <a href="https://www.facebook.com/domanivalencia" target="_blank" rel="noopener" aria-label="Facebook de Domani Valencia">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+        </div>
+        <p class="suave" style="margin-top:12px">Novedades de cada temporada y looks de evento.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-marfil" href="tel:+34963512252">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar ahora
+      </a>
+      <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Domani+Valencia%2C+Carrer+d%27Isabel+la+Cat%C3%B2lica+16%2C+46004+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Domani</p>
+  <p class="sub-pie">Boutique Multimarca · València · Desde 1969</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer d'Isabel la Catòlica, 16 · 46004 València · Tel. <a href="tel:+34963512252" style="color:inherit">963 51 22 52</a></p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del maniquí: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 4000); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (enteros y con un decimal, formato español) --- */
+  try{
+    var animar = function(el, decimales){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var pinta = function(v){
+        el.textContent = decimales ? v.toFixed(1).replace('.', ',') : String(Math.round(v));
+      };
+      if (reduce){ pinta(fin); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pinta(fin * suave);
+        if (p < 1) requestAnimationFrame(paso); else pinta(fin);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador, .contador-dec');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){
+            animar(en.target, en.target.classList.contains('contador-dec'));
+            ioC.unobserve(en.target);
+          }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

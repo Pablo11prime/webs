@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Autobox Valencia — Mecánica y transformación a GLP en Patraix</title>
+<meta name="description" content="Talleres Autobox Valencia, Carrer del Músic Gomis 36 (Patraix). Especialistas en transformación de vehículos a GLP desde 1.500 €. Neumáticos, frenos, distribución, aire acondicionado. 4,8★ en Google. Tel. 961 33 37 33.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#14213D;
+  --secundario:#F5F5F5;
+  --acento:#FCA311;
+  --tinta:#131A2C;
+  --tinta-suave:#525C70;
+  --marino-2:#1D2C50;
+  --marino-3:#0C1428;
+  --ambar-suave:rgba(252,163,17,.14);
+  --blanco:#FFFFFF;
+  --radio:20px;
+  --sombra:0 10px 40px rgba(20,33,61,.10);
+  --sombra-alta:0 24px 60px rgba(20,33,61,.18);
+  --transicion:cubic-bezier(.22,.61,.36,1);
+  --titulos:'Space Grotesk','Inter',system-ui,sans-serif;
+  --texto:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--tinta);
+  background:var(--blanco);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--titulos);font-weight:700;line-height:1.12;letter-spacing:-.02em}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acento);color:var(--primario)}
+
+/* ===== Barra de progreso de scroll ===== */
+#progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:1000;
+  background:linear-gradient(90deg,var(--acento),#ffd280);
+  transition:width .1s linear}
+
+/* ===== Marca de agua DEMO ===== */
+.marca-demo{position:fixed;bottom:14px;right:14px;z-index:999;
+  background:rgba(20,33,61,.9);color:#fff;backdrop-filter:blur(6px);
+  font-size:11px;font-weight:700;letter-spacing:.18em;
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  border:1px solid rgba(252,163,17,.5);
+  box-shadow:0 4px 18px rgba(12,20,40,.3)}
+
+/* ===== INTRO "EL NEUMÁTICO" =====
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   JS solo retira el nodo del DOM al terminar. pointer-events:none SIEMPRE:
+   nunca bloquea clics ni scroll. Un neumático cruza rodando la pantalla y su
+   rodada va revelando el nombre del taller. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 82% 12%, rgba(252,163,17,.2), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 8% 88%, rgba(69,101,173,.3), transparent 60%),
+    linear-gradient(155deg,#1D2C50 0%, #14213D 55%, #0C1428 100%);
+  animation:intro-fuera .75s var(--transicion) 2.4s forwards}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:94vw;text-align:center}
+.intro-linea{position:relative;padding:34px 8px}
+.intro-deco{position:absolute;left:-8%;right:-8%;top:4px;bottom:4px;pointer-events:none}
+.intro-deco svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+/* Asfalto liso (antes de pasar la rueda): desaparece a su paso */
+.intro-deco .asfalto{clip-path:inset(-6% 0 -6% 0);animation:deco-fuera 1.55s var(--transicion) .3s both}
+/* Huella de rodada (dibujo del neumático): aparece tras la rueda */
+.intro-deco .rodada{clip-path:inset(-6% 100% -6% 0);animation:deco-dentro 1.55s var(--transicion) .3s both}
+@keyframes deco-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+@keyframes deco-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+/* El nombre se revela con una máscara sincronizada con la rueda */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:var(--titulos);font-weight:700;color:#fff;
+  font-size:clamp(2.1rem,8.6vw,4.7rem);line-height:1.08;letter-spacing:-.02em;
+  clip-path:inset(-16% 100% -16% -2%);
+  animation:rodadura 1.55s var(--transicion) .3s both}
+.intro-nombre em{font-style:normal;color:var(--acento)}
+@keyframes rodadura{from{clip-path:inset(-16% 100% -16% -2%)}to{clip-path:inset(-16% -4% -16% -2%)}}
+/* La rueda: cruza de izquierda a derecha girando sobre sí misma */
+.intro-rueda{
+  position:absolute;left:-2%;top:50%;width:92px;height:92px;
+  margin-top:-46px;margin-left:-46px;
+  filter:drop-shadow(0 0 16px rgba(252,163,17,.4));
+  animation:rueda-cruza 1.55s var(--transicion) .3s both}
+.intro-rueda svg{width:100%;height:100%;animation:rueda-gira 1.55s linear .3s both}
+@keyframes rueda-cruza{from{left:-2%}to{left:103%}}
+@keyframes rueda-gira{from{transform:rotate(0deg)}to{transform:rotate(720deg)}}
+.intro-sub{
+  margin:18px 0 0;
+  font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--transicion) 1.75s forwards}
+@keyframes intro-sub{to{opacity:1}}
+
+/* ===== Navegación ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+  background:rgba(20,33,61,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(252,163,17,.16);
+  transition:box-shadow .3s var(--transicion)}
+nav.con-sombra{box-shadow:0 8px 28px rgba(12,20,40,.4)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--titulos);font-size:1.12rem;font-weight:700;color:#fff}
+.logo svg{width:30px;height:30px;flex-shrink:0}
+.logo small{display:block;font-family:var(--texto);font-size:.58rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--acento);line-height:1.1}
+.nav-links{display:none;gap:26px;font-size:.92rem;font-weight:500;color:rgba(255,255,255,.75)}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--acento)}
+@media(min-width:860px){.nav-links{display:flex}}
+.nav-tel{display:inline-flex;align-items:center;gap:8px;
+  background:var(--acento);color:var(--primario);font-weight:700;font-size:.9rem;
+  padding:10px 18px;border-radius:999px;
+  transition:transform .25s var(--transicion),background .25s,box-shadow .25s}
+.nav-tel:hover{background:#ffb63d;transform:translateY(-2px);box-shadow:0 8px 20px rgba(252,163,17,.4)}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:130px 20px 70px;overflow:hidden;color:#fff;
+  background:linear-gradient(165deg,var(--marino-2) 0%,var(--primario) 45%,var(--marino-3) 100%)}
+.hero-fondo{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.burbuja{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;
+  animation:flotar 14s ease-in-out infinite alternate}
+.b1{width:460px;height:460px;top:-140px;right:-150px;background:radial-gradient(circle,rgba(252,163,17,.5),transparent 65%)}
+.b2{width:380px;height:380px;bottom:-120px;left:-130px;background:radial-gradient(circle,rgba(69,101,173,.55),transparent 65%);animation-delay:-6s}
+.b3{width:240px;height:240px;top:40%;left:60%;background:radial-gradient(circle,rgba(252,163,17,.22),transparent 65%);animation-delay:-3s}
+@keyframes flotar{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(26px,-32px,0) scale(1.08)}}
+.hero-carril{position:absolute;left:0;right:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(252,163,17,.35),transparent)}
+.c1{top:24%}.c2{bottom:18%}
+.hero-int{position:relative;max-width:1100px;margin:0 auto;width:100%}
+.hero-etiqueta{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(252,163,17,.35);
+  color:#ffd280;font-size:.8rem;font-weight:600;
+  padding:8px 16px;border-radius:999px;margin-bottom:26px;backdrop-filter:blur(6px)}
+.hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);
+  animation:latido 2s ease-in-out infinite}
+@keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
+h1{font-size:clamp(2.4rem,8vw,4.5rem);color:#fff;max-width:17ch}
+h1 .palabra{display:inline-block}
+/* Estado animado SOLO si JS añade .js-on (garantía de visibilidad: sin JS, todo visible) */
+.js-on h1 .palabra{opacity:0;transform:translateY(26px);
+  animation:subePalabra .7s var(--transicion) forwards}
+h1 em{font-style:normal;color:var(--acento);position:relative}
+@keyframes subePalabra{to{opacity:1;transform:translateY(0)}}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.18rem);color:rgba(255,255,255,.78);
+  max-width:54ch;margin:22px 0 34px}
+.hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:40px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-weight:700;font-size:1rem;padding:16px 30px;border-radius:999px;
+  transition:transform .25s var(--transicion),box-shadow .25s,background .25s,color .25s}
+.btn-ambar{background:var(--acento);color:var(--primario);box-shadow:0 10px 28px rgba(252,163,17,.35)}
+.btn-ambar:hover{background:#ffb63d;transform:translateY(-3px);box-shadow:0 16px 36px rgba(252,163,17,.45)}
+.btn-fantasma{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+.btn-fantasma:hover{border-color:var(--acento);color:var(--acento);transform:translateY(-3px)}
+.btn-wasap{background:#fff;color:var(--primario)}
+.btn-wasap:hover{background:var(--secundario);transform:translateY(-3px);box-shadow:0 14px 30px rgba(12,20,40,.35)}
+.hero-valoracion{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.estrellas{color:var(--acento);font-size:1.15rem;letter-spacing:2px}
+.hero-valoracion strong{font-size:1.05rem}
+.hero-valoracion span{color:rgba(255,255,255,.65);font-size:.92rem}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:660px}
+.stat{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--radio);
+  padding:18px 14px;text-align:center;
+  transition:transform .3s var(--transicion),border-color .3s}
+.stat:hover{transform:translateY(-4px);border-color:rgba(252,163,17,.5)}
+.stat b{display:block;font-family:var(--titulos);font-size:clamp(1.4rem,4.5vw,2.05rem);color:var(--acento);font-weight:700}
+.stat small{color:rgba(255,255,255,.65);font-size:.76rem;font-weight:500}
+
+/* ===== Secciones genéricas ===== */
+section{padding:88px 20px}
+.contenedor{max-width:1100px;margin:0 auto}
+.sobretitulo{display:inline-block;color:var(--acento);font-weight:700;font-size:.8rem;
+  letter-spacing:.24em;text-transform:uppercase;margin-bottom:14px}
+h2{font-size:clamp(1.85rem,5.5vw,2.9rem);margin-bottom:18px;max-width:24ch;color:var(--primario)}
+.intro{color:var(--tinta-suave);font-size:1.05rem;max-width:60ch;margin-bottom:44px}
+
+/* ===== Reveal por scroll ===== */
+/* Reveal por scroll: oculto SOLO bajo .js-on (sin JS el contenido es visible por defecto) */
+.js-on .revelar{opacity:0;transform:translateY(34px);
+  transition:opacity .8s var(--transicion),transform .8s var(--transicion)}
+.js-on .revelar.visible{opacity:1;transform:none}
+
+/* ===== GLP (servicio estrella) ===== */
+.glp{background:var(--secundario)}
+.glp-grid{display:grid;gap:30px;align-items:stretch}
+@media(min-width:900px){.glp-grid{grid-template-columns:1.05fr .95fr;gap:50px}}
+.glp-panel{position:relative;border-radius:28px;overflow:hidden;color:#fff;
+  background:linear-gradient(150deg,var(--marino-2),var(--primario) 55%,var(--marino-3));
+  padding:38px 30px;display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:var(--sombra-alta)}
+.glp-panel::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 12%,rgba(252,163,17,.35),transparent 48%)}
+.glp-panel > *{position:relative}
+.glp-gota{width:64px;height:64px;margin-bottom:20px;animation:gota-flota 5s ease-in-out infinite alternate}
+@keyframes gota-flota{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.glp-panel h3{font-size:1.5rem;color:#fff;margin-bottom:10px}
+.glp-panel p{color:rgba(255,255,255,.78);font-size:.97rem}
+.glp-precio{margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.16)}
+.glp-precio .desde{display:block;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:600}
+.glp-precio .cifra{font-family:var(--titulos);font-weight:700;font-size:clamp(2.6rem,8vw,3.6rem);color:var(--acento);line-height:1.1}
+.glp-precio .iva{font-size:.92rem;color:rgba(255,255,255,.7)}
+.glp-lista{display:grid;gap:16px}
+.glp-item{display:flex;gap:16px;align-items:flex-start;background:#fff;
+  border:1px solid rgba(20,33,61,.08);border-radius:var(--radio);padding:20px 22px;
+  box-shadow:var(--sombra);
+  transition:transform .35s var(--transicion),box-shadow .35s,border-color .35s}
+.glp-item:hover{transform:translateY(-5px);box-shadow:var(--sombra-alta);border-color:rgba(252,163,17,.55)}
+.glp-icono{flex-shrink:0;width:46px;height:46px;border-radius:14px;
+  background:var(--ambar-suave);color:var(--primario);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s var(--transicion),background .3s}
+.glp-item:hover .glp-icono{transform:scale(1.1) rotate(-4deg);background:var(--acento)}
+.glp-item h3{font-size:1.05rem;margin-bottom:4px;color:var(--primario)}
+.glp-item p{color:var(--tinta-suave);font-size:.93rem}
+.glp-cta{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
+.btn-marino{background:var(--primario);color:#fff;box-shadow:0 10px 26px rgba(20,33,61,.28)}
+.btn-marino:hover{background:var(--marino-2);transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,33,61,.36)}
+.btn-borde{background:#fff;color:var(--primario);border:1.5px solid rgba(20,33,61,.22)}
+.btn-borde:hover{border-color:var(--primario);transform:translateY(-3px);box-shadow:var(--sombra)}
+
+/* ===== Servicios ===== */
+.servicios{background:linear-gradient(180deg,#fff,var(--secundario))}
+.serv-grid{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:640px){.serv-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.serv-grid{grid-template-columns:repeat(3,1fr)}}
+.serv-card{background:#fff;border:1px solid rgba(20,33,61,.08);
+  border-radius:var(--radio);padding:28px 24px;box-shadow:var(--sombra);
+  transition:transform .35s var(--transicion),box-shadow .35s,border-color .35s;
+  will-change:transform}
+.serv-card:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:var(--sombra-alta);border-color:rgba(252,163,17,.6)}
+.serv-icono{width:52px;height:52px;border-radius:16px;margin-bottom:18px;
+  background:linear-gradient(135deg,var(--ambar-suave),#fff);
+  border:1px solid rgba(20,33,61,.1);
+  display:flex;align-items:center;justify-content:center;color:var(--primario);
+  transition:transform .35s var(--transicion)}
+.serv-card:hover .serv-icono{transform:scale(1.12)}
+.serv-card h3{font-size:1.12rem;margin-bottom:8px;color:var(--primario)}
+.serv-card p{color:var(--tinta-suave);font-size:.93rem}
+.serv-extra{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.chip{background:#fff;border:1px solid rgba(20,33,61,.16);color:var(--primario);
+  font-size:.85rem;font-weight:600;padding:9px 16px;border-radius:999px;
+  transition:background .25s,transform .25s var(--transicion)}
+.chip:hover{background:var(--ambar-suave);transform:translateY(-2px)}
+
+/* ===== Valoración (prueba social) ===== */
+.valoracion{background:var(--primario);color:#fff;position:relative;overflow:hidden}
+.valoracion::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 12% 8%,rgba(252,163,17,.18),transparent 45%),
+             radial-gradient(circle at 92% 92%,rgba(252,163,17,.1),transparent 40%)}
+.valoracion .contenedor{position:relative}
+.valoracion h2{color:#fff}
+.val-grid{display:grid;gap:34px;align-items:center}
+@media(min-width:880px){.val-grid{grid-template-columns:auto 1fr;gap:70px}}
+.val-nota{text-align:center}
+.val-nota .numerote{font-family:var(--titulos);font-weight:700;
+  font-size:clamp(5rem,18vw,8rem);line-height:1;color:var(--acento)}
+.val-nota .estrellas{font-size:1.4rem;display:block;margin:8px 0 4px}
+.val-nota span{color:rgba(255,255,255,.7);font-size:.95rem}
+.val-puntos{display:grid;gap:16px}
+.val-punto{display:flex;gap:16px;align-items:flex-start;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);
+  border-radius:var(--radio);padding:20px 22px;backdrop-filter:blur(6px);
+  transition:transform .35s var(--transicion),background .35s}
+.val-punto:hover{transform:translateY(-5px);background:rgba(255,255,255,.1)}
+.val-punto .glp-icono{background:rgba(252,163,17,.16);color:var(--acento)}
+.val-punto h3{color:#fff;font-size:1.05rem;margin-bottom:4px}
+.val-punto p{color:rgba(255,255,255,.72);font-size:.93rem}
+.val-enlace{margin-top:28px}
+.val-enlace a{display:inline-flex;align-items:center;gap:8px;color:var(--acento);font-weight:600;
+  border-bottom:1px solid rgba(252,163,17,.45);padding-bottom:2px;transition:color .25s}
+.val-enlace a:hover{color:#ffd280}
+
+/* ===== Contacto ===== */
+.contacto-grid{display:grid;gap:22px}
+@media(min-width:880px){.contacto-grid{grid-template-columns:1.1fr .9fr;gap:40px}}
+.info-card{background:#fff;border:1px solid rgba(20,33,61,.1);
+  border-radius:var(--radio);padding:30px 26px;box-shadow:var(--sombra)}
+.info-fila{display:flex;gap:16px;align-items:flex-start;padding:16px 0;
+  border-bottom:1px solid rgba(20,33,61,.08)}
+.info-fila:last-child{border-bottom:none}
+.info-fila .glp-icono{width:42px;height:42px}
+.info-fila h3{font-size:1rem;margin-bottom:3px;color:var(--primario)}
+.info-fila p{color:var(--tinta-suave);font-size:.94rem}
+.info-fila a{font-weight:600;color:var(--primario)}
+.info-fila a:hover{text-decoration:underline}
+.horario-tabla{width:100%;border-collapse:collapse;font-size:.94rem}
+.horario-tabla td{padding:11px 0;border-bottom:1px solid rgba(20,33,61,.08);color:var(--tinta-suave)}
+.horario-tabla tr:last-child td{border-bottom:none}
+.horario-tabla td:first-child{font-weight:600;color:var(--tinta)}
+.horario-tabla td:last-child{text-align:right}
+.cerrado{color:#B4535A;font-weight:600}
+.mapa-btn{margin-top:20px;width:100%}
+
+/* ===== CTA final ===== */
+.cta-final{background:linear-gradient(135deg,var(--primario),var(--marino-3));
+  color:#fff;text-align:center;border-radius:32px;max-width:1060px;
+  margin:0 auto;padding:70px 24px;position:relative;overflow:hidden;
+  box-shadow:var(--sombra-alta)}
+.cta-final::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 15%,rgba(252,163,17,.3),transparent 50%)}
+.cta-final h2{color:#fff;margin:0 auto 14px;position:relative}
+.cta-final p{color:rgba(255,255,255,.85);max-width:48ch;margin:0 auto 30px;position:relative}
+.cta-final .btn{position:relative}
+.seccion-cta{padding:40px 20px 90px}
+
+/* ===== Pie ===== */
+footer{background:var(--marino-3);color:rgba(255,255,255,.8);padding:56px 20px 110px}
+.pie-int{max-width:1100px;margin:0 auto;display:grid;gap:30px}
+@media(min-width:760px){.pie-int{grid-template-columns:1.2fr 1fr 1fr}}
+footer .logo{color:#fff;margin-bottom:12px}
+footer p{font-size:.9rem;line-height:1.7}
+footer h3{color:#fff;font-size:1rem;margin-bottom:14px;font-family:var(--texto);font-weight:700}
+footer ul{list-style:none}
+footer li{margin-bottom:10px;font-size:.9rem}
+footer a:hover{color:var(--acento)}
+.pie-aviso{max-width:1100px;margin:44px auto 0;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.14);
+  font-size:.85rem;color:rgba(255,255,255,.65);text-align:center}
+.pie-aviso strong{color:var(--acento)}
+
+/* ===== Movimiento reducido ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  #intro{display:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+<noscript>
+<style>
+/* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
+.revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+#intro{display:none !important}
+#progreso{display:none}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "EL NEUMÁTICO": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-deco" aria-hidden="true">
+        <!-- Asfalto liso: desaparece al paso de la rueda -->
+        <svg class="asfalto" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#FCA311" stroke-opacity=".28" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 26 H600 M0 174 H600"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="14 18" d="M0 100 H600" stroke-opacity=".18"/>
+          </g>
+        </svg>
+        <!-- Huella de rodada: el dibujo del neumático queda marcado tras la rueda -->
+        <svg class="rodada" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#FCA311" stroke-opacity=".55" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 26 H600 M0 174 H600"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="4 9" d="M0 20 H600" stroke-opacity=".8"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="4 9" d="M0 32 H600" stroke-opacity=".8"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="4 9" d="M0 168 H600" stroke-opacity=".8"/>
+            <path vector-effect="non-scaling-stroke" stroke-dasharray="4 9" d="M0 180 H600" stroke-opacity=".8"/>
+          </g>
+        </svg>
+      </div>
+      <p class="intro-nombre">Talleres <em>Autobox</em></p>
+      <!-- El neumático: rueda y llanta de trazo fino en el ámbar de la marca -->
+      <div class="intro-rueda" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false">
+          <g stroke="#FCA311" stroke-width="2.4" stroke-linecap="round">
+            <!-- neumático -->
+            <circle cx="50" cy="50" r="45"/>
+            <!-- tacos del dibujo exterior -->
+            <path d="M50 2 v7 M83.9 16.1 l-4.9 4.9 M98 50 h-7 M83.9 83.9 l-4.9 -4.9 M50 98 v-7 M16.1 83.9 l4.9 -4.9 M2 50 h7 M16.1 16.1 l4.9 4.9"/>
+            <!-- llanta -->
+            <circle cx="50" cy="50" r="26"/>
+            <!-- radios de la llanta -->
+            <path d="M50 24 V40 M72.5 37 L58.6 45 M72.5 63 L58.6 55 M50 76 V60 M27.5 63 L41.4 55 M27.5 37 L41.4 45"/>
+            <!-- buje central -->
+            <circle cx="50" cy="50" r="6.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="intro-sub">Mecánica y GLP · Patraix, València</p>
+  </div>
+</div>
+
+<div id="progreso"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav id="nav" aria-label="Navegación principal">
+  <a class="logo" href="#inicio" aria-label="Talleres Autobox Valencia — inicio">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <circle cx="16" cy="16" r="13.5" stroke="#FCA311" stroke-width="2.4"/>
+      <circle cx="16" cy="16" r="6.5" stroke="#FCA311" stroke-width="2.4"/>
+      <path d="M16 2.5v4M29.5 16h-4M16 29.5v-4M2.5 16h4" stroke="#FCA311" stroke-width="2.4" stroke-linecap="round"/>
+    </svg>
+    <span>Autobox<small>Talleres · Valencia</small></span>
+  </a>
+  <div class="nav-links">
+    <a href="#glp">GLP</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#valoracion">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <div class="nav-cta">
+    <a class="nav-tel" href="tel:+34961333733">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      961 33 37 33
+    </a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="inicio">
+  <div class="hero-fondo" id="parallax" aria-hidden="true">
+    <div class="burbuja b1"></div>
+    <div class="burbuja b2"></div>
+    <div class="burbuja b3"></div>
+    <div class="hero-carril c1"></div>
+    <div class="hero-carril c2"></div>
+  </div>
+  <div class="hero-int">
+    <span class="hero-etiqueta"><span class="punto"></span> Taller mecánico en Patraix · Valencia</span>
+    <h1 id="titular">
+      <span class="palabra">Tu</span>
+      <span class="palabra">coche,</span>
+      <span class="palabra">a</span>
+      <span class="palabra">punto.</span>
+      <span class="palabra"><em>Tu</em></span>
+      <span class="palabra"><em>gasto,</em></span>
+      <span class="palabra"><em>a</em></span>
+      <span class="palabra"><em>la</em></span>
+      <span class="palabra"><em>mitad.</em></span>
+    </h1>
+    <p class="hero-sub">Mecánica de confianza en el barrio de Patraix y especialistas en transformación de vehículos a GLP (autogas) desde 1.500 € IVA incluido. Neumáticos, frenos, distribución, aire acondicionado y mucho más, con trato directo por teléfono o WhatsApp.</p>
+    <div class="hero-botones">
+      <a class="btn btn-ambar" href="tel:+34961333733">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Llamar ahora
+      </a>
+      <a class="btn btn-wasap" href="https://wa.me/34644403194" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 8.4c.6-.6 1.2-.4 1.5.2l.6 1.2c.1.3 0 .7-.3 1l-.4.4c.4.9 1.7 2.2 2.6 2.6l.4-.4c.3-.3.7-.4 1-.3l1.2.6c.6.3.8.9.2 1.5-2.2 2.2-7-2.6-6.8-6.8Z" fill="currentColor"/></svg>
+        WhatsApp
+      </a>
+      <a class="btn btn-fantasma" href="#glp">Pásate a GLP</a>
+    </div>
+    <div class="hero-valoracion">
+      <span class="estrellas" aria-hidden="true">★★★★★</span>
+      <strong>4,8 sobre 5</strong>
+      <span>· 42 reseñas en Google</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><b><span class="contador" data-fin="4.8" data-decimales="1">0</span>★</b><small>Valoración en Google</small></div>
+      <div class="stat"><b><span class="contador" data-fin="42">0</span></b><small>Reseñas de clientes</small></div>
+      <div class="stat"><b><span class="contador" data-fin="1500">0</span> €</b><small>Pásate a GLP, desde</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GLP: SERVICIO ESTRELLA ===== -->
+<section class="glp" id="glp">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">Nuestro servicio estrella</span>
+      <h2>Especialistas en transformación de vehículos a GLP</h2>
+      <p class="intro">Convertimos tu coche a autogas (GLP) para que reduzcas tu factura de combustible desde 1.500 € IVA incluido. Cuéntanos qué coche tienes y te decimos sin compromiso si se puede transformar.</p>
+    </div>
+    <div class="glp-grid">
+      <div class="glp-panel revelar">
+        <div>
+          <svg class="glp-gota" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M32 6S14 26 14 39a18 18 0 0 0 36 0C50 26 32 6 32 6Z" stroke="#FCA311" stroke-width="2.6" stroke-linejoin="round"/>
+            <path d="M25 40a7 7 0 0 0 7 7" stroke="#FCA311" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+          <h3>Autogas GLP: el mismo coche, mucho menos gasto</h3>
+          <p>El GLP es uno de los carburantes más económicos de la gasolinera. Instalamos el equipo completo, lo dejamos ajustado y tu coche pasa a poder funcionar con autogas manteniendo la gasolina.</p>
+        </div>
+        <div class="glp-precio">
+          <span class="desde">Transformamos tu vehículo desde</span>
+          <span class="cifra">1.500 €</span>
+          <span class="iva">IVA incluido</span>
+        </div>
+      </div>
+      <div class="glp-lista">
+        <div class="glp-item revelar">
+          <div class="glp-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M17 7c0-1.7-2.2-3-5-3S7 5.3 7 7s2.2 3 5 3 5 1.3 5 3-2.2 3-5 3-5-1.3-5-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div><h3>Repostas más barato</h3><p>El precio del litro de GLP suele estar muy por debajo del de la gasolina o el diésel.</p></div>
+        </div>
+        <div class="glp-item revelar">
+          <div class="glp-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 5c-9 0-15 4-15 12v2M20 5c0 9-4 14-11 14M20 5l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Combustión más limpia</h3><p>El autogas genera menos emisiones que los carburantes tradicionales.</p></div>
+        </div>
+        <div class="glp-item revelar">
+          <div class="glp-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12.5 11 15l5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Instalación completa en el taller</h3><p>Nos encargamos de todo el proceso de transformación y del ajuste final del vehículo.</p></div>
+        </div>
+        <div class="glp-cta revelar">
+          <a class="btn btn-marino" href="tel:+34961333733">Pide presupuesto GLP</a>
+          <a class="btn btn-borde" href="https://wa.me/34644403194" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICIOS ===== -->
+<section class="servicios" id="servicios">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">Servicios</span>
+      <h2>Mecánica completa para el día a día de tu coche</h2>
+      <p class="intro">Del mantenimiento básico a la reparación mayor: en Autobox lo resolvemos todo en el mismo taller de Patraix.</p>
+    </div>
+    <div class="serv-grid">
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Neumáticos</h3>
+        <p>Cambio y montaje de neumáticos para que ruedes seguro en cualquier estación.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.7S6 10 6 14.5a6 6 0 0 0 12 0C18 10 12 2.7 12 2.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Aceite y filtros</h3>
+        <p>Cambio de aceite y filtros para alargar la vida del motor de tu vehículo.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 1.5V4M12 20v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Frenos</h3>
+        <p>Pastillas y discos de freno revisados y sustituidos. Tu seguridad, lo primero.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8V6h3v2M9 12v4M7 14h4M15 14h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Baterías</h3>
+        <p>Comprobación y cambio de batería para que no te quedes tirado.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="17" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M9.8 9.8l4.4 4.4M7 11v6a4 4 0 0 0 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Kits de distribución</h3>
+        <p>Sustitución del kit de distribución y bombas de agua en su plazo, sin sustos.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 12 8 8M12 12h5.5M12 12v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Cajas de cambio</h3>
+        <p>Reparación de cajas de cambio y embragues para recuperar la suavidad de siempre.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6.5C7 5 9.5 4.5 12 6c2.5 1.5 5 1 7-.5M5 12c2-1.5 4.5-2 7-.5 2.5 1.5 5 1 7-.5M5 17.5c2-1.5 4.5-2 7-.5 2.5 1.5 5 1 7-.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Carga de aire acondicionado</h3>
+        <p>Carga y puesta a punto del aire acondicionado para viajar fresco todo el verano.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.9L3 18l3 3 5.8-5.7a4.5 4.5 0 0 0 5.9-6l-3.2 3.2-2.5-.5-.5-2.5 3.2-3.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Cambio de motor</h3>
+        <p>Cuando la avería es mayor, también sustituimos el motor completo.</p>
+      </div>
+      <div class="serv-card revelar">
+        <div class="serv-icono"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m9 11 3 3 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Revisiones pre-ITV</h3>
+        <p>Repasamos tu coche antes de la ITV para que vayas sobre seguro.</p>
+      </div>
+    </div>
+    <div class="serv-extra revelar">
+      <span class="chip">Transformación a GLP</span>
+      <span class="chip">Bombas de agua</span>
+      <span class="chip">Embragues</span>
+      <a class="chip" href="tel:+34961333733">Pide cita · 961 33 37 33</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VALORACIÓN (PRUEBA SOCIAL) ===== -->
+<section class="valoracion" id="valoracion">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">La opinión de nuestros clientes</span>
+      <h2>El barrio de Patraix nos avala en Google</h2>
+    </div>
+    <div class="val-grid">
+      <div class="val-nota revelar">
+        <span class="numerote"><span class="contador" data-fin="4.8" data-decimales="1">0</span></span>
+        <span class="estrellas" aria-hidden="true">★★★★★</span>
+        <span><strong>42 reseñas</strong> en Google</span>
+      </div>
+      <div class="val-puntos">
+        <div class="val-punto revelar">
+          <div class="glp-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.6 5.3 5.9.9-4.3 4.1 1 5.9L12 15.4l-5.2 2.8 1-5.9-4.3-4.1 5.9-.9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div><h3>4,8 sobre 5 estrellas</h3><p>La media que nos dan 42 clientes reales en las reseñas públicas de Google.</p></div>
+        </div>
+        <div class="val-punto revelar">
+          <div class="glp-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div><h3>Taller de barrio, trato directo</h3><p>Hablas con el taller por teléfono o WhatsApp, sin intermediarios ni esperas.</p></div>
+        </div>
+        <div class="val-punto revelar">
+          <div class="glp-icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 19 6v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h3>Especialistas en GLP</h3><p>Uno de los pocos talleres de Valencia especializados en transformación a autogas.</p></div>
+        </div>
+        <div class="val-enlace revelar">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Autobox+Valencia%2C+Carrer+del+M%C3%BAsic+Gomis+36%2C+46014+Val%C3%A8ncia" target="_blank" rel="noopener">Lee las reseñas en Google →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+  <div class="contenedor">
+    <div class="revelar">
+      <span class="sobretitulo">Contacto y cita</span>
+      <h2>Nos tienes en Patraix, muy cerca de ti</h2>
+      <p class="intro">Llámanos, escríbenos por WhatsApp o pásate por el taller: te atendemos sin compromiso.</p>
+    </div>
+    <div class="contacto-grid">
+      <div class="info-card revelar">
+        <div class="info-fila">
+          <div class="glp-icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
+          <div>
+            <h3>Dirección</h3>
+            <p>Carrer del Músic Gomis, 36 (trasera) · Patraix<br>46014 Valencia</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Autobox+Valencia%2C+Carrer+del+M%C3%BAsic+Gomis+36%2C+46014+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a>
+          </div>
+        </div>
+        <div class="info-fila">
+          <div class="glp-icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div>
+            <h3>Teléfono</h3>
+            <p>Llámanos para pedir cita</p>
+            <a href="tel:+34961333733">961 33 37 33</a>
+          </div>
+        </div>
+        <div class="info-fila">
+          <div class="glp-icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 8.4c.6-.6 1.2-.4 1.5.2l.6 1.2c.1.3 0 .7-.3 1l-.4.4c.4.9 1.7 2.2 2.6 2.6l.4-.4c.3-.3.7-.4 1-.3l1.2.6c.6.3.8.9.2 1.5-2.2 2.2-7-2.6-6.8-6.8Z" fill="currentColor"/></svg></div>
+          <div>
+            <h3>WhatsApp</h3>
+            <p>Escríbenos y te respondemos</p>
+            <a href="https://wa.me/34644403194" target="_blank" rel="noopener">644 40 31 94</a>
+          </div>
+        </div>
+      </div>
+      <div class="info-card revelar">
+        <h3 style="margin-bottom:16px;color:var(--primario)">Horario del taller</h3>
+        <table class="horario-tabla">
+          <tr><td>Lunes – Viernes</td><td>9:00–14:00 · 16:00–19:00</td></tr>
+          <tr><td>Sábado y domingo</td><td class="cerrado">Cerrado</td></tr>
+        </table>
+        <a class="btn btn-marino mapa-btn" href="tel:+34961333733">Llamar para pedir cita</a>
+        <a class="btn btn-borde mapa-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Autobox+Valencia%2C+Carrer+del+M%C3%BAsic+Gomis+36%2C+46014+Val%C3%A8ncia" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section class="seccion-cta">
+  <div class="cta-final revelar">
+    <h2>¿Calculamos cuánto ahorrarías con GLP?</h2>
+    <p>Cuéntanos qué coche tienes por teléfono o WhatsApp y te damos presupuesto sin compromiso. Transformaciones desde 1.500 € IVA incluido.</p>
+    <a class="btn btn-ambar" href="tel:+34961333733">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      961 33 37 33
+    </a>
+  </div>
+</section>
+
+<!-- ===== PIE ===== -->
+<footer>
+  <div class="pie-int">
+    <div>
+      <span class="logo">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="13.5" stroke="#FCA311" stroke-width="2.4"/><circle cx="16" cy="16" r="6.5" stroke="#FCA311" stroke-width="2.4"/><path d="M16 2.5v4M29.5 16h-4M16 29.5v-4M2.5 16h4" stroke="#FCA311" stroke-width="2.4" stroke-linecap="round"/></svg>
+        Talleres Autobox
+      </span>
+      <p>Taller mecánico en Patraix (Valencia), especialistas en transformación de vehículos a GLP. Valorado con 4,8★ por 42 clientes en Google.</p>
+    </div>
+    <div>
+      <h3>Contacto</h3>
+      <ul>
+        <li>Carrer del Músic Gomis, 36 (trasera)<br>Patraix · 46014 Valencia</li>
+        <li><a href="tel:+34961333733">961 33 37 33</a></li>
+        <li><a href="https://wa.me/34644403194" target="_blank" rel="noopener">WhatsApp: 644 40 31 94</a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Autobox+Valencia%2C+Carrer+del+M%C3%BAsic+Gomis+36%2C+46014+Val%C3%A8ncia" target="_blank" rel="noopener">Google Maps</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Horario</h3>
+      <ul>
+        <li>Lunes – Viernes: 9:00–14:00 · 16:00–19:00</li>
+        <li>Sábado y domingo: cerrado</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pie-aviso">
+    <strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra no oficial elaborado con información pública de Talleres Autobox Valencia.
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* La clase js-on activa los estados iniciales ocultos de las animaciones.
+     Solo la añade JS: si el JS no corre, el CSS base deja TODO visible. */
+  document.documentElement.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del neumático: el CSS ya la autodestruye solo; el JS solo retira el nodo del DOM --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* Palabras del titular: cascada */
+  var palabras = document.querySelectorAll('h1 .palabra');
+  palabras.forEach(function(p,i){ p.style.animationDelay = (0.15 + i*0.11) + 's'; });
+
+  /* Barra de progreso de scroll + sombra del nav + parallax del hero */
+  var barra = document.getElementById('progreso');
+  var nav = document.getElementById('nav');
+  function alScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    if (barra && max > 0) barra.style.width = (h.scrollTop / max * 100) + '%';
+    if (nav) nav.classList.toggle('con-sombra', h.scrollTop > 10);
+    if (!reduce) {
+      var fondo = document.getElementById('parallax');
+      if (fondo && h.scrollTop < window.innerHeight) {
+        fondo.style.transform = 'translate3d(0,' + (h.scrollTop * 0.3) + 'px,0)';
+      }
+    }
+  }
+  window.addEventListener('scroll', alScroll, {passive:true});
+  alScroll();
+
+  /* Revelado escalonado con IntersectionObserver */
+  var revelables = document.querySelectorAll('.revelar');
+  if ('IntersectionObserver' in window && !reduce) {
+    var retardos = {};
+    var io = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) {
+          var padre = e.target.parentElement ? e.target.parentElement : document.body;
+          var key = padre.tagName + (padre.className||'');
+          retardos[key] = (retardos[key]||0);
+          e.target.style.transitionDelay = Math.min(retardos[key]*90, 450) + 'ms';
+          retardos[key]++;
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+          setTimeout(function(){ retardos[key] = 0; }, 800);
+        }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    revelables.forEach(function(el){ io.observe(el); });
+  } else {
+    revelables.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* Contadores animados */
+  function animarContador(el){
+    var fin = parseFloat(el.getAttribute('data-fin'));
+    var dec = parseInt(el.getAttribute('data-decimales')||'0',10);
+    if (reduce) { el.textContent = fin.toFixed(dec).replace('.',','); return; }
+    var t0 = null, dur = 1600;
+    function paso(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0)/dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);
+      el.textContent = (fin * suave).toFixed(dec).replace('.',',');
+      if (p < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var contadores = document.querySelectorAll('.contador');
+  if ('IntersectionObserver' in window) {
+    var ioC = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting) { animarContador(e.target); ioC.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    contadores.forEach(function(c){ ioC.observe(c); });
+  } else {
+    contadores.forEach(animarContador);
+  }
+
+  /* Script de rescate anti-página-vacía (garantía de visibilidad):
+     a los 1200 ms, cualquier elemento que siga oculto se fuerza visible.
+     Lección del 03/08/2026: visores de email y WebViews sin IntersectionObserver. */
+  setTimeout(function(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+    }catch(e){}
+    try{
+      document.querySelectorAll('.revelar:not(.visible)').forEach(function(el){
+        el.style.transition = 'none';
+        el.classList.add('visible');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      document.querySelectorAll('h1 .palabra').forEach(function(p){
+        var op = window.getComputedStyle(p).opacity;
+        if (parseFloat(op) < 1) { p.style.animation = 'none'; p.style.opacity = '1'; p.style.transform = 'none'; }
+      });
+      contadores.forEach(function(c){
+        if (c.textContent === '0') {
+          var fin = parseFloat(c.getAttribute('data-fin'));
+          var dec = parseInt(c.getAttribute('data-decimales')||'0',10);
+          c.textContent = fin.toFixed(dec).replace('.',',');
+        }
+      });
+    }catch(e){
+      /* Último recurso: sin js-on manda el CSS base y todo queda visible */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+</body>
+</html>

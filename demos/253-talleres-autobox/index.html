@@ -153,15 +153,19 @@ nav.con-sombra{box-shadow:0 8px 28px rgba(12,20,40,.4)}
 .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);
   animation:latido 2s ease-in-out infinite}
 @keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
-h1{font-size:clamp(2.4rem,8vw,4.5rem);color:#fff;max-width:17ch}
+h1{font-size:clamp(3rem,11.6vw,6.6rem);color:#fff;max-width:none;margin-bottom:10px;letter-spacing:-.015em;line-height:.95}
 h1 .palabra{display:inline-block}
 /* Estado animado SOLO si JS añade .js-on (garantía de visibilidad: sin JS, todo visible) */
 .js-on h1 .palabra{opacity:0;transform:translateY(26px);
   animation:subePalabra .7s var(--transicion) forwards}
 h1 em{font-style:normal;color:var(--acento);position:relative}
 @keyframes subePalabra{to{opacity:1;transform:translateY(0)}}
+.hero-lema{font-family:var(--titulos);font-weight:600;line-height:1.15;
+  font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(255,255,255,.92);
+  max-width:22ch;margin:0 0 22px}
+.hero-lema em{font-style:normal;color:var(--acento)}
 .hero-sub{font-size:clamp(1rem,2.5vw,1.18rem);color:rgba(255,255,255,.78);
-  max-width:54ch;margin:22px 0 34px}
+  max-width:54ch;margin:0 0 34px}
 .hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:40px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
   font-weight:700;font-size:1rem;padding:16px 30px;border-radius:999px;
@@ -340,7 +344,7 @@ footer a:hover{color:var(--acento)}
 /* ===== Movimiento reducido ===== */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  .revelar,h1 .palabra,.hero-lema{opacity:1!important;transform:none!important}
   #intro{display:none !important}
   html{scroll-behavior:auto}
 }
@@ -348,7 +352,7 @@ footer a:hover{color:var(--acento)}
 <noscript>
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
-.revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+.revelar,h1 .palabra,.hero-lema{opacity:1!important;transform:none!important;animation:none!important}
 #intro{display:none !important}
 #progreso{display:none}
 </style>
@@ -440,16 +444,10 @@ footer a:hover{color:var(--acento)}
   <div class="hero-int">
     <span class="hero-etiqueta"><span class="punto"></span> Taller mecánico en Patraix · Valencia</span>
     <h1 id="titular">
-      <span class="palabra">Tu</span>
-      <span class="palabra">coche,</span>
-      <span class="palabra">a</span>
-      <span class="palabra">punto.</span>
-      <span class="palabra"><em>Tu</em></span>
-      <span class="palabra"><em>gasto,</em></span>
-      <span class="palabra"><em>a</em></span>
-      <span class="palabra"><em>la</em></span>
-      <span class="palabra"><em>mitad.</em></span>
+      <span class="palabra">Talleres</span>
+      <span class="palabra"><em>Autobox</em></span>
     </h1>
+    <p class="hero-lema">Tu coche, a punto. <em>Tu gasto, a la mitad.</em></p>
     <p class="hero-sub">Mecánica de confianza en el barrio de Patraix y especialistas en transformación de vehículos a GLP (autogas) desde 1.500 € IVA incluido. Neumáticos, frenos, distribución, aire acondicionado y mucho más, con trato directo por teléfono o WhatsApp.</p>
     <div class="hero-botones">
       <a class="btn btn-ambar" href="tel:+34961333733">
@@ -825,7 +823,7 @@ footer a:hover{color:var(--acento)}
         el.style.opacity = '1';
         el.style.transform = 'none';
       });
-      document.querySelectorAll('h1 .palabra').forEach(function(p){
+      document.querySelectorAll('h1 .palabra, .hero-lema').forEach(function(p){
         var op = window.getComputedStyle(p).opacity;
         if (parseFloat(op) < 1) { p.style.animation = 'none'; p.style.opacity = '1'; p.style.transform = 'none'; }
       });

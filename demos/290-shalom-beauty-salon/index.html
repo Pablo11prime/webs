@@ -57,7 +57,7 @@
   @keyframes girar{to{transform:rotate(360deg)}}
   .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
   .sello{display:inline-flex;align-items:center;gap:.55em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--oro-claro);border:1px solid rgba(201,162,75,.5);border-radius:999px;padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(201,162,75,.1)}
-  .hero h1{font-size:clamp(2.7rem,10vw,5.6rem);font-weight:600;line-height:1.02;margin-bottom:1.3rem}
+  .hero h1{font-size:clamp(3rem,11.6vw,6.6rem);font-weight:600;line-height:.95;letter-spacing:-.015em;margin-bottom:.55rem}
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
   .hero h1 .palabra:nth-child(1){animation-delay:.15s}
   .hero h1 .palabra:nth-child(2){animation-delay:.32s}
@@ -66,6 +66,11 @@
   .hero h1 .palabra:nth-child(5){animation-delay:.83s}
   .hero h1 em{font-style:italic;color:var(--oro-claro)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  /* Lema comercial: baja de titular a subtítulo. Sin opacity:0 en el CSS base;
+     el estado oculto vive SOLO dentro de la animación (fill-mode both). */
+  .hero-lema{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.15;font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(245,233,226,.92);max-width:22ch;margin-bottom:1.5rem;animation:aparece-lema .9s var(--curva) .55s both}
+  .hero-lema em{font-style:italic;color:var(--oro-claro)}
+  @keyframes aparece-lema{from{opacity:0}to{opacity:1}}
   .hero p.sub{max-width:33em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(245,233,226,.88);margin-bottom:2.3rem}
   .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
   .btn{display:inline-flex;align-items:center;gap:.6em;text-decoration:none;font-weight:600;font-size:.95rem;letter-spacing:.05em;border-radius:999px;padding:.95em 2em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s}
@@ -183,14 +188,14 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
     [data-anim]{opacity:1 !important;transform:none !important}
-    .hero h1 .palabra{opacity:1;transform:none}
+    .hero h1 .palabra,.hero-lema{opacity:1;transform:none}
     html{scroll-behavior:auto}
   }
 </style>
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+    [data-anim],.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -214,12 +219,11 @@
         Peluquería y estética · Eixample, Barcelona
       </p>
       <h1>
-        <span class="palabra">Tu&nbsp;color,</span>
-        <span class="palabra">tu&nbsp;luz,</span>
-        <span class="palabra">tu</span>
-        <span class="palabra">mejor</span>
-        <span class="palabra"><em>versión.</em></span>
+        <span class="palabra"><em>Shalom</em></span>
+        <span class="palabra">Beauty</span>
+        <span class="palabra">Salon</span>
       </h1>
+      <p class="hero-lema">Tu color, tu luz, tu mejor <em>versión.</em></p>
       <p class="sub">Shalom Beauty Salon by David García: especialistas en balayage y color, cortes con personalidad y tratamientos faciales en un salón autorizado Kevin Murphy, a cinco minutos del metro Universitat.</p>
       <div class="botones">
         <a class="btn btn-oro" href="tel:+34935306023">📞 Pedir cita</a>
@@ -484,7 +488,7 @@
     document.querySelectorAll('[data-anim]:not(.visible)').forEach(function(el){
       el.classList.add('visible'); el.style.opacity = '1'; el.style.transform = 'none';
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (getComputedStyle(el).opacity === '0') { el.style.animation = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }
     });
     contadores.forEach(function(el){

@@ -78,7 +78,7 @@
   @keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important;transition:none!important}
+    .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important;transition:none!important}
     *{animation:none!important;transition:none!important}
   }
 
@@ -146,10 +146,16 @@
   }
   .hero-etiqueta svg{flex:0 0 auto}
   .hero h1{
-    font-size:clamp(2.5rem,8vw,4.4rem);font-weight:900;color:var(--grafito);
-    max-width:760px;margin-bottom:8px;text-transform:none;
+    font-size:clamp(3rem,11.6vw,6.6rem);font-weight:900;color:var(--grafito);
+    max-width:none;margin-bottom:10px;text-transform:none;letter-spacing:-.015em;line-height:.95;
   }
   .hero h1 .acento{color:var(--rojo)}
+  .hero-lema{
+    font-family:'Archivo','Inter',sans-serif;font-weight:600;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);
+    color:var(--grafito);max-width:22ch;margin:0 0 22px;letter-spacing:-.01em;
+  }
+  .hero-lema .acento{color:var(--rojo)}
   .hero-sub{
     font-size:clamp(1.05rem,3.3vw,1.26rem);color:var(--texto-suave);
     max-width:620px;margin:16px 0 30px;
@@ -425,7 +431,7 @@
 <noscript>
 <style>
   /* GARANTÍA DE VISIBILIDAD sin JavaScript: todo visible, siempre. */
-  .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+  .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important}
   #progreso{display:none}
 </style>
 </noscript>
@@ -464,9 +470,10 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
         4,9 en Google · 50 reseñas
       </span>
-      <h1 id="titulo-hero">Mecánica honesta, <span class="acento">de gasolina a eléctrico</span></h1>
-      <p class="hero-sub anim" style="transition-delay:180ms">Taller <strong>mecánico y electromecánico</strong> en la Plaza de Roma, en el barrio de <strong>L'Olivereta (València)</strong>. Años de experiencia, precios justos y una especialidad que pocos talleres de barrio dominan: los <strong>vehículos híbridos y eléctricos</strong>.</p>
-      <div class="hero-botones anim" style="transition-delay:300ms">
+      <h1 id="titulo-hero">ROMA <span class="acento">MOTOR</span></h1>
+      <p class="hero-lema anim" style="transition-delay:180ms">Mecánica honesta, <span class="acento">de gasolina a eléctrico</span></p>
+      <p class="hero-sub anim" style="transition-delay:300ms">Taller <strong>mecánico y electromecánico</strong> en la Plaza de Roma, en el barrio de <strong>L'Olivereta (València)</strong>. Años de experiencia, precios justos y una especialidad que pocos talleres de barrio dominan: los <strong>vehículos híbridos y eléctricos</strong>.</p>
+      <div class="hero-botones anim" style="transition-delay:420ms">
         <a class="btn btn-wasap" href="https://wa.me/34614235143" target="_blank" rel="noopener">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.7 14.2c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.2-3.7-.8-3.1-1.3-5.1-4.5-5.3-4.7-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.2.5.1.7-.1l1.1-1.3c.2-.3.5-.2.8-.1l2.2 1c.3.2.6.3.6.4.1.2.1.9-.2 1.7z"/></svg>
           Pedir cita por WhatsApp
@@ -858,7 +865,7 @@
      Si a los 1,2 s algo sigue oculto (visor de email, WebView raro, JS a medias),
      se fuerza visible sin animación. La página JAMÁS puede quedarse en blanco. */
   function rescateVisibilidad(){
-    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra');
+    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra, .hero-lema');
     Array.prototype.forEach.call(ocultos, function(el){
       if (!el.classList.contains('visible')){
         el.style.transition = 'none';

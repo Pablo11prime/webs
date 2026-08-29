@@ -187,15 +187,20 @@ nav.con-sombra{box-shadow:0 8px 26px rgba(22,29,41,.09)}
 .hero-kicker .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);animation:latido 2s ease-in-out infinite}
 @keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.45);opacity:.55}}
 .hero h1{
-  font-weight:800;font-size:clamp(2.5rem,9.4vw,5.2rem);
-  max-width:15ch;margin-bottom:24px;text-transform:uppercase;
+  font-weight:800;font-size:clamp(3rem,11.6vw,6.6rem);
+  max-width:none;margin-bottom:10px;text-transform:uppercase;
+  letter-spacing:-.015em;line-height:.95;
 }
 .hero h1 em{font-style:normal;color:var(--acento)}
 .hero h1 .pal{display:inline-block}
 .js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1deg);animation:palabra .75s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.1s)}
 @keyframes palabra{to{opacity:1;transform:none}}
+.hero-lema{font-family:var(--tit);font-weight:600;line-height:1.15;
+  font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(255,255,255,.92);max-width:22ch;margin-bottom:22px}
+.hero-lema em{font-style:normal;color:var(--acento)}
+.js-on .hero-lema{opacity:0;animation:aparece .9s var(--ease) .85s forwards}
 .hero-sub{max-width:52ch;color:rgba(255,255,255,.74);font-size:clamp(1rem,2.4vw,1.14rem);margin-bottom:34px}
-.js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+.js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) 1.05s forwards}
 @keyframes aparece{to{opacity:1}}
 .hero-botones{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:48px}
 .js-on .hero-botones{opacity:0;animation:aparece 1s var(--ease) 1.15s forwards}
@@ -376,13 +381,13 @@ footer .legal a{color:inherit}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
   #intro{display:none !important}
-  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-lema,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
 }
 </style>
 <noscript>
 <style>
   /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
   #intro{display:none !important}
 </style>
 </noscript>
@@ -473,7 +478,8 @@ footer .legal a{color:inherit}
   <div class="hero-linea l2" aria-hidden="true"></div>
   <div class="hero-int">
     <p class="hero-kicker"><span class="punto" aria-hidden="true"></span>Taller mecánico multimarca · Eixample, Barcelona</p>
-    <h1 id="titulo-hero">Tu coche, en manos con <em>40 años</em> de oficio</h1>
+    <h1 id="titulo-hero">Mavic <em>Talleres</em></h1>
+    <p class="hero-lema">Tu coche, en manos con <em>40 años</em> de oficio</p>
     <p class="hero-sub">Mecánica, autodiagnosis, electricidad, neumáticos y aire acondicionado. Taller multimarca en Carrer de Casp 110, con la tecnología de diagnosis más avanzada y el trato de siempre.</p>
     <div class="hero-botones">
       <a class="btn btn-rojo" href="tel:+34932506897">
@@ -786,7 +792,7 @@ footer .legal a{color:inherit}
           if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
         }
       }
-      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-lema, .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
       ocultos.forEach(function(el){
         var est = window.getComputedStyle(el);
         if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){

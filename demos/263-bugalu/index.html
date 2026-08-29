@@ -35,7 +35,7 @@
   a{color:inherit}
 
   /* ====== GARANTÍA DE VISIBILIDAD ====== */
-  noscript .reveal, noscript .w{opacity:1 !important; transform:none !important}
+  noscript .reveal, noscript .w, noscript .hero-lema{opacity:1 !important; transform:none !important}
 
   /* ====== INTRO PERCHERO (temática moda) ======
      Se autodestruye por CSS puro (introOut + forwards): aunque el JS falle,
@@ -187,13 +187,21 @@
   .eyebrow::before{content:'';display:block;width:34px;height:1px;background:var(--clay)}
   h1{
     font-family:var(--serif);font-weight:400;
-    font-size:clamp(44px, 11vw, 108px);
-    line-height:1.02;letter-spacing:-.015em;
-    margin-bottom:28px;max-width:14ch;
+    font-size:clamp(52px, 12.4vw, 124px);
+    line-height:.95;letter-spacing:-.015em;
+    margin-bottom:12px;max-width:none;
   }
   h1 em{font-style:italic;color:var(--clay)}
   .h1-w{display:inline-block;overflow:hidden;vertical-align:bottom}
   .w{display:inline-block}
+  /* Lema comercial: baja de titular a subtítulo (usa la clase .reveal, cubierta por
+     las tres redes de visibilidad: reduced-motion, noscript y script de rescate). */
+  .hero-lema{
+    font-family:var(--serif);font-weight:500;line-height:1.15;
+    font-size:clamp(19px,3.6vw,30px);color:rgba(28,28,28,.9);
+    max-width:22ch;margin-bottom:26px;
+  }
+  .hero-lema em{font-style:italic;color:var(--clay)}
   .hero-sub{
     font-size:clamp(16px,4.2vw,19px);max-width:44ch;
     color:rgba(28,28,28,.72);margin-bottom:38px;
@@ -425,7 +433,7 @@
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
     html{scroll-behavior:auto}
-    .reveal,.w{opacity:1 !important;transform:none !important}
+    .reveal,.w,.hero-lema{opacity:1 !important;transform:none !important}
     .intro{display:none !important}
   }
 
@@ -453,7 +461,7 @@
 <!-- GARANTÍA DE VISIBILIDAD: si no hay JS, todo visible -->
 <noscript>
   <style>
-    .reveal,.w{opacity:1 !important;transform:none !important}
+    .reveal,.w,.hero-lema{opacity:1 !important;transform:none !important}
     .progress,.scroll-hint{display:none}
     .intro{display:none !important}
   </style>
@@ -502,8 +510,9 @@
     </div>
     <div class="hero-inner">
       <p class="eyebrow reveal">Ciutat Vella · junto a la Lonja de la Seda</p>
-      <h1 id="heroTitle">Moda con <em>carácter</em> nórdico en el corazón de València</h1>
-      <p class="hero-sub reveal" data-delay="500">Boutique de moda para hombre y mujer con marcas europeas — sobre todo escandinavas — elegidas una a una. La alternativa con alma a las grandes cadenas.</p>
+      <h1 id="heroTitle"><em>Bugalú</em></h1>
+      <p class="hero-lema reveal" data-delay="380">Moda con <em>carácter</em> nórdico en el corazón de València</p>
+      <p class="hero-sub reveal" data-delay="520">Boutique de moda para hombre y mujer con marcas europeas — sobre todo escandinavas — elegidas una a una. La alternativa con alma a las grandes cadenas.</p>
       <div class="cta-row reveal" data-delay="650">
         <a class="btn btn-dark" href="tel:+34963918449">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -855,7 +864,7 @@
      A los 1,2 s fuerza visible todo lo que siga oculto (reveal sin activar
      o palabras del hero sin animar), para visores de email y WebViews raros. */
   setTimeout(function rescate(){
-    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function(el){
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal, .hero-lema'), function(el){
       if (!el.classList.contains('in')){
         var cs = window.getComputedStyle(el);
         if (parseFloat(cs.opacity) < 1){

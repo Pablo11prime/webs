@@ -96,10 +96,13 @@
     font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
     padding:.45rem 1rem;border-radius:999px;margin-bottom:1.2rem;
   }
-  .hero h1{font-size:clamp(2.3rem,6.5vw,3.9rem);color:var(--tinta);font-weight:700}
+  .hero h1{font-size:clamp(2.9rem,10.5vw,5.4rem);color:var(--tinta);font-weight:700;line-height:.98;letter-spacing:-.015em;margin-bottom:.5rem}
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em);animation:subir .7s var(--trans) forwards}
   .hero h1 em{font-style:normal;color:var(--primario)}
   @keyframes subir{to{opacity:1;transform:translateY(0)}}
+  .hero .hero-lema{font-family:'Fraunces',serif;font-weight:600;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:var(--tinta);max-width:22ch;margin:0 0 .3rem}
+  .hero .hero-lema em{font-style:normal;color:var(--primario)}
   .hero p.sub{margin:1.3rem 0 2rem;font-size:1.08rem;color:var(--tinta-suave);max-width:34rem}
   .hero-cta{display:flex;flex-wrap:wrap;gap:.9rem}
   .btn{
@@ -253,13 +256,13 @@
   /* Garantía de visibilidad si no hay JS */
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
-    .anim,.hero h1 .palabra{opacity:1 !important;transform:none !important}
+    .anim,.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important}
   }
 </style>
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    .anim,.hero h1 .palabra,[style*="opacity"]{opacity:1 !important;transform:none !important;animation:none !important}
+    .anim,.hero h1 .palabra,.hero-lema,[style*="opacity"]{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -291,16 +294,13 @@
   <div class="hero-inner">
     <div>
       <span class="hero-eyebrow">✦ Tu dentista en Campanar, València</span>
-      <h1 aria-label="Sonríe con confianza. Ortodoncia invisible y cuidado cercano en Campanar.">
-        <span class="palabra" style="animation-delay:.05s">Sonríe</span>
-        <span class="palabra" style="animation-delay:.15s">con</span>
-        <span class="palabra" style="animation-delay:.25s">confianza.</span><br>
-        <span class="palabra" style="animation-delay:.4s"><em>Ortodoncia</em></span>
-        <span class="palabra" style="animation-delay:.5s"><em>invisible</em></span>
-        <span class="palabra" style="animation-delay:.6s">y</span>
-        <span class="palabra" style="animation-delay:.7s">trato</span>
-        <span class="palabra" style="animation-delay:.8s">cercano.</span>
+      <h1 aria-label="Clínica Dental Del Turia">
+        <span class="palabra" style="animation-delay:.05s">Clínica</span>
+        <span class="palabra" style="animation-delay:.15s">Dental</span>
+        <span class="palabra" style="animation-delay:.25s">Del</span>
+        <span class="palabra" style="animation-delay:.35s"><em>Turia</em></span>
       </h1>
+      <p class="hero-lema anim">Sonríe con confianza. <em>Ortodoncia invisible</em> y trato cercano.</p>
       <p class="sub anim">En Clínica Dental Del Turia cuidamos tu sonrisa con tecnología de diagnóstico 3D y un equipo que te explica cada paso. Nuestros pacientes nos avalan: <strong>4,8 sobre 5 en Google</strong>.</p>
       <div class="hero-cta anim">
         <a class="btn btn-primario" href="tel:+34722233472">☎ Llamar ahora</a>
@@ -516,7 +516,7 @@
         el.style.transform = 'none';
       }
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (parseFloat(window.getComputedStyle(el).opacity) < 1) {
         el.style.animation = 'none';
         el.style.opacity = '1';

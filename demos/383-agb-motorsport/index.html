@@ -96,12 +96,19 @@
   }
   .hero-tag::before{content:"";width:34px;height:2px;background:var(--rojo)}
   .hero h1{
-    font-size:clamp(3rem,11vw,6.2rem);
-    font-weight:800;line-height:.95;margin-bottom:18px;
+    font-size:clamp(3rem,11.6vw,6.6rem);
+    font-weight:800;line-height:.95;margin-bottom:10px;
   }
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.6em);animation:palabra .7s cubic-bezier(.22,.61,.36,1) forwards}
   .hero h1 .roja{color:var(--rojo)}
   @keyframes palabra{to{opacity:1;transform:translateY(0)}}
+  .hero-lema{
+    font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em;
+    font-weight:600;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);
+    color:rgba(255,255,255,.92);max-width:22ch;margin-bottom:22px;
+  }
+  .hero-lema .roja{color:var(--rojo)}
   .hero p.sub{
     max-width:560px;color:#c3c8ce;font-size:clamp(1rem,2.6vw,1.2rem);
     margin-bottom:36px;
@@ -251,13 +258,13 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     html{scroll-behavior:auto}
-    .reveal,.hero h1 .palabra{opacity:1!important;transform:none!important}
+    .reveal,.hero h1 .palabra,.hero-lema{opacity:1!important;transform:none!important}
   }
 </style>
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, TODO visible siempre */
-    .reveal,.hero h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+    .reveal,.hero h1 .palabra,.hero-lema{opacity:1!important;transform:none!important;animation:none!important}
     #barra-scroll{display:none}
   </style>
 </noscript>
@@ -276,14 +283,11 @@
   <div class="hero-franja" id="franja"></div>
   <div class="hero-inner">
     <p class="hero-tag">Taller mecánico · Quatre Carreres · València</p>
-    <h1 aria-label="Tu coche, en manos de verdad">
-      <span class="palabra" style="animation-delay:.1s">Tu</span>
-      <span class="palabra" style="animation-delay:.22s">coche,</span><br>
-      <span class="palabra" style="animation-delay:.38s">en</span>
-      <span class="palabra roja" style="animation-delay:.52s">manos</span>
-      <span class="palabra" style="animation-delay:.66s">de</span>
-      <span class="palabra roja" style="animation-delay:.8s">verdad</span>
+    <h1 aria-label="AGB Motorsport">
+      <span class="palabra" style="animation-delay:.1s">AGB</span>
+      <span class="palabra roja" style="animation-delay:.28s">Motorsport</span>
     </h1>
+    <p class="hero-lema">Tu coche, en <span class="roja">manos de verdad</span></p>
     <p class="sub">Mecánica honesta en el barrio de Quatre Carreres: te explicamos todo lo que vamos a hacer, sin sorpresas en la factura. Desde la revisión de siempre hasta las reparaciones de motor más complejas.</p>
     <div class="hero-botones">
       <a class="btn btn-rojo" href="tel:+34659907559">📞 659 90 75 59</a>
@@ -503,7 +507,7 @@
       el.style.opacity = '1';
       el.style.transform = 'none';
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (getComputedStyle(el).opacity === '0'){
         el.style.animation = 'none';
         el.style.opacity = '1';

@@ -37,7 +37,7 @@ a{color:inherit}
 .hero .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1)}
 .hero .palabra.visible{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){
-  .anim,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  .anim,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important;transition:none !important}
   html{scroll-behavior:auto}
 }
 
@@ -50,8 +50,12 @@ a{color:inherit}
   repeating-linear-gradient(65deg,transparent 0 46px,rgba(255,255,255,.03) 46px 48px)}
 .hero-etiqueta{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:600;margin-bottom:22px;backdrop-filter:blur(4px)}
 .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 10px #3ddc84}
-.hero h1{font-size:clamp(2.4rem,9.5vw,4.4rem);font-weight:900;margin-bottom:14px}
+.hero h1{font-size:clamp(3rem,11.6vw,6.4rem);font-weight:900;line-height:.95;letter-spacing:-.015em;margin-bottom:10px}
 .hero h1 .rojo{color:#ff6b76}
+/* Lema comercial: secundario, justo bajo el nombre del negocio */
+.hero-lema{font-family:inherit;font-weight:700;line-height:1.15;font-size:clamp(1.15rem,3.6vw,1.85rem);
+  color:rgba(255,255,255,.92);max-width:22ch;margin-bottom:20px}
+.hero-lema .rojo{color:#ff6b76}
 .hero p.sub{font-size:1.05rem;color:rgba(255,255,255,.8);max-width:36ch;margin-bottom:30px}
 .hero-botones{display:flex;flex-direction:column;gap:12px;max-width:340px}
 .btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s}
@@ -144,7 +148,7 @@ footer a{color:#fff}
 <noscript>
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
-.anim,.hero .palabra{opacity:1 !important;transform:none !important}
+.anim,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important}
 #progreso{display:none}
 </style>
 </noscript>
@@ -159,9 +163,9 @@ footer a{color:#fff}
   <div class="contenedor">
     <span class="hero-etiqueta anim"><span class="punto"></span> Taller multiservicio · Horta-Guinardó, Barcelona</span>
     <h1 id="titulo-hero">
-      <span class="palabra">Talleres</span> <span class="palabra rojo">Morillo</span><br>
-      <span class="palabra">Tu</span> <span class="palabra">coche,</span> <span class="palabra">como</span> <span class="palabra">si</span> <span class="palabra">fuera</span> <span class="palabra rojo">nuestro.</span>
+      <span class="palabra">Talleres</span> <span class="palabra rojo">Morillo</span>
     </h1>
+    <p class="hero-lema anim">Tu coche, como si fuera <span class="rojo">nuestro.</span></p>
     <p class="sub anim">Mecánica, electricidad, chapa y pintura, aire acondicionado — coche y moto. En Carrer dels Cortada, 15, con vehículo de cortesía y recogida a domicilio.</p>
     <div class="hero-botones anim">
       <a class="btn btn-rojo" href="tel:+34933571266">📞 Llamar: 933 57 12 66</a>
@@ -365,7 +369,7 @@ footer a{color:#fff}
   // SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad, lección 03/08/2026):
   // a los 1,2 s fuerza visible todo lo que siga oculto, pase lo que pase con el observer.
   setTimeout(function rescate(){
-    document.querySelectorAll('.anim, .hero .palabra, [data-contar]').forEach(function(el){
+    document.querySelectorAll('.anim, .hero .palabra, .hero-lema, [data-contar]').forEach(function(el){
       el.classList.add('visible');
       var cs = window.getComputedStyle(el);
       if (parseFloat(cs.opacity) < 1) { el.style.opacity = '1'; el.style.transform = 'none'; }

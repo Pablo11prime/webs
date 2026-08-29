@@ -39,7 +39,7 @@ a{color:inherit}
 .hero .palabra{display:inline-block;opacity:0;transform:translateY(.6em);transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1)}
 .hero .palabra.visible{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){
-  .anim,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  .anim,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important;transition:none !important}
   html{scroll-behavior:auto}
 }
 
@@ -53,8 +53,10 @@ a{color:inherit}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(45deg,var(--acento) 0 22px,#1F2937 22px 44px);opacity:.85}
 .hero-etiqueta{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:600;margin-bottom:22px;backdrop-filter:blur(4px)}
 .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:#34D399;box-shadow:0 0 10px #34D399}
-.hero h1{font-size:clamp(2.3rem,9.5vw,4.3rem);font-weight:800;margin-bottom:14px}
+.hero h1{font-size:clamp(3rem,11.6vw,5.8rem);font-weight:800;margin-bottom:10px;letter-spacing:-.015em;line-height:.95}
 .hero h1 .ambar{color:var(--acento-suave)}
+.hero-lema{font-family:'Sora',sans-serif;font-weight:600;line-height:1.15;font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(255,255,255,.92);max-width:22ch;margin-bottom:20px}
+.hero-lema .ambar{color:var(--acento-suave)}
 .hero p.sub{font-size:1.05rem;color:rgba(255,255,255,.82);max-width:40ch;margin-bottom:30px}
 .hero-botones{display:flex;flex-direction:column;gap:12px;max-width:340px}
 .btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s}
@@ -150,7 +152,7 @@ footer a{color:#fff}
 <noscript>
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
-.anim,.hero .palabra{opacity:1 !important;transform:none !important}
+.anim,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important}
 #progreso{display:none}
 </style>
 </noscript>
@@ -165,9 +167,9 @@ footer a{color:#fff}
   <div class="contenedor">
     <span class="hero-etiqueta anim"><span class="punto"></span> Taller multiservicio · Zona Franca, Barcelona</span>
     <h1 id="titulo-hero">
-      <span class="palabra">Talleres</span> <span class="palabra ambar">Unión</span><br>
-      <span class="palabra">Mecánica</span> <span class="palabra">de</span> <span class="palabra ambar">confianza</span> <span class="palabra">en</span> <span class="palabra">la</span> <span class="palabra">Zona</span> <span class="palabra">Franca.</span>
+      <span class="palabra">Talleres</span> <span class="palabra ambar">Unión</span>
     </h1>
+    <p class="hero-lema anim">Mecánica de <span class="ambar">confianza</span> en la Zona Franca.</p>
     <p class="sub anim">Mecánica integral, chapa y pintura, electrónica y reprogramaciones en Carrer de la Foneria, 48. Con vehículo de cortesía mientras reparamos el tuyo.</p>
     <div class="hero-botones anim">
       <a class="btn btn-ambar" href="tel:+34933324396">📞 Llamar: 933 32 43 96</a>
@@ -365,7 +367,7 @@ footer a{color:#fff}
   // SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad, lección 03/08/2026):
   // a los 1,2 s fuerza visible todo lo que siga oculto, pase lo que pase con el observer.
   setTimeout(function rescate(){
-    document.querySelectorAll('.anim, .hero .palabra, [data-contar]').forEach(function(el){
+    document.querySelectorAll('.anim, .hero .palabra, .hero-lema, [data-contar]').forEach(function(el){
       el.classList.add('visible');
       var cs = window.getComputedStyle(el);
       if (parseFloat(cs.opacity) < 1) { el.style.opacity = '1'; el.style.transform = 'none'; }

@@ -172,14 +172,18 @@ nav.con-sombra{box-shadow:0 6px 24px rgba(10,77,140,.12)}
   font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:#7FB2DC;
   font-weight:700;margin-bottom:22px}
 .hero-kicker::before{content:"";width:34px;height:2px;background:var(--acento)}
-.hero h1{font-size:clamp(2.4rem,9.6vw,5.2rem);color:#EAF2F9;max-width:15ch;margin-bottom:24px}
+.hero h1{font-size:clamp(3rem,11.6vw,6.6rem);color:#EAF2F9;max-width:none;margin-bottom:10px;letter-spacing:-.015em;line-height:.95}
 .hero h1 em{font-style:normal;color:#FF4B55}
 .hero h1 .pal{display:inline-block}
 .js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1.2deg);animation:palabra .8s var(--curva) forwards;animation-delay:calc(.15s + var(--i)*.1s)}
 @keyframes palabra{to{opacity:1;transform:none}}
+.hero-lema{font-family:var(--titular);font-weight:600;line-height:1.15;
+  font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(234,242,249,.92);max-width:22ch;margin-bottom:22px}
+.hero-lema em{font-style:normal;color:#FF4B55}
+.js-on .hero-lema{opacity:0;animation:aparece .9s var(--curva) .85s forwards}
 .hero-sub{max-width:46ch;color:rgba(234,242,249,.75);font-size:1.02rem;margin-bottom:32px}
 .hero-sub strong{color:#fff;font-weight:600}
-.js-on .hero-sub{opacity:0;animation:aparece 1s var(--curva) .95s forwards}
+.js-on .hero-sub{opacity:0;animation:aparece 1s var(--curva) 1.05s forwards}
 @keyframes aparece{to{opacity:1}}
 .hero-botones{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
 .js-on .hero-botones{opacity:0;animation:aparece 1s var(--curva) 1.15s forwards}
@@ -384,13 +388,13 @@ footer .legal a{color:inherit}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
   #intro{display:none !important}
-  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-lema,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
 }
 </style>
 <noscript>
 <style>
   /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
   #intro{display:none !important}
 </style>
 </noscript>
@@ -456,7 +460,8 @@ footer .legal a{color:inherit}
   <div class="hero-aro a2" aria-hidden="true"></div>
   <div class="hero-int">
     <p class="hero-kicker">Servicio Oficial Bosch · Extramurs, València</p>
-    <h1 id="titulo-hero">Mecánica y electricidad con sello <em>alemán</em></h1>
+    <h1 id="titulo-hero">Talleres <em>Gabarda</em></h1>
+    <p class="hero-lema">Mecánica y electricidad con sello <em>alemán</em></p>
     <p class="hero-sub">Talleres Gabarda, en el Carrer d'Honorat Juan 12, lleva <strong>más de 30 años</strong> cuidando coches en Extramurs. Servicio Oficial Bosch y <strong>especialistas en Audi, BMW, Mercedes y Volkswagen</strong>.</p>
     <div class="hero-botones">
       <a class="btn btn-rojo" href="tel:+34963853186">
@@ -802,7 +807,7 @@ footer .legal a{color:inherit}
           if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
         }
       }
-      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-lema, .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
       ocultos.forEach(function(el){
         var est = window.getComputedStyle(el);
         if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){

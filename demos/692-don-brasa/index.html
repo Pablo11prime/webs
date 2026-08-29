@@ -80,7 +80,7 @@
     display:inline-flex;align-items:center;gap:.55em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;
     color:var(--ambar);border:1px solid rgba(232,168,72,.5);border-radius:999px;padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(232,168,72,.08);
   }
-  .hero h1{font-size:clamp(2.7rem,10vw,5.8rem);font-weight:700;line-height:1.02;margin-bottom:1.3rem}
+  .hero h1{font-size:clamp(3rem,11.6vw,6.6rem);font-weight:700;line-height:.95;letter-spacing:-.015em;max-width:none;margin-bottom:10px}
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
   .hero h1 .palabra:nth-child(1){animation-delay:.15s}
   .hero h1 .palabra:nth-child(2){animation-delay:.32s}
@@ -89,6 +89,9 @@
   .hero h1 .palabra:nth-child(5){animation-delay:.83s}
   .hero h1 em{font-style:italic;color:var(--brasa-viva)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-lema{font-family:'Playfair Display',serif;font-weight:600;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(242,232,220,.92);max-width:22ch;margin-bottom:22px}
+  .hero-lema em{font-style:italic;color:var(--brasa-viva)}
   .hero p.sub{max-width:34em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(242,232,220,.85);margin-bottom:2.3rem}
   .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
   .btn{
@@ -216,14 +219,14 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
     [data-anim]{opacity:1 !important;transform:none !important}
-    .hero h1 .palabra{opacity:1;transform:none}
+    .hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important}
     html{scroll-behavior:auto}
   }
 </style>
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+    [data-anim],.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -247,12 +250,10 @@
         Asador argentino · Poble-sec, Barcelona
       </p>
       <h1>
-        <span class="palabra">La&nbsp;parrilla</span>
-        <span class="palabra">argentina</span>
-        <span class="palabra">que</span>
-        <span class="palabra">Barcelona</span>
-        <span class="palabra"><em>recomienda.</em></span>
+        <span class="palabra">Don</span>
+        <span class="palabra"><em>Brasa</em></span>
       </h1>
+      <p class="hero-lema">La parrilla argentina que Barcelona <em>recomienda.</em></p>
       <p class="sub">Cortes a la brasa, empanadas caseras, provoleta y vinos argentinos en una sala cálida con terraza, a dos pasos del Paral·lel. Uno de los 30 restaurantes mejor valorados de Barcelona en Tripadvisor.</p>
       <div class="botones">
         <a class="btn btn-brasa" href="tel:+34682519160">📞 Reservar mesa</a>
@@ -506,7 +507,7 @@
     document.querySelectorAll('[data-anim]:not(.visible)').forEach(function(el){
       el.classList.add('visible'); el.style.opacity = '1'; el.style.transform = 'none';
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (getComputedStyle(el).opacity === '0') { el.style.animation = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }
     });
     contadores.forEach(function(el){

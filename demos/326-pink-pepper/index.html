@@ -47,7 +47,7 @@
   .js .reveal.d4{transition-delay:.38s}
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
-    .js .reveal{opacity:1!important;transform:none!important}
+    .js .reveal,.hero-lema{opacity:1!important;transform:none!important}
     html{scroll-behavior:auto}
   }
 
@@ -94,12 +94,16 @@
   .overline{display:inline-flex;align-items:center;gap:.7em;font-size:.72rem;font-weight:700;
     letter-spacing:.3em;text-transform:uppercase;color:var(--rosa)}
   .overline::before{content:"";width:34px;height:1px;background:var(--rosa)}
-  .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,9.6vw,5.2rem);
-    line-height:1.02;letter-spacing:-.01em;margin:.6rem 0 1.15rem;text-transform:uppercase}
+  .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(3.1rem,12vw,6.6rem);
+    line-height:.95;letter-spacing:-.015em;margin:.6rem 0 .6rem;text-transform:uppercase}
   .hero h1 .w{display:inline-block;animation:palabra .9s var(--ease) both}
   .hero h1 em{font-style:normal;color:var(--rosa);text-shadow:0 0 26px rgba(229,57,158,.5)}
   @keyframes palabra{from{opacity:0;transform:translateY(.55em) rotate(1.5deg)}to{opacity:1;transform:none}}
-  .hero-sub{max-width:34rem;font-size:1.06rem;color:var(--hueso-suave);animation:sube 1s var(--ease) .55s both}
+  .hero-lema{font-family:var(--display);font-weight:600;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(247,242,245,.92);max-width:22ch;
+    margin-bottom:1.15rem;animation:sube .9s var(--ease) .45s both}
+  .hero-lema em{font-style:normal;color:var(--rosa)}
+  .hero-sub{max-width:34rem;font-size:1.06rem;color:var(--hueso-suave);animation:sube 1s var(--ease) .7s both}
   @keyframes sube{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
   .hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.9rem;animation:sube 1s var(--ease) .75s both}
   .btn{display:inline-flex;align-items:center;gap:.55em;text-decoration:none;font-weight:700;font-size:.95rem;
@@ -254,7 +258,7 @@
 <noscript>
   <!-- GARANTÍA DE VISIBILIDAD: sin JavaScript, nada queda oculto -->
   <style>
-    .reveal,.hero h1 .w,.hero-sub,.hero-ctas,.hero-nota,.hero-card{opacity:1!important;transform:none!important;animation:none!important}
+    .reveal,.hero h1 .w,.hero-lema,.hero-sub,.hero-ctas,.hero-nota,.hero-card{opacity:1!important;transform:none!important;animation:none!important}
     .marquee-pista{animation:none!important}
   </style>
 </noscript>
@@ -285,7 +289,8 @@
     <div class="wrap hero-grid">
       <div>
         <span class="overline">Moda alternativa · Carrer dels Tallers, 11</span>
-        <h1 id="titulo">Underground fashion desde el corazón de <em>Barcelona</em></h1>
+        <h1 id="titulo">Pink <em>Pepper</em></h1>
+        <p class="hero-lema">Underground fashion desde el corazón de <em>Barcelona</em></p>
         <p class="hero-sub">Gótico, punk, festival y piezas que no encontrarás en ningún escaparate comercial. Ropa de hombre y mujer, vestidos y accesorios únicos, a un minuto de Plaça de Catalunya.</p>
         <div class="hero-ctas">
           <a class="btn btn-rosa" href="https://www.instagram.com/pinkpepperbcn/" target="_blank" rel="noopener">Pedidos por Instagram</a>
@@ -513,6 +518,10 @@
         if(parseFloat(op)<1){el.style.opacity='1';el.style.transform='none';}
         el.classList.add('in');
       }
+    });
+    [].slice.call(document.querySelectorAll('.hero h1 .w,.hero-lema,.hero-sub,.hero-ctas,.hero-nota,.hero-card')).forEach(function(el){
+      var cs=window.getComputedStyle(el);
+      if(parseFloat(cs.opacity)<1){el.style.opacity='1';el.style.transform='none';el.style.animation='none';}
     });
   },1200);
 

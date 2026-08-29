@@ -95,8 +95,8 @@
   }
   .sello svg{flex:none}
   .hero h1{
-    font-size:clamp(2.6rem,9vw,5.4rem);font-weight:600;line-height:1.04;
-    letter-spacing:-.01em;margin-bottom:1.3rem;
+    font-size:clamp(3rem,11.2vw,6.4rem);font-weight:600;line-height:.97;
+    letter-spacing:-.015em;margin-bottom:10px;
   }
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(2deg);animation:palabra .8s var(--transicion) forwards}
   .hero h1 .palabra:nth-child(1){animation-delay:.15s}
@@ -105,6 +105,14 @@
   .hero h1 .palabra:nth-child(4){animation-delay:.60s}
   .hero h1 em{font-style:italic;color:var(--dorado)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  /* Lema secundario: el reclamo comercial, bajo el nombre del negocio.
+     Sin opacity:0 en el CSS base (garantía de visibilidad, lección 03/08/2026). */
+  .hero-lema{
+    font-family:'Fraunces',serif;font-weight:400;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(250,247,242,.92);
+    max-width:22ch;margin-bottom:1.3rem;
+  }
+  .hero-lema em{font-style:italic;color:var(--dorado)}
   .hero p.sub{
     max-width:34em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.25rem);
     color:rgba(250,247,242,.82);margin-bottom:2.2rem;
@@ -275,7 +283,7 @@
   /* ====== accesibilidad: sin animaciones si el usuario lo pide ====== */
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
-    [data-anim]{opacity:1 !important;transform:none !important}
+    [data-anim],.hero-lema{opacity:1 !important;transform:none !important}
     .hero h1 .palabra{opacity:1;transform:none}
     html{scroll-behavior:auto}
   }
@@ -283,7 +291,7 @@
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+    [data-anim],.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -307,11 +315,11 @@
         Mejor peluquería de Valencia · Revista Mujer Hoy
       </p>
       <h1>
-        <span class="palabra">Tu&nbsp;pelo,</span>
-        <span class="palabra">en</span>
-        <span class="palabra">su&nbsp;mejor</span>
-        <span class="palabra"><em>versión.</em></span>
+        <span class="palabra"><em>ROHO</em></span>
+        <span class="palabra">Hair</span>
+        <span class="palabra">&amp;&nbsp;Beauty</span>
       </h1>
+      <p class="hero-lema">Tu pelo, en su mejor <em>versión.</em></p>
       <p class="sub">Peluquería y belleza en el corazón de Ruzafa. Cortes, color, babylights, balayage y alisado orgánico con asesoramiento exclusivo, solo con cita previa.</p>
       <div class="botones">
         <a class="btn btn-oro" href="https://booksy.com/es-es/104372_roho-hair-beauty_peluqueria_58087_valencia" target="_blank" rel="noopener">✦ Reservar cita</a>
@@ -548,7 +556,7 @@
       el.style.opacity = '1';
       el.style.transform = 'none';
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (getComputedStyle(el).opacity === '0') {
         el.style.animation = 'none';
         el.style.opacity = '1';

@@ -145,7 +145,8 @@ nav.con-sombra{box-shadow:0 6px 24px rgba(31,58,95,.08)}
 .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);
   animation:latido 2s ease-in-out infinite}
 @keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
-h1{font-size:clamp(2.5rem,8vw,4.6rem);color:var(--tinta);max-width:16ch}
+h1{font-size:clamp(3rem,11.6vw,6.6rem);color:var(--tinta);max-width:none;
+  letter-spacing:-.015em;line-height:.95;margin-bottom:10px}
 h1 .palabra{display:inline-block;opacity:0;transform:translateY(26px);
   animation:subePalabra .7s var(--transicion) forwards}
 h1 em{font-style:normal;color:var(--primario);position:relative}
@@ -153,6 +154,14 @@ h1 em::after{content:"";position:absolute;left:0;bottom:6px;height:.28em;width:1
   background:linear-gradient(90deg,rgba(214,69,40,.35),rgba(214,69,40,.12));
   z-index:-1;border-radius:4px}
 @keyframes subePalabra{to{opacity:1;transform:translateY(0)}}
+/* Lema secundario del hero: el nombre del negocio manda, el reclamo va debajo.
+   La regla NO declara opacity:0 (lección 03/08/2026): el estado inicial vive solo
+   dentro de la animación con fill-mode backwards, así que sin animación se ve. */
+.hero-lema{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;
+  font-size:clamp(1.15rem,3.6vw,1.85rem);color:var(--tinta);max-width:22ch;margin:0 0 18px;
+  animation:lemaAparece .9s var(--transicion) .75s backwards}
+.hero-lema em{font-style:normal;color:var(--primario)}
+@keyframes lemaAparece{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .hero-sub{font-size:clamp(1.02rem,2.5vw,1.2rem);color:var(--tinta-suave);
   max-width:52ch;margin:22px 0 34px}
 .hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
@@ -309,7 +318,7 @@ footer a:hover{color:#F0876B}
 /* ===== Movimiento reducido ===== */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  .revelar,h1 .palabra,.hero-lema{opacity:1!important;transform:none!important}
   #intro{display:none !important}
   html{scroll-behavior:auto}
 }
@@ -317,7 +326,7 @@ footer a:hover{color:#F0876B}
 <noscript>
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
-.revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+.revelar,h1 .palabra,.hero-lema{opacity:1!important;transform:none!important;animation:none!important}
 #intro{display:none !important}
 #progreso{display:none}
 </style>
@@ -407,12 +416,10 @@ footer a:hover{color:#F0876B}
   <div class="hero-int">
     <span class="hero-etiqueta"><span class="punto"></span> Taller mecánico y eléctrico · Eixample, Barcelona</span>
     <h1 id="titular">
-      <span class="palabra">Tu</span>
-      <span class="palabra">coche,</span>
-      <span class="palabra">en</span>
-      <span class="palabra"><em>buenas</em></span>
-      <span class="palabra"><em>manos</em></span>
+      <span class="palabra">Tallers</span>
+      <span class="palabra"><em>Gran Via</em></span>
     </h1>
+    <p class="hero-lema">Tu coche, en <em>buenas manos</em></p>
     <p class="hero-sub">Mecánica general y electricidad del automóvil en pleno Eixample de Barcelona: 37 años de oficio, diagnóstico claro y reparaciones bien hechas, con el trato cercano del taller de barrio de toda la vida.</p>
     <div class="hero-botones">
       <a class="btn btn-primario" href="tel:931463626">
@@ -743,7 +750,7 @@ footer a:hover{color:#F0876B}
       el.style.opacity = '1';
       el.style.transform = 'none';
     });
-    document.querySelectorAll('h1 .palabra').forEach(function(p){
+    document.querySelectorAll('h1 .palabra, .hero-lema').forEach(function(p){
       var op = window.getComputedStyle(p).opacity;
       if (parseFloat(op) < 1) { p.style.animation = 'none'; p.style.opacity = '1'; p.style.transform = 'none'; }
     });

@@ -55,7 +55,7 @@ img{max-width:100%}
 .hero-word.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .reveal,.hero-word{opacity:1!important;transform:none!important;transition:none!important}
+  .reveal,.hero-word,.hero-lema{opacity:1!important;transform:none!important;transition:none!important}
   .card:hover{transform:none!important}
   .hero-bg{transform:none!important}
   #intro{display:none!important}
@@ -160,11 +160,20 @@ header{
   color:var(--tan);font-weight:500;margin-bottom:1.4rem;
 }
 .hero h1{
-  font-size:clamp(2.9rem,9vw,5.6rem);
-  max-width:12ch;
-  margin-bottom:1.5rem;
+  font-size:clamp(3rem,11.6vw,6.6rem);
+  line-height:.95;letter-spacing:-.015em;
+  max-width:none;
+  margin-bottom:.6rem;
 }
 .hero h1 em{font-style:italic;color:var(--tan)}
+/* Lema comercial: baja de titular a subtítulo (usa la clase .reveal, cubierta por
+   las tres redes de visibilidad: reduced-motion, noscript y script de rescate). */
+.hero-lema{
+  font-family:var(--serif);font-weight:500;line-height:1.15;
+  font-size:clamp(1.25rem,3.6vw,2rem);
+  color:rgba(246,241,236,.94);max-width:22ch;margin-bottom:1.5rem;
+}
+.hero-lema em{font-style:italic;color:var(--tan)}
 .hero p.lead{
   max-width:46ch;font-weight:300;font-size:clamp(1rem,2.4vw,1.15rem);
   color:rgba(246,241,236,.82);margin-bottom:2.4rem;
@@ -295,7 +304,7 @@ footer a:hover{text-decoration:underline}
   font-size:.8rem;color:rgba(246,241,236,.55);
 }
 </style>
-<noscript><style>*{opacity:1!important;transform:none!important}#intro{display:none!important}</style></noscript>
+<noscript><style>*{opacity:1!important;transform:none!important}.hero-lema{opacity:1!important;transform:none!important}#intro{display:none!important}</style></noscript>
 </head>
 <body>
 
@@ -345,7 +354,8 @@ footer a:hover{text-decoration:underline}
   <div class="hero-bg" id="heroBg"></div>
   <div class="wrap hero-inner">
     <p class="eyebrow reveal">Boutique de moda · Ciutat Vella, València</p>
-    <h1 id="heroTitle">Moda elegida <em>pieza a pieza</em>, para ti</h1>
+    <h1 id="heroTitle">Susana <em>Hernández</em></h1>
+    <p class="hero-lema reveal">Moda elegida <em>pieza a pieza</em>, para ti</p>
     <p class="lead reveal">SH Boutique, el sueño hecho realidad de Susana Hernández: prendas de alta calidad, asesoramiento personalizado y un ambiente íntimo en pleno corazón de València.</p>
     <div class="cta-row reveal">
       <a class="btn btn-primary" href="tel:+34961043362">📞 Llamar · 961 04 33 62</a>
@@ -571,7 +581,7 @@ footer a:hover{text-decoration:underline}
         }
       }
     }catch(e){}
-    document.querySelectorAll('.reveal, .hero-word').forEach(function(el){
+    document.querySelectorAll('.reveal, .hero-word, .hero-lema').forEach(function(el){
       var op = window.getComputedStyle(el).opacity;
       if (op === '0' || parseFloat(op) < 1) {
         el.style.transition = 'opacity .4s ease';

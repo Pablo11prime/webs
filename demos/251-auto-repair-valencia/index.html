@@ -78,7 +78,7 @@
   @keyframes latido{0%,100%{box-shadow:0 0 0 0 rgba(232,68,46,.45)}55%{box-shadow:0 0 0 12px rgba(232,68,46,0)}}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important;transition:none!important}
+    .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important;transition:none!important}
     *{animation:none!important;transition:none!important}
   }
 
@@ -147,10 +147,18 @@
     padding:8px 16px;margin-bottom:26px;
   }
   .hero h1{
-    font-size:clamp(2.9rem,10vw,5.4rem);font-weight:800;
-    max-width:900px;margin-bottom:4px;color:#fff;
+    font-size:clamp(3rem,11.6vw,6.6rem);font-weight:800;line-height:.95;letter-spacing:-.005em;
+    max-width:none;margin-bottom:10px;color:#fff;
   }
   .hero h1 .rojo{color:var(--rojo)}
+  /* Lema comercial: baja de titular a subtítulo (usa la clase .anim, cubierta por
+     las tres redes de visibilidad: reduced-motion, noscript y script de rescate). */
+  .hero-lema{
+    font-family:'Barlow Condensed','Barlow',sans-serif;font-weight:600;text-transform:none;
+    line-height:1.15;font-size:clamp(1.15rem,3.6vw,1.85rem);
+    color:rgba(234,240,247,.92);max-width:24ch;margin-bottom:6px;
+  }
+  .hero-lema em{font-style:normal;color:var(--rojo)}
   .hero-sub{
     font-size:clamp(1.05rem,3.4vw,1.26rem);color:var(--texto-suave);
     max-width:660px;margin:20px 0 34px;
@@ -380,7 +388,7 @@
 <noscript>
 <style>
   /* GARANTÍA DE VISIBILIDAD sin JavaScript: todo visible, siempre. */
-  .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+  .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important}
   #progreso{display:none}
 </style>
 </noscript>
@@ -415,9 +423,10 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
       4,9 en Google · 160 reseñas · Frente a la Jefatura de Tráfico
     </span>
-    <h1 id="titulo-hero">El taller de confianza de tu <span class="rojo">barrio</span></h1>
-    <p class="hero-sub anim" style="transition-delay:180ms">Taller de automóviles en el barrio de <strong>Jesús, Valencia</strong>, justo <strong>frente a la Jefatura de Tráfico</strong>. Diagnóstico avanzado, mecánica y un trato cercano que sus clientes puntúan con <strong>4,9 sobre 5</strong>.</p>
-    <div class="hero-botones anim" style="transition-delay:300ms">
+    <h1 id="titulo-hero">Auto <span class="rojo">Repair</span></h1>
+    <p class="hero-lema anim" style="transition-delay:150ms">El taller de confianza de tu <em>barrio</em></p>
+    <p class="hero-sub anim" style="transition-delay:260ms">Taller de automóviles en el barrio de <strong>Jesús, Valencia</strong>, justo <strong>frente a la Jefatura de Tráfico</strong>. Diagnóstico avanzado, mecánica y un trato cercano que sus clientes puntúan con <strong>4,9 sobre 5</strong>.</p>
+    <div class="hero-botones anim" style="transition-delay:380ms">
       <a class="btn btn-rojo" href="tel:+34963421239">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
         Llamar ahora
@@ -751,7 +760,7 @@
      Si a los 1,2 s algo sigue oculto (visor de email, WebView raro, JS a medias),
      se fuerza visible sin animación. La página JAMÁS puede quedarse en blanco. */
   function rescateVisibilidad(){
-    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra');
+    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra, .hero-lema');
     Array.prototype.forEach.call(ocultos, function(el){
       if (!el.classList.contains('visible')){
         el.style.transition = 'none';

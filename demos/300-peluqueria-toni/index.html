@@ -107,10 +107,17 @@
   }
   .sello .estrellas-mini{color:var(--oro);letter-spacing:2px;}
   .hero h1{
-    font-size:clamp(2.5rem,8vw,4.2rem);
-    font-weight:700;margin-bottom:18px;
+    font-size:clamp(2.9rem,11.6vw,5.6rem);
+    font-weight:700;margin-bottom:10px;
+    letter-spacing:-.015em;line-height:.95;
   }
   .hero h1 .palabra{display:inline-block;}
+  .hero .hero-lema{
+    font-family:'Fraunces',Georgia,serif;font-weight:700;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);
+    color:var(--vino);max-width:24ch;margin:0 auto 16px;
+  }
+  .hero .hero-lema em{font-style:normal;color:var(--oro);}
   .hero .eslogan{
     font-size:clamp(1.15rem,4vw,1.5rem);
     color:var(--tinta);max-width:34ch;margin:0 auto 14px;
@@ -345,7 +352,8 @@
     </div>
     <div class="hero-int">
       <p class="sello anim"><span class="estrellas-mini" aria-hidden="true">★★★★★</span> 5,0 en Google · 144 reseñas</p>
-      <h1 id="titulo-hero">El corte exacto que pides, de toda la vida en el Gòtic</h1>
+      <h1 id="titulo-hero">Peluquería Toñi</h1>
+      <p class="hero-lema anim" style="--retardo:180ms">El corte exacto que pides, de toda la vida en el Gòtic</p>
       <p class="eslogan anim" style="--retardo:250ms">Peluquería de señora y caballero en el corazón de Ciutat Vella, con Toñi al frente.</p>
       <p class="sub anim" style="--retardo:350ms">Corte, color y tratamientos capilares, también para los más pequeños. En una calle peatonal del Barri Gòtic, a pocos pasos del Palau de la Música.</p>
       <div class="botones-hero anim" style="--retardo:450ms">

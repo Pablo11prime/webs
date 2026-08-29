@@ -171,19 +171,27 @@
   .hero h1{
     position:relative;
     font-family:var(--serif);font-weight:400;
-    font-size:clamp(2.6rem, 11vw, 6rem);
-    line-height:1.04;letter-spacing:-.01em;
-    max-width:12ch;margin-bottom:26px;
+    font-size:clamp(3rem, 11.6vw, 6.6rem);
+    line-height:.95;letter-spacing:-.015em;
+    max-width:none;margin-bottom:10px;
   }
   .hero h1 em{font-style:italic;color:var(--oro)}
   .hero h1 .pal{display:inline-block}
   .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  /* Lema secundario: el reclamo comercial, ya bajo el nombre del salón */
+  .hero-lema{
+    position:relative;font-family:var(--serif);font-weight:400;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(247,242,238,.92);
+    max-width:22ch;margin-bottom:22px;
+  }
+  .hero-lema em{font-style:italic;color:var(--oro)}
+  .js-on .hero-lema{opacity:0;animation:aparece .9s var(--ease) .85s forwards}
   .hero-sub{
     position:relative;max-width:34ch;color:rgba(247,242,238,.72);
     font-size:1rem;font-weight:300;margin-bottom:34px;
   }
-  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) 1.05s forwards}
   @keyframes aparece{to{opacity:1}}
 
   .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
@@ -375,13 +383,13 @@
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
     html{scroll-behavior:auto}
     #intro{display:none !important}
-    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-lema,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
   }
 </style>
 <noscript>
 <style>
   /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
   #intro{display:none !important}
 </style>
 </noscript>
@@ -449,7 +457,8 @@
   <div class="hero-aro a2" aria-hidden="true"></div>
 
   <p class="hero-kicker">Alta peluquería · València</p>
-  <h1 id="titulo-hero">Tu cabello, firmado por un <em>autor</em></h1>
+  <h1 id="titulo-hero">Alex <em>Jordán</em></h1>
+  <p class="hero-lema">Tu cabello, firmado por un <em>autor</em></p>
   <p class="hero-sub">Cortes, coloración, mechas y tratamientos: del clásico a la vanguardia, en el salón del peluquero valenciano Alex Jordán.</p>
   <div class="hero-botones">
     <a class="btn btn-oro" href="tel:+34963106197">
@@ -744,7 +753,7 @@
           if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
         }
       }
-      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-lema, .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
       ocultos.forEach(function(el){
         var est = window.getComputedStyle(el);
         if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){

@@ -133,11 +133,20 @@
     padding:7px 16px;margin-bottom:22px;
   }
   .hero h1{
-    font-size:clamp(2.6rem,9vw,4.6rem);font-weight:800;
-    max-width:780px;margin-bottom:8px;
+    font-size:clamp(3rem,11.6vw,6.6rem);font-weight:800;line-height:.95;letter-spacing:-.015em;
+    max-width:none;margin-bottom:10px;
   }
   .hero h1 .rojo{color:#F87171}
   .hero h1 .ambar{color:var(--ambar-claro)}
+  /* Lema secundario: el reclamo comercial, bajo el nombre del negocio.
+     Lleva la clase .anim, ya cubierta por las tres redes de visibilidad. */
+  .hero-lema{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;line-height:1.12;
+    font-size:clamp(1.3rem,4.4vw,2.1rem);color:#F3F4F6;
+    max-width:24ch;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;
+  }
+  .hero-lema .rojo{color:#F87171}
+  .hero-lema .ambar{color:var(--ambar-claro)}
   .hero-sub{
     font-size:clamp(1.05rem,3.5vw,1.3rem);color:#D1D5DB;
     max-width:600px;margin:16px 0 30px;font-weight:500;
@@ -324,13 +333,13 @@
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none!important;transition:none!important}
-    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+    .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important}
   }
 </style>
 <noscript>
 <style>
   /* Garantía de visibilidad sin JavaScript: todo visible, siempre. */
-  .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+  .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important}
   #barra-progreso{display:none}
 </style>
 </noscript>
@@ -359,11 +368,10 @@
     <div class="hero-int">
       <p class="hero-etiqueta anim">★ 4,9 en Google · Barrio de Jesús, València</p>
       <h1 id="titulo-hero">
-        <span class="palabra">Tu</span> <span class="palabra">coche,</span>
-        <span class="palabra rojo">como</span> <span class="palabra rojo">nuevo.</span><br>
-        <span class="palabra">Chapa,</span> <span class="palabra">pintura</span>
-        <span class="palabra ambar">y</span> <span class="palabra ambar">mecánica.</span>
+        <span class="palabra">Talleres</span>
+        <span class="palabra ambar">Parc</span> <span class="palabra ambar">Central</span>
       </h1>
+      <p class="hero-lema anim">Tu coche, <span class="rojo">como nuevo</span>. Chapa, pintura <span class="ambar">y mecánica</span>.</p>
       <p class="hero-sub anim">Taller de chapa y pintura y mecánica general en el barrio de Jesús. José y su equipo cuidan tu coche con acabados impecables, plazos que se cumplen y precios justos.</p>
       <div class="hero-botones anim">
         <a class="btn btn-rojo" href="tel:+34645791090">
@@ -644,7 +652,7 @@
      visor de email raro, JS a medias), a los 1,2 segundos TODO
      lo que siga oculto se fuerza a visible. */
   function rescateVisibilidad(){
-    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra');
+    var ocultos = document.querySelectorAll('.anim, .anim-izq, .anim-der, .palabra, .hero-lema');
     Array.prototype.forEach.call(ocultos, function(el){
       if (!el.classList.contains('visible')){
         el.style.transition = 'none';

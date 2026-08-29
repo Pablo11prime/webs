@@ -41,7 +41,7 @@
   .rev{opacity:0;transform:translateY(26px);transition:opacity .7s var(--transicion),transform .7s var(--transicion)}
   .rev.visible{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
-    .rev{opacity:1 !important;transform:none !important;transition:none !important}
+    .rev,.hero-lema{opacity:1 !important;transform:none !important;transition:none !important}
     *{animation:none !important;transition:none !important}
     html{scroll-behavior:auto}
   }
@@ -106,8 +106,11 @@
     border-radius:999px;padding:.45em 1.05em;font-size:.85rem;font-weight:500;margin-bottom:1.4rem;
   }
   .hero-etiqueta b{color:var(--acento);font-weight:700}
-  .hero h1{font-size:clamp(2.5rem,7.5vw,4.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem}
+  .hero h1{font-size:clamp(3rem,11.6vw,6rem);font-weight:800;letter-spacing:-.015em;line-height:.95;margin-bottom:.6rem}
   .hero h1 .acento{color:var(--acento)}
+  .hero .hero-lema{font-family:'Sora',system-ui,sans-serif;font-weight:600;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(255,255,255,.92);max-width:22ch;margin-bottom:1.2rem}
+  .hero .hero-lema .acento{color:var(--acento)}
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em);animation:palabra .7s var(--transicion) forwards}
   @keyframes palabra{to{opacity:1;transform:none}}
   .hero p.sub{font-size:clamp(1.05rem,2.4vw,1.3rem);color:rgba(255,255,255,.82);max-width:34em;margin-bottom:2.2rem}
@@ -255,7 +258,7 @@
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    .rev,.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+    .rev,.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -282,7 +285,8 @@
     <div class="contenedor">
       <div class="hero-inner">
         <span class="hero-etiqueta rev">⭐ <b>4,9 en Google</b> · Taller mecánico en el Eixample</span>
-        <h1 id="hero-titulo">Ràpid i <span class="acento">ben fet</span></h1>
+        <h1 id="hero-titulo">TECNIAUTO <span class="acento">BCN</span></h1>
+        <p class="hero-lema rev">Ràpid i <span class="acento">ben fet</span></p>
         <p class="sub rev">Servicio integral del automóvil en el corazón de Barcelona. Especialistas en filtros de partículas, revisiones exprés y recogida gratuita de tu vehículo a domicilio.</p>
         <div class="hero-botones rev">
           <a class="btn btn-acento" href="tel:+34934368696">
@@ -517,7 +521,7 @@
         if (enPantalla || !("IntersectionObserver" in window)) el.classList.add("visible");
       }
     });
-    document.querySelectorAll(".hero h1 .palabra").forEach(function(el){
+    document.querySelectorAll(".hero h1 .palabra, .hero-lema").forEach(function(el){
       if (parseFloat(window.getComputedStyle(el).opacity) < 1) {
         el.style.opacity = "1";
         el.style.transform = "none";

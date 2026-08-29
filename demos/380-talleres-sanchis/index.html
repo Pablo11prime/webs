@@ -41,7 +41,7 @@ a{color:inherit}
 .hero .palabra{display:inline-block;opacity:0;transform:translateY(.55em);transition:opacity .5s var(--curva),transform .5s var(--curva)}
 .hero .palabra.visible{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){
-  .anim,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+  .anim,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important;transition:none !important}
   html{scroll-behavior:auto}
 }
 
@@ -56,8 +56,10 @@ a{color:inherit}
 .hero::after{content:"";position:absolute;right:-120px;bottom:-120px;width:340px;height:340px;border:2px dashed rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
 .hero-etiqueta{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:600;margin-bottom:24px;backdrop-filter:blur(4px)}
 .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:#43D98B;box-shadow:0 0 10px #43D98B}
-.hero h1{font-size:clamp(2.5rem,9.5vw,4.4rem);font-weight:800;margin-bottom:16px}
+.hero h1{font-size:clamp(3rem,11.6vw,5.8rem);font-weight:800;margin-bottom:10px;letter-spacing:-.015em;line-height:.95}
 .hero h1 .naranja{color:#FF8A4C}
+.hero-lema{font-family:'Sora',sans-serif;font-weight:600;line-height:1.15;font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(255,255,255,.92);max-width:22ch;margin-bottom:20px}
+.hero-lema .naranja{color:#FF8A4C}
 .hero p.sub{font-size:1.06rem;color:rgba(255,255,255,.8);max-width:38ch;margin-bottom:14px}
 .hero p.sub2{font-size:.95rem;color:rgba(255,255,255,.62);max-width:44ch;margin-bottom:30px}
 .hero p.sub2 b{color:#FF8A4C}
@@ -158,7 +160,7 @@ footer a{color:#fff}
 <noscript>
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
-.anim,.hero .palabra{opacity:1 !important;transform:none !important}
+.anim,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important}
 #progreso{display:none}
 </style>
 </noscript>
@@ -173,9 +175,9 @@ footer a{color:#fff}
   <div class="contenedor">
     <span class="hero-etiqueta anim"><span class="punto"></span> Taller multimarca · Barrio de Jesús · València</span>
     <h1 id="titulo-hero">
-      <span class="palabra">Talleres</span> <span class="palabra naranja">SANCHÍS</span><br>
-      <span class="palabra">Tu</span> <span class="palabra">coche,</span> <span class="palabra">en</span> <span class="palabra">buenas</span> <span class="palabra naranja">manos.</span>
+      <span class="palabra">Talleres</span> <span class="palabra naranja">SANCHÍS</span>
     </h1>
+    <p class="hero-lema anim">Tu coche, en buenas <span class="naranja">manos.</span></p>
     <p class="sub anim">Más de 20 años cuidando los coches del barrio: mecánica, chapa y pintura, lunas y gestión con aseguradoras.</p>
     <p class="sub2 anim">Y si no puedes acercarte, <b>recogemos y entregamos tu vehículo a domicilio</b>.</p>
     <div class="hero-botones anim">
@@ -382,7 +384,7 @@ footer a{color:#fff}
   // SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad, lección 03/08/2026):
   // a los 1,2 s fuerza visible todo lo que siga oculto, pase lo que pase con el observer.
   setTimeout(function rescate(){
-    document.querySelectorAll('.anim, .hero .palabra, [data-contar]').forEach(function(el){
+    document.querySelectorAll('.anim, .hero .palabra, .hero-lema, [data-contar]').forEach(function(el){
       el.classList.add('visible');
       var cs = window.getComputedStyle(el);
       if (parseFloat(cs.opacity) < 1) { el.style.opacity = '1'; el.style.transform = 'none'; }

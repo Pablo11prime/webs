@@ -48,7 +48,7 @@
   .hero .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(2deg);transition:opacity .6s var(--suave),transform .6s var(--suave)}
   .hero .palabra.visto{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
-    .rv,.hero .palabra{opacity:1 !important;transform:none !important;transition:none !important}
+    .rv,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important;transition:none !important}
     html{scroll-behavior:auto}
     #glow,#glow2{animation:none !important}
   }
@@ -104,11 +104,17 @@
   }
   .hero .sello::before{content:"";width:34px;height:1px;background:var(--oro)}
   .hero h1{
-    font-size:clamp(2.5rem,9vw,5.6rem);
-    line-height:1.04;letter-spacing:-.01em;font-weight:300;
-    max-width:14ch;
+    font-size:clamp(2.9rem,10.5vw,6.2rem);
+    line-height:.98;letter-spacing:-.015em;font-weight:300;
+    max-width:none;margin-bottom:.35rem;
   }
   .hero h1 em{font-style:italic;color:var(--oro)}
+  .hero-lema{
+    font-family:'Fraunces',Georgia,serif;font-weight:400;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);
+    color:rgba(247,243,238,.92);max-width:22ch;margin-top:.6rem;
+  }
+  .hero-lema em{font-style:italic;color:var(--oro)}
   .hero .sub{
     margin-top:1.5rem;max-width:46ch;color:rgba(247,243,238,.78);
     font-size:clamp(1rem,2.5vw,1.15rem);font-weight:300;
@@ -230,7 +236,7 @@
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer render */
-    .rv,.hero .palabra{opacity:1 !important;transform:none !important}
+    .rv,.hero .palabra,.hero-lema{opacity:1 !important;transform:none !important}
   </style>
 </noscript>
 </head>
@@ -256,9 +262,10 @@
     <div id="glow" aria-hidden="true"></div>
     <div id="glow2" aria-hidden="true"></div>
     <p class="sello rv">Peluquería · Eixample, Barcelona</p>
-    <h1 id="titulo-hero" aria-label="El color que Barcelona recomienda">
-      <span class="palabra">El</span> <span class="palabra">color</span> <span class="palabra">que</span> <span class="palabra"><em>Barcelona</em></span> <span class="palabra">recomienda.</span>
+    <h1 id="titulo-hero" aria-label="Jk Hair / Nail Stylist">
+      <span class="palabra">Jk</span> <span class="palabra"><em>Hair</em></span> <span class="palabra">/</span> <span class="palabra">Nail</span> <span class="palabra">Stylist</span>
     </h1>
+    <p class="hero-lema rv">El color que <em>Barcelona</em> recomienda.</p>
     <p class="sub rv">Balayage, coloración y cortes con firma propia, de la mano de <strong>Juank Salamanca</strong>. Un salón de barrio con acabado de gran marca, a un paso del mercado de Sant Antoni.</p>
     <div class="acciones rv">
       <a class="btn btn-oro" href="https://wa.me/message/3W47ONIGLGVJC1" target="_blank" rel="noopener">Reservar cita</a>
@@ -423,7 +430,7 @@
   }
 
   /* --- Revelado escalonado con IntersectionObserver --- */
-  var revelables = Array.prototype.slice.call(document.querySelectorAll('.rv, .hero .palabra'));
+  var revelables = Array.prototype.slice.call(document.querySelectorAll('.rv, .hero .palabra, .hero-lema'));
   function mostrarTodo(){
     revelables.forEach(function(el){ el.classList.add('visto'); });
     document.querySelectorAll('.contador').forEach(function(c){

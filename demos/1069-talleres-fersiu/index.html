@@ -55,7 +55,7 @@ img{max-width:100%}
 .hero-word.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .reveal,.hero-word{opacity:1!important;transform:none!important;transition:none!important}
+  .reveal,.hero-word,.hero-lema{opacity:1!important;transform:none!important;transition:none!important}
   .card:hover{transform:none!important}
   .hero-bg{transform:none!important}
   #intro{display:none!important}
@@ -159,11 +159,19 @@ header{
   color:var(--bronze);font-weight:500;margin-bottom:1.4rem;
 }
 .hero h1{
-  font-size:clamp(2.9rem,9vw,5.6rem);
-  max-width:13ch;
-  margin-bottom:1.5rem;
+  font-size:clamp(3rem,11.6vw,6.6rem);
+  max-width:none;line-height:.95;letter-spacing:-.015em;
+  margin-bottom:10px;
 }
 .hero h1 em{font-style:italic;color:var(--bronze)}
+/* Lema secundario: el reclamo comercial, bajo el nombre del negocio.
+   Usa .reveal, ya cubierto por las tres redes de visibilidad. */
+.hero-lema{
+  font-family:var(--serif);font-weight:500;line-height:1.15;
+  font-size:clamp(1.15rem,3.6vw,1.85rem);
+  color:rgba(246,241,236,.92);max-width:22ch;margin-bottom:1.6rem;
+}
+.hero-lema em{font-style:italic;color:var(--bronze)}
 .hero p.lead{
   max-width:48ch;font-weight:300;font-size:clamp(1rem,2.4vw,1.15rem);
   color:rgba(246,241,236,.82);margin-bottom:2.4rem;
@@ -391,7 +399,8 @@ footer a:hover{text-decoration:underline}
   <div class="hero-bg" id="heroBg"></div>
   <div class="wrap hero-inner">
     <p class="eyebrow reveal">Taller mecánico multimarca · Patraix, València</p>
-    <h1 id="heroTitle">Artesanos de la <em>mecánica</em> desde 1982</h1>
+    <h1 id="heroTitle">Talleres <em>Fersiu</em></h1>
+    <p class="hero-lema reveal">Artesanos de la <em>mecánica</em> desde 1982</p>
     <p class="lead reveal">Talleres Fersiu S.L. abrió su persiana el 15 de septiembre de 1982. Más de cuarenta años después, el mismo oficio de siempre: diagnosticar con honestidad, reparar con esmero y cobrar lo justo.</p>
     <div class="cta-row reveal">
       <a class="btn btn-primary" href="tel:+34963845328">📞 Llamar · 963 84 53 28</a>
@@ -672,7 +681,7 @@ footer a:hover{text-decoration:underline}
         }
       }
     } catch (e) {}
-    document.querySelectorAll('.reveal, .hero-word').forEach(function(el){
+    document.querySelectorAll('.reveal, .hero-word, .hero-lema').forEach(function(el){
       var op = window.getComputedStyle(el).opacity;
       if (op === '0' || parseFloat(op) < 1) {
         el.style.transition = 'opacity .4s ease';

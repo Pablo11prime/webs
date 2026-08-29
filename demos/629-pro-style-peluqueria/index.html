@@ -42,7 +42,7 @@
   @keyframes girar{to{transform:rotate(360deg)}}
   .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
   .sello{display:inline-flex;align-items:center;gap:.55em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--cobre-claro);border:1px solid rgba(200,155,108,.5);border-radius:999px;padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(200,155,108,.09)}
-  .hero h1{font-size:clamp(2.6rem,9.5vw,5.4rem);font-weight:500;line-height:1.05;margin-bottom:1.3rem}
+  .hero h1{font-size:clamp(3rem,11.4vw,6.2rem);font-weight:500;line-height:.95;letter-spacing:-.015em;margin-bottom:.6rem}
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
   .hero h1 .palabra:nth-child(1){animation-delay:.15s}
   .hero h1 .palabra:nth-child(2){animation-delay:.32s}
@@ -51,6 +51,15 @@
   .hero h1 .palabra:nth-child(5){animation-delay:.83s}
   .hero h1 em{font-style:italic;color:var(--cobre)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  /* Lema secundario del hero: el nombre manda, el reclamo va debajo y más pequeño.
+     La regla NO lleva opacity:0 propio (lección 03/08/2026): el estado inicial vive
+     solo dentro de la animación con fill-mode backwards, así que sin CSS de
+     animación el lema se sigue viendo. */
+  .hero .hero-lema{font-family:'Playfair Display',serif;font-weight:500;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(246,239,233,.92);max-width:22ch;margin-bottom:1.4rem;
+    animation:lema-aparece .9s var(--curva) .95s backwards}
+  .hero .hero-lema em{font-style:italic;color:var(--cobre)}
+  @keyframes lema-aparece{from{opacity:0;transform:translateY(.4em)}to{opacity:1;transform:none}}
   .hero p.sub{max-width:33em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(246,239,233,.85);margin-bottom:2.3rem}
   .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
   .btn{display:inline-flex;align-items:center;gap:.6em;text-decoration:none;font-weight:600;font-size:.95rem;letter-spacing:.05em;border-radius:999px;padding:.95em 2em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s}
@@ -149,14 +158,14 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
     [data-anim]{opacity:1 !important;transform:none !important}
-    .hero h1 .palabra{opacity:1;transform:none}
+    .hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important}
     html{scroll-behavior:auto}
   }
 </style>
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+    [data-anim],.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -180,12 +189,11 @@
         Peluquería · Patraix, Valencia
       </p>
       <h1>
-        <span class="palabra">Tu&nbsp;estilo,</span>
-        <span class="palabra">cuidado</span>
-        <span class="palabra">con</span>
-        <span class="palabra"><em>cariño</em></span>
-        <span class="palabra">y&nbsp;oficio.</span>
+        <span class="palabra">Pro</span>
+        <span class="palabra"><em>Style</em></span>
+        <span class="palabra">Peluquería</span>
       </h1>
+      <p class="hero-lema">Tu estilo, cuidado con <em>cariño</em> y oficio.</p>
       <p class="sub">En Pro Style Peluquería te escuchamos antes de coger las tijeras. Trato cercano, atención personalizada y un ambiente acogedor en pleno corazón de Patraix.</p>
       <div class="botones">
         <a class="btn btn-cobre" href="tel:+34614677344">📞 Llamar y pedir cita</a>
@@ -398,7 +406,7 @@
       el.style.opacity = '1';
       el.style.transform = 'none';
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (getComputedStyle(el).opacity === '0') {
         el.style.animation = 'none';
         el.style.opacity = '1';

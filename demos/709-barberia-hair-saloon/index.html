@@ -193,19 +193,26 @@
   .hero h1{
     position:relative;
     font-family:var(--serif);font-weight:400;
-    font-size:clamp(2.5rem, 10.5vw, 5.6rem);
-    line-height:1.06;letter-spacing:.005em;
-    max-width:14ch;margin-bottom:26px;
+    font-size:clamp(3rem, 11.6vw, 6.6rem);
+    line-height:.98;letter-spacing:.005em;
+    max-width:none;margin-bottom:10px;
   }
   .hero h1 em{font-style:normal;color:var(--oro)}
   .hero h1 .pal{display:inline-block}
   .js-on .hero h1 .pal{opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--ease) forwards;animation-delay:calc(.15s + var(--i)*.11s)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  .hero-lema{
+    position:relative;font-family:var(--serif);font-weight:400;line-height:1.15;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(245,239,230,.92);
+    max-width:22ch;margin-bottom:22px;
+  }
+  .hero-lema em{font-style:normal;color:var(--oro)}
+  .js-on .hero-lema{opacity:0;animation:aparece .9s var(--ease) .85s forwards}
   .hero-sub{
     position:relative;max-width:36ch;color:rgba(245,239,230,.72);
     font-size:1rem;font-weight:300;margin-bottom:34px;
   }
-  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) .95s forwards}
+  .js-on .hero-sub{opacity:0;animation:aparece 1s var(--ease) 1.05s forwards}
   @keyframes aparece{to{opacity:1}}
 
   .hero-botones{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
@@ -404,13 +411,13 @@
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
     html{scroll-behavior:auto}
     #intro{display:none !important}
-    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+    .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-lema,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
   }
 </style>
 <noscript>
 <style>
   /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
   #intro{display:none !important}
 </style>
 </noscript>
@@ -483,7 +490,8 @@
   <div class="poste" aria-hidden="true"></div>
 
   <p class="hero-kicker">Barbería clásica · Carrer Ample 42</p>
-  <h1 id="titulo-hero">El oficio clásico de la <em>barbería</em></h1>
+  <h1 id="titulo-hero">Barberia <em>Hair Saloon</em></h1>
+  <p class="hero-lema">El oficio clásico de la <em>barbería</em></p>
   <p class="hero-sub">Corte de cabello y arreglo de barba en pleno Barri Gòtic. Una de las barberías mejor valoradas del barrio, con un 4,8 en Google.</p>
   <div class="hero-botones">
     <a class="btn btn-oro" href="tel:+34627151970">
@@ -771,7 +779,7 @@
           if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
         }
       }
-      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-lema, .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
       ocultos.forEach(function(el){
         var est = window.getComputedStyle(el);
         if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){

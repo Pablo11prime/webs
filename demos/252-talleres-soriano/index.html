@@ -71,7 +71,7 @@
   .palabra.visible{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
-    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+    .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important}
     html{scroll-behavior:auto}
   }
 
@@ -145,9 +145,18 @@
   .hero-etiqueta i{width:7px;height:7px;border-radius:50%;background:var(--naranja);display:inline-block;animation:latido 2.2s ease-in-out infinite}
   @keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.55);opacity:.55}}
   .hero h1{
-    color:#fff;font-size:clamp(40px,6.2vw,68px);font-weight:600;letter-spacing:-.5px;margin-bottom:22px;
+    color:#fff;font-size:clamp(46px,9.4vw,86px);font-weight:600;
+    line-height:.98;letter-spacing:-1.2px;margin-bottom:10px;
   }
   .hero h1 em{font-style:italic;color:var(--naranja-claro)}
+  /* Lema comercial: baja de titular a subtítulo (usa la clase .anim, cubierta por
+     las tres redes de visibilidad: reduced-motion, noscript y script de rescate). */
+  .hero-lema{
+    font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;
+    font-size:clamp(19px,3.6vw,30px);color:rgba(255,255,255,.92);
+    max-width:22ch;margin-bottom:20px;
+  }
+  .hero-lema em{font-style:italic;color:var(--naranja-claro)}
   .hero-sub{
     font-size:clamp(17px,2vw,19.5px);color:rgba(255,255,255,.82);
     max-width:52ch;margin-bottom:36px;font-weight:400;
@@ -391,7 +400,7 @@
 <!-- GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible -->
 <noscript>
   <style>
-    .anim,.anim-izq,.anim-der,.palabra{opacity:1!important;transform:none!important}
+    .anim,.anim-izq,.anim-der,.palabra,.hero-lema{opacity:1!important;transform:none!important}
     #progreso,.marca-demo{display:block}
   </style>
 </noscript>
@@ -420,8 +429,9 @@
     <div class="hero-int">
       <div>
         <p class="hero-etiqueta anim"><i></i> Taller multimarca · La Saïdia, València</p>
-        <h1 id="titulo-hero">El taller de <em>confianza</em> de tu barrio</h1>
-        <p class="hero-sub anim" style="transition-delay:120ms">Taller familiar en La Saïdia. Mecánica general multimarca con un trato claro y cercano: nuestros clientes nos llaman <strong>"uno de los talleres más honestos de Valencia"</strong>.</p>
+        <h1 id="titulo-hero">Talleres <em>Soriano</em></h1>
+        <p class="hero-lema anim" style="transition-delay:100ms">El taller de <em>confianza</em> de tu barrio</p>
+        <p class="hero-sub anim" style="transition-delay:220ms">Taller familiar en La Saïdia. Mecánica general multimarca con un trato claro y cercano: nuestros clientes nos llaman <strong>"uno de los talleres más honestos de Valencia"</strong>.</p>
         <div class="hero-botones anim" style="transition-delay:220ms">
           <a class="btn btn-naranja" href="tel:+34963494318">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -750,7 +760,7 @@
      Si a los 1,2 s algo sigue oculto (visor de email, WebView raro, JS a medias),
      lo forzamos visible. Ninguna parte del contenido puede depender del JS. */
   setTimeout(function rescate(){
-    var ocultos = document.querySelectorAll('.anim,.anim-izq,.anim-der,.palabra');
+    var ocultos = document.querySelectorAll('.anim,.anim-izq,.anim-der,.palabra,.hero-lema');
     Array.prototype.forEach.call(ocultos, function(el){
       var st = window.getComputedStyle ? getComputedStyle(el) : null;
       if (!el.classList.contains('visible') || (st && parseFloat(st.opacity) < 1)) {

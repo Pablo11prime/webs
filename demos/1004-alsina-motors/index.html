@@ -146,7 +146,7 @@ nav.con-sombra{box-shadow:0 6px 24px rgba(11,60,124,.08)}
 .hero-etiqueta .punto{width:8px;height:8px;border-radius:50%;background:var(--acento);
   animation:latido 2s ease-in-out infinite}
 @keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
-h1{font-size:clamp(2.5rem,8vw,4.6rem);color:var(--tinta);max-width:16ch}
+h1{font-size:clamp(3rem,11.6vw,6.4rem);color:var(--tinta);max-width:none;line-height:.98;margin-bottom:10px}
 h1 .palabra{display:inline-block;opacity:0;transform:translateY(26px);
   animation:subePalabra .7s var(--transicion) forwards}
 h1 em{font-style:normal;color:var(--primario);position:relative}
@@ -154,8 +154,15 @@ h1 em::after{content:"";position:absolute;left:0;bottom:6px;height:.28em;width:1
   background:linear-gradient(90deg,rgba(245,166,35,.5),rgba(245,166,35,.15));
   z-index:-1;border-radius:4px}
 @keyframes subePalabra{to{opacity:1;transform:translateY(0)}}
+/* Lema comercial: secundario, bajo el nombre del negocio.
+   Entra con animation-fill-mode:backwards (nunca hay opacity:0 en el CSS base). */
+.hero-lema{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;
+  font-size:clamp(1.15rem,3.6vw,1.85rem);color:var(--tinta);max-width:22ch;margin-bottom:6px;
+  animation:lemaEntra .8s var(--transicion) .5s backwards}
+.hero-lema em{font-style:normal;color:var(--primario)}
+@keyframes lemaEntra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .hero-sub{font-size:clamp(1.02rem,2.5vw,1.2rem);color:var(--tinta-suave);
-  max-width:52ch;margin:22px 0 34px}
+  max-width:52ch;margin:18px 0 34px}
 .hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
   font-weight:600;font-size:1rem;padding:16px 30px;border-radius:999px;
@@ -319,7 +326,7 @@ footer a:hover{color:var(--acento)}
 /* ===== Movimiento reducido ===== */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .revelar,h1 .palabra{opacity:1!important;transform:none!important}
+  .revelar,h1 .palabra,.hero-lema{opacity:1!important;transform:none!important}
   #intro{display:none !important}
   html{scroll-behavior:auto}
 }
@@ -327,7 +334,7 @@ footer a:hover{color:var(--acento)}
 <noscript>
 <style>
 /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible desde el primer instante */
-.revelar,h1 .palabra{opacity:1!important;transform:none!important;animation:none!important}
+.revelar,h1 .palabra,.hero-lema{opacity:1!important;transform:none!important;animation:none!important}
 #intro{display:none !important}
 #progreso{display:none}
 </style>
@@ -415,13 +422,10 @@ footer a:hover{color:var(--acento)}
   <div class="hero-int">
     <span class="hero-etiqueta"><span class="punto"></span> Taller multimarca en Horta-Guinardó · Barcelona</span>
     <h1 id="titular">
-      <span class="palabra">Un</span>
-      <span class="palabra">taller</span>
-      <span class="palabra">como</span>
-      <span class="palabra">los</span>
-      <span class="palabra"><em>de</em></span>
-      <span class="palabra"><em>antes</em></span>
+      <span class="palabra">Alsina</span>
+      <span class="palabra"><em>Motors</em></span>
     </h1>
+    <p class="hero-lema">Un taller como los <em>de antes</em></p>
     <p class="hero-sub">Mecánica multimarca de barrio con el respaldo de la red EuroTaller: diagnosis, mantenimiento y reparación para turismos, motos, furgonetas, todoterrenos e híbridos, con trato cercano, precios ajustados y entrega en plazo. Trabajamos con cita previa.</p>
     <div class="hero-botones">
       <a class="btn btn-primario" href="tel:+34932853202">
@@ -790,6 +794,10 @@ footer a:hover{color:var(--acento)}
       el.classList.add('visible');
       el.style.opacity = '1';
       el.style.transform = 'none';
+    });
+    document.querySelectorAll('.hero-lema').forEach(function(el){
+      var op = window.getComputedStyle(el).opacity;
+      if (parseFloat(op) < 1) { el.style.animation = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }
     });
     document.querySelectorAll('h1 .palabra').forEach(function(p){
       var op = window.getComputedStyle(p).opacity;

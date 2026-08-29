@@ -42,7 +42,7 @@
   @keyframes girar{to{transform:rotate(360deg)}}
   .hero-int{position:relative;max-width:1060px;margin:0 auto;width:100%;will-change:transform}
   .sello{display:inline-flex;align-items:center;gap:.55em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--arena);border:1px solid rgba(232,213,181,.45);border-radius:999px;padding:.55em 1.3em;margin-bottom:1.7rem;background:rgba(232,213,181,.08)}
-  .hero h1{font-size:clamp(2.8rem,10.5vw,6rem);font-weight:500;line-height:1;margin-bottom:1.3rem}
+  .hero h1{font-size:clamp(3rem,11.6vw,6.6rem);font-weight:500;line-height:.95;letter-spacing:-.015em;margin-bottom:.55rem}
   .hero h1 .palabra{display:inline-block;opacity:0;transform:translateY(.55em) rotate(1.5deg);animation:palabra .8s var(--curva) forwards}
   .hero h1 .palabra:nth-child(1){animation-delay:.15s}
   .hero h1 .palabra:nth-child(2){animation-delay:.32s}
@@ -51,6 +51,11 @@
   .hero h1 .palabra:nth-child(5){animation-delay:.83s}
   .hero h1 em{font-style:italic;color:var(--oro-claro)}
   @keyframes palabra{to{opacity:1;transform:none}}
+  /* Lema comercial: baja de titular a subtítulo. Sin opacity:0 en el CSS base;
+     el estado oculto vive SOLO dentro de la animación (fill-mode both). */
+  .hero-lema{font-family:'Cormorant',serif;font-weight:600;line-height:1.15;font-size:clamp(1.15rem,3.6vw,1.85rem);color:rgba(250,245,236,.92);max-width:22ch;margin-bottom:1.5rem;animation:aparece-lema .9s var(--curva) .55s both}
+  .hero-lema em{font-style:italic;color:var(--oro-claro)}
+  @keyframes aparece-lema{from{opacity:0}to{opacity:1}}
   .hero p.sub{max-width:33em;font-weight:300;font-size:clamp(1.02rem,2.6vw,1.28rem);color:rgba(250,245,236,.85);margin-bottom:2.3rem}
   .botones{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:3rem}
   .btn{display:inline-flex;align-items:center;gap:.6em;text-decoration:none;font-weight:600;font-size:.95rem;letter-spacing:.05em;border-radius:999px;padding:.95em 2em;transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s}
@@ -162,14 +167,14 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
     [data-anim]{opacity:1 !important;transform:none !important}
-    .hero h1 .palabra{opacity:1;transform:none}
+    .hero h1 .palabra,.hero-lema{opacity:1;transform:none}
     html{scroll-behavior:auto}
   }
 </style>
 <noscript>
   <style>
     /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
-    [data-anim],.hero h1 .palabra{opacity:1 !important;transform:none !important;animation:none !important}
+    [data-anim],.hero h1 .palabra,.hero-lema{opacity:1 !important;transform:none !important;animation:none !important}
   </style>
 </noscript>
 </head>
@@ -193,12 +198,10 @@
         Especialistas en rubios · València
       </p>
       <h1>
-        <span class="palabra">El&nbsp;rubio</span>
-        <span class="palabra">que</span>
-        <span class="palabra">siempre</span>
-        <span class="palabra"><em>quisiste</em></span>
-        <span class="palabra">llevar.</span>
+        <span class="palabra"><em>Blondi</em></span>
+        <span class="palabra">Peluquerias</span>
       </h1>
+      <p class="hero-lema">El rubio que siempre <em>quisiste</em> llevar.</p>
       <p class="sub">Balayage, mechas y rubios naturales hechos con mimo en el barrio de Jesús. Te explicamos cada paso y cuidamos tu pelo como si fuera el nuestro.</p>
       <div class="botones">
         <a class="btn btn-oro" href="tel:+34960119609">📞 Llamar y pedir cita</a>
@@ -439,7 +442,7 @@
       el.style.opacity = '1';
       el.style.transform = 'none';
     });
-    document.querySelectorAll('.hero h1 .palabra').forEach(function(el){
+    document.querySelectorAll('.hero h1 .palabra, .hero-lema').forEach(function(el){
       if (getComputedStyle(el).opacity === '0') {
         el.style.animation = 'none';
         el.style.opacity = '1';

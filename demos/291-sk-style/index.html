@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK Style Barcelona — Peluquería y salón de belleza en el Eixample</title>
+<meta name="description" content="SK Style Barcelona, Carrer de Viladomat 135, 3-2, Eixample, 08015 Barcelona. Peluquería y salón de belleza premiado, con 4,7★ y 312 reseñas en Google. Desde 2009, con cita previa. Tel. 934 52 14 60.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --negro:#1A1A1A;
+  --marfil:#F7F3EE;
+  --oro:#C9A227;
+  --oro-suave:rgba(201,162,39,.14);
+  --gris:#8A8A8A;
+  --tinta:#242424;
+  --linea:rgba(26,26,26,.09);
+  --radio:20px;
+  --sombra:0 12px 40px rgba(26,26,26,.08);
+  --sombra-alta:0 26px 60px rgba(26,26,26,.16);
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --curva:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--tinta);
+  background:var(--marfil);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.1;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--oro);color:#fff}
+
+/* ===== Garantía de visibilidad: los estados ocultos SOLO existen bajo .js-on ===== */
+.js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+.js-on .rv.vis{opacity:1;transform:none}
+.js-on .rv-d1{transition-delay:.08s}
+.js-on .rv-d2{transition-delay:.18s}
+.js-on .rv-d3{transition-delay:.28s}
+.js-on .rv-d4{transition-delay:.38s}
+.js-on .rv-d5{transition-delay:.48s}
+.js-on .rv-d6{transition-delay:.58s}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+  background:linear-gradient(90deg,var(--oro),#e6c766);transition:width .1s linear}
+
+/* ===== Marca de agua DEMO ===== */
+.marca-demo{position:fixed;bottom:14px;left:14px;z-index:999;
+  background:rgba(26,26,26,.88);color:#fff;backdrop-filter:blur(6px);
+  font-size:11px;font-weight:700;letter-spacing:.2em;
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  border:1px solid rgba(201,162,39,.6);
+  box-shadow:0 4px 18px rgba(26,26,26,.3)}
+
+/* ===== INTRO "LAS TIJERAS" =====
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (opacity+visibility con
+   animation-fill-mode:forwards): aunque el JS falle, la página queda visible.
+   Unas tijeras de trazo fino cruzan la pantalla dando el corte: a su paso, una
+   línea de corte punteada y el nombre del salón se revelan con clip-path
+   sincronizado. JS solo retira el nodo del DOM al terminar.
+   pointer-events:none SIEMPRE: nunca bloquea clics ni scroll. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 72% 55% at 78% 16%, rgba(201,162,39,.20), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 12% 84%, rgba(247,243,238,.05), transparent 60%),
+    linear-gradient(160deg,#242220 0%, #1A1A1A 55%, #121110 100%);
+  animation:intro-fuera .75s var(--curva) 2.45s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+#intro .intro-caja{position:relative;max-width:92vw;text-align:center}
+#intro .intro-linea{position:relative;padding:34px 10px}
+/* Línea de corte punteada: se revela a la vez que avanza la tijera */
+#intro .intro-corte{position:absolute;left:-7%;right:-7%;top:50%;height:0;pointer-events:none;
+  border-top:1.5px dashed rgba(201,162,39,.45);
+  clip-path:inset(-8px 100% -8px 0);
+  animation:corte 1.55s var(--curva) .3s both}
+@keyframes corte{from{clip-path:inset(-8px 100% -8px 0)}to{clip-path:inset(-8px 0 -8px 0)}}
+/* El nombre se revela tras el paso de la tijera */
+#intro .intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:var(--serif);font-weight:500;color:var(--marfil);
+  font-size:clamp(2.2rem,9.4vw,5rem);line-height:1.08;letter-spacing:0;
+  clip-path:inset(-14% 100% -14% -2%);
+  animation:tijera-revela 1.55s var(--curva) .3s both;
+}
+#intro .intro-nombre em{font-style:italic;color:var(--oro)}
+@keyframes tijera-revela{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+/* Las tijeras: cruzan de izquierda a derecha dando el corte */
+#intro .intro-tijeras{
+  position:absolute;left:-4%;top:50%;width:min(150px,30vw);height:80px;
+  transform:translate(-50%,-50%) rotate(0deg);
+  filter:drop-shadow(0 0 14px rgba(201,162,39,.35));
+  animation:tijeras-pasan 1.55s var(--curva) .3s both;
+}
+@keyframes tijeras-pasan{
+  from{left:-4%;transform:translate(-50%,-50%) rotate(-2deg)}
+  to{left:104%;transform:translate(-50%,-50%) rotate(3deg)}
+}
+#intro .intro-tijeras svg{display:block;width:100%;height:100%;overflow:visible}
+/* Las dos hojas se abren y cierran (tris-tras) mientras avanzan */
+#intro .hoja-a,#intro .hoja-b{transform-box:view-box;transform-origin:70px 30px}
+#intro .hoja-a{animation:snip-a .5s ease-in-out .3s 3 alternate both}
+#intro .hoja-b{animation:snip-b .5s ease-in-out .3s 3 alternate both}
+@keyframes snip-a{from{transform:rotate(-9deg)}to{transform:rotate(3deg)}}
+@keyframes snip-b{from{transform:rotate(9deg)}to{transform:rotate(-3deg)}}
+#intro .intro-sub{
+  margin:18px 0 0;
+  font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--oro);font-weight:600;
+  opacity:0;animation:intro-sub .6s var(--curva) 1.85s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
+
+/* ===== Navegación ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 20px;
+  background:rgba(247,243,238,.9);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--linea);
+  transition:box-shadow .3s var(--curva)}
+nav.con-sombra{box-shadow:0 6px 24px rgba(26,26,26,.09)}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-weight:600;font-size:1.05rem;color:var(--negro);line-height:1.15}
+.logo .sello{width:34px;height:34px;flex:none;border-radius:50%;background:var(--negro);color:var(--oro);display:flex;align-items:center;justify-content:center}
+.logo .sello svg{width:18px;height:18px}
+.logo small{display:block;font-family:var(--sans);font-weight:600;font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--oro)}
+.nav-tel{display:inline-flex;align-items:center;gap:8px;
+  background:var(--negro);color:var(--marfil);font-weight:600;font-size:.84rem;
+  padding:11px 18px;border-radius:999px;white-space:nowrap;
+  transition:transform .25s var(--curva),background .25s var(--curva),color .25s var(--curva),box-shadow .25s var(--curva)}
+.nav-tel:hover{background:var(--oro);color:var(--negro);transform:translateY(-2px);box-shadow:0 10px 24px rgba(201,162,39,.35)}
+.nav-tel svg{width:15px;height:15px;flex:none}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--negro);color:var(--marfil);
+  padding:120px 20px 46px;overflow:hidden}
+.hero-fondo{position:absolute;inset:-12% -5%;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(ellipse 72% 55% at 80% 14%, rgba(201,162,39,.22), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 8% 88%, rgba(247,243,238,.05), transparent 60%),
+    linear-gradient(160deg,#26231f 0%, #1A1A1A 55%, #121110 100%)}
+.hero-veta{position:absolute;top:0;bottom:0;width:1px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(201,162,39,.35),transparent)}
+.hero-veta.v1{left:11%}
+.hero-veta.v2{right:15%}
+.hero-aro{position:absolute;border:1px solid rgba(201,162,39,.28);border-radius:50%;pointer-events:none;will-change:transform}
+.hero-aro.a1{width:340px;height:340px;top:-100px;right:-110px;animation:flotar 12s ease-in-out infinite alternate}
+.hero-aro.a2{width:170px;height:170px;top:150px;right:70px;border-color:rgba(247,243,238,.10);animation:flotar 15s ease-in-out infinite alternate-reverse}
+@keyframes flotar{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(26px) rotate(8deg)}}
+.hero-int{position:relative;max-width:1080px;margin:0 auto;width:100%}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;
+  font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);
+  font-weight:600;margin-bottom:22px}
+.hero-kicker::before{content:"";width:34px;height:1px;background:var(--oro)}
+.hero h1{font-size:clamp(2.6rem,10.5vw,5.6rem);color:var(--marfil);max-width:15ch;margin-bottom:24px}
+.hero h1 em{font-style:italic;color:var(--oro)}
+.hero h1 .pal{display:inline-block}
+.js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1deg);animation:palabra .8s var(--curva) forwards;animation-delay:calc(.15s + var(--i)*.1s)}
+@keyframes palabra{to{opacity:1;transform:none}}
+.hero-sub{max-width:46ch;color:rgba(247,243,238,.72);font-size:1.02rem;margin-bottom:32px}
+.js-on .hero-sub{opacity:0;animation:aparece 1s var(--curva) .95s forwards}
+@keyframes aparece{to{opacity:1}}
+.hero-botones{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
+.js-on .hero-botones{opacity:0;animation:aparece 1s var(--curva) 1.15s forwards}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:16px 26px;border-radius:999px;
+  transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s var(--curva),color .3s var(--curva),border-color .3s var(--curva)}
+.btn svg{width:15px;height:15px;flex:none}
+.btn-oro{background:var(--oro);color:var(--negro)}
+.btn-oro:hover{background:#dcb531;transform:translateY(-2px);box-shadow:0 14px 32px rgba(201,162,39,.4)}
+.btn-linea{border:1px solid rgba(247,243,238,.4);color:var(--marfil)}
+.btn-linea:hover{border-color:var(--oro);color:var(--oro);transform:translateY(-2px)}
+.hero-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  border-top:1px solid rgba(247,243,238,.14);padding-top:22px}
+.js-on .hero-datos{opacity:0;animation:aparece 1s var(--curva) 1.35s forwards}
+.hero-datos .dato b{display:block;font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.5rem,6vw,2.3rem);color:var(--marfil);line-height:1.1;font-variant-numeric:tabular-nums}
+.hero-datos .dato b .estrella{color:var(--oro)}
+.hero-datos .dato span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(247,243,238,.55);font-weight:600}
+
+/* ===== Secciones base ===== */
+section{padding:88px 20px}
+.marco{max-width:1080px;margin:0 auto}
+.etiqueta{display:inline-flex;align-items:center;gap:10px;
+  font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);
+  font-weight:700;margin-bottom:18px}
+.etiqueta::before{content:"";width:28px;height:1px;background:var(--oro)}
+h2{font-size:clamp(2rem,7.5vw,3.4rem);color:var(--negro);margin-bottom:20px}
+h2 em{font-style:italic;color:var(--oro)}
+
+/* ===== Sobre ===== */
+.sobre{background:var(--marfil)}
+.sobre p{color:#5c5c5c;max-width:58ch;font-size:1.02rem;margin-bottom:16px}
+.sobre p strong{color:var(--negro);font-weight:600}
+.sobre-datos{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.chip{display:inline-flex;align-items:center;gap:9px;
+  background:#fff;border:1px solid var(--linea);border-radius:999px;
+  padding:11px 18px;font-size:.85rem;font-weight:500;color:var(--negro);
+  box-shadow:var(--sombra);
+  transition:transform .3s var(--curva),border-color .3s var(--curva)}
+.chip:hover{transform:translateY(-3px);border-color:var(--oro)}
+.chip svg{width:16px;height:16px;color:var(--oro);flex:none}
+
+/* ===== Servicios ===== */
+.servicios{background:var(--negro);color:var(--marfil);border-radius:34px;margin:0 10px}
+.servicios h2{color:var(--marfil)}
+.servicios .intro-serv{color:rgba(247,243,238,.66);max-width:54ch;margin-bottom:44px}
+.grid-serv{display:grid;grid-template-columns:1fr;gap:14px}
+.tarjeta{position:relative;border:1px solid rgba(247,243,238,.13);border-radius:var(--radio);
+  padding:30px 26px;background:rgba(247,243,238,.04);overflow:hidden;
+  transition:transform .4s var(--curva),border-color .4s var(--curva),background .4s var(--curva),box-shadow .4s var(--curva)}
+.tarjeta:hover{transform:translateY(-6px) rotate(-.4deg);
+  border-color:rgba(201,162,39,.6);background:rgba(201,162,39,.08);
+  box-shadow:0 24px 50px rgba(10,10,10,.5)}
+.tarjeta .icono-serv{width:46px;height:46px;border-radius:50%;margin-bottom:18px;
+  background:rgba(201,162,39,.14);color:var(--oro);
+  display:flex;align-items:center;justify-content:center}
+.tarjeta .icono-serv svg{width:22px;height:22px}
+.tarjeta h3{font-size:1.35rem;margin-bottom:10px;color:var(--marfil)}
+.tarjeta p{color:rgba(247,243,238,.62);font-size:.92rem}
+.tarjeta::after{content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+  background:radial-gradient(circle at top right, rgba(201,162,39,.28), transparent 70%);
+  opacity:0;transition:opacity .4s var(--curva)}
+.tarjeta:hover::after{opacity:1}
+.serv-nota{margin-top:34px;color:rgba(247,243,238,.55);font-size:.9rem}
+.serv-nota a{color:var(--oro);font-weight:600;border-bottom:1px solid rgba(201,162,39,.45);transition:color .3s var(--curva)}
+.serv-nota a:hover{color:#e6c766}
+
+/* ===== Premios ===== */
+.premios{background:var(--marfil)}
+.premios-lema{color:#5c5c5c;max-width:54ch;font-size:1rem;margin-bottom:40px}
+.premios-lema strong{color:var(--negro)}
+.grid-premios{display:grid;grid-template-columns:1fr;gap:12px}
+.premio{border:1px solid var(--linea);border-radius:18px;padding:28px 24px;background:#fff;
+  text-align:center;
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva),border-color .35s var(--curva)}
+.premio:hover{transform:translateY(-4px);box-shadow:var(--sombra-alta);border-color:var(--oro)}
+.premio .laurel{width:46px;height:46px;margin:0 auto 16px;border-radius:50%;
+  background:var(--oro-suave);color:var(--oro);
+  display:flex;align-items:center;justify-content:center}
+.premio .laurel svg{width:22px;height:22px}
+.premio h3{font-size:1.2rem;margin-bottom:6px;color:var(--negro)}
+.premio p{color:var(--gris);font-size:.85rem}
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px;
+  border-top:1px solid var(--linea);padding-top:34px}
+.cifras .cifra b{display:block;font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.9rem,8vw,3rem);color:var(--negro);line-height:1.1;font-variant-numeric:tabular-nums}
+.cifras .cifra b .estrella{color:var(--oro);font-size:.7em}
+.cifras .cifra span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);font-weight:600}
+
+/* ===== Opiniones ===== */
+.opiniones{background:#efe8df;border-radius:34px;margin:0 10px}
+.op-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px}
+.op-cifra .num-grande{font-family:var(--serif);font-weight:600;
+  font-size:clamp(4.2rem,19vw,7.6rem);line-height:1;color:var(--negro);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.op-cifra .detalle .estrellas{color:var(--oro);font-size:1.2rem;letter-spacing:.16em}
+.op-cifra .detalle strong{color:var(--negro)}
+.op-lema{color:#5c5c5c;max-width:52ch;font-size:1rem;margin-bottom:36px}
+.op-lema strong{color:var(--negro)}
+.grid-op{display:grid;grid-template-columns:1fr;gap:12px}
+.hito{border:1px solid var(--linea);border-radius:18px;padding:24px 22px;background:#fff;
+  display:flex;gap:16px;align-items:flex-start;
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva),border-color .35s var(--curva)}
+.hito:hover{transform:translateY(-4px);box-shadow:var(--sombra-alta);border-color:var(--oro)}
+.hito .icono{width:42px;height:42px;flex:none;border-radius:50%;
+  background:var(--oro-suave);color:var(--oro);
+  display:flex;align-items:center;justify-content:center}
+.hito .icono svg{width:20px;height:20px}
+.hito h3{font-size:1.1rem;margin-bottom:4px;color:var(--negro)}
+.hito p{color:#6a6a6a;font-size:.88rem}
+
+/* ===== Contacto ===== */
+.contacto{background:var(--marfil)}
+.grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+.ficha{background:#fff;border-radius:18px;padding:26px 22px;border:1px solid var(--linea);
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva)}
+.ficha:hover{transform:translateY(-3px);box-shadow:var(--sombra-alta)}
+.ficha h3{font-family:var(--sans);font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--oro);font-weight:700;margin-bottom:12px}
+.ficha p{color:var(--tinta);font-size:.98rem}
+.ficha p.suave{color:var(--gris);font-size:.85rem;margin-top:4px}
+.ficha a.enlace{color:var(--negro);font-weight:600;border-bottom:1px solid var(--oro);transition:color .3s var(--curva)}
+.ficha a.enlace:hover{color:var(--oro)}
+.contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn-negro{background:var(--negro);color:var(--marfil)}
+.btn-negro:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(26,26,26,.3)}
+.btn-borde{border:1px solid var(--negro);color:var(--negro)}
+.btn-borde:hover{background:var(--negro);color:var(--marfil);transform:translateY(-2px)}
+
+/* ===== Footer ===== */
+footer{background:var(--negro);color:rgba(247,243,238,.7);padding:54px 20px 96px;text-align:center}
+footer .logo-pie{font-family:var(--serif);font-weight:600;font-size:1.4rem;color:var(--marfil);margin-bottom:6px}
+footer .logo-pie em{font-style:italic;color:var(--oro)}
+footer .sub-pie{font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);font-weight:600;margin-bottom:26px}
+footer .aviso{display:inline-block;max-width:52ch;font-size:.85rem;line-height:1.7;
+  border:1px solid rgba(201,162,39,.4);border-radius:16px;
+  padding:16px 22px;background:rgba(201,162,39,.07)}
+footer .aviso strong{color:var(--oro);font-weight:600}
+footer .legal{margin-top:22px;font-size:.72rem;color:rgba(247,243,238,.38)}
+footer .legal a{color:inherit}
+
+/* ===== Desktop ===== */
+@media (min-width:760px){
+  nav{padding:18px 44px}
+  section{padding:120px 44px}
+  .hero{padding:140px 44px 60px}
+  .grid-serv{grid-template-columns:repeat(2,1fr);gap:18px}
+  .grid-premios{grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid-op{grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+  .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  .servicios,.opiniones{margin:0 24px}
+}
+@media (min-width:1080px){
+  .grid-serv{grid-template-columns:repeat(3,1fr)}
+  .grid-op{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ===== Botón flotante de contacto (estándar 29/08/2026) ===== */
+.btn-flotante{position:fixed;right:16px;bottom:16px;z-index:1500;width:60px;height:60px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#1E88E5;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3);
+  transition:transform .25s var(--curva),box-shadow .25s var(--curva),background .25s var(--curva)}
+.btn-flotante:hover,.btn-flotante:focus-visible{background:#1976d2;transform:scale(1.08) translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.36)}
+.btn-flotante svg{width:32px;height:32px;display:block}
+.js-on .btn-flotante{animation:btn-flotante-entra .6s var(--curva) 1.7s backwards}
+@keyframes btn-flotante-entra{from{opacity:0;transform:translateY(16px) scale(.6)}to{opacity:1;transform:none}}
+@media (min-width:768px){.btn-flotante{right:24px;bottom:24px;width:64px;height:64px}}
+
+/* ===== Movimiento reducido ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  #intro{display:none !important}
+  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+}
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "LAS TIJERAS": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-corte" aria-hidden="true"></div>
+      <p class="intro-nombre">SK <em>Style</em> Barcelona</p>
+      <!-- Las tijeras: dos hojas que se abren y cierran mientras cruzan -->
+      <div class="intro-tijeras" aria-hidden="true">
+        <svg viewBox="0 0 150 60" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#C9A227" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Hoja A: anilla superior + hoja hacia abajo-derecha -->
+            <g class="hoja-a">
+              <ellipse vector-effect="non-scaling-stroke" cx="26" cy="14" rx="11" ry="8" transform="rotate(-18 26 14)"/>
+              <path vector-effect="non-scaling-stroke" d="M36 19 L70 30 L142 44 Q146 45 143 47 L70 34 Z"/>
+            </g>
+            <!-- Hoja B: anilla inferior + hoja hacia arriba-derecha -->
+            <g class="hoja-b">
+              <ellipse vector-effect="non-scaling-stroke" cx="26" cy="46" rx="11" ry="8" transform="rotate(18 26 46)"/>
+              <path vector-effect="non-scaling-stroke" d="M36 41 L70 30 L142 16 Q146 15 143 13 L70 26 Z"/>
+            </g>
+            <!-- Tornillo central -->
+            <circle vector-effect="non-scaling-stroke" cx="70" cy="30" r="3.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="intro-sub">Peluquería y belleza · Eixample</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav id="nav">
+  <a class="logo" href="#inicio">
+    <span class="sello" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="8.5" y1="8" x2="20" y2="20"/><line x1="8.5" y1="16" x2="20" y2="4"/></svg>
+    </span>
+    <span>SK Style Barcelona<small>Eixample · Desde 2009</small></span>
+  </a>
+  <a class="nav-tel" href="tel:+34934521460">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    934 52 14 60
+  </a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-veta v1" aria-hidden="true"></div>
+  <div class="hero-veta v2" aria-hidden="true"></div>
+  <div class="hero-aro a1" aria-hidden="true"></div>
+  <div class="hero-aro a2" aria-hidden="true"></div>
+  <div class="hero-int">
+    <p class="hero-kicker">Peluquería y salón de belleza · Eixample, Barcelona</p>
+    <h1 id="titulo-hero">El salón premiado que se reserva con <em>cita</em></h1>
+    <p class="hero-sub">SK Style Barcelona trabaja desde 2009 en el Carrer de Viladomat 135: un salón-estudio en el Eixample, reconocido por el sector y con un 4,7 sobre 5 en Google, donde cada cliente entra con su cita y toda la atención.</p>
+    <div class="hero-botones">
+      <a class="btn btn-oro" href="tel:+34934521460">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita
+      </a>
+      <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=SK+Style+Barcelona%2C+Carrer+de+Viladomat+135%2C+08015+Barcelona" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="hero-datos">
+      <div class="dato"><b><span class="contador" data-fin="4.7" data-dec="1">4,7</span><span class="estrella">★</span></b><span>En Google</span></div>
+      <div class="dato"><b><span class="contador" data-fin="312">312</span></b><span>Reseñas</span></div>
+      <div class="dato"><b>2009</b><span>En activo desde</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">El salón</p>
+      <h2>Belleza sin prisas, en una tercera planta del <em>Eixample</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p>SK Style Barcelona no es un local a pie de calle: es un <strong>salón-estudio en el 3-2 del Carrer de Viladomat, 135</strong>. Se sube con cita y se baja con el trabajo bien hecho — sin colas, sin ruido de escaparate, con el salón para ti.</p>
+      <p>Un equipo <strong>en activo desde 2009</strong>, con reconocimientos del sector como el <strong>Style &amp; Colour Trophy</strong>, los <strong>Figaro Awards</strong> y la <strong>AIPP</strong>, y una comunidad que sigue su trabajo a diario en Instagram.</p>
+      <div class="sobre-datos">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg>4,7★ · 312 reseñas</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Viladomat 135, 3-2</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Solo con cita previa</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>@skstylebarcelona</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Servicios</p>
+      <h2>Cabello, rostro y manos: todo en <em>un mismo salón</em></h2>
+      <p class="intro-serv">Peluquería y belleza integral con cita previa. Llama, cuéntanos qué buscas y reservamos tu hueco.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta rv rv-d1">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="8.5" y1="8" x2="20" y2="20"/><line x1="8.5" y1="16" x2="20" y2="4"/></svg></span>
+        <h3>Corte</h3>
+        <p>Cortes a medida, pensados para tu rasgo y tu día a día, no para la foto de un catálogo.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c3 4.5 6 8.1 6 11.5A6 6 0 0 1 6 13.5C6 10.1 9 6.5 12 2z"/></svg></span>
+        <h3>Coloración y balayage</h3>
+        <p>Color de autor y balayage: la especialidad que ha dado premios al salón.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20c3-2 4-6 4-9M8 21c3-2.5 4.5-7 4.5-10M14 21.5c2.5-2.5 4-6.5 4-10M19.5 20c1.5-2.5 2-5.5 1.5-8"/></svg></span>
+        <h3>Keratina y permanente</h3>
+        <p>Tratamientos de forma: alisados con keratina y permanentes con acabado natural.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3l6 6-9.5 9.5a3 3 0 0 1-1.6.83L5 20l.67-4.9a3 3 0 0 1 .83-1.6z"/><line x1="13" y1="5" x2="19" y2="11"/></svg></span>
+        <h3>Maquillaje</h3>
+        <p>Maquillaje profesional para eventos, sesiones y esos días que tienen que salir bien.</p>
+      </article>
+      <article class="tarjeta rv rv-d5">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10M12 13a4 4 0 0 1-4 4H6a9 9 0 0 0 12 0h-2a4 4 0 0 1-4-4z"/><path d="M9 6l3-3 3 3"/></svg></span>
+        <h3>Manicura</h3>
+        <p>Manos cuidadas al detalle, con el mismo mimo que ponemos en el cabello.</p>
+      </article>
+      <article class="tarjeta rv rv-d6">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.5 2.5 2 4 2s3-.5 4-2M9 9.5h.01M15 9.5h.01"/></svg></span>
+        <h3>Tratamientos faciales y corporales</h3>
+        <p>Rituales de cuidado facial y corporal para completar tu visita al salón.</p>
+      </article>
+    </div>
+    <p class="serv-nota rv">¿No sabes por dónde empezar? <a href="tel:+34934521460">Llama al 934 52 14 60</a> y te asesoramos.</p>
+  </div>
+</section>
+
+<section class="premios" id="premios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Reconocimientos</p>
+      <h2>Un trabajo que el sector ya ha <em>premiado</em></h2>
+      <p class="premios-lema">No hace falta que nos creas a nosotros: el oficio de SK Style Barcelona ha sido reconocido en <strong>certámenes profesionales de la peluquería</strong>.</p>
+    </div>
+    <div class="grid-premios">
+      <article class="premio rv rv-d1">
+        <span class="laurel" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 5H4a3 3 0 0 0 3 5M17 5h3a3 3 0 0 1-3 5"/></svg></span>
+        <h3>Style &amp; Colour Trophy</h3>
+        <p>Certamen internacional de corte y color.</p>
+      </article>
+      <article class="premio rv rv-d2">
+        <span class="laurel" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <h3>Figaro Awards</h3>
+        <p>Premios de referencia de la peluquería.</p>
+      </article>
+      <article class="premio rv rv-d3">
+        <span class="laurel" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5L7 22l5-3 5 3-1.5-7.5"/></svg></span>
+        <h3>AIPP</h3>
+        <p>Premios internacionales de la prensa de peluquería.</p>
+      </article>
+    </div>
+    <div class="cifras rv rv-d2">
+      <div class="cifra"><b><span class="contador" data-fin="4.7" data-dec="1">4,7</span><span class="estrella">★</span></b><span>Nota en Google</span></div>
+      <div class="cifra"><b><span class="contador" data-fin="312">312</span></b><span>Reseñas públicas</span></div>
+      <div class="cifra"><b><span class="contador" data-fin="17">17</span></b><span>Años de oficio</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="opiniones" id="opiniones">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La prueba</p>
+      <h2>312 personas ya han dado su <em>opinión</em></h2>
+    </div>
+    <div class="op-cifra rv rv-d1">
+      <span class="num-grande"><span class="contador" data-fin="4.7" data-dec="1">4,7</span></span>
+      <span class="detalle">
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="312">312</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="op-lema rv rv-d2">Un salón se juzga por sus clientes: <strong>4,7 sobre 5</strong> es la nota media que dejan en Google las personas que han pasado por SK Style Barcelona. Puedes leerlas todas en su ficha de Google Maps.</p>
+    <div class="grid-op">
+      <article class="hito rv rv-d1">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>4,7 de 5 estrellas</h3>
+          <p>Valoración media en la ficha de Google del salón.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></span>
+        <div>
+          <h3>312 opiniones reales</h3>
+          <p>Reseñas públicas de clientes, consultables en Google Maps.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></span>
+        <div>
+          <h3>Comunidad en Instagram</h3>
+          <p>Unas 8.600 personas siguen su trabajo diario en @skstylebarcelona.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <div>
+          <h3>Desde 2009</h3>
+          <p>Más de quince años de trayectoria en el mismo barrio del Eixample.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Tu cita</p>
+      <h2>Sube al 3-2 de Viladomat <em>135</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Carrer de Viladomat, 135, 3-2</p>
+        <p class="suave">Eixample · 08015 Barcelona · Salón en planta 3, puerta 2 — se atiende con cita.</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=SK+Style+Barcelona%2C+Carrer+de+Viladomat+135%2C+08015+Barcelona" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Cita previa</h3>
+        <p><a class="enlace" href="tel:+34934521460">934 52 14 60</a></p>
+        <p class="suave">Se atiende con cita previa: llama y reserva tu hora.</p>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Instagram</h3>
+        <p><a class="enlace" href="https://www.instagram.com/skstylebarcelona" target="_blank" rel="noopener">@skstylebarcelona</a></p>
+        <p class="suave">Unas 8.600 personas siguen sus trabajos de color, corte y recogidos.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Tu opinión</h3>
+        <p>4,7★ · 312 reseñas</p>
+        <p class="suave">Consulta las opiniones del salón en su ficha de Google Maps.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-negro" href="tel:+34934521460">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar y pedir cita
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=SK+Style+Barcelona%2C+Carrer+de+Viladomat+135%2C+08015+Barcelona" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">SK <em>Style</em> Barcelona</p>
+  <p class="sub-pie">Peluquería y salón de belleza · Eixample</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Carrer de Viladomat, 135, 3-2 · 08015 Barcelona · Tel. <a href="tel:+34934521460">934 52 14 60</a> · <a href="https://www.instagram.com/skstylebarcelona" target="_blank" rel="noopener">@skstylebarcelona</a></p>
+</footer>
+
+<!-- Botón flotante de contacto del negocio (estándar 29/08/2026): sus clientes le escriben/llaman a ÉL -->
+<a class="btn-flotante" href="tel:+34934521460" aria-label="Llámanos y pide tu cita: 934 52 14 60" title="Llámanos y pide tu cita: 934 52 14 60"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro de las tijeras: el CSS ya la autodestruye solo; el JS solo retira el nodo --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admite decimales con coma: data-dec) --- */
+  try{
+    var pintarNum = function(el, valor, dec){
+      el.textContent = dec > 0 ? valor.toFixed(dec).replace('.', ',') : String(Math.round(valor));
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ pintarNum(el, fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pintarNum(el, fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso);
+        else pintarNum(el, fin, dec);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso + sombra del nav --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var nav = document.getElementById('nav');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+      if (nav){
+        if (y > 10) nav.classList.add('con-sombra'); else nav.classList.remove('con-sombra');
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

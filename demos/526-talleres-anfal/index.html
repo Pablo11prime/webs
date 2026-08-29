@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talleres Anfal — Taller mecánico multimarca en el barrio de Jesús, València</title>
+<meta name="description" content="Talleres Anfal, Ctra. d'Escrivà 28, barrio de Jesús, 46007 València. Taller mecánico multimarca con 4,8★ y 119 reseñas en Google. Frenómetro y opacímetro propios: pasa la ITV a la primera. Tel. 963 42 16 57.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#12355B;
+  --primario-osc:#0C2440;
+  --secundario:#F2F4F7;
+  --acento:#E63B2E;
+  --acento-osc:#C42E23;
+  --detalle:#1F2937;
+  --tinta-suave:#54627a;
+  --blanco:#FFFFFF;
+  --linea:rgba(18,53,91,.12);
+  --radio:20px;
+  --sombra:0 12px 40px rgba(18,53,91,.10);
+  --sombra-alta:0 26px 60px rgba(18,53,91,.18);
+  --titular:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --texto:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --curva:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--detalle);
+  background:var(--secundario);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--titular);font-weight:700;line-height:1.12;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acento);color:#fff}
+
+/* ===== GARANTÍA DE VISIBILIDAD =====
+   En el CSS base NADA está oculto. Los estados iniciales de animación (opacity:0,
+   translate...) viven SOLO tras .js-on, clase que únicamente añade JavaScript.
+   Sin JS: todo visible desde el primer render. */
+.js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--curva),transform .7s var(--curva)}
+.js-on .rv.vis{opacity:1;transform:none}
+.js-on .rv-d1{transition-delay:.08s}
+.js-on .rv-d2{transition-delay:.18s}
+.js-on .rv-d3{transition-delay:.28s}
+.js-on .rv-d4{transition-delay:.38s}
+.js-on .rv-d5{transition-delay:.48s}
+.js-on .rv-d6{transition-delay:.58s}
+
+/* ===== Barra de progreso de scroll ===== */
+#barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+  background:linear-gradient(90deg,var(--acento),#ff7a6e);transition:width .1s linear}
+
+/* ===== Marca de agua DEMO ===== */
+.marca-demo{position:fixed;bottom:14px;left:14px;z-index:999;
+  background:rgba(18,53,91,.9);color:#fff;backdrop-filter:blur(6px);
+  font-size:11px;font-weight:700;letter-spacing:.2em;
+  padding:7px 14px;border-radius:999px;pointer-events:none;
+  border:1px solid rgba(230,59,46,.55);
+  box-shadow:0 4px 18px rgba(12,36,64,.35)}
+
+/* ===== INTRO "EL FRENÓMETRO" =====
+   Overlay de apertura que se AUTODESTRUYE POR CSS PURO (animation-fill-mode:
+   forwards → opacity:0 + visibility:hidden). El JS solo retira el nodo del DOM.
+   Un manómetro de frenómetro clava su aguja de izquierda a derecha y, con el
+   mismo barrido, el nombre del taller se revela con clip-path sincronizado
+   (misma duración, retardo y curva). pointer-events:none SIEMPRE. */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  display:none; /* solo existe si el navegador soporta clip-path + fill-mode (ver @supports) */
+  align-items:center;justify-content:center;
+  overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 76% 14%, rgba(230,59,46,.18), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 10% 88%, rgba(242,244,247,.07), transparent 60%),
+    linear-gradient(160deg,#1a4470 0%, #12355B 55%, #0C2440 100%);
+  animation:intro-fuera .75s var(--curva) 2.5s forwards;
+}
+@supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+  #intro{display:flex}
+}
+@keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+.intro-caja{position:relative;max-width:92vw;text-align:center}
+/* El manómetro: esfera fija con arco que se "carga" y aguja que barre */
+.intro-dial{position:relative;width:min(230px,56vw);margin:0 auto 6px;
+  filter:drop-shadow(0 0 18px rgba(230,59,46,.3))}
+.intro-dial svg{display:block;width:100%;height:auto;overflow:visible}
+/* Arco de medición: se dibuja con dashoffset al ritmo de la aguja */
+.intro-arco{stroke-dasharray:283;stroke-dashoffset:283;
+  animation:arco-carga 1.6s var(--curva) .35s both}
+@keyframes arco-carga{from{stroke-dashoffset:283}to{stroke-dashoffset:36}}
+/* La aguja: gira de izquierda (reposo) a derecha (freno a tope) */
+.intro-aguja{transform-box:view-box;transform-origin:110px 118px;
+  transform:rotate(-116deg);
+  animation:aguja-barre 1.6s var(--curva) .35s both}
+@keyframes aguja-barre{from{transform:rotate(-116deg)}to{transform:rotate(64deg)}}
+/* El nombre se revela DE IZQUIERDA A DERECHA, al paso de la aguja */
+.intro-nombre{
+  position:relative;margin:0;white-space:nowrap;
+  font-family:var(--titular);font-weight:700;color:var(--secundario);
+  font-size:clamp(2rem,9vw,4.4rem);line-height:1.12;letter-spacing:-.02em;
+  clip-path:inset(-10% 102% -14% -2%);
+  animation:nombre-barrido 1.6s var(--curva) .35s both;
+}
+.intro-nombre em{font-style:normal;color:var(--acento)}
+@keyframes nombre-barrido{from{clip-path:inset(-10% 102% -14% -2%)}to{clip-path:inset(-10% -4% -14% -2%)}}
+.intro-sub{
+  margin:14px 0 0;
+  font-size:.66rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;
+  opacity:0;animation:intro-sub .6s var(--curva) 1.9s forwards;
+}
+@keyframes intro-sub{to{opacity:1}}
+
+/* ===== Navegación ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 20px;
+  background:rgba(242,244,247,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--linea);
+  transition:box-shadow .3s var(--curva)}
+nav.con-sombra{box-shadow:0 6px 24px rgba(18,53,91,.10)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--titular);font-weight:700;font-size:1.02rem;color:var(--primario);line-height:1.15;letter-spacing:-.01em}
+.logo .sello{width:34px;height:34px;flex:none;border-radius:10px;background:var(--primario);color:var(--acento);display:flex;align-items:center;justify-content:center}
+.logo .sello svg{width:19px;height:19px}
+.logo small{display:block;font-family:var(--texto);font-weight:700;font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--acento)}
+.nav-tel{display:inline-flex;align-items:center;gap:8px;
+  background:var(--acento);color:#fff;font-weight:700;font-size:.86rem;
+  padding:11px 18px;border-radius:999px;white-space:nowrap;
+  transition:transform .25s var(--curva),background .25s var(--curva),box-shadow .25s var(--curva)}
+.nav-tel:hover{background:var(--acento-osc);transform:translateY(-2px);box-shadow:0 10px 24px rgba(230,59,46,.35)}
+.nav-tel svg{width:15px;height:15px;flex:none}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--primario);color:var(--secundario);
+  padding:120px 20px 46px;overflow:hidden}
+.hero-fondo{position:absolute;inset:-12% -5%;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(ellipse 72% 55% at 82% 12%, rgba(230,59,46,.22), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 6% 90%, rgba(242,244,247,.06), transparent 60%),
+    linear-gradient(160deg,#1a4470 0%, #12355B 55%, #0C2440 100%)}
+/* Arcos de cuentakilómetros, muy sutiles */
+.hero-arco{position:absolute;border:1px solid rgba(230,59,46,.28);border-radius:50%;pointer-events:none;will-change:transform;
+  border-left-color:transparent;border-bottom-color:transparent}
+.hero-arco.h1a{width:380px;height:380px;top:-130px;right:-120px;transform:rotate(-24deg);animation:girar-lento 26s linear infinite}
+.hero-arco.h2a{width:190px;height:190px;top:170px;right:60px;border-color:rgba(242,244,247,.12);border-left-color:transparent;border-bottom-color:transparent;animation:girar-lento 34s linear infinite reverse}
+@keyframes girar-lento{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.hero-int{position:relative;max-width:1080px;margin:0 auto;width:100%}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);
+  font-weight:700;margin-bottom:22px}
+.hero-kicker::before{content:"";width:34px;height:2px;background:var(--acento)}
+.hero h1{font-size:clamp(2.4rem,9.4vw,5.1rem);color:var(--secundario);max-width:15ch;margin-bottom:24px}
+.hero h1 em{font-style:normal;color:var(--acento)}
+.hero h1 .pal{display:inline-block}
+.js-on .hero h1 .pal{opacity:0;transform:translateY(.5em) rotate(1.2deg);animation:palabra .8s var(--curva) forwards;animation-delay:calc(.15s + var(--i)*.09s)}
+@keyframes palabra{to{opacity:1;transform:none}}
+.hero-sub{max-width:46ch;color:rgba(242,244,247,.75);font-size:1.02rem;margin-bottom:32px}
+.js-on .hero-sub{opacity:0;animation:aparece 1s var(--curva) 1s forwards}
+@keyframes aparece{to{opacity:1}}
+.hero-botones{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px}
+.js-on .hero-botones{opacity:0;animation:aparece 1s var(--curva) 1.2s forwards}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-size:.84rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:16px 26px;border-radius:999px;
+  transition:transform .3s var(--curva),box-shadow .3s var(--curva),background .3s var(--curva),color .3s var(--curva),border-color .3s var(--curva)}
+.btn svg{width:15px;height:15px;flex:none}
+.btn-rojo{background:var(--acento);color:#fff}
+.btn-rojo:hover{background:var(--acento-osc);transform:translateY(-2px);box-shadow:0 14px 32px rgba(230,59,46,.4)}
+.btn-linea{border:1px solid rgba(242,244,247,.4);color:var(--secundario)}
+.btn-linea:hover{border-color:var(--acento);color:var(--acento);transform:translateY(-2px)}
+.hero-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  border-top:1px solid rgba(242,244,247,.15);padding-top:22px}
+.js-on .hero-datos{opacity:0;animation:aparece 1s var(--curva) 1.4s forwards}
+.hero-datos .dato b{display:block;font-family:var(--titular);font-weight:700;
+  font-size:clamp(1.5rem,6vw,2.3rem);color:var(--secundario);line-height:1.1;font-variant-numeric:tabular-nums}
+.hero-datos .dato b .estrella{color:var(--acento)}
+.hero-datos .dato span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,244,247,.55);font-weight:600}
+
+/* ===== Secciones base ===== */
+section{padding:88px 20px}
+.marco{max-width:1080px;margin:0 auto}
+.etiqueta{display:inline-flex;align-items:center;gap:10px;
+  font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);
+  font-weight:700;margin-bottom:18px}
+.etiqueta::before{content:"";width:28px;height:2px;background:var(--acento)}
+h2{font-size:clamp(1.9rem,7vw,3.2rem);color:var(--primario);margin-bottom:20px}
+h2 em{font-style:normal;color:var(--acento)}
+
+/* ===== Sobre ===== */
+.sobre{background:var(--secundario)}
+.sobre p{color:var(--tinta-suave);max-width:58ch;font-size:1.02rem;margin-bottom:16px}
+.sobre p strong{color:var(--primario);font-weight:700}
+.sobre-datos{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.chip{display:inline-flex;align-items:center;gap:9px;
+  background:#fff;border:1px solid var(--linea);border-radius:999px;
+  padding:11px 18px;font-size:.85rem;font-weight:600;color:var(--primario);
+  box-shadow:var(--sombra);
+  transition:transform .3s var(--curva),border-color .3s var(--curva)}
+.chip:hover{transform:translateY(-3px);border-color:var(--acento)}
+.chip svg{width:16px;height:16px;color:var(--acento);flex:none}
+
+/* ===== Pre-ITV (frenómetro + opacímetro) ===== */
+.itv{background:var(--primario);color:var(--secundario);border-radius:34px;margin:0 10px}
+.itv h2{color:var(--secundario)}
+.itv .intro-itv{color:rgba(242,244,247,.7);max-width:56ch;margin-bottom:44px}
+.grid-itv{display:grid;grid-template-columns:1fr;gap:14px}
+.equipo{position:relative;border:1px solid rgba(242,244,247,.14);border-radius:var(--radio);
+  padding:32px 26px;background:rgba(242,244,247,.04);overflow:hidden;
+  transition:transform .4s var(--curva),border-color .4s var(--curva),background .4s var(--curva),box-shadow .4s var(--curva)}
+.equipo:hover{transform:translateY(-6px);
+  border-color:rgba(230,59,46,.6);background:rgba(230,59,46,.08);
+  box-shadow:0 24px 50px rgba(8,22,40,.5)}
+.equipo .icono-eq{width:52px;height:52px;border-radius:14px;margin-bottom:18px;
+  background:rgba(230,59,46,.14);color:var(--acento);
+  display:flex;align-items:center;justify-content:center}
+.equipo .icono-eq svg{width:27px;height:27px}
+.equipo h3{font-size:1.35rem;margin-bottom:10px;color:var(--secundario)}
+.equipo p{color:rgba(242,244,247,.66);font-size:.94rem}
+.equipo .sello-propio{position:absolute;top:20px;right:20px;
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+  color:var(--acento);border:1px solid rgba(230,59,46,.5);border-radius:999px;padding:5px 11px}
+.itv-nota{margin-top:34px;color:rgba(242,244,247,.55);font-size:.9rem}
+.itv-nota a{color:var(--acento);font-weight:700;border-bottom:1px solid rgba(230,59,46,.45);transition:color .3s var(--curva)}
+.itv-nota a:hover{color:#ff7a6e}
+
+/* ===== Servicios ===== */
+.servicios{background:var(--secundario)}
+.servicios .intro-serv{color:var(--tinta-suave);max-width:54ch;margin-bottom:44px}
+.grid-serv{display:grid;grid-template-columns:1fr;gap:14px}
+.tarjeta{position:relative;border:1px solid var(--linea);border-radius:var(--radio);
+  padding:30px 26px;background:#fff;overflow:hidden;
+  transition:transform .4s var(--curva),border-color .4s var(--curva),box-shadow .4s var(--curva)}
+.tarjeta:hover{transform:translateY(-6px) rotate(-.4deg);
+  border-color:rgba(230,59,46,.55);box-shadow:var(--sombra-alta)}
+.tarjeta .icono-serv{width:46px;height:46px;border-radius:13px;margin-bottom:18px;
+  background:rgba(230,59,46,.1);color:var(--acento);
+  display:flex;align-items:center;justify-content:center}
+.tarjeta .icono-serv svg{width:23px;height:23px}
+.tarjeta h3{font-size:1.25rem;margin-bottom:10px;color:var(--primario)}
+.tarjeta p{color:var(--tinta-suave);font-size:.92rem}
+/* Brillo decorativo de hover: solo existe en modo JS (.js-on) para que el CSS base
+   no tenga NINGÚN opacity:0 — regla innegociable de visibilidad */
+.js-on .tarjeta::after{content:"";position:absolute;top:0;right:0;width:90px;height:90px;
+  background:radial-gradient(circle at top right, rgba(230,59,46,.16), transparent 70%);
+  opacity:0;transition:opacity .4s var(--curva)}
+.js-on .tarjeta:hover::after{opacity:1}
+
+/* ===== Marcas ===== */
+.marcas{background:#e6eaf0;border-radius:34px;margin:0 10px}
+.marcas .intro-marcas{color:var(--tinta-suave);max-width:54ch;margin-bottom:38px}
+.grid-marcas{display:flex;flex-wrap:wrap;gap:10px}
+.marca-chip{display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--linea);border-radius:12px;
+  padding:12px 20px;font-family:var(--titular);font-weight:600;font-size:.95rem;color:var(--primario);
+  transition:transform .3s var(--curva),border-color .3s var(--curva),box-shadow .3s var(--curva)}
+.marca-chip:hover{transform:translateY(-4px) scale(1.03);border-color:var(--acento);box-shadow:var(--sombra)}
+.marca-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acento);flex:none}
+.marcas-nota{margin-top:30px;color:var(--tinta-suave);font-size:.9rem}
+.marcas-nota strong{color:var(--primario)}
+
+/* ===== Prueba social ===== */
+.prueba{background:var(--secundario)}
+.prueba-cifra{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:26px 0 8px}
+.prueba-cifra .num-grande{font-family:var(--titular);font-weight:700;
+  font-size:clamp(4.2rem,19vw,7.6rem);line-height:1;color:var(--primario);
+  font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.prueba-cifra .detalle .estrellas{color:var(--acento);font-size:1.2rem;letter-spacing:.16em}
+.prueba-cifra .detalle strong{color:var(--primario)}
+.prueba-lema{color:var(--tinta-suave);max-width:50ch;font-size:1rem;margin-bottom:40px}
+.prueba-lema strong{color:var(--primario)}
+.grid-prueba{display:grid;grid-template-columns:1fr;gap:12px}
+.hito{border:1px solid var(--linea);border-radius:18px;padding:24px 22px;background:#fff;
+  display:flex;gap:16px;align-items:flex-start;
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva),border-color .35s var(--curva)}
+.hito:hover{transform:translateY(-4px);box-shadow:var(--sombra-alta);border-color:var(--acento)}
+.hito .icono{width:42px;height:42px;flex:none;border-radius:12px;
+  background:rgba(230,59,46,.1);color:var(--acento);
+  display:flex;align-items:center;justify-content:center}
+.hito .icono svg{width:20px;height:20px}
+.hito h3{font-size:1.05rem;margin-bottom:4px;color:var(--primario)}
+.hito p{color:var(--tinta-suave);font-size:.88rem}
+
+/* ===== Contacto ===== */
+.contacto{background:#e2e7ee;border-radius:34px 34px 0 0}
+.grid-contacto{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px}
+.ficha{background:#fff;border-radius:18px;padding:26px 22px;border:1px solid var(--linea);
+  transition:transform .35s var(--curva),box-shadow .35s var(--curva)}
+.ficha:hover{transform:translateY(-3px);box-shadow:var(--sombra-alta)}
+.ficha h3{font-family:var(--texto);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--acento);font-weight:700;margin-bottom:12px}
+.ficha p{color:var(--detalle);font-size:.98rem}
+.ficha p.suave{color:var(--tinta-suave);font-size:.85rem;margin-top:4px}
+.ficha a.enlace{color:var(--primario);font-weight:600;border-bottom:1px solid var(--acento);transition:color .3s var(--curva)}
+.ficha a.enlace:hover{color:var(--acento)}
+.contacto-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn-oscuro{background:var(--primario);color:#fff}
+.btn-oscuro:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(18,53,91,.3)}
+.btn-borde{border:1px solid var(--primario);color:var(--primario)}
+.btn-borde:hover{background:var(--primario);color:#fff;transform:translateY(-2px)}
+
+/* ===== Footer ===== */
+footer{background:var(--primario);color:rgba(242,244,247,.72);padding:54px 20px 96px;text-align:center}
+footer .logo-pie{font-family:var(--titular);font-weight:700;font-size:1.35rem;color:var(--secundario);margin-bottom:6px}
+footer .sub-pie{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--acento);font-weight:700;margin-bottom:26px}
+footer .aviso{display:inline-block;max-width:52ch;font-size:.85rem;line-height:1.7;
+  border:1px solid rgba(230,59,46,.4);border-radius:16px;
+  padding:16px 22px;background:rgba(230,59,46,.07)}
+footer .aviso strong{color:var(--acento);font-weight:700}
+footer .legal{margin-top:22px;font-size:.72rem;color:rgba(242,244,247,.4)}
+footer .legal a{color:inherit}
+
+/* ===== Desktop ===== */
+@media (min-width:760px){
+  nav{padding:18px 44px}
+  section{padding:120px 44px}
+  .hero{padding:140px 44px 60px}
+  .grid-itv{grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid-serv{grid-template-columns:repeat(2,1fr);gap:18px}
+  .grid-prueba{grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid-contacto{grid-template-columns:repeat(2,1fr);gap:18px}
+  .sobre .marco{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+  .itv,.marcas{margin:0 24px}
+}
+@media (min-width:1080px){
+  .grid-serv{grid-template-columns:repeat(4,1fr)}
+  .grid-prueba{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ===== Botón flotante de contacto (estándar 29/08/2026) ===== */
+.btn-flotante{position:fixed;right:16px;bottom:16px;z-index:1500;width:60px;height:60px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#1E88E5;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3);
+  transition:transform .25s var(--curva),box-shadow .25s var(--curva),background .25s var(--curva)}
+.btn-flotante:hover,.btn-flotante:focus-visible{background:#1976d2;transform:scale(1.08) translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.36)}
+.btn-flotante svg{width:32px;height:32px;display:block}
+.js-on .btn-flotante{animation:btn-flotante-entra .6s var(--curva) 1.7s backwards}
+@keyframes btn-flotante-entra{from{opacity:0;transform:translateY(16px) scale(.6)}to{opacity:1;transform:none}}
+@media (min-width:768px){.btn-flotante{right:24px;bottom:24px;width:64px;height:64px}}
+
+/* ===== Movimiento reducido ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  #intro{display:none !important}
+  .js-on .rv,.js-on .hero h1 .pal,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:1 !important;transform:none !important}
+}
+</style>
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- INTRO "EL FRENÓMETRO": overlay decorativo, se autodestruye por CSS puro (ver estilos #intro) -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-caja">
+    <div class="intro-dial" aria-hidden="true">
+      <svg viewBox="0 0 220 150" aria-hidden="true" focusable="false">
+        <!-- Esfera del manómetro -->
+        <g fill="none" stroke="#F2F4F7" stroke-opacity=".35" stroke-width="1.4" stroke-linecap="round">
+          <path d="M20 118 A90 90 0 0 1 200 118"/>
+        </g>
+        <!-- Marcas de escala -->
+        <g fill="none" stroke="#F2F4F7" stroke-opacity=".45" stroke-width="1.4" stroke-linecap="round">
+          <path d="M27 100 L36 104"/>
+          <path d="M45 70 L52 77"/>
+          <path d="M75 45 L80 54"/>
+          <path d="M110 36 L110 46"/>
+          <path d="M145 45 L140 54"/>
+          <path d="M175 70 L168 77"/>
+          <path d="M193 100 L184 104"/>
+        </g>
+        <!-- Arco de medición que se carga (rojo) -->
+        <path class="intro-arco" d="M20 118 A90 90 0 0 1 200 118"
+          fill="none" stroke="#E63B2E" stroke-width="4" stroke-linecap="round"/>
+        <!-- Aguja: barre de izquierda a derecha revelando el nombre -->
+        <g class="intro-aguja">
+          <path d="M110 118 L110 42" fill="none" stroke="#E63B2E" stroke-width="3" stroke-linecap="round"/>
+          <path d="M104 60 L110 42 L116 60" fill="none" stroke="#E63B2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <!-- Eje central -->
+        <circle cx="110" cy="118" r="9" fill="none" stroke="#E63B2E" stroke-width="2.4"/>
+        <circle cx="110" cy="118" r="2.6" fill="#E63B2E"/>
+      </svg>
+    </div>
+    <p class="intro-nombre">Talleres <em>Anfal</em></p>
+    <p class="intro-sub">Frenómetro · Opacímetro · Pre-ITV</p>
+  </div>
+</div>
+
+<div id="barra-scroll" aria-hidden="true"></div>
+<div class="marca-demo" aria-hidden="true">DEMO</div>
+
+<nav id="nav">
+  <a class="logo" href="#inicio">
+    <span class="sello" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20a8 8 0 1 1 8-8"/><path d="M12 12l4.5-4.5"/><circle cx="12" cy="12" r="1.6"/></svg>
+    </span>
+    <span>Talleres Anfal<small>Barrio de Jesús · València</small></span>
+  </a>
+  <a class="nav-tel" href="tel:+34963421657">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    963 42 16 57
+  </a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-fondo" id="hero-fondo" aria-hidden="true"></div>
+  <div class="hero-arco h1a" aria-hidden="true"></div>
+  <div class="hero-arco h2a" aria-hidden="true"></div>
+  <div class="hero-int">
+    <p class="hero-kicker">Taller mecánico multimarca · Barrio de Jesús, València</p>
+    <h1 id="titulo-hero">Tu coche pasa la ITV a la <em>primera</em></h1>
+    <p class="hero-sub">Mecánica y electricidad del automóvil para todas las marcas, con frenómetro y opacímetro propios: comprobamos frenos y emisiones en el taller antes de que vayas a la ITV.</p>
+    <div class="hero-botones">
+      <a class="btn btn-rojo" href="tel:+34963421657">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Pedir cita
+      </a>
+      <a class="btn btn-linea" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Anfal%2C+Ctra.+d%27Escriv%C3%A0+28%2C+46007+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="hero-datos">
+      <div class="dato"><b><span class="contador" data-fin="4.8" data-dec="1">4,8</span><span class="estrella">★</span></b><span>En Google</span></div>
+      <div class="dato"><b><span class="contador" data-fin="119">119</span></b><span>Reseñas</span></div>
+      <div class="dato"><b><span class="contador" data-fin="13">13</span></b><span>Marcas</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="sobre" id="sobre">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">El taller</p>
+      <h2>Mecánica multimarca en el barrio de <em>Jesús</em></h2>
+    </div>
+    <div class="rv rv-d1">
+      <p>En la <strong>Ctra. d'Escrivà, 28</strong>, en el barrio de Jesús de València, Talleres Anfal es el taller mecánico multimarca al que los vecinos confían su coche, sea de la marca que sea.</p>
+      <p>Mecánica y electricidad del automóvil, mantenimiento y, lo que pocos talleres pueden ofrecer: <strong>frenómetro y opacímetro propios</strong> para revisar tu coche igual que lo hará la ITV. El resultado, a la vista: <strong>4,8 sobre 5</strong> con 119 reseñas en Google.</p>
+      <div class="sobre-datos">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg>4,8★ en Google</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Ctra. d'Escrivà, 28</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20a8 8 0 1 1 8-8"/><path d="M12 12l4.5-4.5"/><circle cx="12" cy="12" r="1.6"/></svg>Frenómetro y opacímetro propios</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="itv" id="itv">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Nuestro punto fuerte</p>
+      <h2>La ITV, aprobada antes de <em>ir a la ITV</em></h2>
+      <p class="intro-itv">Contamos con los mismos equipos de medición que usa la estación de inspección. Pasamos tu coche por ellos, corregimos lo que haga falta y vas a la ITV con el trabajo hecho.</p>
+    </div>
+    <div class="grid-itv">
+      <article class="equipo rv rv-d1">
+        <span class="sello-propio">Equipo propio</span>
+        <span class="icono-eq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
+        <h3>Frenómetro</h3>
+        <p>Inspección de frenos con banco de frenómetro: medimos la frenada de cada rueda, igual que en la inspección oficial.</p>
+      </article>
+      <article class="equipo rv rv-d2">
+        <span class="sello-propio">Equipo propio</span>
+        <span class="icono-eq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18c2-1 3-4 3-6a5 5 0 0 1 10 0c0 2 1 5 3 6"/><path d="M8 21c1.2-.8 2.6-1.2 4-1.2s2.8.4 4 1.2"/><circle cx="12" cy="11" r="1.8"/></svg></span>
+        <h3>Opacímetro</h3>
+        <p>Control de emisiones y humos del motor con opacímetro: comprobamos que tu coche cumple antes de que lo midan a ti.</p>
+      </article>
+      <article class="equipo rv rv-d3">
+        <span class="sello-propio">Sin sorpresas</span>
+        <span class="icono-eq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <h3>Revisión pre-ITV</h3>
+        <p>Repaso completo del vehículo antes de la inspección: frenos, emisiones, luces y puntos clave. Vas a la ITV a aprobar.</p>
+      </article>
+    </div>
+    <p class="itv-nota rv">¿Te toca pasar la ITV? <a href="tel:+34963421657">Llámanos al 963 42 16 57</a> y deja el coche preparado.</p>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Qué hacemos</p>
+      <h2>Todo lo que tu coche necesita, <em>en un solo taller</em></h2>
+      <p class="intro-serv">Mecánica y electricidad del automóvil para cualquier marca. Cuéntanos qué le pasa a tu coche y nos ponemos con ello.</p>
+    </div>
+    <div class="grid-serv">
+      <article class="tarjeta rv rv-d1">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+        <h3>Mecánica del automóvil</h3>
+        <p>Reparación mecánica multimarca: motor, frenos, suspensión, embrague... lo que tu coche pida.</p>
+      </article>
+      <article class="tarjeta rv rv-d2">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <h3>Electricidad del automóvil</h3>
+        <p>Diagnosis y reparación eléctrica y electrónica: batería, luces, sensores y averías del sistema eléctrico.</p>
+      </article>
+      <article class="tarjeta rv rv-d3">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20a8 8 0 1 1 8-8"/><path d="M12 12l4.5-4.5"/><circle cx="12" cy="12" r="1.6"/></svg></span>
+        <h3>Mantenimiento</h3>
+        <p>Revisiones y mantenimiento periódico para que el coche no te deje tirado y conserve su valor.</p>
+      </article>
+      <article class="tarjeta rv rv-d4">
+        <span class="icono-serv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <h3>Revisión pre-ITV</h3>
+        <p>Frenómetro, opacímetro y repaso general: tu coche llega a la inspección con los deberes hechos.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="marcas" id="marcas">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Multimarca de verdad</p>
+      <h2>Trabajamos con <em>tu marca</em></h2>
+      <p class="intro-marcas">Sea cual sea tu coche, en Talleres Anfal lo conocemos. Estas son las marcas con las que trabajamos habitualmente:</p>
+    </div>
+    <div class="grid-marcas rv rv-d1">
+      <span class="marca-chip">Audi</span>
+      <span class="marca-chip">Seat</span>
+      <span class="marca-chip">Renault</span>
+      <span class="marca-chip">Citroën</span>
+      <span class="marca-chip">Peugeot</span>
+      <span class="marca-chip">Mercedes</span>
+      <span class="marca-chip">Kia</span>
+      <span class="marca-chip">Nissan</span>
+      <span class="marca-chip">Volkswagen</span>
+      <span class="marca-chip">Skoda</span>
+      <span class="marca-chip">BMW</span>
+      <span class="marca-chip">Fiat</span>
+      <span class="marca-chip">Hyundai</span>
+    </div>
+    <p class="marcas-nota rv rv-d2"><strong>¿No ves tu marca?</strong> Llámanos igualmente: somos taller multimarca y te decimos al momento si podemos ayudarte.</p>
+  </div>
+</section>
+
+<section class="prueba" id="opiniones">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">La opinión del barrio</p>
+      <h2>119 clientes ya han dado su <em>veredicto</em></h2>
+    </div>
+    <div class="prueba-cifra rv rv-d1">
+      <span class="num-grande"><span class="contador" data-fin="4.8" data-dec="1">4,8</span></span>
+      <span class="detalle">
+        <span class="estrellas" aria-hidden="true">★★★★★</span><br>
+        <strong><span class="contador" data-fin="119">119</span> reseñas en Google</strong>
+      </span>
+    </div>
+    <p class="prueba-lema rv rv-d2">Un taller no se explica: se comprueba. <strong>4,8 sobre 5 con 119 reseñas</strong> es la nota que le ponen en Google las personas que ya han dejado su coche en Talleres Anfal.</p>
+    <div class="grid-prueba">
+      <article class="hito rv rv-d1">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></span>
+        <div>
+          <h3>4,8 de 5 estrellas</h3>
+          <p>Valoración media de sus clientes en la ficha de Google del taller.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d2">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></span>
+        <div>
+          <h3>119 opiniones reales</h3>
+          <p>Reseñas públicas de clientes, consultables en Google Maps.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d3">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>
+        <div>
+          <h3>Equipos de ITV propios</h3>
+          <p>Frenómetro y opacímetro en el propio taller: pocos pueden decirlo.</p>
+        </div>
+      </article>
+      <article class="hito rv rv-d4">
+        <span class="icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-6 9 6v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <div>
+          <h3>Taller de barrio</h3>
+          <p>En el barrio de Jesús: el taller multimarca que tienes al lado de casa.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="marco">
+    <div class="rv">
+      <p class="etiqueta">Visítanos</p>
+      <h2>Te esperamos en la Ctra. <em>d'Escrivà</em></h2>
+    </div>
+    <div class="grid-contacto">
+      <div class="ficha rv rv-d1">
+        <h3>Dirección</h3>
+        <p>Ctra. d'Escrivà, 28</p>
+        <p class="suave">Barrio de Jesús · 46007 València</p>
+        <p style="margin-top:14px"><a class="enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Anfal%2C+Ctra.+d%27Escriv%C3%A0+28%2C+46007+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar (Google Maps) →</a></p>
+      </div>
+      <div class="ficha rv rv-d2">
+        <h3>Pide tu cita</h3>
+        <p><a class="enlace" href="tel:+34963421657">963 42 16 57</a></p>
+        <p class="suave">Llámanos para pedir cita y te decimos cuándo traer el coche.</p>
+      </div>
+      <div class="ficha rv rv-d3">
+        <h3>Síguenos</h3>
+        <p><a class="enlace" href="https://www.facebook.com/Talleresanfal" target="_blank" rel="noopener">Facebook · Talleres Anfal</a></p>
+        <p class="suave">Novedades y avisos del taller en nuestra página de Facebook.</p>
+      </div>
+      <div class="ficha rv rv-d4">
+        <h3>Tu opinión</h3>
+        <p>4,8★ · 119 reseñas</p>
+        <p class="suave">Consulta las opiniones del taller en su ficha de Google Maps.</p>
+      </div>
+    </div>
+    <div class="contacto-cta rv">
+      <a class="btn btn-rojo" href="tel:+34963421657">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar ahora
+      </a>
+      <a class="btn btn-borde" href="https://www.google.com/maps/search/?api=1&amp;query=Talleres+Anfal%2C+Ctra.+d%27Escriv%C3%A0+28%2C+46007+Val%C3%A8ncia" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="logo-pie">Talleres Anfal</p>
+  <p class="sub-pie">Taller mecánico multimarca · Barrio de Jesús, València</p>
+  <p class="aviso"><strong>Demo creada por Eleven AI</strong> — esta web puede ser tuya. Diseño de muestra elaborado con la información pública del negocio; sin compromiso.</p>
+  <p class="legal">Ctra. d'Escrivà, 28 · 46007 València · Tel. <a href="tel:+34963421657">963 42 16 57</a> · <a href="https://www.facebook.com/Talleresanfal" target="_blank" rel="noopener">Facebook</a></p>
+</footer>
+
+<!-- Botón flotante de contacto del negocio (estándar 29/08/2026): sus clientes le escriben/llaman a ÉL -->
+<a class="btn-flotante" href="tel:+34963421657" aria-label="Llámanos al 963 42 16 57" title="Llámanos al 963 42 16 57"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del frenómetro: el CSS ya la autodestruye solo; el JS solo retira el nodo --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 3900); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admite decimales con coma: data-dec) --- */
+  try{
+    var pintarNum = function(el, valor, dec){
+      el.textContent = dec > 0 ? valor.toFixed(dec).replace('.', ',') : String(Math.round(valor));
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ pintarNum(el, fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pintarNum(el, fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso);
+        else pintarNum(el, fin, dec);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso + sombra del nav --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var nav = document.getElementById('nav');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+      if (nav){
+        if (y > 10) nav.classList.add('con-sombra'); else nav.classList.remove('con-sombra');
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      /* Overlay de intro: si a estas alturas su animación CSS no está en marcha (CSS falló),
+         se elimina de inmediato para que jamás tape la página. */
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      ocultos.forEach(function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      /* Último recurso: quitar el modo JS para que el CSS base (todo visible) mande */
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller Auto Escorial — Mecánica, 4x4 y cambio automático en Gràcia (Barcelona)</title>
+<meta name="description" content="Taller Auto Escorial, Carrer de Sant Lluís 71, Gràcia, 08024 Barcelona. Especialistas en 4x4, transformaciones y cambio automático, además de mantenimiento y reparación general. 4,6★ en Google. Tel. 932 84 30 16.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primario:#1E3A2F;--secundario:#F3F4F1;--acento:#D97706;--detalle:#374151;
+  --texto:#161A1F;--suave:#5B6572;--blanco:#fff;--radio:20px;
+  --sombra:0 10px 30px rgba(16,20,26,.10);--sombra-alta:0 22px 60px rgba(16,20,26,.18);
+  --curva:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--secundario);color:var(--texto);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.08;letter-spacing:-.015em;margin:0}
+a{color:inherit}
+.contenedor{width:min(1160px,92vw);margin:0 auto}
+section{padding:clamp(64px,9vw,120px) 0}
+
+.barra{position:sticky;top:0;z-index:900;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06)}
+.barra .contenedor{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
+.logo span{color:var(--acento)}
+.barra nav{display:flex;gap:26px;font-size:.94rem;font-weight:500}
+.barra nav a{text-decoration:none;color:var(--suave);transition:color .25s var(--curva)}
+.barra nav a:hover{color:var(--primario)}
+@media(max-width:900px){.barra nav{display:none}}
+
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:999px;text-decoration:none;font-weight:600;font-size:.97rem;transition:transform .28s var(--curva),box-shadow .28s var(--curva),border-color .28s var(--curva)}
+.btn-p{background:var(--primario);color:var(--blanco);box-shadow:var(--sombra)}
+.btn-p:hover{transform:translateY(-3px);box-shadow:var(--sombra-alta)}
+.btn-a{background:var(--acento);color:#14161A;box-shadow:var(--sombra)}
+.btn-a:hover{transform:translateY(-3px);box-shadow:var(--sombra-alta)}
+.btn-linea{border:1.5px solid rgba(0,0,0,.18);color:var(--texto)}
+.btn-linea:hover{transform:translateY(-3px);border-color:var(--primario)}
+
+.hero{position:relative;padding:clamp(72px,11vw,140px) 0 clamp(56px,8vw,96px);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-30% -20% auto -20%;height:150%;z-index:0;
+  background:radial-gradient(60% 55% at 18% 8%,#D9770640,transparent 70%),radial-gradient(55% 50% at 88% 18%,#1E3A2F30,transparent 72%);
+  animation:flotar 18s ease-in-out infinite alternate}
+@keyframes flotar{to{transform:translate3d(0,-26px,0) scale(1.04)}}
+.hero .contenedor{position:relative;z-index:1}
+.hero h1{font-size:clamp(3rem,11.6vw,6.6rem);font-weight:700;margin:0 0 .26em}
+.hero h1 em{font-style:normal;color:var(--acento)}
+.hero-lema{font-family:Fraunces,serif;font-size:clamp(1.15rem,3.6vw,1.85rem);font-weight:600;color:var(--primario);margin:0 0 .5em;max-width:24ch}
+.hero-sub{font-size:clamp(1.02rem,2.2vw,1.2rem);color:var(--suave);max-width:58ch;margin:0 0 34px}
+.hero-botones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
+.hero-datos{display:flex;flex-wrap:wrap;gap:clamp(22px,5vw,56px);padding-top:28px;border-top:1px solid rgba(0,0,0,.10)}
+.hero-datos .dato{display:flex;flex-direction:column}
+.hero-datos .dato b{font-family:Fraunces,serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:700;line-height:1}
+.hero-datos .dato b .estrella{color:var(--acento)}
+.hero-datos .dato span{font-size:.86rem;color:var(--suave);text-transform:uppercase;letter-spacing:.09em;margin-top:6px}
+
+.etiqueta{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acento);margin-bottom:14px}
+h2{font-size:clamp(2rem,5.2vw,3.2rem);font-weight:700;margin-bottom:.5em;max-width:20ch}
+.entradilla{font-size:1.05rem;color:var(--suave);max-width:62ch}
+.sobre{background:var(--blanco)}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:start}
+.sobre p{margin:0 0 1.1em;font-size:1.06rem}
+@media(max-width:860px){.dos{grid-template-columns:1fr}}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:44px}
+.tarjeta{background:var(--blanco);border:1px solid rgba(0,0,0,.06);border-radius:var(--radio);padding:30px 28px;box-shadow:0 2px 10px rgba(16,20,26,.05);transition:transform .35s var(--curva),box-shadow .35s var(--curva),border-color .35s var(--curva)}
+.tarjeta:hover{transform:translateY(-7px);box-shadow:var(--sombra-alta);border-color:#D9770680}
+.tarjeta h3{font-size:1.24rem;margin-bottom:.45em}
+.tarjeta p{margin:0;color:var(--suave);font-size:.99rem}
+
+.prueba{background:var(--primario);color:var(--blanco)}
+.prueba h2{color:var(--blanco)}
+.prueba .entradilla{color:rgba(255,255,255,.80)}
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px;margin-top:48px}
+.cifra{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--radio);padding:30px 26px;transition:transform .35s var(--curva),background .35s var(--curva)}
+.cifra:hover{transform:translateY(-6px);background:rgba(255,255,255,.12)}
+.cifra b{display:block;font-family:Fraunces,serif;font-size:clamp(2.2rem,6vw,3.2rem);font-weight:700;line-height:1;color:var(--acento)}
+.cifra span{display:block;margin-top:10px;font-size:.9rem;color:rgba(255,255,255,.78);letter-spacing:.05em}
+.estrellas{color:var(--acento);letter-spacing:.18em;font-size:1.15rem}
+
+.contacto{background:var(--blanco)}
+.bloque-dato{margin-bottom:28px}
+.bloque-dato h3{font-size:.86rem;text-transform:uppercase;letter-spacing:.12em;font-family:Inter,sans-serif;font-weight:700;color:var(--suave);margin-bottom:10px}
+.bloque-dato p{margin:0;font-size:1.12rem}
+.bloque-dato dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;font-size:1.05rem}
+.bloque-dato dt{color:var(--suave)}
+.bloque-dato dd{margin:0;font-weight:600}
+.bloque-dato dd a{text-decoration:none;color:var(--primario)}
+.mapa{display:flex;flex-direction:column;justify-content:flex-end;min-height:300px;padding:28px;border-radius:var(--radio);overflow:hidden;position:relative;text-decoration:none;color:inherit;background:var(--secundario);border:1px solid rgba(0,0,0,.07);box-shadow:var(--sombra);transition:transform .35s var(--curva),box-shadow .35s var(--curva)}
+.mapa:hover{transform:translateY(-5px);box-shadow:var(--sombra-alta)}
+.mapa::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 1px,transparent 1px 46px),
+  repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 1px,transparent 1px 46px),
+  radial-gradient(70% 60% at 32% 30%,#D9770633,transparent 70%)}
+.mapa b,.mapa span{position:relative}
+.mapa b{font-family:Fraunces,serif;font-size:1.3rem}
+.mapa span{display:block;color:var(--suave);margin-top:6px;font-size:.97rem}
+
+footer{background:var(--detalle);color:rgba(255,255,255,.88);padding:56px 0 44px;font-size:.95rem}
+footer .contenedor{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-end}
+footer b{font-family:Fraunces,serif;font-size:1.2rem;color:#fff;display:block;margin-bottom:6px}
+footer a{color:var(--acento)}
+.aviso{font-size:.86rem;color:rgba(255,255,255,.66);max-width:46ch}
+.marca-demo{position:fixed;left:14px;bottom:14px;z-index:1400;background:rgba(17,20,25,.82);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.18em;padding:8px 14px;border-radius:999px;backdrop-filter:blur(6px);pointer-events:none}
+
+/* Animaciones — patrón js-on: SIN JavaScript todo se ve (lección 03/08/2026) */
+.js-on .pal{display:inline-block;opacity:0;transform:translateY(.5em);animation:aparece .7s var(--curva) forwards;animation-delay:calc(var(--i)*70ms + 120ms)}
+.js-on .anim{opacity:0;animation:aparece .8s var(--curva) forwards;animation-delay:var(--d,0ms)}
+.js-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s var(--curva),transform .7s var(--curva);transition-delay:var(--d,0ms)}
+.js-on .rv.visible{opacity:1;transform:none}
+@keyframes aparece{to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js-on .pal,.js-on .anim,.js-on .rv{opacity:1!important;transform:none!important;animation:none!important;transition:none!important}
+  .hero::before{animation:none}
+}
+</style>
+</head>
+<body>
+<!-- EP-INTRO (estándar 30/08/2026): el objeto del sector (llave inglesa) cruza la pantalla
+     y va revelando el nombre del negocio. Se AUTODESTRUYE POR CSS PURO
+     (opacity+visibility con animation-fill-mode:forwards): aunque el JS falle,
+     la página queda visible. pointer-events:none SIEMPRE: no bloquea clics. -->
+<style>
+  #ep-intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 75% 55% at 78% 18%, #D9770633, transparent 62%),
+      radial-gradient(ellipse 60% 45% at 12% 82%, #D9770618, transparent 60%),
+      linear-gradient(160deg, #1E3A2F 0%, #1E3A2F 55%, rgba(0,0,0,.92) 100%);
+    animation:ep-intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #ep-intro{display:flex}
+  }
+  @keyframes ep-intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  #ep-intro .ep-caja{position:relative;max-width:92vw;text-align:center}
+  #ep-intro .ep-linea{position:relative;padding:30px 8px}
+  #ep-intro .ep-rayas{position:absolute;left:-8%;right:-8%;top:6px;bottom:6px;pointer-events:none}
+  #ep-intro .ep-rayas svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  #ep-intro .ep-rayas .ep-antes{clip-path:inset(-6% 0 -6% 0);animation:ep-raya-fuera 1.5s cubic-bezier(.22,.61,.36,1) .3s both}
+  #ep-intro .ep-rayas .ep-despues{clip-path:inset(-6% 100% -6% 0);animation:ep-raya-dentro 1.5s cubic-bezier(.22,.61,.36,1) .3s both}
+  @keyframes ep-raya-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+  @keyframes ep-raya-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+  #ep-intro .ep-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:Fraunces,Georgia,serif;font-weight:500;color:#FFFDF9;
+    font-size:clamp(1.4rem,5.8vw,3.1rem);line-height:1.08;letter-spacing:.01em;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:ep-revela 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  #ep-intro .ep-nombre em{font-style:italic;color:#D97706}
+  @keyframes ep-revela{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  #ep-intro .ep-objeto{
+    position:absolute;left:-2%;top:50%;width:44px;height:150px;
+    transform:translate(-50%,-50%) rotate(-6deg);
+    filter:drop-shadow(0 0 14px #D9770659);
+    animation:ep-objeto-pasa 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  @keyframes ep-objeto-pasa{
+    from{left:-2%;transform:translate(-50%,-50%) rotate(-6deg)}
+    to{left:103%;transform:translate(-50%,-50%) rotate(8deg)}
+  }
+  #ep-intro .ep-sub{
+    margin:16px 0 0;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:#D97706;font-weight:600;opacity:0;
+    animation:ep-sub-entra .6s ease 1.7s forwards;
+  }
+  @keyframes ep-sub-entra{to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){#ep-intro{display:none !important}}
+</style>
+<noscript><style>#ep-intro{display:none !important}</style></noscript>
+<div id="ep-intro" aria-hidden="true" role="presentation">
+  <div class="ep-caja">
+    <div class="ep-linea">
+      <div class="ep-rayas" aria-hidden="true">
+        <svg class="ep-antes" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#D97706" stroke-opacity=".30" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 q40 -12 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 74 q40 10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 128 q44 11 88 0 t88 0 t88 0 t88 0 t88 0 t88 0 t88 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 172 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+          </g>
+        </svg>
+        <svg class="ep-despues" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#D97706" stroke-opacity=".5" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 H600 M0 74 H600 M0 128 H600 M0 172 H600"/>
+          </g>
+        </svg>
+      </div>
+      <p class="ep-nombre">Taller Auto <em>Escorial</em></p>
+      <svg class="ep-objeto" viewBox="0 0 44 150" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 44 V132 a7 7 0 0 0 14 0 V44"/>
+      <path d="M15 44 V20 h5.5 v10 h3 V20 H29 v24"/>
+      <path d="M15 60 H29"/>
+        </g>
+      </svg>
+    </div>
+    <p class="ep-sub">Taller de automóviles · Barcelona</p>
+  </div>
+</div>
+<script>
+/* La intro se autodestruye por CSS; el JS solo retira el nodo del DOM y hace
+   de red de seguridad (lección del 03/08/2026: nada puede tapar la página). */
+(function(){
+  try{
+    var i = document.getElementById('ep-intro');
+    if(!i) return;
+    var fuera = function(){ if(i && i.parentNode) i.parentNode.removeChild(i); };
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ fuera(); return; }
+    i.addEventListener('animationend', function(ev){ if(ev.target === i) fuera(); });
+    setTimeout(function(){
+      var e = window.getComputedStyle(i);
+      if(e.display !== 'none' && (e.animationName === 'none' || e.animationName === '')) fuera();
+    }, 1200);
+    setTimeout(fuera, 3800);
+  }catch(e){}
+})();
+</script>
+<!-- /EP-INTRO -->
+
+<div class="marca-demo">DEMO</div>
+
+<header class="barra">
+  <div class="contenedor">
+    <div class="logo">Taller <span>Auto Escorial</span></div>
+    <nav>
+      <a href="#sobre">El negocio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn btn-p" href="tel:+34932843016">Llama y pide cita</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="contenedor">
+    <h1><span class="pal" style="--i:0">Taller</span> <em><span class="pal" style="--i:0">Auto</span> <span class="pal" style="--i:1">Escorial</span></em></h1>
+    <p class="hero-lema anim" style="--d:520ms">Especialistas en 4x4 y cambio automático en Gràcia</p>
+    <p class="hero-sub anim" style="--d:660ms">Taller mecánico en el corazón de Gràcia: preparación y transformación de 4x4, cambio automático y todo el mantenimiento del día a día.</p>
+    <div class="hero-botones anim" style="--d:800ms">
+      <a class="btn btn-p" href="tel:+34932843016">Llama y pide cita</a>
+      <a class="btn btn-linea" href="#contacto">Cómo llegar</a>
+    </div>
+    <div class="hero-datos anim" style="--d:920ms">
+      <div class="dato"><b><span class="contador" data-fin="4.6" data-dec="1">4,6</span><span class="estrella">★</span></b><span>Nota media en Google</span></div>
+      <div class="dato"><b><span class="contador" data-fin="38" data-dec="0">38</span><span class="estrella"></span></b><span>Reseñas de clientes</span></div>
+      <div class="dato"><b>4x4</b><span>Especialidad de la casa</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="contenedor">
+    <div class="dos">
+      <div class="rv">
+        <span class="etiqueta">Barcelona</span>
+        <h2>Lo que pocos talleres de barrio se atreven a tocar</h2>
+      </div>
+      <div class="rv" style="--d:120ms">
+<p>En Sant Lluís 71, en pleno <strong>Gràcia</strong>, Auto Escorial hace lo que muy pocos talleres de barrio abordan: <strong>4x4 y cambios automáticos</strong>. Preparación, transformación y reparación, con el mismo cuidado que una revisión rutinaria.</p><p>Sus clientes destacan tres cosas en Google: <strong>profesionalidad, precios accesibles y rapidez</strong>. De ahí el 4,6 sobre 5.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="contenedor">
+    <span class="etiqueta rv">Servicios</span>
+    <h2 class="rv" style="--d:60ms">Todo lo que hacemos</h2>
+    <p class="entradilla rv" style="--d:120ms">Con presupuesto claro antes de empezar.</p>
+    <div class="rejilla">
+        <article class="tarjeta rv" style="--d:0ms">
+          <h3>4x4 y todoterreno</h3>
+          <p>Preparación y transformación de vehículos 4x4: la especialidad de la casa.</p>
+        </article>
+        <article class="tarjeta rv" style="--d:70ms">
+          <h3>Cambio automático</h3>
+          <p>Diagnóstico, mantenimiento y reparación de cajas automáticas.</p>
+        </article>
+        <article class="tarjeta rv" style="--d:140ms">
+          <h3>Mantenimiento general</h3>
+          <p>Revisiones, cambios de aceite, filtros y correas para cualquier marca.</p>
+        </article>
+        <article class="tarjeta rv" style="--d:210ms">
+          <h3>Reparación mecánica</h3>
+          <p>Motor, embrague, frenos y suspensión, con presupuesto previo.</p>
+        </article>
+        <article class="tarjeta rv" style="--d:280ms">
+          <h3>Diagnosis</h3>
+          <p>Lectura electrónica para saber qué pasa antes de desmontar.</p>
+        </article>
+        <article class="tarjeta rv" style="--d:350ms">
+          <h3>Pre-ITV</h3>
+          <p>Repaso de los puntos que más suspenden en la inspección.</p>
+        </article>
+    </div>
+  </div>
+</section>
+
+<section class="prueba" id="opiniones">
+  <div class="contenedor">
+    <span class="etiqueta rv">Opiniones reales</span>
+    <h2 class="rv" style="--d:60ms">Lo dicen en Google, no nosotros</h2>
+    <p class="entradilla rv" style="--d:120ms"><span class="estrellas" aria-hidden="true">★★★★★</span><br>
+      4,6 sobre 5 con 38 reseñas de clientes en Google.</p>
+    <div class="cifras">
+        <div class="cifra rv" style="--d:0ms">
+          <b><span class="contador" data-fin="4.6" data-dec="1">4,6</span><span class="estrella">★</span></b>
+          <span>Nota media en Google</span>
+        </div>
+        <div class="cifra rv" style="--d:90ms">
+          <b><span class="contador" data-fin="38" data-dec="0">38</span><span class="estrella"></span></b>
+          <span>Reseñas de clientes</span>
+        </div>
+        <div class="cifra rv" style="--d:180ms">
+          <b>4x4</b>
+          <span>Especialidad de la casa</span>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <div class="dos">
+      <div class="rv">
+        <span class="etiqueta">Contacto</span>
+        <h2>Dónde estamos</h2>
+        <div class="bloque-dato">
+          <h3>Dirección</h3>
+          <p>Carrer de Sant Lluís, 71, Gràcia, 08024 Barcelona, España</p>
+        </div>
+        <div class="bloque-dato">
+          <h3>Teléfono</h3>
+          <dl><dt>Taller</dt><dd><a href="tel:+34932843016">932 84 30 16</a></dd></dl>
+        </div>
+        <div class="bloque-dato">
+          <h3>Horario</h3>
+          <dl><dt>Lunes a jueves</dt><dd>8:30 – 13:00 y 15:30 – 19:00</dd><dt>Viernes</dt><dd>8:30 – 13:00</dd></dl>
+        </div>
+        <a class="btn btn-a" href="tel:+34932843016">Llama y pide cita</a>
+      </div>
+      <a class="mapa rv" style="--d:140ms" href="https://www.google.com/maps/search/?api=1&amp;query=Taller%20Auto%20Escorial%20-%20Taller%20mec%C3%A1nico%20en%20Gracia%2C%20Carrer%20de%20Sant%20Llu%C3%ADs%2C%2071%2C%20Gr%C3%A0cia%2C%2008024%20Barcelona%2C%20Espa%C3%B1a" target="_blank" rel="noopener">
+        <b>Abrir en Google Maps</b>
+        <span>Carrer de Sant Lluís, 71, Gràcia, 08024 Barcelona, España</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div>
+      <b>Taller Auto Escorial - Taller mecánico en Gracia</b>
+      Carrer de Sant Lluís, 71, Gràcia, 08024 Barcelona, España<br>
+      Tel. <a href="tel:+34932843016">932 84 30 16</a>
+    </div>
+    <div class="aviso">
+      DEMO creada por Eleven AI como muestra para Taller Auto Escorial - Taller mecánico en Gracia — esta web puede ser tuya.
+      Datos tomados de su ficha pública de Google.
+      <a href="https://elevenprime.es" target="_blank" rel="noopener">elevenprime.es</a>
+    </div>
+  </div>
+</footer>
+
+<noscript><style>.pal,.anim,.rv{opacity:1!important;transform:none!important;animation:none!important}</style></noscript>
+
+<script>
+(function(){
+  var h=document.documentElement;
+  h.classList.remove('no-js');h.classList.add('js-on');
+  function arranca(){
+    var rv=document.querySelectorAll('.rv');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+      },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+      [].forEach.call(rv,function(el){io.observe(el)});
+      var io2=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ anima(e.target); io2.unobserve(e.target); } });
+      },{threshold:.4});
+      [].forEach.call(document.querySelectorAll('.contador'),function(el){io2.observe(el)});
+    } else {
+      [].forEach.call(rv,function(el){el.classList.add('visible')});
+    }
+  }
+  function anima(el){
+    var fin=parseFloat(el.getAttribute('data-fin'));
+    var dec=parseInt(el.getAttribute('data-dec')||'0',10);
+    if(isNaN(fin))return;
+    var t0=null,dur=1400;
+    function paso(t){
+      if(!t0)t0=t;
+      var k=Math.min((t-t0)/dur,1),v=fin*(1-Math.pow(1-k,3));
+      el.textContent=v.toLocaleString('es-ES',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+      if(k<1)requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  if(document.readyState!=='loading')arranca();else document.addEventListener('DOMContentLoaded',arranca);
+  // Rescate anti-página-vacía: si algo sigue invisible a los 1,2s, se fuerza visible.
+  setTimeout(function rescate(){
+    [].forEach.call(document.querySelectorAll('.pal,.anim,.rv'),function(el){
+      var s=window.getComputedStyle(el);
+      if(parseFloat(s.opacity)<0.9){
+        el.style.opacity='1';el.style.transform='none';el.style.animation='none';el.style.transition='none';
+      }
+    });
+  },1200);
+})();
+</script>
+
+<!-- EP-CONTACTO-FLOTANTE (estándar 30/08/2026) — los clientes del negocio le escriben/llaman a ÉL.
+     WhatsApp solo si hay móvil (6xx/7xx); el fijo nunca lleva WhatsApp. -->
+<style>
+  .ep-fab{position:fixed;right:16px;bottom:16px;z-index:1500;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .ep-fab a{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;fill:currentColor;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.28);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease,filter .25s ease}
+  .ep-fab a:hover,.ep-fab a:focus-visible{transform:scale(1.08) translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.38);filter:brightness(1.06)}
+  .ep-fab svg{width:30px;height:30px;display:block}
+  .ep-fab .ep-wa{background:#25D366}
+  .ep-fab .ep-tel{background:#1E3A2F}
+  .js-on .ep-fab a,.js-anim .ep-fab a{animation:ep-fab-entra .55s cubic-bezier(.22,.61,.36,1) backwards}
+  .js-on .ep-fab a:nth-child(1),.js-anim .ep-fab a:nth-child(1){animation-delay:1.7s}
+  .js-on .ep-fab a:nth-child(2),.js-anim .ep-fab a:nth-child(2){animation-delay:1.85s}
+  @keyframes ep-fab-entra{from{opacity:0;transform:translateY(18px) scale(.6)}to{opacity:1;transform:none}}
+  @media (min-width:768px){.ep-fab{right:24px;bottom:24px}.ep-fab a{width:62px;height:62px}.ep-fab svg{width:32px;height:32px}}
+  @media (prefers-reduced-motion: reduce){.ep-fab a{animation:none !important}}
+</style>
+<div class="ep-fab">
+  <a class="ep-tel" href="tel:+34932843016" aria-label="Llámanos al 932 84 30 16" title="Llamar al 932 84 30 16"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+</div>
+<!-- /EP-CONTACTO-FLOTANTE -->
+</body>
+</html>

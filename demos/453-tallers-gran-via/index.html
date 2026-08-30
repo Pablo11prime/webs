@@ -764,5 +764,27 @@ footer a:hover{color:#F0876B}
   }, 1200);
 })();
 </script>
+<!-- EP-CONTACTO-FLOTANTE (estándar 30/08/2026) — los clientes del negocio le escriben/llaman a ÉL.
+     WhatsApp solo si hay móvil (6xx/7xx); el fijo nunca lleva WhatsApp. -->
+<style>
+  .ep-fab{position:fixed;right:16px;bottom:16px;z-index:1500;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .ep-fab a{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;fill:currentColor;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.28);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease,filter .25s ease}
+  .ep-fab a:hover,.ep-fab a:focus-visible{transform:scale(1.08) translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.38);filter:brightness(1.06)}
+  .ep-fab svg{width:30px;height:30px;display:block}
+  .ep-fab .ep-wa{background:#25D366}
+  .ep-fab .ep-tel{background:#1F3A5F}
+  .js-on .ep-fab a,.js-anim .ep-fab a{animation:ep-fab-entra .55s cubic-bezier(.22,.61,.36,1) backwards}
+  .js-on .ep-fab a:nth-child(1),.js-anim .ep-fab a:nth-child(1){animation-delay:1.7s}
+  .js-on .ep-fab a:nth-child(2),.js-anim .ep-fab a:nth-child(2){animation-delay:1.85s}
+  @keyframes ep-fab-entra{from{opacity:0;transform:translateY(18px) scale(.6)}to{opacity:1;transform:none}}
+  @media (min-width:768px){.ep-fab{right:24px;bottom:24px}.ep-fab a{width:62px;height:62px}.ep-fab svg{width:32px;height:32px}}
+  @media (prefers-reduced-motion: reduce){.ep-fab a{animation:none !important}}
+</style>
+<div class="ep-fab">
+  <a class="ep-tel" href="tel:+34931463626" aria-label="Llámanos al 931 46 36 26" title="Llamar al 931 46 36 26"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+</div>
+<!-- /EP-CONTACTO-FLOTANTE -->
 </body>
 </html>

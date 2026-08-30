@@ -166,6 +166,111 @@ footer a{color:#fff}
 </noscript>
 </head>
 <body>
+<!-- EP-INTRO (estándar 30/08/2026): el objeto del sector (llave inglesa) cruza la pantalla
+     y va revelando el nombre del negocio. Se AUTODESTRUYE POR CSS PURO
+     (opacity+visibility con animation-fill-mode:forwards): aunque el JS falle,
+     la página queda visible. pointer-events:none SIEMPRE: no bloquea clics. -->
+<style>
+  #ep-intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 75% 55% at 78% 18%, #E8611C33, transparent 62%),
+      radial-gradient(ellipse 60% 45% at 12% 82%, #E8611C18, transparent 60%),
+      linear-gradient(160deg, #1B3A5C 0%, #1B3A5C 55%, rgba(0,0,0,.92) 100%);
+    animation:ep-intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #ep-intro{display:flex}
+  }
+  @keyframes ep-intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  #ep-intro .ep-caja{position:relative;max-width:92vw;text-align:center}
+  #ep-intro .ep-linea{position:relative;padding:30px 8px}
+  #ep-intro .ep-rayas{position:absolute;left:-8%;right:-8%;top:6px;bottom:6px;pointer-events:none}
+  #ep-intro .ep-rayas svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  #ep-intro .ep-rayas .ep-antes{clip-path:inset(-6% 0 -6% 0);animation:ep-raya-fuera 1.5s cubic-bezier(.22,.61,.36,1) .3s both}
+  #ep-intro .ep-rayas .ep-despues{clip-path:inset(-6% 100% -6% 0);animation:ep-raya-dentro 1.5s cubic-bezier(.22,.61,.36,1) .3s both}
+  @keyframes ep-raya-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+  @keyframes ep-raya-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+  #ep-intro .ep-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:'Sora',sans-serif;font-weight:500;color:#FFFDF9;
+    font-size:clamp(1.7rem,7.2vw,4rem);line-height:1.08;letter-spacing:.01em;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:ep-revela 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  #ep-intro .ep-nombre em{font-style:italic;color:#E8611C}
+  @keyframes ep-revela{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  #ep-intro .ep-objeto{
+    position:absolute;left:-2%;top:50%;width:44px;height:150px;
+    transform:translate(-50%,-50%) rotate(-6deg);
+    filter:drop-shadow(0 0 14px #E8611C59);
+    animation:ep-objeto-pasa 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  @keyframes ep-objeto-pasa{
+    from{left:-2%;transform:translate(-50%,-50%) rotate(-6deg)}
+    to{left:103%;transform:translate(-50%,-50%) rotate(8deg)}
+  }
+  #ep-intro .ep-sub{
+    margin:16px 0 0;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:#E8611C;font-weight:600;opacity:0;
+    animation:ep-sub-entra .6s ease 1.7s forwards;
+  }
+  @keyframes ep-sub-entra{to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){#ep-intro{display:none !important}}
+</style>
+<noscript><style>#ep-intro{display:none !important}</style></noscript>
+<div id="ep-intro" aria-hidden="true" role="presentation">
+  <div class="ep-caja">
+    <div class="ep-linea">
+      <div class="ep-rayas" aria-hidden="true">
+        <svg class="ep-antes" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#E8611C" stroke-opacity=".30" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 q40 -12 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 74 q40 10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 128 q44 11 88 0 t88 0 t88 0 t88 0 t88 0 t88 0 t88 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 172 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+          </g>
+        </svg>
+        <svg class="ep-despues" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#E8611C" stroke-opacity=".5" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 H600 M0 74 H600 M0 128 H600 M0 172 H600"/>
+          </g>
+        </svg>
+      </div>
+      <p class="ep-nombre">Talleres <em>SANCHÍS</em></p>
+      <svg class="ep-objeto" viewBox="0 0 44 150" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#E8611C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 44 V132 a7 7 0 0 0 14 0 V44"/>
+      <path d="M15 44 V20 h5.5 v10 h3 V20 H29 v24"/>
+      <path d="M15 60 H29"/>
+        </g>
+      </svg>
+    </div>
+    <p class="ep-sub">Taller de automóviles · Valencia</p>
+  </div>
+</div>
+<script>
+/* La intro se autodestruye por CSS; el JS solo retira el nodo del DOM y hace
+   de red de seguridad (lección del 03/08/2026: nada puede tapar la página). */
+(function(){
+  try{
+    var i = document.getElementById('ep-intro');
+    if(!i) return;
+    var fuera = function(){ if(i && i.parentNode) i.parentNode.removeChild(i); };
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ fuera(); return; }
+    i.addEventListener('animationend', function(ev){ if(ev.target === i) fuera(); });
+    setTimeout(function(){
+      var e = window.getComputedStyle(i);
+      if(e.display !== 'none' && (e.animationName === 'none' || e.animationName === '')) fuera();
+    }, 1200);
+    setTimeout(fuera, 3800);
+  }catch(e){}
+})();
+</script>
+<!-- /EP-INTRO -->
 
 <div id="progreso"></div>
 <div class="demo-marca">DEMO</div>
@@ -395,5 +500,27 @@ footer a{color:#fff}
   }, 1200);
 })();
 </script>
+<!-- EP-CONTACTO-FLOTANTE (estándar 30/08/2026) — los clientes del negocio le escriben/llaman a ÉL.
+     WhatsApp solo si hay móvil (6xx/7xx); el fijo nunca lleva WhatsApp. -->
+<style>
+  .ep-fab{position:fixed;right:16px;bottom:16px;z-index:1500;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .ep-fab a{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;fill:currentColor;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.28);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease,filter .25s ease}
+  .ep-fab a:hover,.ep-fab a:focus-visible{transform:scale(1.08) translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.38);filter:brightness(1.06)}
+  .ep-fab svg{width:30px;height:30px;display:block}
+  .ep-fab .ep-wa{background:#25D366}
+  .ep-fab .ep-tel{background:#1B3A5C}
+  .js-on .ep-fab a,.js-anim .ep-fab a{animation:ep-fab-entra .55s cubic-bezier(.22,.61,.36,1) backwards}
+  .js-on .ep-fab a:nth-child(1),.js-anim .ep-fab a:nth-child(1){animation-delay:1.7s}
+  .js-on .ep-fab a:nth-child(2),.js-anim .ep-fab a:nth-child(2){animation-delay:1.85s}
+  @keyframes ep-fab-entra{from{opacity:0;transform:translateY(18px) scale(.6)}to{opacity:1;transform:none}}
+  @media (min-width:768px){.ep-fab{right:24px;bottom:24px}.ep-fab a{width:62px;height:62px}.ep-fab svg{width:32px;height:32px}}
+  @media (prefers-reduced-motion: reduce){.ep-fab a{animation:none !important}}
+</style>
+<div class="ep-fab">
+  <a class="ep-tel" href="tel:+34963777374" aria-label="Llámanos al 963 77 73 74" title="Llamar al 963 77 73 74"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+</div>
+<!-- /EP-CONTACTO-FLOTANTE -->
 </body>
 </html>

@@ -279,6 +279,113 @@
 </noscript>
 </head>
 <body>
+<!-- EP-INTRO (estándar 30/08/2026): el objeto del sector (peine) cruza la pantalla
+     y va revelando el nombre del negocio. Se AUTODESTRUYE POR CSS PURO
+     (opacity+visibility con animation-fill-mode:forwards): aunque el JS falle,
+     la página queda visible. pointer-events:none SIEMPRE: no bloquea clics. -->
+<style>
+  #ep-intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se muestra si el navegador soporta clip-path + fill-mode (ver @supports) */
+    align-items:center;justify-content:center;overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 75% 55% at 78% 18%, #C9A22733, transparent 62%),
+      radial-gradient(ellipse 60% 45% at 12% 82%, #C9A22718, transparent 60%),
+      linear-gradient(160deg, #1A1A1A 0%, #1A1A1A 55%, rgba(0,0,0,.92) 100%);
+    animation:ep-intro-fuera .75s cubic-bezier(.22,.61,.36,1) 2.35s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #ep-intro{display:flex}
+  }
+  @keyframes ep-intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  #ep-intro .ep-caja{position:relative;max-width:92vw;text-align:center}
+  #ep-intro .ep-linea{position:relative;padding:30px 8px}
+  #ep-intro .ep-rayas{position:absolute;left:-8%;right:-8%;top:6px;bottom:6px;pointer-events:none}
+  #ep-intro .ep-rayas svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+  #ep-intro .ep-rayas .ep-antes{clip-path:inset(-6% 0 -6% 0);animation:ep-raya-fuera 1.5s cubic-bezier(.22,.61,.36,1) .3s both}
+  #ep-intro .ep-rayas .ep-despues{clip-path:inset(-6% 100% -6% 0);animation:ep-raya-dentro 1.5s cubic-bezier(.22,.61,.36,1) .3s both}
+  @keyframes ep-raya-fuera{from{clip-path:inset(-6% 0 -6% 0)}to{clip-path:inset(-6% 0 -6% 100%)}}
+  @keyframes ep-raya-dentro{from{clip-path:inset(-6% 100% -6% 0)}to{clip-path:inset(-6% 0 -6% 0)}}
+  #ep-intro .ep-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:'Cinzel',serif;font-weight:500;color:#FFFDF9;
+    font-size:clamp(1.7rem,7.2vw,4rem);line-height:1.08;letter-spacing:.01em;
+    clip-path:inset(-14% 100% -14% -2%);
+    animation:ep-revela 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  #ep-intro .ep-nombre em{font-style:italic;color:#C9A227}
+  @keyframes ep-revela{from{clip-path:inset(-14% 100% -14% -2%)}to{clip-path:inset(-14% -4% -14% -2%)}}
+  #ep-intro .ep-objeto{
+    position:absolute;left:-2%;top:50%;width:44px;height:150px;
+    transform:translate(-50%,-50%) rotate(-6deg);
+    filter:drop-shadow(0 0 14px #C9A22759);
+    animation:ep-objeto-pasa 1.5s cubic-bezier(.22,.61,.36,1) .3s both;
+  }
+  @keyframes ep-objeto-pasa{
+    from{left:-2%;transform:translate(-50%,-50%) rotate(-6deg)}
+    to{left:103%;transform:translate(-50%,-50%) rotate(8deg)}
+  }
+  #ep-intro .ep-sub{
+    margin:16px 0 0;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:#C9A227;font-weight:600;opacity:0;
+    animation:ep-sub-entra .6s ease 1.7s forwards;
+  }
+  @keyframes ep-sub-entra{to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){#ep-intro{display:none !important}}
+</style>
+<noscript><style>#ep-intro{display:none !important}</style></noscript>
+<div id="ep-intro" aria-hidden="true" role="presentation">
+  <div class="ep-caja">
+    <div class="ep-linea">
+      <div class="ep-rayas" aria-hidden="true">
+        <svg class="ep-antes" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#C9A227" stroke-opacity=".30" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 q40 -12 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 74 q40 10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 128 q44 11 88 0 t88 0 t88 0 t88 0 t88 0 t88 0 t88 0"/>
+            <path vector-effect="non-scaling-stroke" d="M0 172 q40 -10 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0"/>
+          </g>
+        </svg>
+        <svg class="ep-despues" viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#C9A227" stroke-opacity=".5" stroke-width="1" stroke-linecap="round">
+            <path vector-effect="non-scaling-stroke" d="M0 30 H600 M0 74 H600 M0 128 H600 M0 172 H600"/>
+          </g>
+        </svg>
+      </div>
+      <p class="ep-nombre">Víctor <em>Martínez</em></p>
+      <svg class="ep-objeto" viewBox="0 0 44 150" fill="none" aria-hidden="true" focusable="false">
+        <g stroke="#C9A227" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="31.5" y="6" width="8" height="138" rx="4"/>
+      <path d="M31.5 18 H10"/><path d="M31.5 29 H8"/><path d="M31.5 40 H10"/>
+      <path d="M31.5 51 H8"/><path d="M31.5 62 H10"/><path d="M31.5 73 H8"/>
+      <path d="M31.5 84 H10"/><path d="M31.5 95 H8"/><path d="M31.5 106 H10"/>
+      <path d="M31.5 117 H8"/><path d="M31.5 128 H10"/>
+        </g>
+      </svg>
+    </div>
+    <p class="ep-sub">Barbería · Valencia</p>
+  </div>
+</div>
+<script>
+/* La intro se autodestruye por CSS; el JS solo retira el nodo del DOM y hace
+   de red de seguridad (lección del 03/08/2026: nada puede tapar la página). */
+(function(){
+  try{
+    var i = document.getElementById('ep-intro');
+    if(!i) return;
+    var fuera = function(){ if(i && i.parentNode) i.parentNode.removeChild(i); };
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ fuera(); return; }
+    i.addEventListener('animationend', function(ev){ if(ev.target === i) fuera(); });
+    setTimeout(function(){
+      var e = window.getComputedStyle(i);
+      if(e.display !== 'none' && (e.animationName === 'none' || e.animationName === '')) fuera();
+    }, 1200);
+    setTimeout(fuera, 3800);
+  }catch(e){}
+})();
+</script>
+<!-- /EP-INTRO -->
 
 <div id="progreso" aria-hidden="true"></div>
 <div class="marca-fondo" aria-hidden="true"><span>DEMO</span></div>

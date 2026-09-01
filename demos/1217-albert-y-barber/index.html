@@ -120,7 +120,7 @@ footer a{color:var(--acento)}
 </style>
 </head>
 <body>
-<!-- EP-INTRO (estándar 30/08/2026): el objeto del sector (peine) cruza la pantalla
+<!-- EP-INTRO (estándar 30/08/2026): el objeto del sector (cepillo de dientes) cruza la pantalla
      y va revelando el nombre del negocio. Se AUTODESTRUYE POR CSS PURO
      (opacity+visibility con animation-fill-mode:forwards): aunque el JS falle,
      la página queda visible. pointer-events:none SIEMPRE: no bloquea clics. -->
@@ -196,11 +196,10 @@ footer a{color:var(--acento)}
       <p class="ep-nombre">Albert y <em>Barber</em></p>
       <svg class="ep-objeto" viewBox="0 0 44 150" fill="none" aria-hidden="true" focusable="false">
         <g stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="31.5" y="6" width="8" height="138" rx="4"/>
-      <path d="M31.5 18 H10"/><path d="M31.5 29 H8"/><path d="M31.5 40 H10"/>
-      <path d="M31.5 51 H8"/><path d="M31.5 62 H10"/><path d="M31.5 73 H8"/>
-      <path d="M31.5 84 H10"/><path d="M31.5 95 H8"/><path d="M31.5 106 H10"/>
-      <path d="M31.5 117 H8"/><path d="M31.5 128 H10"/>
+          <path d="M18 12 h8 v92 h-8 z" rx="4"/>
+      <rect x="13" y="104" width="18" height="28" rx="8"/>
+      <path d="M17 132 v11 M22 132 v13 M27 132 v11"/>
+      <path d="M18 26 h8"/>
         </g>
       </svg>
     </div>

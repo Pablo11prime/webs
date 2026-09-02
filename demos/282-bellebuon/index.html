@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BelleBuòn — restaurante italiano en Horta-Guinardó, Barcelona. Cocina napolitana e irpina, pastas frescas hechas a mano cada día. 17 años en el barrio, 4,8 estrellas en Google.">
+<title>BelleBuòn — Restaurante italiano en Barcelona · Pasta fresca hecha a mano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tierra:#6B4F3A;
+    --tierra-osc:#4A3527;
+    --crema:#F5EFE6;
+    --oliva:#8A9A5B;
+    --tomate:#C0392B;
+    --tinta:#2A2019;
+    --gris:#6f6259;
+    --blanco:#FFFCF7;
+    --display:'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--crema);
+    color:var(--tinta);
+    line-height:1.68;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--oliva);color:var(--blanco)}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo existen bajo .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease), transform .8s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.09s}
+  .js-on .rv-d2{transition-delay:.19s}
+  .js-on .rv-d3{transition-delay:.29s}
+  .js-on .rv-d4{transition-delay:.39s}
+  .js-on .rv-d5{transition-delay:.49s}
+
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--oliva),var(--tomate));z-index:1000;transition:width .1s linear}
+
+  .marca-demo{
+    position:fixed;bottom:16px;left:16px;z-index:999;
+    font-size:11px;letter-spacing:.22em;font-weight:600;
+    color:var(--crema);background:rgba(42,32,25,.86);
+    border:1px solid rgba(138,154,91,.6);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "EL TENEDOR" ======
+     Un tenedor de trazo fino cruza la escena enrollando un hilo de pasta y, a su paso,
+     va revelando el nombre del restaurante. El overlay se AUTODESTRUYE POR CSS PURO
+     (opacity+visibility con animation-fill-mode:forwards): si el JS falla, la página
+     queda visible igual. El JS solo retira el nodo al terminar.
+     pointer-events:none SIEMPRE: nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se activa bajo @supports */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 68% 52% at 74% 18%, rgba(192,57,43,.20), transparent 62%),
+      radial-gradient(ellipse 58% 46% at 16% 86%, rgba(138,154,91,.16), transparent 60%),
+      linear-gradient(158deg,#3A2A1E 0%, #2A2019 55%, #1A130E 100%);
+    animation:intro-fuera .85s var(--ease) 2.7s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:94vw;text-align:center}
+  .intro-linea{position:relative;padding:30px 12px 16px}
+  /* El hilo de pasta que el tenedor va recogiendo */
+  .intro-hilo{
+    position:absolute;left:-8%;right:-8%;bottom:10px;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(240,214,160,.75),rgba(138,154,91,.5),transparent);
+    clip-path:inset(0 100% 0 0);
+    animation:hilo-dentro 1.7s var(--ease) .4s both;
+    border-radius:2px;
+  }
+  @keyframes hilo-dentro{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--display);font-weight:600;color:var(--crema);
+    font-size:clamp(2.6rem,12.5vw,6.2rem);line-height:1.04;letter-spacing:.01em;
+    clip-path:inset(-16% 100% -16% -2%);
+    animation:enrolla 1.7s var(--ease) .4s both;
+  }
+  .intro-nombre em{font-style:italic;color:#E8C87A}
+  @keyframes enrolla{from{clip-path:inset(-16% 100% -16% -2%)}to{clip-path:inset(-16% -4% -16% -2%)}}
+  /* El tenedor: trazo fino dorado que se desliza girando, como quien enrolla tagliatelle */
+  .intro-tenedor{
+    position:absolute;left:-4%;top:50%;width:56px;height:150px;
+    transform:translate(-50%,-52%) rotate(-14deg);
+    filter:drop-shadow(0 0 15px rgba(232,200,122,.5));
+    animation:tenedor-gira 1.7s var(--ease) .4s both;
+  }
+  @keyframes tenedor-gira{
+    from{left:-4%;transform:translate(-50%,-52%) rotate(-14deg)}
+    to{left:105%;transform:translate(-50%,-52%) rotate(346deg)}
+  }
+  .intro-sub{
+    margin:20px 0 0;
+    font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:#E8C87A;font-weight:600;
+    opacity:0;animation:intro-sub .65s var(--ease) 1.95s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;padding:14px 20px;
+    background:rgba(245,239,230,.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(42,32,25,.08);
+    transition:box-shadow .3s var(--ease);
+  }
+  nav.con-sombra{box-shadow:0 6px 26px rgba(42,32,25,.10)}
+  nav .logo{font-family:var(--display);font-weight:700;font-size:1.4rem;letter-spacing:.01em;text-decoration:none;color:var(--tinta);line-height:1.05}
+  nav .logo em{font-style:italic;color:var(--tomate)}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:600;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--oliva);margin-top:3px}
+  nav .enlaces{display:none;gap:26px}
+  nav .enlaces a{font-size:.83rem;font-weight:500;text-decoration:none;color:var(--gris);transition:color .25s var(--ease)}
+  nav .enlaces a:hover{color:var(--tomate)}
+  nav .cta-nav{
+    font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--crema);background:var(--tierra);text-decoration:none;
+    padding:11px 18px;border-radius:999px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--tomate);transform:translateY(-1px)}
+  @media (min-width:900px){nav{padding:16px 44px}nav .enlaces{display:flex}}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;align-items:center;
+    padding:120px 20px 70px;
+    overflow:hidden;
+  }
+  #hero-fondo{
+    position:absolute;inset:-12% 0 0;z-index:0;
+    background:
+      radial-gradient(ellipse 62% 48% at 78% 22%, rgba(192,57,43,.16), transparent 60%),
+      radial-gradient(ellipse 54% 44% at 12% 78%, rgba(138,154,91,.20), transparent 58%),
+      linear-gradient(168deg,#FBF7F0 0%, var(--crema) 58%, #EFE6D8 100%);
+    will-change:transform;
+  }
+  /* Textura sutil de mantel: líneas finísimas en diagonal */
+  .hero::after{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:repeating-linear-gradient(135deg, rgba(107,79,58,.032) 0 1px, transparent 1px 22px);
+  }
+  .hero-int{position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%}
+  .hero-etiqueta{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.66rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--oliva);margin-bottom:22px;
+  }
+  .hero-etiqueta::before{content:'';width:34px;height:1px;background:var(--oliva)}
+  .hero h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(3rem,11.6vw,6.6rem);
+    line-height:.98;letter-spacing:-.015em;
+    color:var(--tinta);margin-bottom:16px;
+  }
+  .hero h1 em{font-style:italic;color:var(--tomate)}
+  .js-on .hero h1 .pal{
+    display:inline-block;
+    opacity:0;transform:translateY(24px) rotate(1.5deg);
+    animation:pal-entra .78s var(--ease) forwards;
+    animation-delay:calc(2.75s + var(--i) * .085s);
+  }
+  @keyframes pal-entra{to{opacity:1;transform:none}}
+  .hero-lema{
+    font-family:var(--display);font-style:italic;font-weight:500;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);
+    color:var(--tierra);margin-bottom:18px;max-width:22ch;line-height:1.28;
+  }
+  .hero-sub{
+    font-size:clamp(1rem,2.2vw,1.14rem);color:var(--gris);
+    max-width:52ch;margin-bottom:34px;font-weight:300;
+  }
+  .hero-botones{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:44px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.87rem;font-weight:700;letter-spacing:.03em;
+    text-decoration:none;padding:16px 30px;border-radius:999px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
+  }
+  .btn svg{width:18px;height:18px;fill:currentColor}
+  .btn-1{background:var(--tomate);color:var(--blanco);box-shadow:0 10px 26px rgba(192,57,43,.28)}
+  .btn-1:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(192,57,43,.38)}
+  .btn-2{background:transparent;color:var(--tinta);border:1.5px solid rgba(42,32,25,.24)}
+  .btn-2:hover{background:var(--tinta);color:var(--crema);transform:translateY(-3px)}
+  .hero-datos{display:flex;flex-wrap:wrap;gap:34px 46px;padding-top:30px;border-top:1px solid rgba(42,32,25,.11)}
+  .dato .num{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,5.5vw,2.7rem);line-height:1;color:var(--tierra)}
+  .dato .num span{color:var(--oliva)}
+  .dato .txt{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);margin-top:7px;font-weight:600}
+  .js-on .hero-lema,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:0;animation:aparece .9s var(--ease) forwards}
+  .js-on .hero-lema{animation-delay:3.15s}
+  .js-on .hero-sub{animation-delay:3.3s}
+  .js-on .hero-botones{animation-delay:3.45s}
+  .js-on .hero-datos{animation-delay:3.6s}
+  @keyframes aparece{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  /* ====== SECCIONES ====== */
+  section{padding:88px 20px}
+  .int{max-width:1180px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--oliva);margin-bottom:16px;
+  }
+  .etiqueta::before{content:'';width:30px;height:1px;background:var(--oliva)}
+  h2{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2rem,6vw,3.3rem);line-height:1.08;
+    letter-spacing:-.01em;margin-bottom:20px;
+  }
+  h2 em{font-style:italic;color:var(--tomate)}
+  .entradilla{font-size:1.03rem;color:var(--gris);max-width:62ch;font-weight:300;margin-bottom:44px}
+
+  /* Historia */
+  .historia{background:var(--blanco)}
+  .historia-grid{display:grid;gap:44px;align-items:start}
+  @media (min-width:900px){.historia-grid{grid-template-columns:1.15fr .85fr;gap:70px}}
+  .historia p{margin-bottom:17px;color:var(--gris);font-weight:300;font-size:1.03rem}
+  .historia p strong{color:var(--tinta);font-weight:600}
+  .cita{
+    border-left:3px solid var(--oliva);padding:22px 26px;
+    background:linear-gradient(135deg,rgba(138,154,91,.09),rgba(138,154,91,.03));
+    border-radius:0 14px 14px 0;
+  }
+  .cita blockquote{font-family:var(--display);font-style:italic;font-size:1.22rem;line-height:1.45;color:var(--tierra-osc);margin-bottom:11px}
+  .cita cite{font-style:normal;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--oliva);font-weight:700}
+  .sellos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .sello{
+    background:var(--crema);border:1px solid rgba(107,79,58,.14);
+    border-radius:16px;padding:22px 20px;text-align:center;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .sello:hover{transform:translateY(-5px);box-shadow:0 14px 32px rgba(107,79,58,.13)}
+  .sello svg{width:30px;height:30px;stroke:var(--tomate);fill:none;stroke-width:1.4;margin:0 auto 11px}
+  .sello h3{font-size:.86rem;font-weight:700;margin-bottom:5px;color:var(--tinta)}
+  .sello p{font-size:.78rem;color:var(--gris);font-weight:300;line-height:1.5}
+
+  /* Carta */
+  .carta{background:var(--crema)}
+  .carta-grid{display:grid;gap:16px}
+  @media (min-width:760px){.carta-grid{grid-template-columns:1fr 1fr}}
+  .plato{
+    background:var(--blanco);border:1px solid rgba(107,79,58,.13);
+    border-radius:18px;padding:26px 26px 24px;
+    position:relative;overflow:hidden;
+    transition:transform .38s var(--ease), box-shadow .38s var(--ease), border-color .38s var(--ease);
+  }
+  .plato::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--tomate),var(--oliva));
+    transform:scaleY(0);transform-origin:top;transition:transform .45s var(--ease);
+  }
+  .plato:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(107,79,58,.15);border-color:rgba(138,154,91,.4)}
+  .plato:hover::before{transform:scaleY(1)}
+  .plato-cab{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:9px}
+  .plato h3{font-family:var(--display);font-weight:600;font-size:1.16rem;line-height:1.24;color:var(--tinta)}
+  .plato .precio{font-family:var(--display);font-weight:700;font-size:1.16rem;color:var(--tomate);white-space:nowrap}
+  .plato p{font-size:.89rem;color:var(--gris);font-weight:300;line-height:1.58}
+  .carta-nota{
+    margin-top:26px;text-align:center;font-size:.82rem;color:var(--gris);font-weight:300;
+  }
+  .carta-nota strong{color:var(--tierra);font-weight:600}
+
+  /* Reseñas */
+  .resenas{background:var(--tierra-osc);color:var(--crema);position:relative;overflow:hidden}
+  .resenas::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 50% at 82% 12%, rgba(138,154,91,.20), transparent 62%);
+  }
+  .resenas .int{position:relative;z-index:1}
+  .resenas .etiqueta{color:#E8C87A}
+  .resenas .etiqueta::before{background:#E8C87A}
+  .resenas h2{color:var(--crema)}
+  .resenas h2 em{color:#E8C87A}
+  .resenas .entradilla{color:rgba(245,239,230,.72)}
+  .nota-global{
+    display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px;
+    background:rgba(245,239,230,.07);border:1px solid rgba(245,239,230,.14);
+    border-radius:18px;padding:24px 28px;margin-bottom:34px;
+  }
+  .nota-global .puntos{font-family:var(--display);font-weight:700;font-size:3rem;line-height:1;color:#E8C87A}
+  .nota-global .estrellas{color:#E8C87A;font-size:1.1rem;letter-spacing:.16em}
+  .nota-global .cuenta{font-size:.86rem;color:rgba(245,239,230,.8);font-weight:300}
+  .nota-global .cuenta strong{color:var(--crema);font-weight:700}
+  .opiniones{display:grid;gap:16px}
+  @media (min-width:820px){.opiniones{grid-template-columns:repeat(3,1fr)}}
+  .opinion{
+    background:rgba(245,239,230,.065);border:1px solid rgba(245,239,230,.13);
+    border-radius:18px;padding:26px 24px;
+    transition:transform .38s var(--ease), background .38s var(--ease);
+  }
+  .opinion:hover{transform:translateY(-6px);background:rgba(245,239,230,.10)}
+  .opinion .estrellas{color:#E8C87A;font-size:.92rem;letter-spacing:.14em;margin-bottom:13px}
+  .opinion blockquote{font-size:.93rem;line-height:1.62;color:rgba(245,239,230,.93);font-weight:300;margin-bottom:18px}
+  .quien{display:flex;align-items:center;gap:12px}
+  .quien .avatar{
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(135deg,var(--oliva),var(--tomate));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:.95rem;color:var(--blanco);
+  }
+  .quien p{font-size:.85rem;font-weight:600;color:var(--crema);line-height:1.25}
+  .quien small{font-size:.7rem;color:rgba(245,239,230,.6)}
+
+  /* Contacto */
+  .contacto{background:var(--blanco)}
+  .contacto-grid{display:grid;gap:38px}
+  @media (min-width:900px){.contacto-grid{grid-template-columns:1fr 1fr;gap:64px}}
+  .ficha{display:flex;flex-direction:column;gap:22px}
+  .linea{display:flex;gap:16px;align-items:flex-start}
+  .linea .ico{
+    width:44px;height:44px;border-radius:13px;flex-shrink:0;
+    background:linear-gradient(135deg,rgba(192,57,43,.13),rgba(138,154,91,.13));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .linea .ico svg{width:20px;height:20px;stroke:var(--tomate);fill:none;stroke-width:1.6}
+  .linea h3{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--oliva);font-weight:700;margin-bottom:5px}
+  .linea p, .linea a{font-size:.99rem;color:var(--tinta);text-decoration:none;font-weight:400;line-height:1.55}
+  .linea a:hover{color:var(--tomate)}
+  .horario{background:var(--crema);border:1px solid rgba(107,79,58,.14);border-radius:20px;padding:30px 28px}
+  .horario h3{font-family:var(--display);font-weight:700;font-size:1.35rem;margin-bottom:20px;color:var(--tinta)}
+  .horario .fila{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(107,79,58,.1);font-size:.92rem}
+  .horario .fila:last-of-type{border-bottom:none}
+  .horario .fila span:first-child{font-weight:600;color:var(--tinta)}
+  .horario .fila span:last-child{color:var(--gris);font-weight:300;text-align:right}
+  .horario .cerrado span:last-child{color:var(--tomate);font-weight:600}
+  .horario .btn{margin-top:22px;width:100%;justify-content:center}
+
+  /* Pie */
+  footer{background:var(--tinta);color:rgba(245,239,230,.62);padding:52px 20px 40px;text-align:center}
+  footer .marca{font-family:var(--display);font-weight:700;font-size:1.7rem;color:var(--crema);margin-bottom:9px}
+  footer .marca em{font-style:italic;color:#E8C87A}
+  footer .dir{font-size:.87rem;margin-bottom:26px;font-weight:300}
+  footer .aviso{
+    border-top:1px solid rgba(245,239,230,.14);padding-top:24px;margin-top:8px;
+    font-size:.8rem;line-height:1.65;font-weight:300;
+  }
+  footer .aviso strong{color:#E8C87A;font-weight:700}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    #intro{display:none !important}
+    .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO: EL TENEDOR QUE ENROLLA EL NOMBRE -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-hilo"></div>
+      <h2 class="intro-nombre">Belle<em>Buòn</em></h2>
+      <svg class="intro-tenedor" viewBox="0 0 56 150" fill="none" stroke="#E8C87A" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M16 8v34M28 6v36M40 8v34"/>
+        <path d="M12 42c0 9 5 14 16 14s16-5 16-14"/>
+        <path d="M28 56v88"/>
+        <path d="M22 142h12"/>
+      </svg>
+    </div>
+    <p class="intro-sub">Cucina napoletana · Barcelona</p>
+  </div>
+</div>
+
+<div id="barra-scroll"></div>
+<div class="marca-demo">DEMO</div>
+
+<nav id="nav">
+  <a class="logo" href="#inicio">Belle<em>Buòn</em><small>Ristorante · Barcelona</small></a>
+  <div class="enlaces">
+    <a href="#historia">Nuestra historia</a>
+    <a href="#carta">La carta</a>
+    <a href="#resenas">Opiniones</a>
+    <a href="#contacto">Dónde estamos</a>
+  </div>
+  <a class="cta-nav" href="tel:+34935141971">Reservar mesa</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div id="hero-fondo"></div>
+  <div class="hero-int">
+    <p class="hero-etiqueta">Cocina napolitana e irpina</p>
+    <h1 id="titulo-hero">Belle<em>Buòn</em></h1>
+    <p class="hero-lema">La pasta se hace a mano cada mañana. Como en casa de la nonna.</p>
+    <p class="hero-sub">Diecisiete años en Horta-Guinardó cocinando al momento la tradición de la Campania: pastas frescas elaboradas a mano, sabores genuinos y el «agradable estupor» que da nombre a la casa.</p>
+    <div class="hero-botones">
+      <a class="btn btn-1" href="tel:+34935141971">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+        Reservar mesa
+      </a>
+      <a class="btn btn-2" href="#carta">Ver la carta</a>
+    </div>
+    <div class="hero-datos">
+      <div class="dato">
+        <p class="num"><span class="contador" data-fin="4.8" data-dec="1">4,8</span><span>★</span></p>
+        <p class="txt">Valoración en Google</p>
+      </div>
+      <div class="dato">
+        <p class="num"><span class="contador" data-fin="5944">5.944</span></p>
+        <p class="txt">Reseñas de comensales</p>
+      </div>
+      <div class="dato">
+        <p class="num"><span class="contador" data-fin="17">17</span></p>
+        <p class="txt">Años en el barrio</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="historia" id="historia">
+  <div class="int">
+    <div class="historia-grid">
+      <div>
+        <p class="etiqueta rv">Nuestra historia</p>
+        <h2 class="rv rv-d1">Un <em>agradable estupor</em> en cada plato</h2>
+        <p class="rv rv-d2"><strong>«BelleBuòn»</strong> es una expresión partenopea —napolitana— que expresa sorpresa ante algo inesperado: un agradable estupor. La redundancia de «bello» y «buono» da una sensación de saciedad ya solo al pronunciarla.</p>
+        <p class="rv rv-d2">Eso es exactamente lo que buscamos en la cocina: valores antiguos, sabores genuinos y un pequeño asombro en cada bocado. Nuestro chef, natural de <strong>La Campania</strong>, en el sur de Italia, propone una cocina artesanal en todos sus aspectos: <strong>las pastas frescas se elaboran a mano</strong> y todas las comidas se cocinan al momento. En algunas se reconoce además el auténtico estilo <strong>irpino</strong>, propio de la provincia de Avellino.</p>
+        <p class="rv rv-d3">Desde su apertura, hace ya diecisiete años, somos un punto de referencia de la auténtica cocina tradicional italiana en Barcelona.</p>
+        <div class="cita rv rv-d3">
+          <blockquote>«Uno no puede pensar bien, amar bien, dormir bien, si no ha comido bien.»</blockquote>
+          <cite>Virginia Woolf</cite>
+        </div>
+      </div>
+      <div class="sellos">
+        <div class="sello rv rv-d1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9m0 0a4 4 0 0 1 8 0m-8 0h8m0 0a4 4 0 0 1 8 0v11M12 9v11"/></svg>
+          <h3>Pasta fresca</h3>
+          <p>Hecha a mano en el propio restaurante</p>
+        </div>
+        <div class="sello rv rv-d2">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M5 7c0 3 3 5 7 5s7-2 7-5"/><circle cx="12" cy="7" r="4"/></svg>
+          <h3>Campania</h3>
+          <p>Recetas napolitanas e irpinas de origen</p>
+        </div>
+        <div class="sello rv rv-d3">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <h3>Al momento</h3>
+          <p>Todo se cocina cuando lo pides</p>
+        </div>
+        <div class="sello rv rv-d4">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.6 5.6 6.1.8-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.4l6.1-.8L12 3z"/></svg>
+          <h3>4,8 en Google</h3>
+          <p>Con casi 6.000 reseñas de comensales</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="carta" id="carta">
+  <div class="int">
+    <p class="etiqueta rv">La fresca · hecha a mano</p>
+    <h2 class="rv rv-d1">Nuestras <em>pastas frescas</em></h2>
+    <p class="entradilla rv rv-d2">Una selección de la carta. Todas las pastas se elaboran a mano en el restaurante y se cocinan en el momento.</p>
+    <div class="carta-grid">
+      <article class="plato rv rv-d1">
+        <div class="plato-cab"><h3>Scialatielli ai frutti di mare</h3><span class="precio">23,90 €</span></div>
+        <p>Scialatielli con frutos del mar (gambas, almejas, mejillones, langostinos), tomate cherry y ajo.</p>
+      </article>
+      <article class="plato rv rv-d2">
+        <div class="plato-cab"><h3>Raviolo pappone</h3><span class="precio">19,90 €</span></div>
+        <p>Raviolis rellenos de carne de ternera braseada al tinto, con salsa de tomate, pesto, cebolla y guanciale.</p>
+      </article>
+      <article class="plato rv rv-d1">
+        <div class="plato-cab"><h3>Fettuccine alla reale «bottarga e vongole»</h3><span class="precio">19,90 €</span></div>
+        <p>Tiras de pasta casera con caviar italiano, almejas frescas, fumet, tomate colina y perejil.</p>
+      </article>
+      <article class="plato rv rv-d2">
+        <div class="plato-cab"><h3>Mezzelune profumate</h3><span class="precio">19,50 €</span></div>
+        <p>Raviolis rellenos de fontina y speck ahumado, en crema de gorgonzola y nueces.</p>
+      </article>
+      <article class="plato rv rv-d1">
+        <div class="plato-cab"><h3>Scialatielli, salsiccia, funghi e provola</h3><span class="precio">18,90 €</span></div>
+        <p>Scialatielli con butifarra, bechamel, setas mixtas, próvola ahumada, cebolla, ajo y perejil.</p>
+      </article>
+      <article class="plato rv rv-d2">
+        <div class="plato-cab"><h3>Raviolo irpino</h3><span class="precio">18,00 €</span></div>
+        <p>Raviolis en masa de espinacas rellenos de requesón, con salsa de tomate collina, albahaca y orégano.</p>
+      </article>
+      <article class="plato rv rv-d1">
+        <div class="plato-cab"><h3>Tagliatelle al pesto di pistacchio di Bronte</h3><span class="precio">17,90 €</span></div>
+        <p>Tiras de pasta fresca al pesto artesanal de pistacho siciliano de Bronte, parmesano, mantequilla, rúcula y granillo de pistacho.</p>
+      </article>
+      <article class="plato rv rv-d2">
+        <div class="plato-cab"><h3>Maltagliati del contadino</h3><span class="precio">16,00 €</span></div>
+        <p>Tiras rotas de pasta casera con mixto de verduras, salsa de tomate, albahaca y pecorino romano.</p>
+      </article>
+    </div>
+    <p class="carta-nota rv rv-d3">La carta completa incluye además entrantes, carnes, postres caseros y una <strong>selección de vinos italianos</strong>. Pregúntanos al reservar.</p>
+  </div>
+</section>
+
+<section class="resenas" id="resenas">
+  <div class="int">
+    <p class="etiqueta rv">Opiniones reales</p>
+    <h2 class="rv rv-d1">Lo cuentan <em>nuestros comensales</em></h2>
+    <p class="entradilla rv rv-d2">Reseñas publicadas en Google por clientes del restaurante.</p>
+    <div class="nota-global rv rv-d1">
+      <span class="puntos">4,8</span>
+      <div>
+        <p class="estrellas">★★★★★</p>
+        <p class="cuenta">A partir de <strong>5.944 reseñas</strong> en Google</p>
+      </div>
+    </div>
+    <div class="opiniones">
+      <article class="opinion rv rv-d1">
+        <p class="estrellas">★★★★★</p>
+        <blockquote>«Servicio y ambiente increíble. Huele genial en todo el restaurante y los platos, muy muy buenos. La pasta con gorgonzola y nueces es una auténtica pasada: puedes trasladarte a Italia estando en Barcelona. Sin duda volveré.»</blockquote>
+        <div class="quien"><span class="avatar">F</span><div><p>Fernando Chicharro</p><small>Reseña · Google</small></div></div>
+      </article>
+      <article class="opinion rv rv-d2">
+        <p class="estrellas">★★★★★</p>
+        <blockquote>«Soy de Napoli, vivo en Barcelona y ha sido todo un descubrimiento. Los platos de pasta son espectaculares, sobre todo las tagliatelle con champiñones y trufa. Seguro que repetiré. Forza Napoli :)»</blockquote>
+        <div class="quien"><span class="avatar">V</span><div><p>Valentina DB</p><small>Reseña · Google</small></div></div>
+      </article>
+      <article class="opinion rv rv-d3">
+        <p class="estrellas">★★★★★</p>
+        <blockquote>«Todo perfecto. Local muy acogedor, personal muy atento y amable, que te da muy buenas recomendaciones, y comida espectacular. Sin duda, repetiremos.»</blockquote>
+        <div class="quien"><span class="avatar">E</span><div><p>Eli Casulleras</p><small>Reseña · Google</small></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="int">
+    <p class="etiqueta rv">Dónde estamos</p>
+    <h2 class="rv rv-d1">Te esperamos en <em>Horta-Guinardó</em></h2>
+    <div class="contacto-grid">
+      <div class="ficha">
+        <div class="linea rv rv-d1">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+          <div>
+            <h3>Dirección</h3>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant+BelleBuon+Travessera+de+Gracia+441+Barcelona" target="_blank" rel="noopener">Travessera de Gràcia, 441, bajo<br>Horta-Guinardó · 08025 Barcelona</a>
+          </div>
+        </div>
+        <div class="linea rv rv-d2">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></span>
+          <div>
+            <h3>Reservas</h3>
+            <a href="tel:+34935141971">935 14 19 71</a><br>
+            <a href="tel:+34637229053">637 22 90 53</a>
+          </div>
+        </div>
+        <div class="linea rv rv-d3">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span>
+          <div>
+            <h3>Correo</h3>
+            <a href="mailto:bellebuon@gmail.com">bellebuon@gmail.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="horario rv rv-d2">
+        <h3>Horario</h3>
+        <div class="fila"><span>Miércoles a domingo</span><span>13:00 – 17:00<br>19:00 – 00:00</span></div>
+        <div class="fila cerrado"><span>Lunes y martes</span><span>Cerrado</span></div>
+        <a class="btn btn-1" href="tel:+34935141971">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+          Llamar y reservar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="marca">Belle<em>Buòn</em></p>
+  <p class="dir">Travessera de Gràcia, 441, bajo · Horta-Guinardó · 08025 Barcelona · 935 14 19 71</p>
+  <p class="aviso"><strong>DEMO</strong> creada por Eleven AI — esta web puede ser tuya.<br>Página de muestra elaborada con los datos públicos del restaurante. Sin vinculación comercial.</p>
+</footer>
+
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro del tenedor: el CSS ya la autodestruye sola; el JS solo retira el nodo --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 4100); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admite decimales con coma: data-dec) --- */
+  try{
+    var pintarNum = function(el, valor, dec){
+      if (dec > 0){ el.textContent = valor.toFixed(dec).replace('.', ','); }
+      else { el.textContent = Math.round(valor).toLocaleString('es-ES'); }
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ pintarNum(el, fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pintarNum(el, fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso);
+        else pintarNum(el, fin, dec);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso + sombra del nav --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var nav = document.getElementById('nav');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+      if (nav){
+        if (y > 10) nav.classList.add('con-sombra'); else nav.classList.remove('con-sombra');
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-lema, .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      Array.prototype.forEach.call(ocultos, function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+<!-- EP-CONTACTO-FLOTANTE (estándar 30/08/2026) — los clientes del negocio le escriben/llaman a ÉL.
+     BelleBuòn tiene móvil (637 22 90 53) -> WhatsApp; y fijo (935 14 19 71) -> llamar. -->
+<style>
+  .ep-fab{position:fixed;right:16px;bottom:16px;z-index:1500;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .ep-fab a{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;fill:currentColor;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.28);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease,filter .25s ease}
+  .ep-fab a:hover,.ep-fab a:focus-visible{transform:scale(1.08) translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.38);filter:brightness(1.06)}
+  .ep-fab svg{width:30px;height:30px;display:block}
+  .ep-fab .ep-wa{background:#25D366}
+  .ep-fab .ep-tel{background:#6B4F3A}
+  .js-on .ep-fab a,.js-anim .ep-fab a{animation:ep-fab-entra .55s cubic-bezier(.22,.61,.36,1) backwards}
+  .js-on .ep-fab a:nth-child(1),.js-anim .ep-fab a:nth-child(1){animation-delay:1.7s}
+  .js-on .ep-fab a:nth-child(2),.js-anim .ep-fab a:nth-child(2){animation-delay:1.85s}
+  @keyframes ep-fab-entra{from{opacity:0;transform:translateY(18px) scale(.6)}to{opacity:1;transform:none}}
+  @media (min-width:768px){.ep-fab{right:24px;bottom:24px}.ep-fab a{width:62px;height:62px}.ep-fab svg{width:32px;height:32px}}
+  @media (prefers-reduced-motion: reduce){.ep-fab a{animation:none !important}}
+</style>
+<div class="ep-fab">
+  <a class="ep-wa" href="https://wa.me/34637229053?text=Hola%2C%20os%20escribo%20desde%20vuestra%20web.%20Quer%C3%ADa%20reservar%20mesa%20en%20BelleBu%C3%B2n..." target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp al 637 22 90 53" title="WhatsApp 637 22 90 53"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.02h-.01c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.22 8.22 0 0 1-1.26-4.39c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.23 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05s.88 2.38 1 2.54c.12.17 1.73 2.65 4.2 3.71.59.25 1.04.4 1.4.52.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></a>
+  <a class="ep-tel" href="tel:+34935141971" aria-label="Llámanos al 935 14 19 71" title="Llamar al 935 14 19 71"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+</div>
+<!-- /EP-CONTACTO-FLOTANTE -->
+</body>
+</html>

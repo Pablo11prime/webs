@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Autotalleres Barcelona — especialistas en chapa y pintura en Sant Andreu. Trabajamos con todas las compañías aseguradoras. Vehículo de sustitución, recogida y entrega. Dos talleres en Barcelona.">
+<title>Autotalleres Barcelona — Chapa, pintura y mecánica en Sant Andreu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#14456B;
+    --azul-osc:#0D2E48;
+    --azul-claro:#1D6199;
+    --gris-f:#ECEFF3;
+    --ambar:#FFC107;
+    --tinta:#1A2229;
+    --gris:#5f6b76;
+    --blanco:#FFFFFF;
+    --display:'Barlow Condensed', 'Arial Narrow', Impact, sans-serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.22,.61,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--gris-f);
+    color:var(--tinta);
+    line-height:1.66;
+    font-size:16px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--ambar);color:var(--tinta)}
+  a{color:inherit}
+
+  /* ====== GARANTÍA DE VISIBILIDAD: los reveals solo existen bajo .js-on ====== */
+  .js-on .rv{opacity:0;transform:translateY(28px);transition:opacity .78s var(--ease), transform .78s var(--ease)}
+  .js-on .rv.vis{opacity:1;transform:none}
+  .js-on .rv-d1{transition-delay:.09s}
+  .js-on .rv-d2{transition-delay:.19s}
+  .js-on .rv-d3{transition-delay:.29s}
+  .js-on .rv-d4{transition-delay:.39s}
+
+  #barra-scroll{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--ambar),var(--azul-claro));z-index:1000;transition:width .1s linear}
+
+  .marca-demo{
+    position:fixed;bottom:16px;left:16px;z-index:999;
+    font-size:11px;letter-spacing:.22em;font-weight:700;
+    color:var(--gris-f);background:rgba(26,34,41,.88);
+    border:1px solid rgba(255,193,7,.55);
+    padding:7px 14px;border-radius:999px;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+
+  /* ====== INTRO "LA LLAVE INGLESA" ======
+     Una llave inglesa de trazo fino cruza la pantalla apretando una tuerca y, a su paso,
+     va revelando el nombre del taller. El overlay se AUTODESTRUYE POR CSS PURO
+     (opacity+visibility con animation-fill-mode:forwards): si el JS falla, la página
+     se ve igual. El JS solo retira el nodo del DOM al terminar.
+     pointer-events:none SIEMPRE: nunca bloquea clics ni scroll. */
+  #intro{
+    position:fixed;inset:0;z-index:2000;
+    display:none; /* solo se activa bajo @supports */
+    align-items:center;justify-content:center;
+    overflow:hidden;pointer-events:none;
+    background:
+      radial-gradient(ellipse 66% 52% at 76% 18%, rgba(255,193,7,.16), transparent 62%),
+      radial-gradient(ellipse 56% 46% at 14% 84%, rgba(29,97,153,.28), transparent 60%),
+      linear-gradient(158deg,#16334B 0%, #0D2E48 55%, #071B2C 100%);
+    animation:intro-fuera .85s var(--ease) 2.7s forwards;
+  }
+  @supports ((clip-path: inset(0 0 0 0)) and (animation-fill-mode: forwards)){
+    #intro{display:flex}
+  }
+  @keyframes intro-fuera{from{opacity:1}to{opacity:0;visibility:hidden}}
+  .intro-caja{position:relative;max-width:94vw;text-align:center}
+  .intro-linea{position:relative;padding:30px 12px 16px}
+  /* La línea del banco de trabajo */
+  .intro-banco{
+    position:absolute;left:-8%;right:-8%;bottom:10px;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(255,193,7,.7),rgba(29,97,153,.5),transparent);
+    clip-path:inset(0 100% 0 0);
+    animation:banco-dentro 1.7s var(--ease) .4s both;
+    border-radius:2px;
+  }
+  @keyframes banco-dentro{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  .intro-nombre{
+    position:relative;margin:0;white-space:nowrap;
+    font-family:var(--display);font-weight:700;color:var(--gris-f);
+    font-size:clamp(2.4rem,11.5vw,5.8rem);line-height:1.04;letter-spacing:.02em;text-transform:uppercase;
+    clip-path:inset(-16% 100% -16% -2%);
+    animation:aprieta 1.7s var(--ease) .4s both;
+  }
+  .intro-nombre em{font-style:normal;color:var(--ambar)}
+  @keyframes aprieta{from{clip-path:inset(-16% 100% -16% -2%)}to{clip-path:inset(-16% -4% -16% -2%)}}
+  /* La llave inglesa: trazo fino ámbar que cruza girando, como quien aprieta una tuerca */
+  .intro-llave{
+    position:absolute;left:-4%;top:50%;width:60px;height:158px;
+    transform:translate(-50%,-52%) rotate(-18deg);
+    filter:drop-shadow(0 0 15px rgba(255,193,7,.5));
+    animation:llave-pasa 1.7s var(--ease) .4s both;
+  }
+  @keyframes llave-pasa{
+    from{left:-4%;transform:translate(-50%,-52%) rotate(-18deg)}
+    to{left:105%;transform:translate(-50%,-52%) rotate(342deg)}
+  }
+  .intro-sub{
+    margin:20px 0 0;
+    font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ambar);font-weight:700;
+    opacity:0;animation:intro-sub .65s var(--ease) 1.95s forwards;
+  }
+  @keyframes intro-sub{to{opacity:1}}
+
+  /* ====== NAV ====== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;padding:13px 20px;
+    background:rgba(236,239,243,.94);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(26,34,41,.09);
+    transition:box-shadow .3s var(--ease);
+  }
+  nav.con-sombra{box-shadow:0 6px 26px rgba(13,46,72,.13)}
+  nav .logo{font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--azul);line-height:1}
+  nav .logo em{font-style:normal;color:var(--ambar);-webkit-text-stroke:.4px var(--azul)}
+  nav .logo small{display:block;font-family:var(--sans);font-weight:600;font-size:.53rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gris);margin-top:4px}
+  nav .enlaces{display:none;gap:26px}
+  nav .enlaces a{font-size:.83rem;font-weight:500;text-decoration:none;color:var(--gris);transition:color .25s var(--ease)}
+  nav .enlaces a:hover{color:var(--azul)}
+  nav .cta-nav{
+    font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--blanco);background:var(--azul);text-decoration:none;
+    padding:11px 18px;border-radius:8px;white-space:nowrap;
+    transition:background .3s var(--ease), transform .3s var(--ease);
+  }
+  nav .cta-nav:hover{background:var(--ambar);color:var(--tinta);transform:translateY(-1px)}
+  @media (min-width:900px){nav{padding:15px 44px}nav .enlaces{display:flex}}
+
+  /* ====== HERO ====== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;align-items:center;
+    padding:118px 20px 68px;
+    overflow:hidden;color:var(--blanco);
+  }
+  #hero-fondo{
+    position:absolute;inset:-12% 0 0;z-index:0;
+    background:
+      radial-gradient(ellipse 60% 46% at 80% 20%, rgba(255,193,7,.20), transparent 60%),
+      radial-gradient(ellipse 56% 48% at 10% 80%, rgba(29,97,153,.42), transparent 58%),
+      linear-gradient(160deg,#1B4A70 0%, var(--azul) 52%, #0A2438 100%);
+    will-change:transform;
+  }
+  /* Textura de chapa: líneas diagonales finísimas */
+  .hero::after{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.028) 0 1px, transparent 1px 20px);
+  }
+  .hero-int{position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%}
+  .hero-etiqueta{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.66rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--ambar);margin-bottom:20px;
+  }
+  .hero-etiqueta::before{content:'';width:34px;height:2px;background:var(--ambar)}
+  .hero h1{
+    font-family:var(--display);font-weight:700;text-transform:uppercase;
+    font-size:clamp(3rem,11.6vw,6.6rem);
+    line-height:.94;letter-spacing:.01em;
+    margin-bottom:14px;
+  }
+  .hero h1 em{font-style:normal;color:var(--ambar)}
+  .js-on .hero h1 .pal{
+    display:inline-block;
+    opacity:0;transform:translateY(26px);
+    animation:pal-entra .78s var(--ease) forwards;
+    animation-delay:calc(2.75s + var(--i) * .085s);
+  }
+  @keyframes pal-entra{to{opacity:1;transform:none}}
+  .hero-lema{
+    font-family:var(--display);font-weight:600;text-transform:uppercase;
+    font-size:clamp(1.15rem,3.6vw,1.85rem);letter-spacing:.03em;
+    color:rgba(255,255,255,.93);margin-bottom:18px;line-height:1.2;
+  }
+  .hero-sub{
+    font-size:clamp(1rem,2.2vw,1.12rem);color:rgba(255,255,255,.78);
+    max-width:54ch;margin-bottom:32px;font-weight:300;
+  }
+  .hero-botones{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:42px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.87rem;font-weight:700;letter-spacing:.03em;
+    text-decoration:none;padding:16px 30px;border-radius:9px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
+  }
+  .btn svg{width:18px;height:18px;fill:currentColor}
+  .btn-1{background:var(--ambar);color:var(--tinta);box-shadow:0 10px 26px rgba(255,193,7,.3)}
+  .btn-1:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(255,193,7,.42)}
+  .btn-2{background:transparent;color:var(--blanco);border:1.5px solid rgba(255,255,255,.4)}
+  .btn-2:hover{background:var(--blanco);color:var(--azul);transform:translateY(-3px)}
+  .hero-datos{display:flex;flex-wrap:wrap;gap:30px 44px;padding-top:28px;border-top:1px solid rgba(255,255,255,.18)}
+  .dato .num{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,5.5vw,2.7rem);line-height:1;color:var(--ambar)}
+  .dato .txt{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:6px;font-weight:600}
+  .js-on .hero-lema,.js-on .hero-sub,.js-on .hero-botones,.js-on .hero-datos{opacity:0;animation:aparece .9s var(--ease) forwards}
+  .js-on .hero-lema{animation-delay:3.15s}
+  .js-on .hero-sub{animation-delay:3.3s}
+  .js-on .hero-botones{animation-delay:3.45s}
+  .js-on .hero-datos{animation-delay:3.6s}
+  @keyframes aparece{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  /* ====== SECCIONES ====== */
+  section{padding:86px 20px}
+  .int{max-width:1180px;margin:0 auto}
+  .etiqueta{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.65rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--azul-claro);margin-bottom:14px;
+  }
+  .etiqueta::before{content:'';width:30px;height:2px;background:var(--ambar)}
+  h2{
+    font-family:var(--display);font-weight:700;text-transform:uppercase;
+    font-size:clamp(2.1rem,6.2vw,3.5rem);line-height:1.03;
+    letter-spacing:.01em;margin-bottom:18px;color:var(--azul);
+  }
+  h2 em{font-style:normal;color:var(--ambar);-webkit-text-stroke:.5px var(--azul)}
+  .entradilla{font-size:1.02rem;color:var(--gris);max-width:62ch;font-weight:300;margin-bottom:42px}
+
+  /* Especialidad */
+  .especialidad{background:var(--blanco)}
+  .esp-grid{display:grid;gap:44px;align-items:start}
+  @media (min-width:900px){.esp-grid{grid-template-columns:1.1fr .9fr;gap:66px}}
+  .especialidad p{margin-bottom:16px;color:var(--gris);font-weight:300;font-size:1.02rem}
+  .especialidad p strong{color:var(--tinta);font-weight:600}
+  .destacado{
+    background:linear-gradient(135deg,var(--azul),var(--azul-osc));
+    color:var(--blanco);border-radius:18px;padding:30px 28px;
+    position:relative;overflow:hidden;
+  }
+  .destacado::before{
+    content:'';position:absolute;top:-40%;right:-16%;width:230px;height:230px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,193,7,.24),transparent 70%);
+  }
+  .destacado h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.6rem;margin-bottom:12px;position:relative;color:var(--ambar)}
+  .destacado p{color:rgba(255,255,255,.86);font-size:.96rem;font-weight:300;position:relative;margin:0}
+  .ventajas{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}
+  .vent{
+    background:var(--gris-f);border:1px solid rgba(20,69,107,.13);
+    border-radius:14px;padding:20px 18px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .vent:hover{transform:translateY(-5px);box-shadow:0 14px 32px rgba(13,46,72,.14)}
+  .vent svg{width:28px;height:28px;stroke:var(--azul-claro);fill:none;stroke-width:1.5;margin-bottom:10px}
+  .vent h4{font-size:.85rem;font-weight:700;margin-bottom:4px;color:var(--tinta)}
+  .vent p{font-size:.77rem;color:var(--gris);font-weight:300;line-height:1.5;margin:0}
+
+  /* Servicios */
+  .servicios{background:var(--gris-f)}
+  .serv-grid{display:grid;gap:15px}
+  @media (min-width:700px){.serv-grid{grid-template-columns:1fr 1fr}}
+  @media (min-width:1000px){.serv-grid{grid-template-columns:repeat(3,1fr)}}
+  .serv{
+    background:var(--blanco);border:1px solid rgba(20,69,107,.12);
+    border-radius:16px;padding:26px 24px;
+    position:relative;overflow:hidden;
+    transition:transform .38s var(--ease), box-shadow .38s var(--ease), border-color .38s var(--ease);
+  }
+  .serv::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--ambar),var(--azul-claro));
+    transform:scaleY(0);transform-origin:top;transition:transform .45s var(--ease);
+  }
+  .serv:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(13,46,72,.15);border-color:rgba(255,193,7,.5)}
+  .serv:hover::before{transform:scaleY(1)}
+  .serv .ico{
+    width:46px;height:46px;border-radius:12px;margin-bottom:15px;
+    background:linear-gradient(135deg,rgba(20,69,107,.1),rgba(255,193,7,.18));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .serv .ico svg{width:22px;height:22px;stroke:var(--azul);fill:none;stroke-width:1.6}
+  .serv h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.28rem;margin-bottom:8px;color:var(--azul)}
+  .serv p{font-size:.88rem;color:var(--gris);font-weight:300;line-height:1.58}
+  .lista-tecnica{
+    margin-top:34px;background:var(--blanco);border:1px solid rgba(20,69,107,.12);
+    border-radius:16px;padding:28px 26px;
+  }
+  .lista-tecnica h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.3rem;color:var(--azul);margin-bottom:16px}
+  .lista-tecnica ul{list-style:none;display:grid;gap:9px 22px;grid-template-columns:1fr}
+  @media (min-width:640px){.lista-tecnica ul{grid-template-columns:1fr 1fr}}
+  @media (min-width:1000px){.lista-tecnica ul{grid-template-columns:repeat(3,1fr)}}
+  .lista-tecnica li{font-size:.88rem;color:var(--gris);font-weight:400;display:flex;gap:9px;align-items:flex-start}
+  .lista-tecnica li::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--ambar);margin-top:.55em}
+
+  /* Sedes */
+  .sedes{background:var(--azul-osc);color:var(--blanco);position:relative;overflow:hidden}
+  .sedes::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 58% 50% at 84% 14%, rgba(255,193,7,.14), transparent 62%);
+  }
+  .sedes .int{position:relative;z-index:1}
+  .sedes .etiqueta{color:var(--ambar)}
+  .sedes h2{color:var(--blanco)}
+  .sedes h2 em{-webkit-text-stroke:0}
+  .sedes .entradilla{color:rgba(255,255,255,.72)}
+  .sede-grid{display:grid;gap:16px}
+  @media (min-width:820px){.sede-grid{grid-template-columns:repeat(3,1fr)}}
+  .sede{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    border-radius:18px;padding:28px 26px;
+    transition:transform .38s var(--ease), background .38s var(--ease);
+  }
+  .sede:hover{transform:translateY(-6px);background:rgba(255,255,255,.1)}
+  .sede .tipo{font-size:.63rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ambar);font-weight:700;margin-bottom:9px}
+  .sede h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.35rem;margin-bottom:7px;color:var(--blanco)}
+  .sede p{font-size:.9rem;color:rgba(255,255,255,.76);font-weight:300;line-height:1.55}
+  .sede a{color:var(--ambar);text-decoration:none;font-weight:600}
+  .sede a:hover{text-decoration:underline}
+
+  /* Contacto */
+  .contacto{background:var(--blanco)}
+  .contacto-grid{display:grid;gap:38px}
+  @media (min-width:900px){.contacto-grid{grid-template-columns:1fr 1fr;gap:62px}}
+  .ficha{display:flex;flex-direction:column;gap:22px}
+  .linea{display:flex;gap:16px;align-items:flex-start}
+  .linea .ico{
+    width:44px;height:44px;border-radius:12px;flex-shrink:0;
+    background:linear-gradient(135deg,rgba(20,69,107,.12),rgba(255,193,7,.18));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .linea .ico svg{width:20px;height:20px;stroke:var(--azul);fill:none;stroke-width:1.6}
+  .linea h3{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--azul-claro);font-weight:700;margin-bottom:5px}
+  .linea p, .linea a{font-size:.98rem;color:var(--tinta);text-decoration:none;font-weight:400;line-height:1.55}
+  .linea a:hover{color:var(--azul-claro)}
+  .horario{background:var(--gris-f);border:1px solid rgba(20,69,107,.13);border-radius:20px;padding:30px 28px}
+  .horario h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.45rem;margin-bottom:18px;color:var(--azul)}
+  .horario .fila{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(20,69,107,.11);font-size:.92rem}
+  .horario .fila:last-of-type{border-bottom:none}
+  .horario .fila span:first-child{font-weight:600;color:var(--tinta)}
+  .horario .fila span:last-child{color:var(--gris);font-weight:300;text-align:right}
+  .horario .cerrado span:last-child{color:#C0392B;font-weight:600}
+  .horario .btn{margin-top:22px;width:100%;justify-content:center}
+
+  /* Pie */
+  footer{background:var(--tinta);color:rgba(236,239,243,.62);padding:52px 20px 40px;text-align:center}
+  footer .marca{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.9rem;color:var(--gris-f);margin-bottom:8px}
+  footer .marca em{font-style:normal;color:var(--ambar)}
+  footer .dir{font-size:.86rem;margin-bottom:26px;font-weight:300}
+  footer .aviso{
+    border-top:1px solid rgba(236,239,243,.14);padding-top:24px;margin-top:8px;
+    font-size:.79rem;line-height:1.65;font-weight:300;
+  }
+  footer .aviso strong{color:var(--ambar);font-weight:700}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    #intro{display:none !important}
+    .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO: LA LLAVE INGLESA QUE REVELA EL NOMBRE -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-caja">
+    <div class="intro-linea">
+      <div class="intro-banco"></div>
+      <h2 class="intro-nombre">Auto<em>talleres</em></h2>
+      <svg class="intro-llave" viewBox="0 0 60 158" fill="none" stroke="#FFC107" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M30 6a15 15 0 0 0-11 25l0 8h22l0-8A15 15 0 0 0 30 6z"/>
+        <path d="M22 14v10M38 14v10"/>
+        <path d="M26 39v104M34 39v104"/>
+        <path d="M22 143h16"/>
+      </svg>
+    </div>
+    <p class="intro-sub">Chapa · Pintura · Mecánica</p>
+  </div>
+</div>
+
+<div id="barra-scroll"></div>
+<div class="marca-demo">DEMO</div>
+
+<nav id="nav">
+  <a class="logo" href="#inicio">Auto<em>talleres</em><small>Barcelona · Sant Andreu</small></a>
+  <div class="enlaces">
+    <a href="#especialidad">Especialidad</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#sedes">Nuestros talleres</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a class="cta-nav" href="tel:+34933114307">93 311 43 07</a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div id="hero-fondo"></div>
+  <div class="hero-int">
+    <p class="hero-etiqueta">Especialistas en chapa y pintura</p>
+    <h1 id="titulo-hero">Autotalleres <em>Barcelona</em></h1>
+    <p class="hero-lema">Trabajamos con todas las compañías aseguradoras</p>
+    <p class="hero-sub">Dos talleres en Sant Andreu especializados en planchistería: reparamos coches, motos, furgonetas y pequeños camiones de todas las marcas. Presupuesto sin compromiso y garantía de por vida en pintura.</p>
+    <div class="hero-botones">
+      <a class="btn btn-1" href="tel:+34933114307">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+        Pedir presupuesto
+      </a>
+      <a class="btn btn-2" href="#servicios">Ver servicios</a>
+    </div>
+    <div class="hero-datos">
+      <div class="dato">
+        <p class="num"><span class="contador" data-fin="4.5" data-dec="1">4,5</span>★</p>
+        <p class="txt">Valoración en Google</p>
+      </div>
+      <div class="dato">
+        <p class="num"><span class="contador" data-fin="2">2</span></p>
+        <p class="txt">Talleres en Sant Andreu</p>
+      </div>
+      <div class="dato">
+        <p class="num">De por vida</p>
+        <p class="txt">Garantía en pintura</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="especialidad" id="especialidad">
+  <div class="int">
+    <div class="esp-grid">
+      <div>
+        <p class="etiqueta rv">Quiénes somos</p>
+        <h2 class="rv rv-d1">Planchistería <em>de especialistas</em></h2>
+        <p class="rv rv-d2">Somos <strong>dos talleres de coches asociados</strong> —Autotalleres Barcelona y ECO-CAR Barcelona— especializados en planchistería de vehículos. Realizamos reparaciones en coches, motos, furgonetas y pequeños camiones de <strong>todas las marcas</strong>.</p>
+        <p class="rv rv-d2">Nuestro servicio de chapa está realizado por especialistas en reparaciones de carrocería, y a la hora de pintar contamos con los mejores productos del mercado. Hacemos <strong>presupuestos sin compromiso</strong>.</p>
+        <p class="rv rv-d3">Trabajamos con todas las compañías de seguros y somos taller colaborador oficial de algunas aseguradoras.</p>
+        <div class="destacado rv rv-d3">
+          <h3>Garantía de por vida en pintura</h3>
+          <p>Usamos los mejores productos del mercado en cabina. Por eso podemos dar garantía de por vida en nuestros trabajos de pintura.</p>
+        </div>
+      </div>
+      <div class="ventajas">
+        <div class="vent rv rv-d1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h2l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13h2M5 13v4h14v-4"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg>
+          <h4>Vehículo de sustitución</h4>
+          <p>No interrumpa su día a día: le dejamos otro coche</p>
+        </div>
+        <div class="vent rv rv-d2">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17h3l2-9h9l1 5"/><path d="M14 17h4"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+          <h4>Recogida y entrega</h4>
+          <p>Recogemos y devolvemos su vehículo donde nos diga</p>
+        </div>
+        <div class="vent rv rv-d3">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.3 8.3 8 9 4.7-.7 8-4.5 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
+          <h4>Todas las aseguradoras</h4>
+          <p>Colaboradores oficiales de varias compañías</p>
+        </div>
+        <div class="vent rv rv-d4">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <h4>Taller rápido</h4>
+          <p>Pinchazos y neumáticos sin esperas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="int">
+    <p class="etiqueta rv">Qué hacemos</p>
+    <h2 class="rv rv-d1">Todo lo que <em>su vehículo</em> necesita</h2>
+    <p class="entradilla rv rv-d2">De la reparación de carrocería al mantenimiento completo, en dos talleres a cinco minutos el uno del otro.</p>
+    <div class="serv-grid">
+      <article class="serv rv rv-d1">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16 14 6a3 3 0 0 1 4 4L8 20l-4 1 0-5z"/><path d="M13 7l4 4"/></svg></span>
+        <h3>Chapa y pintura</h3>
+        <p>Reparación de carrocería por especialistas y pintura en cabina con los mejores productos del mercado.</p>
+      </article>
+      <article class="serv rv rv-d2">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg></span>
+        <h3>Mecánica general</h3>
+        <p>Mantenimiento, ajustes, cambio de aceite, frenos, escapes, dirección y suspensiones.</p>
+      </article>
+      <article class="serv rv rv-d3">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 21h10M12 17v4M7 11h2l1.5-2.5L13 13l1.5-2H17"/></svg></span>
+        <h3>Diagnosis de motor</h3>
+        <p>Diagnóstico completo de motor y análisis completo de seguridad del vehículo.</p>
+      </article>
+      <article class="serv rv rv-d1">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M12 15.4V21M3 12h5.6M15.4 12H21"/></svg></span>
+        <h3>Neumáticos y ruedas</h3>
+        <p>Cambio de neumáticos, reparación de pinchazos y alineación de dirección.</p>
+      </article>
+      <article class="serv rv rv-d2">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></span>
+        <h3>Pre-ITV</h3>
+        <p>Revisamos su coche antes de la inspección para que pase a la primera.</p>
+      </article>
+      <article class="serv rv rv-d3">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/><path d="M9 20h6M12 16v4"/></svg></span>
+        <h3>Aire acondicionado</h3>
+        <p>Revisión y recarga del climatizador, y sistemas de refrigeración del motor.</p>
+      </article>
+    </div>
+    <div class="lista-tecnica rv rv-d2">
+      <h3>Además, en el taller</h3>
+      <ul>
+        <li>Diagnóstico completo de motor</li>
+        <li>Análisis completo de seguridad</li>
+        <li>Problemas con la conducción</li>
+        <li>Cambio de aceite</li>
+        <li>Sistema de frenado</li>
+        <li>Silenciadores y escapes</li>
+        <li>Dirección y suspensiones</li>
+        <li>Sistemas de combustible</li>
+        <li>Sistemas de refrigeración</li>
+        <li>Verificador de emisiones</li>
+        <li>Sistemas eléctricos</li>
+        <li>Mantenimiento de flotas</li>
+        <li>Trabajos de motor</li>
+        <li>Alineación</li>
+        <li>Limpieza interior</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sedes" id="sedes">
+  <div class="int">
+    <p class="etiqueta rv">Dónde estamos</p>
+    <h2 class="rv rv-d1">Dos talleres en <em>Sant Andreu</em></h2>
+    <p class="entradilla rv rv-d2">Oficina central y dos talleres especializados, a pocos minutos entre sí.</p>
+    <div class="sede-grid">
+      <div class="sede rv rv-d1">
+        <p class="tipo">Oficina central</p>
+        <h3>Gran de Sant Andreu 388</h3>
+        <p>08030 Barcelona<br><a href="tel:+34933114307">93 311 43 07</a></p>
+      </div>
+      <div class="sede rv rv-d2">
+        <p class="tipo">Taller</p>
+        <h3>Chapa y pintura</h3>
+        <p>Carrer de Sant Adrià, 52<br>Sant Andreu · 08030 Barcelona</p>
+      </div>
+      <div class="sede rv rv-d3">
+        <p class="tipo">Taller</p>
+        <h3>Mecánica</h3>
+        <p>Carrer Eiximenis, 19<br>Sant Andreu · Barcelona</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="int">
+    <p class="etiqueta rv">Contacto</p>
+    <h2 class="rv rv-d1">Pida su <em>presupuesto</em> sin compromiso</h2>
+    <div class="contacto-grid">
+      <div class="ficha">
+        <div class="linea rv rv-d1">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+          <div>
+            <h3>Oficina central</h3>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Autotalleres+Barcelona+Gran+de+Sant+Andreu+388+08030+Barcelona" target="_blank" rel="noopener">Gran de Sant Andreu, 388<br>08030 Barcelona</a>
+          </div>
+        </div>
+        <div class="linea rv rv-d2">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></span>
+          <div>
+            <h3>Teléfono</h3>
+            <a href="tel:+34933114307">93 311 43 07</a>
+          </div>
+        </div>
+        <div class="linea rv rv-d3">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span>
+          <div>
+            <h3>Correo</h3>
+            <a href="mailto:info@autotalleresbcn.com">info@autotalleresbcn.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="horario rv rv-d2">
+        <h3>Horario de atención y taller</h3>
+        <div class="fila"><span>Lunes a viernes</span><span>8:00 – 13:30<br>15:00 – 19:00</span></div>
+        <div class="fila cerrado"><span>Sábados y domingos</span><span>Cerrado</span></div>
+        <a class="btn btn-1" href="tel:+34933114307">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+          Llamar al taller
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="marca">Auto<em>talleres</em> Barcelona</p>
+  <p class="dir">Gran de Sant Andreu, 388 · 08030 Barcelona · 93 311 43 07 · info@autotalleresbcn.com</p>
+  <p class="aviso"><strong>DEMO</strong> creada por Eleven AI — esta web puede ser tuya.<br>Página de muestra elaborada con los datos públicos del taller. Sin vinculación comercial.</p>
+</footer>
+
+<noscript>
+<style>
+  /* GARANTÍA DE VISIBILIDAD: sin JavaScript, todo visible siempre */
+  .rv,.hero h1 .pal,.hero-lema,.hero-sub,.hero-botones,.hero-datos{opacity:1 !important;transform:none !important;animation:none !important}
+  #intro{display:none !important}
+</style>
+</noscript>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  doc.classList.add('js-on');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Intro de la llave inglesa: el CSS ya la autodestruye sola; el JS solo retira el nodo --- */
+  try{
+    var intro = document.getElementById('intro');
+    if (intro){
+      var quitarIntro = function(){ if (intro && intro.parentNode) intro.parentNode.removeChild(intro); };
+      if (reduce){ quitarIntro(); }
+      else {
+        intro.addEventListener('animationend', function(ev){ if (ev.target === intro) quitarIntro(); });
+        setTimeout(quitarIntro, 4100); /* red de seguridad: fuera pase lo que pase */
+      }
+    }
+  }catch(e){}
+
+  /* --- Título del hero: aparición palabra a palabra --- */
+  try{
+    var h1 = document.getElementById('titulo-hero');
+    if (h1 && !reduce){
+      var nodos = Array.prototype.slice.call(h1.childNodes);
+      h1.textContent = '';
+      var i = 0;
+      nodos.forEach(function(n){
+        var esEm = n.nodeType === 1 && n.tagName === 'EM';
+        var texto = n.textContent;
+        texto.split(/\s+/).forEach(function(pal){
+          if (!pal) return;
+          var s = document.createElement('span');
+          s.className = 'pal';
+          s.style.setProperty('--i', i++);
+          if (esEm){ var em = document.createElement('em'); em.textContent = pal; s.appendChild(em); }
+          else { s.textContent = pal; }
+          h1.appendChild(s);
+          h1.appendChild(document.createTextNode(' '));
+        });
+      });
+    }
+  }catch(e){}
+
+  /* --- Reveals escalonados con IntersectionObserver --- */
+  try{
+    var revs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+      revs.forEach(function(el){ io.observe(el); });
+    } else {
+      revs.forEach(function(el){ el.classList.add('vis'); });
+    }
+  }catch(e){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* --- Contadores animados (admite decimales con coma: data-dec) --- */
+  try{
+    var pintarNum = function(el, valor, dec){
+      el.textContent = dec > 0 ? valor.toFixed(dec).replace('.', ',') : String(Math.round(valor));
+    };
+    var animarContador = function(el){
+      var fin = parseFloat(el.getAttribute('data-fin')) || 0;
+      var dec = parseInt(el.getAttribute('data-dec'), 10) || 0;
+      if (reduce){ pintarNum(el, fin, dec); return; }
+      var t0 = null, dur = 1500;
+      var paso = function(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var suave = 1 - Math.pow(1 - p, 3);
+        pintarNum(el, fin * suave, dec);
+        if (p < 1) requestAnimationFrame(paso);
+        else pintarNum(el, fin, dec);
+      };
+      requestAnimationFrame(paso);
+    };
+    var conts = document.querySelectorAll('.contador');
+    if ('IntersectionObserver' in window){
+      var ioC = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(en){
+          if (en.isIntersecting){ animarContador(en.target); ioC.unobserve(en.target); }
+        });
+      }, {threshold:.4});
+      conts.forEach(function(el){ ioC.observe(el); });
+    }
+  }catch(e){}
+
+  /* --- Parallax suave del fondo del hero + barra de progreso + sombra del nav --- */
+  try{
+    var fondo = document.getElementById('hero-fondo');
+    var barra = document.getElementById('barra-scroll');
+    var nav = document.getElementById('nav');
+    var pintando = false;
+    var pintar = function(){
+      pintando = false;
+      var y = window.pageYOffset || doc.scrollTop || 0;
+      if (fondo && !reduce) fondo.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      if (barra){
+        var total = (doc.scrollHeight - window.innerHeight) || 1;
+        barra.style.width = Math.min(y / total * 100, 100) + '%';
+      }
+      if (nav){
+        if (y > 10) nav.classList.add('con-sombra'); else nav.classList.remove('con-sombra');
+      }
+    };
+    window.addEventListener('scroll', function(){
+      if (!pintando){ pintando = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }catch(e){}
+
+  /* --- SCRIPT DE RESCATE anti-página-vacía (garantía de visibilidad) ---
+     A los 1200 ms, cualquier elemento que siga invisible se fuerza a visible.
+     Lección del 03/08/2026: nada puede quedarse oculto si algo falla. --- */
+  setTimeout(function rescate(){
+    try{
+      var restoIntro = document.getElementById('intro');
+      if (restoIntro){
+        var estIntro = window.getComputedStyle(restoIntro);
+        if (estIntro.display !== 'none' && (estIntro.animationName === 'none' || estIntro.animationName === '')){
+          if (restoIntro.parentNode) restoIntro.parentNode.removeChild(restoIntro);
+        }
+      }
+      var ocultos = document.querySelectorAll('.rv:not(.vis), .hero-lema, .hero-sub, .hero-botones, .hero-datos, .hero h1, .hero h1 .pal');
+      Array.prototype.forEach.call(ocultos, function(el){
+        var est = window.getComputedStyle(el);
+        if (parseFloat(est.opacity) < 1 && est.animationName === 'none'){
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+        if (el.classList.contains('rv')) el.classList.add('vis');
+      });
+    }catch(e){
+      document.documentElement.classList.remove('js-on');
+    }
+  }, 1200);
+})();
+</script>
+
+<!-- EP-CONTACTO-FLOTANTE (estándar 30/08/2026) — los clientes del negocio le escriben/llaman a ÉL.
+     Autotalleres Barcelona solo tiene FIJO (93 311 43 07): un único botón, el de llamar.
+     Nunca se pone WhatsApp sobre un fijo (los 9xx no tienen WhatsApp). -->
+<style>
+  .ep-fab{position:fixed;right:16px;bottom:16px;z-index:1500;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .ep-fab a{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;fill:currentColor;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.28);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s ease,filter .25s ease}
+  .ep-fab a:hover,.ep-fab a:focus-visible{transform:scale(1.08) translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.38);filter:brightness(1.06)}
+  .ep-fab svg{width:30px;height:30px;display:block}
+  .ep-fab .ep-tel{background:#14456B}
+  .js-on .ep-fab a,.js-anim .ep-fab a{animation:ep-fab-entra .55s cubic-bezier(.22,.61,.36,1) backwards}
+  .js-on .ep-fab a:nth-child(1),.js-anim .ep-fab a:nth-child(1){animation-delay:1.7s}
+  @keyframes ep-fab-entra{from{opacity:0;transform:translateY(18px) scale(.6)}to{opacity:1;transform:none}}
+  @media (min-width:768px){.ep-fab{right:24px;bottom:24px}.ep-fab a{width:62px;height:62px}.ep-fab svg{width:32px;height:32px}}
+  @media (prefers-reduced-motion: reduce){.ep-fab a{animation:none !important}}
+</style>
+<div class="ep-fab">
+  <a class="ep-tel" href="tel:+34933114307" aria-label="Llámanos al 93 311 43 07" title="Llamar al 93 311 43 07"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+</div>
+<!-- /EP-CONTACTO-FLOTANTE -->
+</body>
+</html>
